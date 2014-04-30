@@ -27,7 +27,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 ## app dependencies
-gem 'auto-session-timeout-warning'
 gem 'bootstrap-sass'
 gem 'devise'
 # gem 'devise-async'
@@ -36,24 +35,26 @@ gem 'omniauth'
 gem 'oauth2'
 gem 'omniauth-openid' #, :git => 'https://github.com/GSA/omniauth-openid.git', :branch => 'pape'
 gem 'mysql2'
-gem 'recaptcha', require: 'recaptcha/rails'
 gem 'secure_headers'
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
 end
 
 group :development do
-  gem 'capistrano'
-  gem 'capistrano-maintenance'
+  # Use Capistrano for deployment
+  gem 'capistrano',  '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1'
+#  gem 'capistrano-maintenance', github: "capistrano/capistrano-maintenance"
+  gem 'rvm1-capistrano3', require: false
   gem 'guard-livereload'
   gem 'railroady'
   gem 'quiet_assets'
   gem 'ruby_parser'
-  gem 'rvm-capistrano'
   gem 'slim'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/Spring
   gem 'spring'
@@ -68,8 +69,8 @@ group :development, :test do
   gem 'guard-brakeman'
   gem 'guard-migrate'
   gem 'guard-rspec'
-  gem 'pry'
-  gem 'pry-nav'
+  gem 'pry-rails'
+  gem 'pry-plus'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'spring-commands-rspec'
 end
@@ -86,5 +87,4 @@ end
 
 group :production do
   gem 'newrelic_rpm'
-  gem 'pg'
 end

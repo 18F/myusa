@@ -29,9 +29,11 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
-    auto-session-timeout-warning (1.0.0)
     awesome_print (1.2.0)
     bcrypt (3.1.7)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
+    bond (0.5.1)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     brakeman (2.5.0)
@@ -46,14 +48,16 @@ GEM
       slim (>= 1.3.6, < 3.0)
       terminal-table (~> 1.4)
     builder (3.2.2)
-    capistrano (2.15.5)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
-    capistrano-maintenance (0.0.4)
-      capistrano (>= 2.0.0)
+    capistrano (3.2.1)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-bundler (1.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
+    capistrano-rails (1.1.1)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
     capybara (2.2.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -73,10 +77,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     database_cleaner (1.2.0)
+    debug_inspector (0.0.2)
+    debugger (1.6.6)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.3.2)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.3.2)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -127,9 +139,12 @@ GEM
     hike (1.2.3)
     http_parser.rb (0.6.0)
     i18n (0.6.9)
+    interception (0.5)
     jbuilder (2.0.6)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jist (1.5.1)
+      json
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -157,11 +172,7 @@ GEM
     mysql2 (0.3.15)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-sftp (2.1.2)
-      net-ssh (>= 2.6.5)
     net-ssh (2.9.0)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
     newrelic_rpm (3.8.0.218)
     nio4r (1.0.0)
     nokogiri (1.6.1)
@@ -179,14 +190,36 @@ GEM
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
     orm_adapter (0.5.0)
-    pg (0.17.1)
     polyglot (0.3.4)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pry-nav (0.2.3)
+    pry-debugger (0.2.2)
+      debugger (~> 1.3)
       pry (~> 0.9.10)
+    pry-doc (0.6.0)
+      pry (~> 0.9)
+      yard (~> 0.8)
+    pry-docmore (0.1.1)
+      pry
+      pry-doc
+    pry-plus (1.0.0)
+      bond
+      jist
+      pry-debugger
+      pry-doc
+      pry-docmore
+      pry-rescue
+      pry-stack_explorer
+    pry-rails (0.3.2)
+      pry (>= 0.9.10)
+    pry-rescue (1.4.1)
+      interception (>= 0.5)
+      pry
+    pry-stack_explorer (0.4.9.1)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -217,7 +250,6 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
-    recaptcha (0.3.6)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -240,8 +272,9 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.4.1)
       sexp_processor (~> 4.1)
-    rvm-capistrano (1.5.1)
-      capistrano (~> 2.15.4)
+    rvm1-capistrano3 (1.2.2)
+      capistrano (~> 3.0)
+      sshkit (>= 1.2)
     safe_yaml (1.0.3)
     sass (3.2.19)
     sass-rails (4.0.3)
@@ -275,7 +308,13 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    sshkit (1.4.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
+      term-ansicolor
     temple (0.6.7)
+    term-ansicolor (1.3.0)
+      tins (~> 1.0)
     terminal-table (1.4.5)
     thin (1.6.2)
       daemons (>= 1.0.9)
@@ -285,6 +324,7 @@ GEM
     thread_safe (0.3.3)
     tilt (1.4.1)
     timers (1.1.0)
+    tins (1.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -299,17 +339,17 @@ GEM
       rack (>= 1.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+    yard (0.8.7.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  auto-session-timeout-warning
   awesome_print
   bootstrap-sass
   brakeman
-  capistrano
-  capistrano-maintenance
+  capistrano (~> 3.1)
+  capistrano-rails (~> 1.1)
   capybara
   coffee-rails (~> 4.0.0)
   crack
@@ -330,17 +370,15 @@ DEPENDENCIES
   oauth2
   omniauth
   omniauth-openid
-  pg
-  pry
-  pry-nav
+  pry-plus
+  pry-rails
   quiet_assets
   railroady
   rails (= 4.1.0)
   rb-fsevent
-  recaptcha
   rspec-rails
   ruby_parser
-  rvm-capistrano
+  rvm1-capistrano3
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   secure_headers

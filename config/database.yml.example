@@ -16,6 +16,8 @@ default: &default
   username: root
   password:
   socket: /tmp/mysql.sock
+# For Ubuntu systems, such as Ubuntu 12.04:
+#  socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default

@@ -21,7 +21,7 @@ To get your Rails development environment setup, here's the steps to follow.
 
         git clone https://github.com/18F/myusa-server.git
 
-    3.  bundle install
+    3.  Install Ruby Gems
 
       Change into the directory (it would be 'cd myusa-server' from wherever you executed the above command) and do the following:
 
@@ -40,8 +40,8 @@ To get your Rails development environment setup, here's the steps to follow.
 
       Make sure you have MySQL running.  By default, the development environment looks to connect to MySQL using the root MySQL user with no password.
 
-        bundle exec rake db:create
-        bundle exec rake db:schema:load
+        bundle exec rake db:setup
+        bundle exec rake db:setup RAILS_ENV=test
 
 That should be it!  You are ready to develop.
 
@@ -52,11 +52,11 @@ looks to connect to MySQL using the root MySQL user with no password.
 
 From the command line in the Rails root, do the following:
 
-    rails server
+    bundle exec rails server
 
 You can also do:
 
-    rails s
+    bundle exec rails s
 
 ('s' is short for server).
 

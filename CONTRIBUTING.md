@@ -10,7 +10,7 @@ When working in the development environment, be sure to install the project spec
 
 ### <a name="code-style"></a> Code Style
 
-**TBD** style guide selection 
+We adhere to the [GitHub Ruby Style Guide](https://github.com/styleguide/ruby) for MyUSA.
 
 Spaces should be used instead of tabs, and the tab width should be set to 2 spaces.  No spaces at the end of lines.
 

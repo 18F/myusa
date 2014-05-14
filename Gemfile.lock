@@ -266,6 +266,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rspec_api_blueprint (0.0.8)
+      rspec-rails
     ruby-openid (2.5.0)
     ruby2ruby (2.0.8)
       ruby_parser (~> 3.1)
@@ -377,6 +379,7 @@ DEPENDENCIES
   rails (= 4.1.0)
   rb-fsevent
   rspec-rails
+  rspec_api_blueprint
   ruby_parser
   rvm1-capistrano3
   sass-rails (~> 4.0.3)

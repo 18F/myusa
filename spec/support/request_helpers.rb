@@ -1,4 +1,5 @@
 require 'spec_helper'
+include Warden::Test::Helpers
 
 def create_confirmed_user_with_profile(email_or_hash = {})
   email_or_hash = {email: email_or_hash} unless email_or_hash.kind_of? Hash
@@ -10,4 +11,8 @@ def create_confirmed_user_with_profile(email_or_hash = {})
   user.profile = Profile.new(profile_create_hash)
   user.confirm!
   user
+end
+
+def login(user)
+  login_as user, scope: :user
 end

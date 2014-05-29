@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516134319) do
+ActiveRecord::Schema.define(version: 20140529123825) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -43,6 +43,23 @@ ActiveRecord::Schema.define(version: 20140516134319) do
 
   add_index "apps", ["slug"], name: "index_apps_on_slug", using: :btree
 
+  create_table "notifications", force: true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "received_at"
+    t.integer  "app_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.datetime "deleted_at"
+    t.datetime "viewed_at"
+  end
+
+  add_index "notifications", ["app_id"], name: "index_messages_on_o_auth2_model_client_id", using: :btree
+  add_index "notifications", ["app_id"], name: "index_notifications_on_app_id", using: :btree
+  add_index "notifications", ["deleted_at"], name: "index_notifications_on_deleted_at", using: :btree
+  add_index "notifications", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
   create_table "oauth2_authorizations", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -59,7 +76,7 @@ ActiveRecord::Schema.define(version: 20140516134319) do
   add_index "oauth2_authorizations", ["access_token_hash"], name: "index_oauth2_authorizations_on_access_token_hash", unique: true, using: :btree
   add_index "oauth2_authorizations", ["client_id", "code"], name: "index_oauth2_authorizations_on_client_id_and_code", unique: true, using: :btree
   add_index "oauth2_authorizations", ["client_id", "oauth2_resource_owner_type", "oauth2_resource_owner_id"], name: "index_owner_client_pairs", unique: true, using: :btree
-  add_index "oauth2_authorizations", ["client_id", "refresh_token_hash"], name: "index_oauth2_authorizations_on_client_id_and_refresh_token_hash", unique: true, using: :btree
+  add_index "oauth2_authorizations", ["client_id", "refresh_token_hash"], name: "index_oauth2_authorizations_client_id_refresh_token_hash_u", unique: true, using: :btree
 
   create_table "oauth2_clients", force: true do |t|
     t.datetime "created_at"

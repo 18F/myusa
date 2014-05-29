@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20140516134319) do
     t.string   "is_parent"
     t.string   "is_student"
     t.string   "is_veteran"
-    t.string   "is_retired_string"
+    t.string   "is_retired"
     t.string   "phone"
     t.string   "mobile"
     t.datetime "created_at"

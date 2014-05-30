@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529123825) do
+ActiveRecord::Schema.define(version: 20140529184147) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -128,6 +128,29 @@ ActiveRecord::Schema.define(version: 20140529123825) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
+  create_table "task_items", force: true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "completed_at"
+    t.integer  "task_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "task_items", ["task_id"], name: "index_task_items_on_task_id", using: :btree
+
+  create_table "tasks", force: true do |t|
+    t.string   "name"
+    t.datetime "completed_at"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "app_id"
+  end
+
+  add_index "tasks", ["app_id"], name: "index_tasks_on_app_id", using: :btree
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

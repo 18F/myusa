@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :apps, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
+  has_many :tasks, :dependent => :destroy
   validates_acceptance_of :terms_of_service
   validates_presence_of :uid
   validates_uniqueness_of :uid

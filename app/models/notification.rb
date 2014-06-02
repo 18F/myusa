@@ -3,12 +3,9 @@ class Notification < ActiveRecord::Base
   belongs_to :app
   validates_presence_of :subject, :received_at, :user_id
   after_create :deliver_notification
-
-  # attr_accessible :body, :received_at, :subject, :as => [:default, :admin]
-  # attr_accessible :user_id, :app_id, :as => :admin
   
   def self.newest_first
-    where(deleted_at: nil).order('received_at DESC, id DESC')
+    where(deleted_at: nil).order(received_at: :desc, id: :desc)
   end
   
   def self.not_viewed

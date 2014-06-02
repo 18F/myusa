@@ -7,6 +7,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "sprockets/railtie"
+require 'songkick/oauth2/provider'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,3 +28,6 @@ module MyusaServer
     # config.i18n.default_locale = :de
   end
 end
+
+Songkick::OAuth2::Provider.enforce_ssl = false
+Songkick::OAuth2::Provider.realm = 'MyUSA'

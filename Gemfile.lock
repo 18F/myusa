@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/adam-at-mobomo/oauth2-provider.git
-  revision: f944e2b2dfef1f24b4d7426adb102fbd45ae08d3
-  branch: rails-4-compatibility
+  revision: 80a4f2f34cf7353101c85640ad308e8afafb87fc
+  branch: rails-4-compatibility-with-bearer-and-client-credential-support
   specs:
     songkick-oauth2-provider (0.10.2)
       activerecord

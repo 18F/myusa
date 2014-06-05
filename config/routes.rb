@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       resource :profile, :only => [:show]
       resources :notifications, :only => [:create]
-#      resources :tasks, :only => [:index, :create, :show, :update]
+      resources :tasks, :only => [:index, :create, :show, :update]
 #      resources :forms, :only => [:create, :show]
 #      get "credentials/verify" => "credentials#verify", :as => :verify_credentials
     end

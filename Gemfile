@@ -29,13 +29,16 @@ gem 'jbuilder', '~> 2.0'
 ## app dependencies
 gem 'bootstrap-sass'
 gem 'devise'
-# gem 'devise-async'
+gem 'devise-async'
 gem 'omniauth'
-#gem 'oauth2-provider', git: 'https://github.com/songkick/oauth2-provider'
+gem 'songkick-oauth2-provider', :git => 'https://github.com/adam-at-mobomo/oauth2-provider.git', :branch => 'rails-4-compatibility-with-bearer-and-client-credential-support', :require => 'songkick/oauth2/provider'
 gem 'oauth2'
 gem 'omniauth-openid' #, :git => 'https://github.com/GSA/omniauth-openid.git', :branch => 'pape'
 gem 'mysql2'
 gem 'secure_headers'
+gem 'validates_email_format_of', :git => 'https://github.com/alexdunae/validates_email_format_of.git'
+gem "paperclip", "~> 4.1"
+gem "permanent_records", "~> 2.3.0"
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
@@ -59,6 +62,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/Spring
   gem 'spring'
   gem 'thin'
+  gem "letter_opener"
 end
 
 group :development, :test do
@@ -73,6 +77,7 @@ group :development, :test do
   gem 'pry-plus'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'spring-commands-rspec'
+  gem 'rspec_api_blueprint', require: false
 end
 
 group :test do

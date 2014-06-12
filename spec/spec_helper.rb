@@ -2,8 +2,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
-require 'rspec_api_blueprint'
+#require 'rspec_api_blueprint'
 require 'capybara/rspec'
 #require 'webmock/rspec'
 
@@ -32,6 +31,16 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
+  # rspec-rails 3 will no longer automatically infer an example group's spec type
+  # from the file location. You can explicitly opt-in to this feature using this
+  # snippet:
+  config.infer_spec_type_from_file_location!
+
+  # RSpec::Core::ExampleGroup#example is deprecated and will be removed in
+  # RSpec 3. Use this snippet to continue making this method available in RSpec
+  # 2.99 and RSpec 3
+  config.expose_current_running_example_as :example
+  
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.

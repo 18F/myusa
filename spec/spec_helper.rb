@@ -2,7 +2,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-#require 'rspec_api_blueprint'
+require 'rspec_api_blueprint'
 require 'capybara/rspec'
 #require 'webmock/rspec'
 
@@ -15,6 +15,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  
+  config.api_docs_controllers = -> (resource) { "./app/controllers/api/v1/#{resource}s_controller.rb" }
+  
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

@@ -1,3 +1,7 @@
+#POST /api/v1/notifications
+#
+#Create a notification
+
 class Api::V1::NotificationsController < Api::ApiController
   before_filter :oauthorize_scope
   

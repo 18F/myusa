@@ -1,3 +1,7 @@
+#GET /api/v1/profiles
+#
+#List all profiles.
+
 class Api::V1::ProfilesController < Api::ApiController
   before_filter :oauthorize_scope
   

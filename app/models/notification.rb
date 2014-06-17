@@ -1,3 +1,5 @@
+# This is a test message in the Notification Model
+
 class Notification < ActiveRecord::Base
   belongs_to :user
   belongs_to :app

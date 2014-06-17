@@ -77,7 +77,7 @@ group :development, :test do
   gem 'pry-plus'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'spring-commands-rspec'
-#  gem 'rspec_api_blueprint', require: false
+  gem 'rspec_api_blueprint', require: false, :git => 'https://github.com/petrbela/rspec_api_blueprint.git', :branch => 'feat/markdown-docs'
 end
 
 group :test do

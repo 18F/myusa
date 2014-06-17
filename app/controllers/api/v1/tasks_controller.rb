@@ -1,3 +1,20 @@
+#GET /api/v1/tasks
+#
+#List all tasks.
+
+#PUT /api/v1/task/:id
+#
+#Update a task.
+
+#POST /api/v1/tasks
+#
+#Create a task
+
+#GET /api/v1/task/:id
+#
+#Retrieve a task.
+
+
 class Api::V1::TasksController < Api::ApiController
   before_filter :oauthorize_scope
 

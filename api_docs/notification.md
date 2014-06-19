@@ -1,8 +1,16 @@
-## POST /api/v1/notifications
+# Group Notification
 
-Create a notification
 
-+ Request should create a new notification when the notification info is valid (application/json)
+## POST /api/notifications
+
+This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.
+
++ Parameters
+
+ + subject (required, string, `Test notification`)
+ + body (optional, string, `This is a test`)
+
++ Request Create a new notification (application/json)
 
     {
       "notification": {
@@ -17,30 +25,12 @@ Create a notification
       "id": 17,
       "subject": "Project MyUSA",
       "body": "This is a test.",
-      "received_at": "2014-06-17T13:38:40.143Z",
+      "received_at": "2014-06-19T16:19:39.515Z",
       "app_id": 1,
       "user_id": 1,
-      "created_at": "2014-06-17T13:38:40.144Z",
-      "updated_at": "2014-06-17T13:38:40.144Z",
+      "created_at": "2014-06-19T16:19:39.516Z",
+      "updated_at": "2014-06-19T16:19:39.516Z",
       "deleted_at": null,
       "viewed_at": null
-    }
-
-+ Request should return an error message (application/json)
-
-    {
-      "notification": {
-        "body": "This is a test."
-      }
-    }
-
-+ Response 400 (application/json; charset=utf-8)
-
-    {
-      "message": {
-        "subject": [
-          "can't be blank"
-        ]
-      }
     }
 

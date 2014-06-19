@@ -1,35 +1,9 @@
 # Group Profile
 
 
-## GET /api/v1/profiles
+## GET /api/profile
 
-List all profiles.
-
-+ Response 200 (application/json; charset=utf-8)
-
-    {
-      "title": null,
-      "first_name": "Joe",
-      "middle_name": null,
-      "last_name": null,
-      "suffix": null,
-      "address": null,
-      "address2": null,
-      "city": null,
-      "state": null,
-      "zip": null,
-      "gender": null,
-      "marital_status": null,
-      "is_parent": null,
-      "is_student": null,
-      "is_veteran": null,
-      "is_retired": null,
-      "email": null,
-      "phone_number": null,
-      "mobile_number": null,
-      "uid": "d553c6dd-e4cb-4827-8783-53dd65ff828e",
-      "id": "d553c6dd-e4cb-4827-8783-53dd65ff828e"
-    }
+Get a list of profiles with all attributes.
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -53,9 +27,17 @@ List all profiles.
       "email": "joe@citizen.org",
       "phone_number": null,
       "mobile_number": null,
-      "uid": "609b93c1-450f-406d-bd01-06a72044ee5f",
-      "id": "609b93c1-450f-406d-bd01-06a72044ee5f"
+      "uid": "93ed4809-c44b-4b0d-9344-3b23517b2c84",
+      "id": "93ed4809-c44b-4b0d-9344-3b23517b2c84"
     }
+
+## GET /api/profile schema=>true
+
+Get a list of profiles with attributes limited to those chosen by the app owner during app registration.
+
++ Parameters
+
+ + schema (required, boolean, `true`)
 
 + Response 200 (application/json; charset=utf-8)
 

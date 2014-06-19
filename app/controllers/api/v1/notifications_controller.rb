@@ -1,9 +1,14 @@
-#POST /api/v1/notifications
-#
-#Create a notification
-
 class Api::V1::NotificationsController < Api::ApiController
   before_filter :oauthorize_scope
+  
+  #POST /api/notifications
+  #
+  #This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.
+  #
+  # + Parameters
+  #
+  #  + subject (required, string, `Test notification`)
+  #  + body (optional, string, `This is a test`)
   
   def create
     notification = @user.notifications.build(notification_params)

@@ -1,17 +1,9 @@
 # Group Task
 
 
-## POST /api/v1/tasks
+## GET /api/task/:id
 
-Create a task
-
-+ Request should create a new task for the user (application/json)
-
-    {
-      "task": {
-        "name": "New Task"
-      }
-    }
+Get a single task.
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -20,83 +12,41 @@ Create a task
       "name": "New Task",
       "completed_at": null,
       "user_id": 1,
-      "created_at": "2014-06-17T13:38:23.082Z",
-      "updated_at": "2014-06-17T13:38:23.082Z",
-      "app_id": 1,
-      "task_items": [
-
-      ]
-    }
-
-+ Response 400 (application/json; charset=utf-8)
-
-    {
-      "message": "can't be blank"
-    }
-
-## PUT /api/v1/task/:id
-
-Update a task.
-
-+ Request should no longer be marked as complete when specified (application/json)
-
-    {
-      "task": {
-        "name": "New Incomplete Task",
-        "completed_at": null,
-        "task_items_attributes": [
-          {
-            "id": "2",
-            "name": "Task item one"
-          }
-        ]
-      }
-    }
-
-+ Response 200 (application/json; charset=utf-8)
-
-    {
-      "id": 2,
-      "name": "New Incomplete Task",
-      "completed_at": null,
-      "user_id": 1,
-      "created_at": "2014-06-17T13:38:25.000Z",
-      "updated_at": "2014-06-17T13:38:26.010Z",
+      "created_at": "2014-06-19T16:19:50.000Z",
+      "updated_at": "2014-06-19T16:19:50.000Z",
       "app_id": 1,
       "task_items": [
         {
-          "id": 2,
-          "name": "Task item one",
+          "id": 1,
+          "name": "Task Item #1",
           "url": null,
-          "completed_at": "2014-06-17T13:38:25.000Z",
-          "task_id": 2,
-          "created_at": "2014-06-17T13:38:25.000Z",
-          "updated_at": "2014-06-17T13:38:25.000Z"
+          "completed_at": null,
+          "task_id": 1,
+          "created_at": "2014-06-19T16:19:50.000Z",
+          "updated_at": "2014-06-19T16:19:50.000Z"
+        },
+        {
+          "id": 2,
+          "name": "Task Item #2",
+          "url": "http://valid_url.com",
+          "completed_at": null,
+          "task_id": 1,
+          "created_at": "2014-06-19T16:19:50.000Z",
+          "updated_at": "2014-06-19T16:19:50.000Z"
         }
       ]
     }
 
-+ Request should return meaningful errors (application/json)
+## PUT /api/task/:id
 
-    {
-      "task": {
-        "name": "New Task",
-        "task_items_attributes": [
-          {
-            "id": "chicken",
-            "name": "updated task item name"
-          }
-        ]
-      }
-    }
+Update a task
 
-+ Response 422 (application/json; charset=utf-8)
++ Parameters
 
-    {
-      "message": "Invalid parameters. Check your values and try again."
-    }
+ + name (optional, string, `Test task`) ...The updated name of the task.
+ + task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute' }`)... The updated task items that are associated with the task.
 
-+ Request should update the task and task items (application/json)
++ Request Update a task and task items (application/json)
 
     {
       "task": {
@@ -115,10 +65,10 @@ Update a task.
     {
       "id": 1,
       "name": "New Task",
-      "completed_at": "2014-06-16T13:38:28.000Z",
+      "completed_at": "2014-06-18T16:19:51.000Z",
       "user_id": 1,
-      "created_at": "2014-06-17T13:38:28.000Z",
-      "updated_at": "2014-06-17T13:38:28.231Z",
+      "created_at": "2014-06-19T16:19:51.000Z",
+      "updated_at": "2014-06-19T16:19:51.940Z",
       "app_id": 1,
       "task_items": [
         {
@@ -127,69 +77,28 @@ Update a task.
           "url": null,
           "completed_at": null,
           "task_id": 1,
-          "created_at": "2014-06-17T13:38:28.000Z",
-          "updated_at": "2014-06-17T13:38:28.000Z"
+          "created_at": "2014-06-19T16:19:51.000Z",
+          "updated_at": "2014-06-19T16:19:51.000Z"
         }
       ]
     }
 
-## GET /api/v1/tasks
+## POST /api/tasks
 
-List all tasks.
+Create a new task for the user for this application.
 
-+ Response 200 (application/json; charset=utf-8)
++ Parameters
 
-    [
-      {
-        "id": 1,
-        "name": "Task #1",
-        "completed_at": null,
-        "user_id": 1,
-        "created_at": "2014-06-17T13:38:32.000Z",
-        "updated_at": "2014-06-17T13:38:32.000Z",
-        "app_id": 1,
-        "task_items": [
-          {
-            "id": 1,
-            "name": "Task item 1 (no url)",
-            "url": null,
-            "completed_at": null,
-            "task_id": 1,
-            "created_at": "2014-06-17T13:38:32.000Z",
-            "updated_at": "2014-06-17T13:38:32.000Z"
-          }
-        ]
+ + name (required, string, `Test task`) ...The name for the task that is being created.
+ + task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute' }`) ...A list of task items to be associated with the task.
+
++ Request Create a new task (application/json)
+
+    {
+      "task": {
+        "name": "New Task"
       }
-    ]
-
-+ Response 200 (application/json; charset=utf-8)
-
-    [
-      {
-        "id": 1,
-        "name": "Task #1",
-        "completed_at": null,
-        "user_id": 1,
-        "created_at": "2014-06-17T13:38:33.000Z",
-        "updated_at": "2014-06-17T13:38:33.000Z",
-        "app_id": 1,
-        "task_items": [
-          {
-            "id": 1,
-            "name": "Task item 1 (no url)",
-            "url": null,
-            "completed_at": null,
-            "task_id": 1,
-            "created_at": "2014-06-17T13:38:33.000Z",
-            "updated_at": "2014-06-17T13:38:33.000Z"
-          }
-        ]
-      }
-    ]
-
-## GET /api/v1/task/:id
-
-Retrieve a task.
+    }
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -198,28 +107,40 @@ Retrieve a task.
       "name": "New Task",
       "completed_at": null,
       "user_id": 1,
-      "created_at": "2014-06-17T13:38:33.000Z",
-      "updated_at": "2014-06-17T13:38:33.000Z",
+      "created_at": "2014-06-19T16:19:52.924Z",
+      "updated_at": "2014-06-19T16:19:52.924Z",
       "app_id": 1,
       "task_items": [
-        {
-          "id": 1,
-          "name": "Task Item #1",
-          "url": null,
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-06-17T13:38:33.000Z",
-          "updated_at": "2014-06-17T13:38:33.000Z"
-        },
-        {
-          "id": 2,
-          "name": "Task Item #2",
-          "url": "http://valid_url.com",
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-06-17T13:38:33.000Z",
-          "updated_at": "2014-06-17T13:38:33.000Z"
-        }
+
       ]
     }
+
+## GET /api/tasks
+
+List all tasks, and associated attributes, created by the calling application
+
++ Response 200 (application/json; charset=utf-8)
+
+    [
+      {
+        "id": 1,
+        "name": "Task #1",
+        "completed_at": null,
+        "user_id": 1,
+        "created_at": "2014-06-19T16:19:54.000Z",
+        "updated_at": "2014-06-19T16:19:54.000Z",
+        "app_id": 1,
+        "task_items": [
+          {
+            "id": 1,
+            "name": "Task item 1 (no url)",
+            "url": null,
+            "completed_at": null,
+            "task_id": 1,
+            "created_at": "2014-06-19T16:19:54.000Z",
+            "updated_at": "2014-06-19T16:19:54.000Z"
+          }
+        ]
+      }
+    ]
 

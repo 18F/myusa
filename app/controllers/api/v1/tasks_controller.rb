@@ -1,28 +1,23 @@
-#GET /api/v1/tasks
-#
-#List all tasks.
-
-#PUT /api/v1/task/:id
-#
-#Update a task.
-
-#POST /api/v1/tasks
-#
-#Create a task
-
-#GET /api/v1/task/:id
-#
-#Retrieve a task.
-
-
 class Api::V1::TasksController < Api::ApiController
   before_filter :oauthorize_scope
 
+ 
+  #GET /api/tasks
+  #
+  #List all tasks, and associated attributes, created by the calling application
   def index
     tasks = @user.tasks.where(:app_id => @app.id).joins(:task_items)
     render :json => tasks.to_json(:include => :task_items), :status => 200
   end
 
+  #POST /api/tasks
+  #
+  #Create a new task for the user for this application.
+  #
+  # + Parameters
+  #
+  #  + name (required, string, `Test task`) ...The name for the task that is being created.
+  #  + task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute' }`) ...A list of task items to be associated with the task.
   def create
     begin
       ActionController::Parameters.action_on_unpermitted_parameters = :raise
@@ -40,11 +35,22 @@ class Api::V1::TasksController < Api::ApiController
     end
   end
 
+  #GET /api/task/:id
+  #
+  #Get a single task.
   def show
     task = @token.owner.tasks.find_by_id(params[:id])
     render :json => task.to_json(:include => :task_items), :status => 200
   end
 
+  #PUT /api/task/:id
+  #
+  #Update a task
+  #
+  # + Parameters
+  #
+  #  + name (optional, string, `Test task`) ...The updated name of the task.
+  #  + task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute' }`)... The updated task items that are associated with the task.
   def update
       begin
         ActionController::Parameters.action_on_unpermitted_parameters = :raise

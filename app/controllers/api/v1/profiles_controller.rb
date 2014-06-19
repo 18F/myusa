@@ -1,10 +1,17 @@
-#GET /api/v1/profiles
-#
-#List all profiles.
-
 class Api::V1::ProfilesController < Api::ApiController
   before_filter :oauthorize_scope
   
+  #GET /api/profile schema=>true
+  #
+  #Get a list of profiles with attributes limited to those chosen by the app owner during app registration.
+  #
+  # + Parameters
+  #
+  #  + schema (required, boolean, `true`)
+  
+  #GET /api/profile
+  #
+  #Get a list of profiles with all attributes.
   def show
     scope_list = @token.authorization.scope.split(" ")
     filtered_profile = @user.profile.filtered_profile(scope_list)

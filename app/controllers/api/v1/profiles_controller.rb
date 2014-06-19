@@ -1,9 +1,9 @@
 class Api::V1::ProfilesController < Api::ApiController
   before_filter :oauthorize_scope
   
-  #GET /api/profile schema=>true
+  #GET /api/profile?schema=
   #
-  #Get a list of profiles with attributes limited to those chosen by the app owner during app registration.
+  #Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
   #
   # + Parameters
   #
@@ -11,14 +11,14 @@ class Api::V1::ProfilesController < Api::ApiController
   
   #GET /api/profile
   #
-  #Get a list of profiles with all attributes.
+  #Get the user profile with attributes limited to just those chosen by app owner during app registration.
   def show
     scope_list = @token.authorization.scope.split(" ")
     filtered_profile = @user.profile.filtered_profile(scope_list)
+    # Limit profile attributes to just those chosen by app owner during app registration.
     if params[:schema].present?
       render :json => filtered_profile.to_schema_dot_org_hash(scope_list)
-    else
-      # Limit profile attributes to just those chosen by app owner during app registration.
+    else  
       render :json => filtered_profile.as_json(:scope_list => scope_list).merge("uid" => @user.uid, "id" => @user.uid)
     end
   end

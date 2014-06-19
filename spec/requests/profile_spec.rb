@@ -100,14 +100,14 @@ describe "API Requests" do
     before do
        @token = build_access_token(@app)
     end
-    describe "GET /api/profile schema=>true" do
-      it "List profiles with limited attributes, schema true" do
+    describe "GET /api/profile?schema=" do
+      it "Get the user profile with limited attributes, schema true" do
         response = get "/api/profile", {"schema" => "true"}, {'HTTP_AUTHORIZATION' => "Bearer #{@token}"}
         expect(response.status).to eq 200
       end
     end
     describe "GET /api/profile" do
-      it "List profiles with all attributes" do
+      it "Get the user profile with all attributes" do
          response = get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{@token}"}
          expect(response.status).to eq 200
       end

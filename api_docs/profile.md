@@ -1,9 +1,34 @@
 # Group Profile
 
 
+## GET /api/profile?schema=
+
+Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
+
++ Parameters
+
+ + schema (required, boolean, `true`)
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "email": "joe@citizen.org",
+      "givenName": "Joe",
+      "additionalName": null,
+      "familyName": "Citizen",
+      "homeLocation": {
+        "streetAddress": "",
+        "addressLocality": null,
+        "addressRegion": null,
+        "postalCode": null
+      },
+      "telephone": null,
+      "gender": null
+    }
+
 ## GET /api/profile
 
-Get a list of profiles with all attributes.
+Get the user profile with attributes limited to just those chosen by app owner during app registration.
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -27,32 +52,7 @@ Get a list of profiles with all attributes.
       "email": "joe@citizen.org",
       "phone_number": null,
       "mobile_number": null,
-      "uid": "93ed4809-c44b-4b0d-9344-3b23517b2c84",
-      "id": "93ed4809-c44b-4b0d-9344-3b23517b2c84"
-    }
-
-## GET /api/profile schema=>true
-
-Get a list of profiles with attributes limited to those chosen by the app owner during app registration.
-
-+ Parameters
-
- + schema (required, boolean, `true`)
-
-+ Response 200 (application/json; charset=utf-8)
-
-    {
-      "email": "joe@citizen.org",
-      "givenName": "Joe",
-      "additionalName": null,
-      "familyName": "Citizen",
-      "homeLocation": {
-        "streetAddress": "",
-        "addressLocality": null,
-        "addressRegion": null,
-        "postalCode": null
-      },
-      "telephone": null,
-      "gender": null
+      "uid": "4c108bd5-2042-421b-b09f-4a004dbd441d",
+      "id": "4c108bd5-2042-421b-b09f-4a004dbd441d"
     }
 

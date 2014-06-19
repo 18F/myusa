@@ -1,7 +1,7 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
-  devise_for :users
+  #devise_for :users
 
   namespace :api, :defaults => {:format => :json} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
@@ -10,6 +10,12 @@ Rails.application.routes.draw do
       resources :tasks, :only => [:index, :create, :show, :update]
 #      resources :forms, :only => [:create, :show]
 #      get "credentials/verify" => "credentials#verify", :as => :verify_credentials
+    end
+  end
+
+  resources :users do
+    collection do
+      put '' => 'users#update'
     end
   end
 

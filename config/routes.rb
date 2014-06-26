@@ -15,7 +15,8 @@ Rails.application.routes.draw do
 
   resources :users do
     collection do
-      put '' => 'users#update'
+      # TODO Investigate why 'Her' is updating without an ID in the URL
+      put '' => 'users#update' # This supports a 'Her' call where ID is in the body instead of the URL
     end
   end
 

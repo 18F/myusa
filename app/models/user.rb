@@ -3,13 +3,12 @@ class User < ActiveRecord::Base
 
   has_one :profile, :dependent => :destroy
   has_many :apps, :dependent => :destroy
-  has_many :authentications, :dependent => :destroy
+  #has_many :authentications, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   validates_acceptance_of :terms_of_service
   validates_presence_of :uid
   validates_uniqueness_of :uid
-  validate :validate_password_strength
   validates_email_format_of :email, {:allow_blank => true}
   validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
 
@@ -21,7 +20,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :trackable, :validatable, :omniauthable, :lockable, :timeoutable, :confirmable, :async
+  #devise :database_authenticatable, :registerable, :recoverable, :trackable, :validatable, :omniauthable, :lockable, :timeoutable, :confirmable, :async
 
 #  attr_accessible :email, :password, :remember_me, :terms_of_service, :unconfirmed_email, :as => [:default, :admin]
 
@@ -32,10 +31,6 @@ class User < ActiveRecord::Base
 
   def sandbox_apps
     self.apps.sandbox
-  end
-
-  def self.default_password
-    "13#{Devise.friendly_token[0,20]}"
   end
 
   def authorized_apps
@@ -54,9 +49,9 @@ class User < ActiveRecord::Base
         signed_in_resource.save
         signed_in_resource
       else
-        user = User.new(:email => data['email'],  :password => User.default_password)
+        user = User.new(:email => data['email'])
         user.terms_of_service = (user_params && user_params[:terms_of_service]) || false
-        [:email, :password, :terms_of_service].each {|param| user_params.delete param} if user_params
+        [:email, :terms_of_service].each {|param| user_params.delete param} if user_params
         user.profile = Profile.new(user_params || {:first_name => data["first_name"], :last_name => data["last_name"]})
         user.skip_confirmation!
         user.authentications.new(:uid => access_token.uid, :provider => access_token.provider, :data => access_token)
@@ -161,10 +156,6 @@ class User < ActiveRecord::Base
 
   def is_reconfirmation?
     self.unconfirmed_email.present?
-  end
-
-  def validate_password_strength
-    errors.add(:password, "must include at least one lower case letter, one upper case letter and one digit.") if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/)
   end
 
   def generate_uid

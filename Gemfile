@@ -74,7 +74,8 @@ group :development, :test do
   gem 'guard-migrate'
   gem 'guard-rspec'
   gem 'pry-rails'
-  gem 'pry-plus'
+  # this fork of pry-plus is 2.1.x-compatible
+  gem 'pry-plus', git: 'https://github.com/nhemsley/pry-plus.git'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'spring-commands-rspec'
 #  gem 'rspec_api_blueprint', require: false

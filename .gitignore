@@ -26,6 +26,7 @@ config/environments/production.rb
 config/initializers/recaptcha.rb
 coverage
 log/*
+api_docs/*
 /public/system
 /spec/tmp
 /tmp

@@ -137,8 +137,6 @@ This will create a notification for the authenticated user.  The user will be ab
       "viewed_at": null
     }
 
-
-
 # Group Profile
 
 
@@ -196,8 +194,6 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "uid": "4c108bd5-2042-421b-b09f-4a004dbd441d",
       "id": "4c108bd5-2042-421b-b09f-4a004dbd441d"
     }
-
-		
 
 # Group Task
 
@@ -344,3 +340,4 @@ List all tasks, and associated attributes, created by the calling application
         ]
       }
     ]
+

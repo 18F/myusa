@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include Songkick::OAuth2::Model::ResourceOwner  
+  include Songkick::OAuth2::Model::ResourceOwner
 
   has_one :profile, :dependent => :destroy
   has_many :apps, :dependent => :destroy
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
 #  attr_accessible :first_name, :last_name, :zip, :as => [:default]
   attr_accessor :just_created, :auto_approve
-  
+
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
 
   def sandbox_apps
@@ -83,17 +83,6 @@ class User < ActiveRecord::Base
 
   def last_name=(last_name)
     @last_name = last_name
-  end
-
-  def confirm!
-    # TODO: commented out beta_signup code
-    # if is_reconfirmation = is_reconfirmation?
-    #   sync_beta_signup_with_changes
-    # end
-    is_reconfirmation = is_reconfirmation?
-    super_response = super
-    is_reconfirmation ? create_email_changed_notification : create_default_notification
-    super_response
   end
 
   def create_default_notification
@@ -171,7 +160,7 @@ class User < ActiveRecord::Base
   def send_confirmation_instructions
     #TODO: commented everything
     #ensure_confirmation_token!
-    # 
+    #
     # opts = pending_reconfirmation? ? { :to => unconfirmed_email } : { }
     # send_devise_notification((pending_reconfirmation? ? :reconfirmation_instructions : :confirmation_instructions), opts)
     # send_devise_notification(:you_changed_your_email_address, opts) if pending_reconfirmation?

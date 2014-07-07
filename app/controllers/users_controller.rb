@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  
+
   def index
     q = User
     if !params.blank?
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     end
     render :json => q.all
   end
-  
+
   def show
     id = params[:id]
     uid = params[:uid]
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     rescue ActiveRecord::RecordNotUnique => e
       u && u.errors.add(:base, 'Dupliate record')
     end
-    
+
     if u && u.errors.blank?
       u.update_attribute :encrypted_password, params[:encrypted_password] if params[:encrypted_password]
       u.update_attribute :confirmation_token, params[:confirmation_token] if params[:confirmation_token]
@@ -108,7 +108,7 @@ class UsersController < ApplicationController
      :confirmation_token, :current_sign_in_at, :current_sign_in_ip,
      :failed_attempts, :last_sign_in_at, :last_sign_in_ip, :locked_at,
      :remember_created_at, :remember_token, :reset_password_sent_at,
-     :reset_password_token, :sign_in_count, :uid, :unlock_token))
+     :reset_password_token, :sign_in_count, :uid, :unlock_token,
+     :authentication_token, :authentication_token_sent_at))
   end
 end
- 

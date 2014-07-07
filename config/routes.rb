@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  mount DatabaseCleaner::RemoteApi::Engine => '/database_cleaner' #if Rails.env.test?
+  mount DatabaseCleaner::RemoteApi::Engine => '/database_cleaner' if Rails.env.test?
 
 
   # The priority is based upon order of creation: first created -> highest priority.

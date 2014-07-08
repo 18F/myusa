@@ -155,12 +155,48 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "email": "joe@citizen.org",
       "phone_number": null,
       "mobile_number": null,
-      "uid": "2cd24baf-04f5-4133-93ac-503513439e82",
-      "id": "2cd24baf-04f5-4133-93ac-503513439e82"
+      "uid": "f331a354-f508-40ab-95ef-b9edbdc4ba0d",
+      "id": "f331a354-f508-40ab-95ef-b9edbdc4ba0d"
     }
 
 # Group Task
 
+
+## GET /api/task/:id
+
+Get a single task.
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "id": 1,
+      "name": "New Task",
+      "completed_at": null,
+      "user_id": 1,
+      "created_at": "2014-07-08T17:05:54.000Z",
+      "updated_at": "2014-07-08T17:05:54.000Z",
+      "app_id": 1,
+      "task_items": [
+        {
+          "id": 1,
+          "name": "Task Item #1",
+          "url": null,
+          "completed_at": null,
+          "task_id": 1,
+          "created_at": "2014-07-08T17:05:54.000Z",
+          "updated_at": "2014-07-08T17:05:54.000Z"
+        },
+        {
+          "id": 2,
+          "name": "Task Item #2",
+          "url": "http://valid_url.com",
+          "completed_at": null,
+          "task_id": 1,
+          "created_at": "2014-07-08T17:05:54.000Z",
+          "updated_at": "2014-07-08T17:05:54.000Z"
+        }
+      ]
+    }
 
 ## GET /api/tasks
 
@@ -174,8 +210,8 @@ List all tasks, and associated attributes, created by the calling application
         "name": "Task #1",
         "completed_at": null,
         "user_id": 1,
-        "created_at": "2014-07-08T15:21:20.000Z",
-        "updated_at": "2014-07-08T15:21:20.000Z",
+        "created_at": "2014-07-08T17:05:55.000Z",
+        "updated_at": "2014-07-08T17:05:55.000Z",
         "app_id": 1,
         "task_items": [
           {
@@ -184,48 +220,12 @@ List all tasks, and associated attributes, created by the calling application
             "url": null,
             "completed_at": null,
             "task_id": 1,
-            "created_at": "2014-07-08T15:21:20.000Z",
-            "updated_at": "2014-07-08T15:21:20.000Z"
+            "created_at": "2014-07-08T17:05:55.000Z",
+            "updated_at": "2014-07-08T17:05:55.000Z"
           }
         ]
       }
     ]
-
-## GET /api/task/:id
-
-Get a single task.
-
-+ Response 200 (application/json; charset=utf-8)
-
-    {
-      "id": 1,
-      "name": "New Task",
-      "completed_at": null,
-      "user_id": 1,
-      "created_at": "2014-07-08T15:21:21.000Z",
-      "updated_at": "2014-07-08T15:21:21.000Z",
-      "app_id": 1,
-      "task_items": [
-        {
-          "id": 1,
-          "name": "Task Item #1",
-          "url": null,
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-07-08T15:21:21.000Z",
-          "updated_at": "2014-07-08T15:21:21.000Z"
-        },
-        {
-          "id": 2,
-          "name": "Task Item #2",
-          "url": "http://valid_url.com",
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-07-08T15:21:21.000Z",
-          "updated_at": "2014-07-08T15:21:21.000Z"
-        }
-      ]
-    }
 
 ## POST /api/tasks
 
@@ -251,8 +251,8 @@ Create a new task for the user for this application.
       "name": "New Task",
       "completed_at": null,
       "user_id": 1,
-      "created_at": "2014-07-08T15:21:21.870Z",
-      "updated_at": "2014-07-08T15:21:21.870Z",
+      "created_at": "2014-07-08T17:05:55.893Z",
+      "updated_at": "2014-07-08T17:05:55.893Z",
       "app_id": 1,
       "task_items": [
 
@@ -287,10 +287,10 @@ Update a task
     {
       "id": 1,
       "name": "New Task",
-      "completed_at": "2014-07-07T15:21:22.000Z",
+      "completed_at": "2014-07-07T17:05:56.000Z",
       "user_id": 1,
-      "created_at": "2014-07-08T15:21:22.000Z",
-      "updated_at": "2014-07-08T15:21:22.163Z",
+      "created_at": "2014-07-08T17:05:56.000Z",
+      "updated_at": "2014-07-08T17:05:56.208Z",
       "app_id": 1,
       "task_items": [
         {
@@ -299,8 +299,8 @@ Update a task
           "url": null,
           "completed_at": null,
           "task_id": 1,
-          "created_at": "2014-07-08T15:21:22.000Z",
-          "updated_at": "2014-07-08T15:21:22.000Z"
+          "created_at": "2014-07-08T17:05:56.000Z",
+          "updated_at": "2014-07-08T17:05:56.000Z"
         }
       ]
     }
@@ -332,11 +332,11 @@ This will create a notification for the authenticated user.  The user will be ab
       "id": 17,
       "subject": "Project MyUSA",
       "body": "This is a test.",
-      "received_at": "2014-07-08T15:21:26.816Z",
+      "received_at": "2014-07-08T17:06:05.473Z",
       "app_id": 1,
       "user_id": 1,
-      "created_at": "2014-07-08T15:21:26.817Z",
-      "updated_at": "2014-07-08T15:21:26.817Z",
+      "created_at": "2014-07-08T17:06:05.473Z",
+      "updated_at": "2014-07-08T17:06:05.473Z",
       "deleted_at": null,
       "viewed_at": null
     }

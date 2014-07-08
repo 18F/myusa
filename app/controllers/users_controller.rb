@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     begin
       u = User.create(create_params)
     rescue ActiveRecord::RecordNotUnique => e
-      u && u.errors.add(:base, 'Dupliate record')
+      u && u.errors.add(:base, 'Duplicate record')
     end
 
     if u && u.errors.blank?
@@ -54,12 +54,13 @@ class UsersController < ApplicationController
     if (id && User.exists?(id) && u = User.find(id)) || (uid && u = User.where(uid: uid).first)
       u_params = update_params
 
+      # TODO Is this still needed?  What about other fields?
       u_params.delete(:email) if u_params[:email].blank?
       Rails.logger.debug "Updating with #{u_params.inspect}"
       begin
         u.update_attributes(u_params)
       rescue ActiveRecord::RecordNotUnique => e
-        u && u.errors.add(:base, 'Dupliate record')
+        u && u.errors.add(:base, 'Duplicate record')
       end
 
       if u.errors.blank?

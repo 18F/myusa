@@ -101,69 +101,8 @@ View the OmniAuth 1.0 docs for more information about strategy implementation: h
 5. Create new Pull Request
 
 
-# Group Notification
-
-
-## POST /api/notifications
-
-This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.
-
-+ Parameters
-
- + subject (required, string, `Test notification`)
- + body (optional, string, `This is a test`)
-
-+ Request Create a new notification (application/json)
-
-    {
-      "notification": {
-        "subject": "Project MyUSA",
-        "body": "This is a test."
-      }
-    }
-
-+ Response 200 (application/json; charset=utf-8)
-
-    {
-      "id": 17,
-      "subject": "Project MyUSA",
-      "body": "This is a test.",
-      "received_at": "2014-06-19T16:19:39.515Z",
-      "app_id": 1,
-      "user_id": 1,
-      "created_at": "2014-06-19T16:19:39.516Z",
-      "updated_at": "2014-06-19T16:19:39.516Z",
-      "deleted_at": null,
-      "viewed_at": null
-    }
-
 # Group Profile
 
-
-## GET /api/profile?schema=
-
-Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
-
-+ Parameters
-
- + schema (required, boolean, `true`)
-
-+ Response 200 (application/json; charset=utf-8)
-
-    {
-      "email": "joe@citizen.org",
-      "givenName": "Joe",
-      "additionalName": null,
-      "familyName": "Citizen",
-      "homeLocation": {
-        "streetAddress": "",
-        "addressLocality": null,
-        "addressRegion": null,
-        "postalCode": null
-      },
-      "telephone": null,
-      "gender": null
-    }
 
 ## GET /api/profile
 
@@ -191,48 +130,37 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "email": "joe@citizen.org",
       "phone_number": null,
       "mobile_number": null,
-      "uid": "4c108bd5-2042-421b-b09f-4a004dbd441d",
-      "id": "4c108bd5-2042-421b-b09f-4a004dbd441d"
+      "uid": "76f5bb0a-e886-4ea9-b798-e9b9e164e54b",
+      "id": "76f5bb0a-e886-4ea9-b798-e9b9e164e54b"
     }
 
-# Group Task
+## GET /api/profile?schema=
 
+Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
 
-## GET /api/task/:id
++ Parameters
 
-Get a single task.
+ + schema (required, boolean, `true`)
 
 + Response 200 (application/json; charset=utf-8)
 
     {
-      "id": 1,
-      "name": "New Task",
-      "completed_at": null,
-      "user_id": 1,
-      "created_at": "2014-06-19T16:19:50.000Z",
-      "updated_at": "2014-06-19T16:19:50.000Z",
-      "app_id": 1,
-      "task_items": [
-        {
-          "id": 1,
-          "name": "Task Item #1",
-          "url": null,
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-06-19T16:19:50.000Z",
-          "updated_at": "2014-06-19T16:19:50.000Z"
-        },
-        {
-          "id": 2,
-          "name": "Task Item #2",
-          "url": "http://valid_url.com",
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-06-19T16:19:50.000Z",
-          "updated_at": "2014-06-19T16:19:50.000Z"
-        }
-      ]
+      "email": "joe@citizen.org",
+      "givenName": "Joe",
+      "additionalName": null,
+      "familyName": "Citizen",
+      "homeLocation": {
+        "streetAddress": "",
+        "addressLocality": null,
+        "addressRegion": null,
+        "postalCode": null
+      },
+      "telephone": null,
+      "gender": null
     }
+
+# Group Task
+
 
 ## PUT /api/task/:id
 
@@ -262,10 +190,10 @@ Update a task
     {
       "id": 1,
       "name": "New Task",
-      "completed_at": "2014-06-18T16:19:51.000Z",
+      "completed_at": "2014-07-07T12:14:16.000Z",
       "user_id": 1,
-      "created_at": "2014-06-19T16:19:51.000Z",
-      "updated_at": "2014-06-19T16:19:51.940Z",
+      "created_at": "2014-07-08T12:14:16.000Z",
+      "updated_at": "2014-07-08T12:14:16.558Z",
       "app_id": 1,
       "task_items": [
         {
@@ -274,8 +202,8 @@ Update a task
           "url": null,
           "completed_at": null,
           "task_id": 1,
-          "created_at": "2014-06-19T16:19:51.000Z",
-          "updated_at": "2014-06-19T16:19:51.000Z"
+          "created_at": "2014-07-08T12:14:16.000Z",
+          "updated_at": "2014-07-08T12:14:16.000Z"
         }
       ]
     }
@@ -304,11 +232,47 @@ Create a new task for the user for this application.
       "name": "New Task",
       "completed_at": null,
       "user_id": 1,
-      "created_at": "2014-06-19T16:19:52.924Z",
-      "updated_at": "2014-06-19T16:19:52.924Z",
+      "created_at": "2014-07-08T12:14:16.957Z",
+      "updated_at": "2014-07-08T12:14:16.957Z",
       "app_id": 1,
       "task_items": [
 
+      ]
+    }
+
+## GET /api/task/:id
+
+Get a single task.
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "id": 1,
+      "name": "New Task",
+      "completed_at": null,
+      "user_id": 1,
+      "created_at": "2014-07-08T12:14:17.000Z",
+      "updated_at": "2014-07-08T12:14:17.000Z",
+      "app_id": 1,
+      "task_items": [
+        {
+          "id": 1,
+          "name": "Task Item #1",
+          "url": null,
+          "completed_at": null,
+          "task_id": 1,
+          "created_at": "2014-07-08T12:14:17.000Z",
+          "updated_at": "2014-07-08T12:14:17.000Z"
+        },
+        {
+          "id": 2,
+          "name": "Task Item #2",
+          "url": "http://valid_url.com",
+          "completed_at": null,
+          "task_id": 1,
+          "created_at": "2014-07-08T12:14:17.000Z",
+          "updated_at": "2014-07-08T12:14:17.000Z"
+        }
       ]
     }
 
@@ -324,8 +288,8 @@ List all tasks, and associated attributes, created by the calling application
         "name": "Task #1",
         "completed_at": null,
         "user_id": 1,
-        "created_at": "2014-06-19T16:19:54.000Z",
-        "updated_at": "2014-06-19T16:19:54.000Z",
+        "created_at": "2014-07-08T12:14:17.000Z",
+        "updated_at": "2014-07-08T12:14:17.000Z",
         "app_id": 1,
         "task_items": [
           {
@@ -334,10 +298,46 @@ List all tasks, and associated attributes, created by the calling application
             "url": null,
             "completed_at": null,
             "task_id": 1,
-            "created_at": "2014-06-19T16:19:54.000Z",
-            "updated_at": "2014-06-19T16:19:54.000Z"
+            "created_at": "2014-07-08T12:14:17.000Z",
+            "updated_at": "2014-07-08T12:14:17.000Z"
           }
         ]
       }
     ]
+
+# Group Notification
+
+
+## POST /api/notifications
+
+This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.
+
++ Parameters
+
+ + subject (required, string, `Test notification`)
+ + body (optional, string, `This is a test`)
+
++ Request Create a new notification (application/json)
+
+    {
+      "notification": {
+        "subject": "Project MyUSA",
+        "body": "This is a test."
+      }
+    }
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "id": 17,
+      "subject": "Project MyUSA",
+      "body": "This is a test.",
+      "received_at": "2014-07-08T12:14:14.017Z",
+      "app_id": 1,
+      "user_id": 1,
+      "created_at": "2014-07-08T12:14:14.018Z",
+      "updated_at": "2014-07-08T12:14:14.018Z",
+      "deleted_at": null,
+      "viewed_at": null
+    }
 

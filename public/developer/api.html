@@ -95,7 +95,7 @@ a.list-group-item.heading {
     min-width: 212px;
   }
 }
-</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a href="#profile" class="list-group-item heading">Profile</a><a href="#profile-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/profile</a><a href="#profile-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/profile?schema=</a></div><div class="list-group"><a href="#task" class="list-group-item heading">Task</a><a href="#task-" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;PUT /api/task/:id</a><a href="#task-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /api/tasks</a><a href="#task-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/task/:id</a><a href="#task-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/tasks</a></div><div class="list-group"><a href="#notification" class="list-group-item heading">Notification</a><a href="#notification-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /api/notifications</a></div></nav></div><div class="col-md-9"><div><header><div class="page-header"><h1 id="top">MyUSA API Documentation</h1></div></header><div class="description"><h1 id="getting-started-with-myusa-authentication">Getting started with MyUSA Authentication</h1>
+</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a href="#profile" class="list-group-item heading">Profile</a><a href="#profile-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/profile?schema=</a><a href="#profile-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/profile</a></div><div class="list-group"><a href="#task" class="list-group-item heading">Task</a><a href="#task-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/tasks</a><a href="#task-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/task/:id</a><a href="#task-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /api/tasks</a><a href="#task-" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;PUT /api/task/:id</a></div><div class="list-group"><a href="#notification" class="list-group-item heading">Notification</a><a href="#notification-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /api/notifications</a></div></nav></div><div class="col-md-9"><div><header><div class="page-header"><h1 id="top">MyUSA API Documentation</h1></div></header><div class="description"><h1 id="getting-started-with-myusa-authentication">Getting started with MyUSA Authentication</h1>
 <p>MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the <a href="https://my.usa.gov/developer">developers</a> section of MyUSA.</p>
 <h2 id="overview">Overview</h2>
 <ol>
@@ -156,8 +156,23 @@ Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtaine
 <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
 <li>Create new Pull Request</li>
 </ol>
-</div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="profile">Profile&nbsp;<a href="#profile"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/profile</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#9cd621fe0cab0b3c477aa506a90d07ac" class="pull-right">Toggle</a></li><li id="9cd621fe0cab0b3c477aa506a90d07ac" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="profile">Profile&nbsp;<a href="#profile"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/profile?schema=</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.</p>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>schema</dt><dd><code>boolean</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>true</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d5d490c60e2a2cd77efb1767fb0c950b" class="pull-right">Toggle</a></li><li id="d5d490c60e2a2cd77efb1767fb0c950b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"joe@citizen.org"</span></span>,
+  "<span class="hljs-attribute">givenName</span>": <span class="hljs-value"><span class="hljs-string">"Joe"</span></span>,
+  "<span class="hljs-attribute">additionalName</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">familyName</span>": <span class="hljs-value"><span class="hljs-string">"Citizen"</span></span>,
+  "<span class="hljs-attribute">homeLocation</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">streetAddress</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">addressLocality</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+    "<span class="hljs-attribute">addressRegion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+    "<span class="hljs-attribute">postalCode</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">telephone</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">gender</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
+</span>}
+</code></pre></li></ul></section><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/profile</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d6b5881499bd646d99eefc8bfa1cd336" class="pull-right">Toggle</a></li><li id="d6b5881499bd646d99eefc8bfa1cd336" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
   "<span class="hljs-attribute">first_name</span>": <span class="hljs-value"><span class="hljs-string">"Joe"</span></span>,
   "<span class="hljs-attribute">middle_name</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -177,25 +192,83 @@ Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtaine
   "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"joe@citizen.org"</span></span>,
   "<span class="hljs-attribute">phone_number</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
   "<span class="hljs-attribute">mobile_number</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"76f5bb0a-e886-4ea9-b798-e9b9e164e54b"</span></span>,
-  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"76f5bb0a-e886-4ea9-b798-e9b9e164e54b"</span>
+  "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"2cd24baf-04f5-4133-93ac-503513439e82"</span></span>,
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"2cd24baf-04f5-4133-93ac-503513439e82"</span>
 </span>}
-</code></pre></li></ul></section><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/profile?schema=</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.</p>
-</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>schema</dt><dd><code>boolean</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>true</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d5d490c60e2a2cd77efb1767fb0c950b" class="pull-right">Toggle</a></li><li id="d5d490c60e2a2cd77efb1767fb0c950b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"joe@citizen.org"</span></span>,
-  "<span class="hljs-attribute">givenName</span>": <span class="hljs-value"><span class="hljs-string">"Joe"</span></span>,
-  "<span class="hljs-attribute">additionalName</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">familyName</span>": <span class="hljs-value"><span class="hljs-string">"Citizen"</span></span>,
-  "<span class="hljs-attribute">homeLocation</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">streetAddress</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
-    "<span class="hljs-attribute">addressLocality</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-    "<span class="hljs-attribute">addressRegion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-    "<span class="hljs-attribute">postalCode</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-  </span>}</span>,
-  "<span class="hljs-attribute">telephone</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">gender</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="task">Task&nbsp;<a href="#task"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/tasks</code></div></div><div class="panel-body"><p>List all tasks, and associated attributes, created by the calling application</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#4b7c8d902c9498bf6e8164c33c36511c" class="pull-right">Toggle</a></li><li id="4b7c8d902c9498bf6e8164c33c36511c" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task #1"</span></span>,
+    "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+    "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:20.000Z"</span></span>,
+    "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:20.000Z"</span></span>,
+    "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task item 1 (no url)"</span></span>,
+        "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:20.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:20.000Z"</span>
+      </span>}
+    ]
+  </span>}
+]
+</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/task/:id</code></div></div><div class="panel-body"><p>Get a single task.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#7d744c50966631bbf9b0273dc2f50f83" class="pull-right">Toggle</a></li><li id="7d744c50966631bbf9b0273dc2f50f83" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.000Z"</span></span>,
+  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.000Z"</span></span>,
+  "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task Item #1"</span></span>,
+      "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+      "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+      "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.000Z"</span></span>,
+      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.000Z"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task Item #2"</span></span>,
+      "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://valid_url.com"</span></span>,
+      "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+      "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.000Z"</span></span>,
+      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.000Z"</span>
+    </span>}
+  ]
 </span>}
-</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="task">Task&nbsp;<a href="#task"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--put" class="panel panel-warning"><div class="panel-heading"><div style="float:left"><a href="#task--put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/api/task/:id</code></div></div><div class="panel-body"><p>Update a task</p>
+</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#task--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/tasks</code></div></div><div class="panel-body"><p>Create a new task for the user for this application.</p>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The name for the task that is being created.</p>
+</dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>A list of task items to be associated with the task.</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task</code></strong><a data-toggle="collapse" data-target="#7fa52df752b9382f276814a428f0a707" class="pull-right">Toggle</a></li><li id="7fa52df752b9382f276814a428f0a707" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">task</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span>
+  </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#3fae374a68bfca17267ba5d1e53e273a" class="pull-right">Toggle</a></li><li id="3fae374a68bfca17267ba5d1e53e273a" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.870Z"</span></span>,
+  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:21.870Z"</span></span>,
+  "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
+
+  ]
+</span>}
+</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--put" class="panel panel-warning"><div class="panel-heading"><div style="float:left"><a href="#task--put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/api/task/:id</code></div></div><div class="panel-body"><p>Update a task</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The updated name of the task.</p>
 </dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>The updated task items that are associated with the task.</p>
 </dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Update a task and task items</code></strong><a data-toggle="collapse" data-target="#735a7335615f4cab1eb738df005c26e2" class="pull-right">Toggle</a></li><li id="735a7335615f4cab1eb738df005c26e2" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
@@ -209,13 +282,13 @@ Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtaine
     ]
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#b08af7c3f772ec644a4ebfd018025791" class="pull-right">Toggle</a></li><li id="b08af7c3f772ec644a4ebfd018025791" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#44d96c91fd83b6c2690585282d351a64" class="pull-right">Toggle</a></li><li id="44d96c91fd83b6c2690585282d351a64" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
-  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-07T12:14:16.000Z"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-07T15:21:22.000Z"</span></span>,
   "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:16.000Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:16.558Z"</span></span>,
+  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:22.000Z"</span></span>,
+  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:22.163Z"</span></span>,
   "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
     {
@@ -224,84 +297,11 @@ Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtaine
       "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
       "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
       "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:16.000Z"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:16.000Z"</span>
+      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:22.000Z"</span></span>,
+      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:22.000Z"</span>
     </span>}
   ]
 </span>}
-</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#task--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/tasks</code></div></div><div class="panel-body"><p>Create a new task for the user for this application.</p>
-</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The name for the task that is being created.</p>
-</dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>A list of task items to be associated with the task.</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task</code></strong><a data-toggle="collapse" data-target="#7fa52df752b9382f276814a428f0a707" class="pull-right">Toggle</a></li><li id="7fa52df752b9382f276814a428f0a707" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">task</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span>
-  </span>}
-</span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#b8a510668bb1b7f29dfc6acbd6496f28" class="pull-right">Toggle</a></li><li id="b8a510668bb1b7f29dfc6acbd6496f28" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
-  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:16.957Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:16.957Z"</span></span>,
-  "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
-
-  ]
-</span>}
-</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/task/:id</code></div></div><div class="panel-body"><p>Get a single task.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#0dac6e79bd77b325247fbe103e79d68c" class="pull-right">Toggle</a></li><li id="0dac6e79bd77b325247fbe103e79d68c" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
-  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-  "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
-    {
-      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task Item #1"</span></span>,
-      "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-      "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-      "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span>
-    </span>},
-    {
-      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
-      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task Item #2"</span></span>,
-      "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://valid_url.com"</span></span>,
-      "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-      "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span>
-    </span>}
-  ]
-</span>}
-</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/tasks</code></div></div><div class="panel-body"><p>List all tasks, and associated attributes, created by the calling application</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#051f82e09d60550e10c239a1276f1acb" class="pull-right">Toggle</a></li><li id="051f82e09d60550e10c239a1276f1acb" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>[
-  {
-    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task #1"</span></span>,
-    "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-    "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-    "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-    "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-    "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-    "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
-      {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task item 1 (no url)"</span></span>,
-        "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span></span>,
-        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:17.000Z"</span>
-      </span>}
-    ]
-  </span>}
-]
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="notification">Notification&nbsp;<a href="#notification"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="notification-">Resources&nbsp;<a href="#notification-"><i class="fa fa-link"></i></a></h4><section id="notification--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#notification--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/notifications</code></div></div><div class="panel-body"><p>This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>subject</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test notification</span></span></dd><dt>body</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>This is a test</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new notification</code></strong><a data-toggle="collapse" data-target="#d29039edf1a7ff762dd9051b91f0191f" class="pull-right">Toggle</a></li><li id="d29039edf1a7ff762dd9051b91f0191f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">notification</span>": <span class="hljs-value">{
@@ -309,15 +309,15 @@ Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtaine
     "<span class="hljs-attribute">body</span>": <span class="hljs-value"><span class="hljs-string">"This is a test."</span>
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#02171d6cf7fecfe8faf72fd16a4cd3de" class="pull-right">Toggle</a></li><li id="02171d6cf7fecfe8faf72fd16a4cd3de" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#9837c5346dea04c55bb5fcce40353b40" class="pull-right">Toggle</a></li><li id="9837c5346dea04c55bb5fcce40353b40" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">17</span></span>,
   "<span class="hljs-attribute">subject</span>": <span class="hljs-value"><span class="hljs-string">"Project MyUSA"</span></span>,
   "<span class="hljs-attribute">body</span>": <span class="hljs-value"><span class="hljs-string">"This is a test."</span></span>,
-  "<span class="hljs-attribute">received_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:14.017Z"</span></span>,
+  "<span class="hljs-attribute">received_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:26.816Z"</span></span>,
   "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:14.018Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T12:14:14.018Z"</span></span>,
+  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:26.817Z"</span></span>,
+  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T15:21:26.817Z"</span></span>,
   "<span class="hljs-attribute">deleted_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
   "<span class="hljs-attribute">viewed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
 </span>}

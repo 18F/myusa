@@ -424,7 +424,6 @@ DEPENDENCIES
   quiet_assets
   railroady
   rails (= 4.1.0)
-  rb-fsevent
   rspec-rails (~> 3.0.0)
   ruby_parser
   rvm1-capistrano3

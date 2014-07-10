@@ -78,14 +78,14 @@ group :development, :test do
   gem 'pry-plus', git: 'https://github.com/nhemsley/pry-plus.git'
   gem 'spring-commands-rspec'
 #  gem 'rspec_api_blueprint', require: false
-  gem 'database_cleaner'
-  gem 'database_cleaner-remote_api', '~> 0.1.0'
 
 end
 
 group :test do
   gem 'capybara'
-  # gem 'database_cleaner'
+  gem 'database_cleaner'
+  gem 'database_cleaner-remote_api', '~> 0.1.0'
+
   gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'launchy'

@@ -109,7 +109,7 @@ describe "Profiles Requests" do
       end
     end
   end
-  
+
   describe "POST /api/notifications" do
     before do
       @token = build_access_token(@app)
@@ -129,7 +129,7 @@ describe "Profiles Requests" do
     context "when the user has a valid token" do
       context "when the notification attributes are valid" do
         it "should create a new notification when the notification info is valid" do
-          expect(@user.notifications.size).to eq 0         
+          expect(@user.notifications.size).to eq 0
           response = post "/api/notifications", {:notification => {:subject => 'Project MyUSA', :body => 'This is a test.'}}, {'HTTP_AUTHORIZATION' => "Bearer #{@token}"}
           expect(response.status).to eq 200
           @user.notifications.reload

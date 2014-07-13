@@ -1,0 +1,110 @@
+    <div class="main">
+      <div class="logo">
+        <div class="image">
+					<%= image_tag "myusa-shield.png" , :alt => "MyUSA Shield" %>				
+        </div>
+        <div class="content">
+          <span class="my">My</span>USA
+        </div>
+        <div class="cta">
+        	<%= button_to "Sign Up for MyUSA", new_user_registration_path, method: :get,  class: "btn btn-default btn-sm" %>
+        </div>
+      </div>
+      <div class="slogan">
+        Your one account for government.
+      </div>
+	      <!-- SIGN IN -->
+	      <div class="content-signin">
+
+	        <div class="row">
+	          <div class="col-md-12">
+	          	<%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
+	          </div>
+	        </div>
+	        <div class="hidden-buttons">
+	          <div class="row">
+	            <div class="col-md-12">
+	              <button class="btn btn-social btn-paypal fullwidth">Sign In with PayPal</button>
+	            </div>
+	          </div>
+	          <div class="row">
+	            <div class="col-md-12">
+	              <button class="btn btn-social btn-symantec fullwidth">Sign In with Symantec</button>
+	            </div>
+	          </div>
+	        </div>
+
+	        <div class="row">
+	          <div class="col-md-12 moresignin">
+	            <span class="more-options">
+	              <a href="#">
+	              <i class="fa fa-chevron-circle-down"></i> More Options <i class="fa fa-chevron-circle-down"></i>
+	              </a>
+	            </span>
+	            <span class="less-options">
+	              <a href="#">
+	              <i class="fa fa-chevron-circle-up"></i> Less Options <i class="fa fa-chevron-circle-up"></i>
+	              </a>
+	            </span>
+	          </div>
+	        </div>
+
+	        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-horizontal" }) do |f| %>
+	        <div class="form-group">
+	          <label for="inputEmail3" class="sr-only">Email</label>
+	          <div class="col-sm-12">
+						  <%= f.email_field :email, class: "form-control", id: "inputEmail3", autofocus: true, placeholder: "Email Address" %>
+	          </div>
+	        </div>
+	        <div class="form-group">
+	          <label for="inputPassword3" class="sr-only">Password</label>
+	          <div class="col-sm-12">
+							<%= f.password_field :password, class: "form-control", id: "inputPassword3", autocomplete: "off", placeholder: "Password" %>
+	          </div>
+	        </div>
+					<% if devise_mapping.rememberable? -%>
+		        <div class="form-group">
+		          <div class="col-sm-12">
+		            <div class="checkbox">
+		            	<label>
+										<%= f.check_box :remember_me %> 
+										This is a private computer, remember me
+									</label>
+		            </div>
+		          </div>
+		        </div>
+					<% end -%>
+	        <div class="form-group">
+	          <div class="col-sm-12">
+							<%= f.submit "Sign in with MyUSA", class: "btn btn-blue fullwidth" %>
+	          </div>
+	        </div>
+        <div class="row">
+          <div class="col-sm-12 align-center">
+            <a href="">Need help logging into your account?</a>
+          </div>
+        </div>
+				<% end %>
+      </div>
+
+      <div class="footer">
+        <br/>
+        By using MyUSA, you accept the <a href="">Terms and Conditions</a>. <a href="">What is MyUSA?</a>
+        <br/>
+        <i class="fa fa-lock"></i> This is a secure website |
+        <a href="">Privacy Policy</a> | <a href="">Paperwork Reduction Act</a>
+      </div>
+    </div>
+
+
+    <div class="debug">
+      <div class="title">
+        Debug Console
+      </div>
+      <div class="buttons">
+        <button class="btn btn-default btn-xs" id="debug-hide">Hide</button>
+        <button class="btn btn-default btn-xs" id="debug-toggle">Buttons</button>
+      </div>
+    </div>
+
+

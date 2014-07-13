@@ -1,7 +1,13 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
-  #devise_for :users
+  root to: "application#index"
+  get "secret" => "application#secret"
+  
+  devise_for :users, 
+    path_names: { sign_up: :sign_in },
+    controllers: { omniauth_callbacks: "omniauth_callbacks" }
+    
 
   namespace :api, :defaults => {:format => :json} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
@@ -13,12 +19,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
-    collection do
-      # TODO Investigate why 'Her' is updating without an ID in the URL
-      put '' => 'users#update' # This supports a 'Her' call where ID is in the body instead of the URL
-    end
-  end
+  # resources :users do
+  #   collection do
+  #     # TODO Investigate why 'Her' is updating without an ID in the URL
+  #     put '' => 'users#update' # This supports a 'Her' call where ID is in the body instead of the URL
+  #   end
+  # end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

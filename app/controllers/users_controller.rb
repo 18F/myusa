@@ -37,8 +37,6 @@ class UsersController < ApplicationController
     end
 
     if u && u.errors.blank?
-      u.update_attribute :encrypted_password, params[:encrypted_password] if params[:encrypted_password]
-      u.update_attribute :confirmation_token, params[:confirmation_token] if params[:confirmation_token]
       render :json => u
     else
       Rails.logger.debug "Errors: #{u && u.errors.inspect}"
@@ -105,7 +103,7 @@ class UsersController < ApplicationController
   def update_params
     nillify_blanks(params.permit(:email, :password, :password_confirmation,
      :confirmed_at, :created_at, :unconfirmed_email, :updated_at,
-     :encrypted_password, :confirmation_sent_at,
+     :confirmation_sent_at,
      :confirmation_token, :current_sign_in_at, :current_sign_in_ip,
      :failed_attempts, :last_sign_in_at, :last_sign_in_ip, :locked_at,
      :remember_created_at, :remember_token, :reset_password_sent_at,

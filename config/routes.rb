@@ -3,11 +3,14 @@ require 'api_constraints'
 Rails.application.routes.draw do
   root to: "application#index"
   get "secret" => "application#secret"
-  
-  devise_for :users, 
-    path_names: { sign_up: :sign_in },
-    controllers: { omniauth_callbacks: "omniauth_callbacks" }
-    
+
+  devise_for :users,
+    # path_names: { sign_up: :sign_in },
+    controllers: {
+      omniauth_callbacks: "omniauth_callbacks" ,
+      sessions: "sessions"
+    }
+
 
   namespace :api, :defaults => {:format => :json} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do

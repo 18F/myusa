@@ -1,3 +1,5 @@
+require 'email_authenticatable'
+
 class User < ActiveRecord::Base
   include Songkick::OAuth2::Model::ResourceOwner
 
@@ -17,12 +19,7 @@ class User < ActiveRecord::Base
   after_create :create_default_notification
   after_destroy :send_account_deleted_notification
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :registerable, :omniauthable #, :recoverable, :trackable, :validatable, :omniauthable, :lockable, :timeoutable, :confirmable, :async
-
-#  attr_accessible :email, :password, :remember_me, :terms_of_service, :unconfirmed_email, :as => [:default, :admin]
+  devise :omniauthable, :email_authenticatable
 
 #  attr_accessible :first_name, :last_name, :zip, :as => [:default]
   attr_accessor :just_created, :auto_approve

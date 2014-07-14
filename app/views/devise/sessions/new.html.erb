@@ -1,13 +1,10 @@
     <div class="main">
       <div class="logo">
         <div class="image">
-					<%= image_tag "myusa-shield.png" , :alt => "MyUSA Shield" %>				
+					<%= image_tag "myusa-shield.png" , :alt => "MyUSA Shield" %>
         </div>
         <div class="content">
           <span class="my">My</span>USA
-        </div>
-        <div class="cta">
-        	<%= button_to "Sign Up for MyUSA", new_user_registration_path, method: :get,  class: "btn btn-default btn-sm" %>
         </div>
       </div>
       <div class="slogan">
@@ -67,7 +64,7 @@
 		          <div class="col-sm-12">
 		            <div class="checkbox">
 		            	<label>
-										<%= f.check_box :remember_me %> 
+										<%= f.check_box :remember_me %>
 										This is a private computer, remember me
 									</label>
 		            </div>
@@ -106,5 +103,3 @@
         <button class="btn btn-default btn-xs" id="debug-toggle">Buttons</button>
       </div>
     </div>
-
-

@@ -56,6 +56,11 @@ class User < ActiveRecord::Base
         user
       end
     end
+
+  	def find_from_omniauth(auth)
+	    User.find_by_email(auth.info.email)
+    end
+
   end
 
   def first_name

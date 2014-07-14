@@ -1,6 +1,6 @@
 require 'feature_helper.rb'
 
-describe "Sign In" do
+describe "Sign In", js: true do
 
   describe "page" do
     before do
@@ -109,7 +109,7 @@ describe "Sign In" do
               }
             })
 
-            User.create(email: email)
+            User.create!(email: email)
           end
 
           it "should redirect the user to the next point" do

@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
 
   has_one :profile, :dependent => :destroy
   has_many :apps, :dependent => :destroy
-  #has_many :authentications, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   validates_acceptance_of :terms_of_service
@@ -16,12 +15,9 @@ class User < ActiveRecord::Base
 
   before_validation :generate_uid
   after_create :create_profile
-  after_create :create_default_notification
-  after_destroy :send_account_deleted_notification
 
   devise :omniauthable, :email_authenticatable
 
-#  attr_accessible :first_name, :last_name, :zip, :as => [:default]
   attr_accessor :just_created, :auto_approve
 
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
@@ -87,26 +83,6 @@ class User < ActiveRecord::Base
     @last_name = last_name
   end
 
-  def create_default_notification
-    # TODO: commented out the following
-    # notification = self.notifications.create(
-    #   :subject     => 'Welcome to MyUSA',
-    #   :body        => File.read(Rails.root.to_s + "/lib/assets/text/welcome_email_body.html").html_safe,
-    #   :received_at => Time.now,
-    # ) if self.confirmation_token.nil?
-    nil
-  end
-
-  def create_email_changed_notification
-    # TODO: commented out the following
-    # notification = self.notifications.create(
-    #   :subject     => 'You changed your email address',
-    #   :body        => File.read(Rails.root.to_s + "/lib/assets/text/email_changed_body.html").html_safe,
-    #   :received_at => Time.now,
-    # ) if self.confirmation_token.nil?
-    nil
-  end
-
   def installed_apps
     self.oauth2_authorizations.map(&:client).map(&:oauth2_client_owner)
   end
@@ -130,11 +106,6 @@ class User < ActiveRecord::Base
     grouped_logs
   end
 
-  def send_reset_password_confirmation
-    # TODO commented out mailer
-    #UserMailer.reset_password_confirmation(self.email).deliver
-  end
-
   private
 
   def create_profile
@@ -151,20 +122,5 @@ class User < ActiveRecord::Base
 
   def generate_uid
     self.uid = SecureRandom.uuid if self.uid.blank?
-  end
-
-  def send_account_deleted_notification
-    # TODO commented out UserMailer until mailer code added
-    #UserMailer.account_deleted(self.email).deliver
-  end
-
-  # Send confirmation instructions by email
-  def send_confirmation_instructions
-    #TODO: commented everything
-    #ensure_confirmation_token!
-    #
-    # opts = pending_reconfirmation? ? { :to => unconfirmed_email } : { }
-    # send_devise_notification((pending_reconfirmation? ? :reconfirmation_instructions : :confirmation_instructions), opts)
-    # send_devise_notification(:you_changed_your_email_address, opts) if pending_reconfirmation?
   end
 end

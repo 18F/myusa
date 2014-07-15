@@ -93,6 +93,7 @@ group :test do
   gem 'launchy'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-its'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
 

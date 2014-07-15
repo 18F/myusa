@@ -347,6 +347,8 @@ GEM
       rdoc (~> 4.0, < 5.0)
     secure_headers (1.1.1)
     sexp_processor (4.4.3)
+    shoulda-matchers (2.6.1)
+      activesupport (>= 3.0.0)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -453,6 +455,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   secure_headers
+  shoulda-matchers
   simplecov
   site_prism
   slim

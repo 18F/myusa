@@ -95,6 +95,7 @@ group :test do
   gem 'rspec-its'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
+  gem 'timecop'
 end
 
 group :production do

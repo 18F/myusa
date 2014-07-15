@@ -89,7 +89,7 @@ RSpec.configure do |config|
 
 #  config.include IntegrationSpecHelper, :type => :request
   config.include Devise::TestHelpers, :type => :controller
-  config.include Rack::Test::Methods
+  config.include Rack::Test::Methods, :type => :request
 end
 
 Capybara.default_host = "http://citizen.org"

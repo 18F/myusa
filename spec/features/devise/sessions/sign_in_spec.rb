@@ -44,13 +44,32 @@ describe "Sign In", js: true do
     end
 
     it "signed-out user should be redirected to sign-in page" do
-      @target_page = TargetPage.new
       @target_page.load
-      @sign_in_page = SignInPage.new
       expect(@sign_in_page).to be_displayed
     end
 
-    context "Registering for the first time" do
+    context "Signing in for the first time" do
+      describe "with email address" do
+        let(:email) { 'testy@example.gov' }
+
+        it "should create a new user" do
+          expect(User.find_by_email(email)).to be_nil
+
+          @target_page.load
+          @sign_in_page.email.set email
+          @sign_in_page.submit
+
+          expect(User.find_by_email(email)).to be
+        end
+
+        it "should let user know about the token email" do
+        end
+
+        it "should allow user to authenticate with token" do
+
+        end
+      end
+
       describe "using Google" do
         let(:email) { 'testo@example.com' }
         let(:body) { "You got me #{email}" }
@@ -69,20 +88,23 @@ describe "Sign In", js: true do
         it "should create a new user" do
           pending 'not creating a new user (for now)'
           expect(User.find_by_email(email)).to be_nil
-          sign_in_to_target(@target_page, @sign_in_page)
+          @target_page.load
+          @sign_in_page.google_button.click
           expect(User.find_by_email(email)).to exist
         end
 
         it "should redirect the user to the next point" do
           pending 'not creating a new user (for now)'
-          sign_in_to_target(@target_page, @sign_in_page)
+          @target_page.load
+          @sign_in_page.google_button.click
           expect(@target_page).to be_displayed
           expect(@target_page.source).to match body
         end
 
         context "when returning later in the session" do
           before do
-            sign_in_to_target(@target_page, @sign_in_page)
+            @target_page.load
+            @sign_in_page.google_button.click
             @target_page.load
           end
 
@@ -113,7 +135,8 @@ describe "Sign In", js: true do
           end
 
           it "should redirect the user to the next point" do
-            sign_in_to_target(@target_page, @sign_in_page)
+            @target_page.load
+            @sign_in_page.google_button.click
 
             expect(@target_page).to be_displayed
             expect(@target_page.source).to match body

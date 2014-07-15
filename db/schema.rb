@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703230851) do
+ActiveRecord::Schema.define(version: 20140715153458) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -105,26 +105,26 @@ ActiveRecord::Schema.define(version: 20140703230851) do
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
-    t.string   "title"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.string   "suffix"
-    t.string   "address"
-    t.string   "address2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.string   "gender"
-    t.string   "marital_status"
-    t.string   "is_parent"
-    t.string   "is_student"
-    t.string   "is_veteran"
-    t.string   "is_retired"
-    t.string   "phone"
-    t.string   "mobile"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "encrypted_title"
+    t.string   "encrypted_first_name"
+    t.string   "encrypted_middle_name"
+    t.string   "encrypted_last_name"
+    t.string   "encrypted_suffix"
+    t.string   "encrypted_address"
+    t.string   "encrypted_address2"
+    t.string   "encrypted_city"
+    t.string   "encrypted_state"
+    t.string   "encrypted_zip"
+    t.string   "encrypted_gender"
+    t.string   "encrypted_marital_status"
+    t.string   "encrypted_is_parent"
+    t.string   "encrypted_is_student"
+    t.string   "encrypted_is_veteran"
+    t.string   "encrypted_is_retired"
+    t.string   "encrypted_phone"
+    t.string   "encrypted_mobile"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree

@@ -18,6 +18,7 @@ default: &default
   socket: /tmp/mysql.sock
 # For Ubuntu systems, such as Ubuntu 12.04:
 #  socket: /var/run/mysqld/mysqld.sock
+  encryption_key: cdaed00f0161582218638cb5493c1b1e0a59e022eb9f01cce8ff5ab1d1baddde072d9e12a67ca713d39258f5ce0cc518e404497e9f6aa68ada3ad21b2d2b64ed
 
 development:
   <<: *default
@@ -54,3 +55,5 @@ production:
   database: myusa-server_production
   username: myusa-server
   password: <%= ENV['MYUSA-SERVER_DATABASE_PASSWORD'] %>
+  encryption_key: <%= ENV['MYUSA-SERVER_DATABASE_ENCRYPTION_KEY'] %>
+

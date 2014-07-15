@@ -39,6 +39,8 @@ gem 'secure_headers'
 gem 'validates_email_format_of', :git => 'https://github.com/alexdunae/validates_email_format_of.git'
 gem "paperclip", "~> 4.1"
 gem "permanent_records", "~> 2.3.0"
+gem "attr_encrypted"
+gem "factory_girl"
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'

@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   validates_acceptance_of :terms_of_service
   validates_presence_of :uid
   validates_uniqueness_of :uid
-  validates_email_format_of :email, {:allow_blank => true}
+  validates_email_format_of :email, {:allow_blank => false}
   validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
 
   before_validation :generate_uid

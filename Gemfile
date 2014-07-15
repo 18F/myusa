@@ -92,6 +92,7 @@ group :test do
   gem 'fakeweb'
   gem 'launchy'
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-its'
   gem 'simplecov', require: false
 end
 

@@ -14,6 +14,31 @@ describe SessionsController do
       get :new
       expect(response).to render_template(:new)
     end
+
+    context 'email and token are present' do
+      before :each do
+        @user = User.create(email: email)
+        @raw = @user.set_authentication_token
+      end
+
+      context 'and are valid' do
+        it 'logs in and redirects the user' do
+          get :new, :email => @user.email, :token => @raw
+
+          expect(controller.current_user).to be
+          expect(controller.current_user.email).to eq(@user.email)
+          expect(response).to redirect_to(root_path)
+        end
+      end
+      context 'token is bad' do
+        it 'does not log user in' do
+          get :new, :email => @user.email, :token => 'foobar'
+
+          expect(controller.current_user).to be_nil
+        end
+      end
+
+    end
   end
 
   describe '#create' do

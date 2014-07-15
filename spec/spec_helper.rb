@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 #require 'rspec_api_blueprint'
 require 'capybara/rspec'
+
 #require 'webmock/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -52,23 +53,19 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
+  config.use_transactional_fixtures = false
+  # Use transactions by default
+  config.before :each do
     DatabaseCleaner.strategy = :transaction
   end
-
-  config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation
+  # Switch to truncation for javascript tests, but *only clean used tables*
+  config.before :each, :js => true do
+    DatabaseCleaner.strategy = :truncation, {:pre_count => true}
   end
-
-  config.before(:each) do
+  config.before :each do
     DatabaseCleaner.start
   end
-
-  config.after(:each) do
+  config.after :each do
     DatabaseCleaner.clean
   end
 

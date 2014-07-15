@@ -1,4 +1,4 @@
-require 'feature_helper.rb'
+require 'feature_helper'
 
 describe "Sign In", js: true do
 
@@ -51,22 +51,41 @@ describe "Sign In", js: true do
     context "Signing in for the first time" do
       describe "with email address" do
         let(:email) { 'testy@example.gov' }
+        let(:link_text) { 'Clicky' }
+        let(:body) { "CYM, #{email}" }
 
-        it "should create a new user" do
+        before :each do
+          @token_instructions_page = TokenInstructionsPage.new
+          clear_emails
           expect(User.find_by_email(email)).to be_nil
 
           @target_page.load
           @sign_in_page.email.set email
-          @sign_in_page.submit
+          @sign_in_page.submit.click
+        end
 
+        it "should create a new user" do
           expect(User.find_by_email(email)).to be
         end
 
         it "should let user know about the token email" do
+          expect(@token_instructions_page).to be_displayed
+          expect(@token_instructions_page.source).to match body
+        end
+
+        it "should send the user an email with the token" do
+          open_email(email)
+          expect(current_email).to have_link(link_text)
         end
 
         it "should allow user to authenticate with token" do
+          pending 'click link does not seem to be working'
+          open_email(email)
+          current_email.click_link(link_text)
+          # visit current_email.find_link(link_text)[:href]
 
+          expect(@target_page).to be_displayed
+          expect(@target_page.source).to match body
         end
       end
 

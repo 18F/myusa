@@ -3,7 +3,8 @@ class OauthController < ApplicationController
   before_filter :set_client_credentials_handler, :only => [:authorize]
   
   after_filter ({ :only => :authorize }) do |controller|
-    controller.log_app_authorization(controller)
+    # TODO migrate app authorization log table
+    # controller.log_app_authorization(controller)    
   end
 
   def authorize 

@@ -34,11 +34,13 @@ gem 'omniauth'
 gem 'songkick-oauth2-provider', :git => 'https://github.com/adam-at-mobomo/oauth2-provider.git', :branch => 'rails-4-compatibility-with-bearer-and-client-credential-support', :require => 'songkick/oauth2/provider'
 gem 'oauth2'
 gem 'omniauth-openid' #, :git => 'https://github.com/GSA/omniauth-openid.git', :branch => 'pape'
+gem 'omniauth-google-oauth2'
 gem 'mysql2'
 gem 'secure_headers'
 gem 'validates_email_format_of', :git => 'https://github.com/alexdunae/validates_email_format_of.git'
 gem "paperclip", "~> 4.1"
 gem "permanent_records", "~> 2.3.0"
+gem 'font-awesome-sass'
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
@@ -83,13 +85,15 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'poltergeist'
   gem 'database_cleaner'
-  gem 'database_cleaner-remote_api', '~> 0.1.0'
-
   gem 'factory_girl_rails'
+  gem 'site_prism'
   gem 'fakeweb'
   gem 'launchy'
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-its'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
 

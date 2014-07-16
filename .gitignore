@@ -32,3 +32,7 @@ api_docs/*
 /tmp
 /vendor/bundle
 lib/load-scripts/
+
+# generated api docs
+public/developer/api.html
+public/developer/api.md

@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//Turbo links disabled as temp fix of more/less options on signin/signup pages
+// require turbolinks
+//= requrie bootstrap
 //= require_tree .

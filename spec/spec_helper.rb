@@ -43,7 +43,7 @@ RSpec.configure do |config|
   # RSpec 3. Use this snippet to continue making this method available in RSpec
   # 2.99 and RSpec 3
   config.expose_current_running_example_as :example
-  
+
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
@@ -56,6 +56,14 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
     DatabaseCleaner.strategy = :truncation
   end
 
@@ -88,4 +96,3 @@ RSpec.configure do |config|
 end
 
 Capybara.default_host = "http://citizen.org"
-

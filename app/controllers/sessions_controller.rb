@@ -14,6 +14,7 @@ class SessionsController < Devise::SessionsController
     end
     user.set_authentication_token
 
+    #TODO: fixme ...
     render :text => "CYM, #{user.email}"
   end
 
@@ -23,8 +24,14 @@ class SessionsController < Devise::SessionsController
     user_email = params[:email].presence
     user = user_email && User.find_by_email(user_email)
 
-    if user && user.verify_authentication_token(params[:token])
-      sign_in_and_redirect user
+    if user && user.authentication_token
+      if user.authentication_sent_at && user.authentication_sent_at < 30.minutes.ago
+        #TODO: i18n
+        flash[:alert] = 'token expired'
+      elsif user && user.verify_authentication_token(params[:token])
+        user.expire_authentication_token
+        sign_in_and_redirect user
+      end
     end
   end
 end

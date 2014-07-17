@@ -9,6 +9,10 @@ describe SessionsController do
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
+  after :each do
+    Timecop.return
+  end
+
   describe '#new' do
     it 'should render a template' do
       get :new
@@ -18,18 +22,25 @@ describe SessionsController do
     context 'email and token are present' do
       before :each do
         @user = User.create(email: email)
-        @raw = @user.set_authentication_token
       end
 
       context 'and are valid' do
-        it 'logs in and redirects the user' do
-          get :new, :email => @user.email, :token => @raw
+        before :each do
+          raw = @user.set_authentication_token
+          get :new, :email => @user.email, :token => raw
+        end
 
+        it 'logs in and redirects the user' do
           expect(controller.current_user).to be
           expect(controller.current_user.email).to eq(@user.email)
           expect(response).to redirect_to(root_path)
         end
+
+        it 'expires the token' do
+          expect(controller.current_user.authentication_token).to be_nil
+        end
       end
+
       context 'token is bad' do
         it 'does not log user in' do
           get :new, :email => @user.email, :token => 'foobar'
@@ -38,6 +49,22 @@ describe SessionsController do
         end
       end
 
+      context 'token is old' do
+        before :each do
+          Timecop.travel(date - 1.day)
+          raw = @user.set_authentication_token
+          Timecop.travel(date)
+          get :new, :email => @user.email, :token => raw
+        end
+
+        it 'displays a flash alert' do
+          expect(flash[:alert]).to eq('token expired')
+        end
+
+        it 'does not log user in' do
+          expect(controller.current_user).to be_nil
+        end
+      end
     end
   end
 

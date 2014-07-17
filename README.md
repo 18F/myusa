@@ -81,12 +81,12 @@ Then, open your web browser and visit:
 
 That's it!  Use the app just as you would any other web application.
 
-## Developing
+## Contributing to MyUSA
 
-Check out the [MyUSA Contribution Guide](CONTRIBUTING.md)
+Please read the [MyUSA Contribution Guide](CONTRIBUTING.md) and submit a pull request.
 
 ## License
 
-This project constitutes an original work of the United States Government.
+[The project is in the public domain](LICENSE.md), and all contributions will also be released in the public domain. By submitting a pull request, you are agreeing to waive all rights to your contribution under the terms of the [CC0 Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/).
 
-You may use this project under the [MIT License](LICENSE).
+This project constitutes an original work of the United States Government.

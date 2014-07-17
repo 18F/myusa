@@ -50,6 +50,10 @@ describe User, :type => :model do
       @user = User.create!(email: email)
     end
 
+    after :each do
+      Timecop.return
+    end
+
     it "sets an authentication_token" do
       @user.set_authentication_token
       @user.reload

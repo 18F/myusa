@@ -1,6 +1,6 @@
 require 'feature_helper'
 
-describe "Sign In", js: true do
+describe "Sign In" do
 
   describe "page" do
     before do
@@ -12,7 +12,7 @@ describe "Sign In", js: true do
       expect(@page.slogan.text).to match("Your one account for government.")
     end
 
-    describe '"More Options" button,' do
+    describe '"More Options" button,', :js => true do
 
       describe 'at load time,' do
         specify { expect(@page).to have_more_options }
@@ -52,7 +52,7 @@ describe "Sign In", js: true do
       describe "with email address" do
         let(:email) { 'testy@example.gov' }
         let(:link_text) { 'Clicky' }
-        let(:body) { "CYM, #{email}" }
+        let(:instructions) { "CYM, #{email}" }
 
         before :each do
           @token_instructions_page = TokenInstructionsPage.new
@@ -78,67 +78,66 @@ describe "Sign In", js: true do
           expect(current_email).to have_link(link_text)
         end
 
-        # it "should allow user to authenticate with token" do
-        #   pending 'click link does not seem to be working'
-        #   open_email(email)
-        #   current_email.click_link(link_text)
-        #   # visit current_email.find_link(link_text)[:href]
-        #
-        #   expect(@target_page).to be_displayed
-        #   expect(@target_page.source).to match body
-        # end
+        it "should allow user to authenticate with token" do
+          # pending 'click link does not seem to be working'
+          open_email(email)
+          current_email.click_link(link_text)
+
+          expect(@target_page).to be_displayed
+          expect(@target_page.source).to match body
+        end
       end
 
-      # describe "using Google" do
-      #   let(:email) { 'testo@example.com' }
-      #   let(:body) { "You got me #{email}" }
-      #
-      #   before do
-      #     OmniAuth.config.test_mode = true
-      #     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-      #       provider: 'google_oauth2',
-      #       uid: '12345',
-      #       info: {
-      #         email: email
-      #       }
-      #     })
-      #   end
-      #
-      #   it "should create a new user" do
-      #     pending 'not creating a new user (for now)'
-      #     expect(User.find_by_email(email)).to be_nil
-      #     @target_page.load
-      #     @sign_in_page.google_button.click
-      #     expect(User.find_by_email(email)).to exist
-      #   end
-      #
-      #   it "should redirect the user to the next point" do
-      #     pending 'not creating a new user (for now)'
-      #     @target_page.load
-      #     @sign_in_page.google_button.click
-      #     expect(@target_page).to be_displayed
-      #     expect(@target_page.source).to match body
-      #   end
-      #
-      #   context "when returning later in the session" do
-      #     before do
-      #       @target_page.load
-      #       @sign_in_page.google_button.click
-      #       @target_page.load
-      #     end
-      #
-      #     it "should redirect the user straight to the next point" do
-      #       pending 'not creating a new user (for now)'
-      #       expect(@target_page).to be_displayed
-      #       expect(@target_page.source).to match body
-      #     end
-      #   end
-      # end
+      describe "using Google" do
+        let(:email) { 'testo@example.com' }
+        let(:secret) { "You got me #{email}" }
+
+        before do
+          OmniAuth.config.test_mode = true
+          OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+            provider: 'google_oauth2',
+            uid: '12345',
+            info: {
+              email: email
+            }
+          })
+        end
+
+        it "should create a new user" do
+          pending 'not creating a new user (for now)'
+          expect(User.find_by_email(email)).to be_nil
+          @target_page.load
+          @sign_in_page.google_button.click
+          expect(User.find_by_email(email)).to exist
+        end
+
+        it "should redirect the user to the next point" do
+          pending 'not creating a new user (for now)'
+          @target_page.load
+          @sign_in_page.google_button.click
+          expect(@target_page).to be_displayed
+          expect(@target_page.source).to match secret
+        end
+
+        context "when returning later in the session" do
+          before do
+            @target_page.load
+            @sign_in_page.google_button.click
+            @target_page.load
+          end
+
+          it "should redirect the user straight to the next point" do
+            pending 'not creating a new user (for now)'
+            expect(@target_page).to be_displayed
+            expect(@target_page.source).to match secret
+          end
+        end
+      end
 
       context "Signing in a registered user" do
         describe "using Google" do
           let(:email) { 'testo@example.com' }
-          let(:body) { "You got me #{email}" }
+          let(:secret) { "You got me #{email}" }
 
           before do
             OmniAuth.config.test_mode = true
@@ -158,7 +157,7 @@ describe "Sign In", js: true do
             @sign_in_page.google_button.click
 
             expect(@target_page).to be_displayed
-            expect(@target_page.source).to match body
+            expect(@target_page.source).to match secret
           end
 
         end

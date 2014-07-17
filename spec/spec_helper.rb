@@ -55,17 +55,24 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
   # Use transactions by default
-  config.before :each do
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
     DatabaseCleaner.strategy = :transaction
   end
-  # Switch to truncation for javascript tests, but *only clean used tables*
-  config.before :each, :js => true do
-    DatabaseCleaner.strategy = :truncation, {:pre_count => true}
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
   end
-  config.before :each do
+
+  config.before(:each) do
     DatabaseCleaner.start
   end
-  config.after :each do
+
+  config.after(:each) do
     DatabaseCleaner.clean
   end
 
@@ -89,4 +96,4 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods, :type => :request
 end
 
-Capybara.default_host = "http://citizen.org"
+Capybara.default_host = "http://localhost:3000"

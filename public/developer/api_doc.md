@@ -2,6 +2,7 @@ FORMAT: 1A
 
 # MyUSA API Documentation
 
+# Group Getting Started
 # Getting started with MyUSA Authentication
 
 MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the [developers](https://my.usa.gov/developer) section of MyUSA.
@@ -18,6 +19,7 @@ MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create
 
 The scopes you define when you setup your app on MyUSA.gov define what information your app will require from the user. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.
 
+# Group Before You Begin
 ## Before You Begin
 
 1. Sign in to [MyUSA](https://my.usa.gov/developer) to register an application. 

@@ -16,13 +16,6 @@ GIT
     validates_email_format_of (1.5.3)
 
 GIT
-  remote: https://github.com/petrbela/rspec_api_blueprint.git
-  revision: 91d8744ae727bf6d9ea977c8232f4d538070c129
-  branch: feat/markdown-docs
-  specs:
-    rspec_api_blueprint (0.0.6)
-      rspec
-GIT
   remote: https://github.com/nhemsley/pry-plus.git
   revision: 7ad4a1ac48a68032f1afe3df79c5e54c1011c162
   specs:
@@ -34,6 +27,14 @@ GIT
       pry-docmore
       pry-rescue
       pry-stack_explorer
+
+GIT
+  remote: https://github.com/petrbela/rspec_api_blueprint.git
+  revision: 91d8744ae727bf6d9ea977c8232f4d538070c129
+  branch: feat/markdown-docs
+  specs:
+    rspec_api_blueprint (0.0.6)
+      rspec
 
 GEM
   remote: https://rubygems.org/

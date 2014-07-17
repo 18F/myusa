@@ -7,8 +7,10 @@ require 'rubygems'
     #Combine the api documentation markdown and all the api blueprint markdown files into one markdown file
     #then render with Aglio
     puts ""
-    puts "Running rspec tests......."
-    %x{bundle exec rspec spec}
+    puts "Running API rspec tests......."
+    %x{bundle exec rspec spec/requests/notification_spec.rb}
+    %x{bundle exec rspec spec/requests/profile_spec.rb}
+    %x{bundle exec rspec spec/requests/task_spec.rb}
     puts "Loading markdown files .........."
     text = File.open('public/developer/api_doc.md', 'r').read
     text += File.open('api_docs/profile.md', 'r').read

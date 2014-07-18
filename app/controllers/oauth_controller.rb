@@ -32,13 +32,23 @@ class OauthController < ApplicationController
   end
   
   def allow
-    @auth = Songkick::OAuth2::Provider::Authorization.new(current_user, params)
+    selected_scopes = params[:selected_scopes].select { |k, v|
+      v == "1"
+    }.keys.join(' ')
+    new_params = params.dup
+    new_params[:scopes] = selected_scopes
+    @auth = Songkick::OAuth2::Provider::Authorization.new(current_user, new_params)
     if params[:allow] == '1' and params[:commit] == 'Allow' && pass_sandbox_check(params)
       @auth.grant_access!
     else
       @auth.deny_access!
     end
+    current_user.set_values_from_scopes(params[:new_profile_values])
     redirect_to @auth.redirect_uri, :status => @auth.response_status
+  end
+
+  def deauthorize
+    current_user.deauthorize_app(@app)
   end
 
   def pass_sandbox_check params

@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   attr_accessor :just_created, :auto_approve
 
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
+  SCOPE_ATTRIBUTES = PROFILE_ATTRIBUTES + [:email]
 
   def sandbox_apps
     self.apps.sandbox
@@ -133,6 +134,29 @@ class User < ActiveRecord::Base
   def send_reset_password_confirmation
     # TODO commented out mailer
     #UserMailer.reset_password_confirmation(self.email).deliver
+  end
+
+  def scope_field_value(scope_name)
+    field_name = scope_name.split('.').last
+    if SCOPE_ATTRIBUTES.member?(field_name.to_sym)
+      send field_name
+    else
+      nil
+    end
+  end
+
+  def set_values_from_scopes(scope_value_hash)
+    scope_value_hash.each do |k, v|
+      field_name = k.split('.').last
+      self.profile.send "#{field_name}=", v
+    end
+    self.profile.save
+  end
+
+  def deauthorize_app(app)
+    client_id = app.oauth2_client.id
+    auth = self.oauth2_authorizations.where(:client_id => client_id)
+    auth.destroy_all
   end
 
   private

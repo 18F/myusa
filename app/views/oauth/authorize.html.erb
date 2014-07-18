@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <div class="row">
+  <div class="row" style="padding-left:50px;">
     <div class="ten columns centered">
       <div class="panel group">
         <div class="ten columns">
@@ -8,26 +8,18 @@
             <em><%= @oauth2.client.name %></em>
             to access your MyUSA account?
           </h3>
+                      <p class="disclaimer">
+              You can revoke access to any application at any time from your Apps page.
+            </p>
           <p>
             The
             <b>
               <%= @oauth2.client.name %>
             </b>
             application wants to:
-            <ul class="plain-list">
-              <% @oauth2.client.owner.find_scopes(@oauth2.scopes).each do |scope| %>
-                <li>
-                  <%= scope.description %>
-                </li>
-              <% end %>
-            </ul>
-            <p class="disclaimer">
-              You can revoke access to any application at any time from your Apps page.
-            </p>
           </p>
         </div>
         <div class="two columns hide-for-small panel">
-          <%= image_tag @oauth2.client.owner.logo, :class => 'icon'    %>
           <p class="info">
             <%= @oauth2.client.owner.short_description %>
           </p>
@@ -36,8 +28,21 @@
           <div class="twelve columns">
             <%= form_tag "/oauth/allow" do %>
               <% @oauth2.params.each do |key, value| %>
-                <%= hidden_field_tag key, value %>
+                <%= hidden_field nil, key, {:value => value} %>
               <% end %>
+              <ul>
+               <% @oauth2.client.owner.find_scopes(@oauth2.scopes).each do |scope| %>
+                  <li>
+	                  <%= check_box_tag "selected_scopes[#{scope.scope_name}]" %><%= scope.description %>
+	                  <% if current_user.scope_field_value(scope.scope_name).blank? %>
+	                  	<%= text_field "new_profile_values", scope.scope_name %>
+	                  <% else %>
+	                  	<%= current_user.scope_field_value(scope.scope_name)%>
+	                  <% end %>
+                  </li>
+              <% end %>
+              </ul>
+              </br>
               <%= hidden_field_tag :user_id, current_user.id %>
               <%= hidden_field_tag :allow, "1", :id => "allow" %>
               <%= submit_tag 'Allow', :class => 'large button positive' %>

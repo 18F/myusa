@@ -1,7 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
-    20.times do Rails.logger.debug('auth') end
-      Rails.logger.debug(request.env["omniauth.auth"])
     user = User.find_from_omniauth(request.env["omniauth.auth"])
     if user
       flash.notice = "Signed in Through Google!"

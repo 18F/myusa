@@ -53,9 +53,6 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.use_transactional_fixtures = false
-  # Use transactions by default
-
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end

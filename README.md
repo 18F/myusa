@@ -38,6 +38,7 @@ To get your Rails development environment setup, here's the steps to follow.
     ```sh
     cp config/database.yml.example config/database.yml
     cp config/secrets.yml.example config/secrets.yml
+    cp config/initializers/devise.rb.example config/initializers/devise.rb
     rake secret
     ```
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715003047) do
+ActiveRecord::Schema.define(version: 20140718184034) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 20140715003047) do
   end
 
   add_index "apps", ["slug"], name: "index_apps_on_slug", using: :btree
+
+  create_table "authentications", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.text     "data"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["uid", "provider"], name: "index_authentications_on_uid_and_provider", using: :btree
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.string   "subject"

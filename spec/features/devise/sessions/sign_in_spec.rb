@@ -79,7 +79,6 @@ describe "Sign In" do
         end
 
         it "should allow user to authenticate with token" do
-          # pending 'click link does not seem to be working'
           open_email(email)
           current_email.click_link(link_text)
 
@@ -134,7 +133,7 @@ describe "Sign In" do
         before :each do
           User.create! do |user|
             user.email = email
-            user.authentication.build(provider: provider, uid: uid)
+            user.authentications.build(provider: provider, uid: uid)
           end
 
           @target_page.load

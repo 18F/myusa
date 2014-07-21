@@ -12,7 +12,7 @@ describe "Sign In" do
       expect(@page.slogan.text).to match("Your one account for government.")
     end
 
-    describe '"More Options" button,', :js => true do
+    describe '"More Options" button,', js: true do
 
       describe 'at load time,' do
         specify { expect(@page).to have_more_options }
@@ -100,7 +100,7 @@ describe "Sign In" do
       @sign_in_page = SignInPage.new
     end
 
-    context "with Google", :js => true do
+    context "with Google" do
       let(:provider) { :google_oauth2 }
 
       before :each do

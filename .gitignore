@@ -24,6 +24,7 @@ config/deploy.rb
 config/deploy
 config/environments/production.rb
 config/initializers/recaptcha.rb
+config/initializers/devise.rb
 coverage
 log/*
 /public/system

@@ -6,7 +6,7 @@ describe SessionsController do
 
   before :each do
     Timecop.freeze(date)
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
   after :each do
@@ -14,25 +14,23 @@ describe SessionsController do
   end
 
   describe '#new' do
-    it 'should render a template' do
+    it 'renders a template' do
       get :new
       expect(response).to render_template(:new)
     end
 
     context 'email and token are present' do
-      before :each do
-        @user = User.create(email: email)
-      end
+      let(:user) { User.create(email: email) }
 
       context 'and are valid' do
         before :each do
-          raw = @user.set_authentication_token
-          get :new, :email => @user.email, :token => raw
+          raw = user.set_authentication_token
+          get :new, :email => user.email, :token => raw
         end
 
         it 'logs in and redirects the user' do
           expect(controller.current_user).to be
-          expect(controller.current_user.email).to eq(@user.email)
+          expect(controller.current_user.email).to eq(user.email)
           expect(response).to redirect_to(root_path)
         end
 
@@ -43,7 +41,7 @@ describe SessionsController do
 
       context 'token is bad' do
         it 'does not log user in' do
-          get :new, :email => @user.email, :token => 'foobar'
+          get :new, :email => user.email, :token => 'foobar'
 
           expect(controller.current_user).to be_nil
         end
@@ -52,9 +50,9 @@ describe SessionsController do
       context 'token is old' do
         before :each do
           Timecop.travel(date - 1.day)
-          raw = @user.set_authentication_token
+          raw = user.set_authentication_token
           Timecop.travel(date)
-          get :new, :email => @user.email, :token => raw
+          get :new, :email => user.email, :token => raw
         end
 
         it 'displays a flash alert' do

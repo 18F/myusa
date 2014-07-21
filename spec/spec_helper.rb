@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 #require 'rspec_api_blueprint'
 require 'capybara/rspec'
+
 #require 'webmock/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -89,7 +90,7 @@ RSpec.configure do |config|
 
 #  config.include IntegrationSpecHelper, :type => :request
   config.include Devise::TestHelpers, :type => :controller
-  config.include Rack::Test::Methods
+  config.include Rack::Test::Methods, :type => :request
 end
 
-Capybara.default_host = "http://citizen.org"
+Capybara.default_host = "http://localhost:3000"

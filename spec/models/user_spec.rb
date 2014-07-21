@@ -39,4 +39,62 @@ describe User, :type => :model do
       its(:errors) { should_not be_empty }
     end
   end
+
+  describe "#set_authentication_token" do
+    let(:email) { 'testy@example.gov' }
+    let(:time) { Date.new(1999, 12, 31) }
+
+    before :each do
+      Timecop.freeze time
+      allow(Devise.token_generator).to receive(:generate) { ['raw', 'enc'] }
+      @user = User.create!(email: email)
+    end
+
+    after :each do
+      Timecop.return
+    end
+
+    it "sets an authentication_token" do
+      @user.set_authentication_token
+      @user.reload
+      expect(@user.authentication_token).to eq('enc')
+    end
+
+    it "records the time that the token was set" do
+      @user.set_authentication_token
+      @user.reload
+      expect(@user.authentication_sent_at).to eq(time)
+    end
+
+    it "returns the raw token" do
+      expect(@user.set_authentication_token).to eq('raw')
+    end
+
+    it "sends email to the user with the raw token" do
+      expect(@user).to receive(:send_devise_notification).with(:authentication_instructions, 'raw', anything)
+      @user.set_authentication_token
+    end
+  end
+
+  describe "#verify_authentication_token" do
+    let(:email) { 'testy@example.gov' }
+    let(:raw_token) { 'token' }
+    let(:token) { Devise.token_generator.digest(self, :authentication_token, raw_token) }
+
+    before :each do
+      @user = User.create!(email: email, authentication_token: token)
+    end
+
+    it "returns true for a valid token" do
+      expect(@user.verify_authentication_token(raw_token)).to be true
+    end
+
+    it "returns false for a blank token" do
+      expect(@user.verify_authentication_token('')).to be false
+    end
+
+    it "returns false for an invalid token" do
+      expect(@user.verify_authentication_token('foobar')).to be false
+    end
+  end
 end

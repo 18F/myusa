@@ -1,0 +1,7 @@
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Someone has a token. Clicky clicky!</p>
+
+<p><%= link_to 'Clicky', new_user_session_url(email: @resource.email, token: @token).html_safe %></p>
+
+<p>If you didn't request this, please ignore this email.</p>

@@ -27,8 +27,14 @@ config/initializers/recaptcha.rb
 config/initializers/devise.rb
 coverage
 log/*
+api_docs/*
 /public/system
 /spec/tmp
 /tmp
 /vendor/bundle
 lib/load-scripts/
+
+# generated api docs
+public/developer/api.html
+public/developer/api.md
+

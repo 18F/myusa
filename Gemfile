@@ -79,8 +79,7 @@ group :development, :test do
   # this fork of pry-plus is 2.1.x-compatible
   gem 'pry-plus', git: 'https://github.com/nhemsley/pry-plus.git'
   gem 'spring-commands-rspec'
-#  gem 'rspec_api_blueprint', require: false
-
+  gem 'rspec_api_blueprint', require: false, :git => 'https://github.com/petrbela/rspec_api_blueprint.git', :branch => 'feat/markdown-docs'
 end
 
 group :test do

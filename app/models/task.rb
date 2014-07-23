@@ -1,3 +1,5 @@
+# This is a test mesage in the Task Model
+
 class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :app

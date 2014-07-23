@@ -99,6 +99,10 @@ group :test do
   gem 'capybara-email'
 end
 
+# group :production, :staging
+  gem 'unicorn'
+# end
+
 group :production do
   gem 'newrelic_rpm'
 end

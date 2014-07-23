@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703230851) do
+ActiveRecord::Schema.define(version: 20140718184034) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 20140703230851) do
   end
 
   add_index "apps", ["slug"], name: "index_apps_on_slug", using: :btree
+
+  create_table "authentications", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.text     "data"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["uid", "provider"], name: "index_authentications_on_uid_and_provider", using: :btree
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.string   "subject"
@@ -153,9 +165,9 @@ ActiveRecord::Schema.define(version: 20140703230851) do
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                        default: "", null: false
+    t.string   "email",                  default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -167,14 +179,14 @@ ActiveRecord::Schema.define(version: 20140703230851) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",              default: 0
+    t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
     t.string   "authentication_token"
-    t.datetime "authentication_token_sent_at"
+    t.datetime "authentication_sent_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree

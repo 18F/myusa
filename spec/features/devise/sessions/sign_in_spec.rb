@@ -1,6 +1,6 @@
-require 'feature_helper.rb'
+require 'feature_helper'
 
-describe "Sign In", js: true do
+describe "Sign In" do
 
   describe "page" do
     before do
@@ -12,7 +12,7 @@ describe "Sign In", js: true do
       expect(@page.slogan.text).to match("Your one account for government.")
     end
 
-    describe '"More Options" button,' do
+    describe '"More Options" button,', js: true do
 
       describe 'at load time,' do
         specify { expect(@page).to have_more_options }
@@ -32,7 +32,7 @@ describe "Sign In", js: true do
 
   end
 
-  describe "Authenticate with an external identity provider" do
+  describe "with email" do
     def sign_in_to_target(target_page, sign_in_page)
       target_page.load
       sign_in_page.google_button.click
@@ -44,84 +44,127 @@ describe "Sign In", js: true do
     end
 
     it "signed-out user should be redirected to sign-in page" do
-      @target_page = TargetPage.new
       @target_page.load
-      @sign_in_page = SignInPage.new
       expect(@sign_in_page).to be_displayed
     end
 
-    context "Registering for the first time" do
-      describe "using Google" do
-        let(:email) { 'testo@example.com' }
-        let(:body) { "You got me #{email}" }
+    context "Signing in for the first time" do
+      describe "with email address" do
+        let(:email) { 'testy@example.gov' }
+        let(:link_text) { 'Clicky' }
+        let(:instructions) { "CYM, #{email}" }
 
-        before do
-          OmniAuth.config.test_mode = true
-          OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-            provider: 'google_oauth2',
-            uid: '12345',
-            info: {
-              email: email
-            }
-          })
+        before :each do
+          @token_instructions_page = TokenInstructionsPage.new
+          clear_emails
+          expect(User.find_by_email(email)).to be_nil
+
+          @target_page.load
+          @sign_in_page.email.set email
+          @sign_in_page.submit.click
         end
 
         it "should create a new user" do
-          pending 'not creating a new user (for now)'
-          expect(User.find_by_email(email)).to be_nil
-          sign_in_to_target(@target_page, @sign_in_page)
-          expect(User.find_by_email(email)).to exist
+          expect(User.find_by_email(email)).to be
         end
 
-        it "should redirect the user to the next point" do
-          pending 'not creating a new user (for now)'
-          sign_in_to_target(@target_page, @sign_in_page)
+        it "should let user know about the token email" do
+          expect(@token_instructions_page).to be_displayed
+          expect(@token_instructions_page.source).to match body
+        end
+
+        it "should send the user an email with the token" do
+          open_email(email)
+          expect(current_email).to have_link(link_text)
+        end
+
+        it "should allow user to authenticate with token" do
+          open_email(email)
+          current_email.click_link(link_text)
+
           expect(@target_page).to be_displayed
           expect(@target_page.source).to match body
-        end
-
-        context "when returning later in the session" do
-          before do
-            sign_in_to_target(@target_page, @sign_in_page)
-            @target_page.load
-          end
-
-          it "should redirect the user straight to the next point" do
-            pending 'not creating a new user (for now)'
-            expect(@target_page).to be_displayed
-            expect(@target_page.source).to match body
-          end
-        end
-      end
-
-      context "Signing in a registered user" do
-        describe "using Google" do
-          let(:email) { 'testo@example.com' }
-          let(:body) { "You got me #{email}" }
-
-          before do
-            OmniAuth.config.test_mode = true
-            OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-              provider: 'google_oauth2',
-              uid: '12345',
-              info: {
-                email: email
-              }
-            })
-
-            User.create!(email: email)
-          end
-
-          it "should redirect the user to the next point" do
-            sign_in_to_target(@target_page, @sign_in_page)
-
-            expect(@target_page).to be_displayed
-            expect(@target_page.source).to match body
-          end
-
         end
       end
     end
   end
+
+  describe "Authenticate with an external identity provider" do
+
+    let(:email) { 'testo@example.com' }
+    let(:uid) { '12345' }
+    let(:secret) { "You got me #{email}" }
+
+    before :each do
+      @target_page = TargetPage.new
+      @sign_in_page = SignInPage.new
+    end
+
+    context "with Google" do
+      let(:provider) { :google_oauth2 }
+
+      before :each do
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new({
+          provider: provider,
+          uid: uid,
+          info: {
+            email: email
+          }
+        })
+      end
+
+      shared_examples "omniauth" do
+
+        it "redirects the user to the next point" do
+          expect(@target_page).to be_displayed
+          expect(@target_page.source).to match secret
+        end
+
+        it "allows user to navigate directly to protected pages" do
+          @target_page.load
+          expect(@target_page).to be_displayed
+          expect(@target_page.source).to match secret
+        end
+
+      end
+
+      context "user has already signed in with google" do
+        before :each do
+          User.create! do |user|
+            user.email = email
+            user.authentications.build(provider: provider, uid: uid)
+          end
+
+          @target_page.load
+          @sign_in_page.google_button.click
+        end
+
+        include_examples "omniauth"
+      end
+
+      context "user has signed in, but not with google" do
+        before :each do
+          User.create!(email: email)
+
+          @target_page.load
+          @sign_in_page.google_button.click
+        end
+
+        include_examples "omniauth"
+      end
+
+      context "user has not signed in" do
+        before :each do
+          @target_page.load
+          @sign_in_page.google_button.click
+        end
+
+        include_examples "omniauth"
+      end
+
+    end
+  end
+
 
 end

@@ -8,7 +8,6 @@
 .zeus.sock
 .DS_store
 .rspec
-.travis.yml
 .vagrant
 
 # root files

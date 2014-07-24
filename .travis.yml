@@ -1,0 +1,27 @@
+after_failure:
+  - mysql -e 'show databases;'
+  - cat ./config/database.yml
+  - echo $RAILS_ENV
+  - bundle exec rake --version
+  - ruby env
+build_environment: ubuntu1404
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - mysql -e 'create database myusa-server_test;'
+install:
+  - bundle install --without development
+language: ruby
+env:
+  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+notifications:
+  email:
+    recipients:
+      - jeremy.grahame@gsa.gov
+script:
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:test:prepare
+  - bundle exec rake spec
+services:
+  - mysql
+rvm:
+  - 2.1.2

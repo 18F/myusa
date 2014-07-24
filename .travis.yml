@@ -14,8 +14,9 @@ install:
   - bundle install --without development
 language: ruby
 env:
-  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage SLACK_ORG=18f PROJECT=myusa
-  secure: K6fmrnBxiermK5s96QoOaBEhjvkLzbtSOB34FHXggiYDt8BrrH8Po+8xQ186/rx1uWrm9w4ZL/ZBZpwVaSUA9ZFwTfQ4MtO/fMF0DkL2u/pCXI6ywwRRsBCQfSPQLD5rQdStcn6rFjL8oEfAybKf4N2eTLC/IR+amp/le0SHb3gvgE9lk5E5AfVkWMRMuwjNW3h15eR9jwmDDMCAgMGEmPvIgDdqFVThALOd5cXs7SoZlAMeBrAgOGGYph3SxFicf3OBuDdNOpinECMih/Tu99FUiEUqHXLdt1vwp6ppasiV/WqjEyOXe6Kp9mHhgRJr7xFIpK8X83rfSajUiYO3xA==
+  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+  - SLACK_ORG=18f PROJECT=myusa
+  - secure: K6fmrnBxiermK5s96QoOaBEhjvkLzbtSOB34FHXggiYDt8BrrH8Po+8xQ186/rx1uWrm9w4ZL/ZBZpwVaSUA9ZFwTfQ4MtO/fMF0DkL2u/pCXI6ywwRRsBCQfSPQLD5rQdStcn6rFjL8oEfAybKf4N2eTLC/IR+amp/le0SHb3gvgE9lk5E5AfVkWMRMuwjNW3h15eR9jwmDDMCAgMGEmPvIgDdqFVThALOd5cXs7SoZlAMeBrAgOGGYph3SxFicf3OBuDdNOpinECMih/Tu99FUiEUqHXLdt1vwp6ppasiV/WqjEyOXe6Kp9mHhgRJr7xFIpK8X83rfSajUiYO3xA==
 notifications:
   email:
     recipients:

@@ -9,6 +9,8 @@ after_success:
 build_environment: ubuntu1404
 before_script:
   - cp config/database.yml.example config/database.yml
+  - cp config/initializers/devise.rb.example config/initializers/devise.rb
+  - cp config/secrets.yml.example config/secrets.yml
   - mysql -e 'create database `myusa-server_test`;'
 install:
   - bundle install --without development

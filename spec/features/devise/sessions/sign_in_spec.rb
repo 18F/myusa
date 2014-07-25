@@ -67,14 +67,12 @@ describe "Sign In", js: true do
         end
 
         it "should create a new user" do
-          pending 'not creating a new user (for now)'
           expect(User.find_by_email(email)).to be_nil
           sign_in_to_target(@target_page, @sign_in_page)
-          expect(User.find_by_email(email)).to exist
+          expect(User.find_by_email(email)).to be
         end
 
         it "should redirect the user to the next point" do
-          pending 'not creating a new user (for now)'
           sign_in_to_target(@target_page, @sign_in_page)
           expect(@target_page).to be_displayed
           expect(@target_page.source).to match body
@@ -87,9 +85,26 @@ describe "Sign In", js: true do
           end
 
           it "should redirect the user straight to the next point" do
-            pending 'not creating a new user (for now)'
             expect(@target_page).to be_displayed
             expect(@target_page.source).to match body
+          end
+        end
+      end
+
+      context "Oauth/Songkick app authentication" do
+        describe "using google as auth" do
+
+          before do
+            OmniAuth.config.test_mode = true
+            OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+              provider: 'google_oauth2',
+              uid: '12345',
+              info: {
+                email: email
+              }
+            })
+
+            User.create!(email: email)
           end
         end
       end

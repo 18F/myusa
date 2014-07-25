@@ -6,6 +6,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
 require 'capybara/rspec'
+require 'capybara/email/rspec'
 require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist do |app|

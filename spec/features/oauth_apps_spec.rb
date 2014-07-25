@@ -14,19 +14,6 @@ describe "OauthApps" do
     @app1_client_auth = @app1.oauth2_client
   end
 
-  # let(:app1) do
-  #   App.create(name: 'App1', custom_text: 'Custom text for test') do |a| 
-  #     a.redirect_uri = "http://localhost/"
-  #     a.url="http://app1host.com"
-  #     a.is_public = true
-  #     a.oauth_scopes << OauthScope.top_level_scopes
-  #     a.oauth_scopes << OauthScope.where('scope_name = "profile.email"').first
-  #   end
-  # end
-
-  # before do @app1_client_auth = app1.oauth2_client end
-  
-
   context "when logged in with a user who owns a sandboxed app" do
     before {login(user)}
 
@@ -151,11 +138,11 @@ describe "OauthApps" do
       it "should ask for authorization and redirect after clicking 'Allow'" do
         visit(url_for(controller: 'oauth', action: 'authorize',
               response_type: 'code', scope: 'profile notifications profile.email', client_id: @app1_client_auth.client_id, redirect_uri: 'http://localhost/'))
-        expect(page).to  have_content('The App1 application wants to:')
-        expect(page).to  have_content('Read your profile information')
-        expect(page).to  have_content('Send you notifications')
-        expect(page).to  have_content('Read your email address')
-        expect(page).to_not  have_content('Read your address')
+        expect(page).to have_content('The App1 application wants to:')
+        expect(page).to have_content('Read your profile information')
+        expect(page).to have_content('Send you notifications')
+        expect(page).to have_content('Read your email address')
+        expect(page).to_not have_content('Read your address')
       end
 
       context "when the user does not approve" do
@@ -172,11 +159,11 @@ describe "OauthApps" do
         before do
           visit(url_for(controller: 'oauth', action: 'authorize',
                 response_type: 'code', scope: 'profile notifications profile.email', client_id: @app1_client_auth.client_id, redirect_uri: 'http://localhost/'))
-          expect(page).to  have_content('The App1 application wants to:')
-          expect(page).to  have_content('Read your profile information')
-          expect(page).to  have_content('Send you notifications')
-          expect(page).to  have_content('Read your email address')
-          expect(page).to_not  have_content('Read your address')
+          expect(page).to have_content('The App1 application wants to:')
+          expect(page).to have_content('Read your profile information')
+          expect(page).to have_content('Send you notifications')
+          expect(page).to have_content('Read your email address')
+          expect(page).to_not have_content('Read your address')
         end
       end
     end

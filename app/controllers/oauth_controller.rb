@@ -9,7 +9,7 @@ class OauthController < ApplicationController
 
   def authorize 
     @oauth2 = Songkick::OAuth2::Provider.parse(current_user, request.env)
-    unless scopes_allowed?
+    if !scopes_allowed?
       redirect_to get_redirect_uri(@oauth2.client.owner.redirect_uri)
       return
     end
@@ -41,14 +41,12 @@ class OauthController < ApplicationController
     redirect_to @auth.redirect_uri, :status => @auth.response_status
   end
 
-  def pass_sandbox_check params
-    pass = false
+  def pass_sandbox_check(params)
     if @app.sandbox?
       pass = @app.user == current_user ? true : false
     else
       pass = true
     end
-    return pass
   end
 
   def unknown_app

@@ -1,3 +1,26 @@
+language: ruby
+rvm:
+  - 2.1.2
+services:
+  - mysql
+env:
+  global:
+    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+    - SLACK_ORG=18f PROJECT=myusa
+    - secure: K6fmrnBxiermK5s96QoOaBEhjvkLzbtSOB34FHXggiYDt8BrrH8Po+8xQ186/rx1uWrm9w4ZL/ZBZpwVaSUA9ZFwTfQ4MtO/fMF0DkL2u/pCXI6ywwRRsBCQfSPQLD5rQdStcn6rFjL8oEfAybKf4N2eTLC/IR+amp/le0SHb3gvgE9lk5E5AfVkWMRMuwjNW3h15eR9jwmDDMCAgMGEmPvIgDdqFVThALOd5cXs7SoZlAMeBrAgOGGYph3SxFicf3OBuDdNOpinECMih/Tu99FUiEUqHXLdt1vwp6ppasiV/WqjEyOXe6Kp9mHhgRJr7xFIpK8X83rfSajUiYO3xA==
+install:
+  - bundle install --without development
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - cp config/initializers/devise.rb.example config/initializers/devise.rb
+  - cp config/secrets.yml.example config/secrets.yml
+  - mysql -e 'create database `myusa-server_test`;'
+script:
+  - RAILS_ENV=test bundle exec rake db:schema:load
+  - RAILS_ENV=test bundle exec rake db:prepare
+  - bundle exec rake spec
+after_script:
+  - mysql -e 'drop database `myusa-server_test`;'
 after_failure:
   - mysql -e 'show databases;'
   - cat ./config/database.yml
@@ -6,30 +29,9 @@ after_failure:
   - python other/slack/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
 after_success:
   - python other/slack/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN -s
-before_script:
-  - cp config/database.yml.example config/database.yml
-  - cp config/initializers/devise.rb.example config/initializers/devise.rb
-  - cp config/secrets.yml.example config/secrets.yml
-  - mysql -e 'create database `myusaservertest`;'
-install:
-  - bundle install --without development
-language: ruby
-env:
-  global:
-    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-    - SLACK_ORG=18f PROJECT=myusa
-    - secure: K6fmrnBxiermK5s96QoOaBEhjvkLzbtSOB34FHXggiYDt8BrrH8Po+8xQ186/rx1uWrm9w4ZL/ZBZpwVaSUA9ZFwTfQ4MtO/fMF0DkL2u/pCXI6ywwRRsBCQfSPQLD5rQdStcn6rFjL8oEfAybKf4N2eTLC/IR+amp/le0SHb3gvgE9lk5E5AfVkWMRMuwjNW3h15eR9jwmDDMCAgMGEmPvIgDdqFVThALOd5cXs7SoZlAMeBrAgOGGYph3SxFicf3OBuDdNOpinECMih/Tu99FUiEUqHXLdt1vwp6ppasiV/WqjEyOXe6Kp9mHhgRJr7xFIpK8X83rfSajUiYO3xA==
 notifications:
   email:
     on_success: change
     on_failure: always
     recipients:
       - jeremy.grahame@gsa.gov
-rvm:
-  - 2.1.2
-script:
-  - RAILS_ENV=test bundle exec rake db:schema:load
-  - RAILS_ENV=test bundle exec rake db:prepare
-  - bundle exec rake spec
-services:
-  - mysql

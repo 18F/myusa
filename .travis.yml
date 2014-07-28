@@ -10,7 +10,7 @@ before_script:
   - cp config/database.yml.example config/database.yml
   - cp config/initializers/devise.rb.example config/initializers/devise.rb
   - cp config/secrets.yml.example config/secrets.yml
-  - mysql -e 'create database `myusa-server_test`;'
+  - mysql -e 'create database `myusaservertest`;'
 install:
   - bundle install --without development
 language: ruby
@@ -28,7 +28,7 @@ notifications:
 rvm:
   - 2.1.2
 script:
-  - bundle exec rake db:schema:load
+  - RAILS_ENV=test bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   - bundle exec rake spec
 services:

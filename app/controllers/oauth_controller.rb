@@ -51,20 +51,18 @@ class OauthController < ApplicationController
     current_user.deauthorize_app(@app)
   end
 
-  def pass_sandbox_check params
-    pass = false
+  def unknown_app
+  end
+
+  protected
+
+  def pass_sandbox_check
     if @app.sandbox?
       pass = @app.user == current_user ? true : false
     else
       pass = true
     end
-    return pass
   end
-
-  def unknown_app
-  end
-
-  protected
 
   def get_redirect_uri(redirect_uri)
     url_obj           = URI.parse(redirect_uri)

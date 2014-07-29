@@ -42,6 +42,18 @@ gem "paperclip", "~> 4.1"
 gem "permanent_records", "~> 2.3.0"
 gem 'font-awesome-sass'
 
+## deploy dependencies
+gem 'berkshelf'
+gem 'capistrano', '~> 2.15'
+gem 'chef'
+gem 'knife-ec2'
+gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
+gem 'knife-solo_data_bag'
+# gem 'rb-fsevent'
+gem 'unf'
+gem 'unicorn', :require => false
+gem 'capistrano-unicorn', :require => false
+
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
 
@@ -51,11 +63,6 @@ group :doc do
 end
 
 group :development do
-  # Use Capistrano for deployment
-  gem 'capistrano',  '~> 3.1'
-  gem 'capistrano-rails', '~> 1.1'
-#  gem 'capistrano-maintenance', github: "capistrano/capistrano-maintenance"
-  gem 'rvm1-capistrano3', require: false
   gem 'guard-livereload'
   gem 'railroady'
   gem 'quiet_assets'
@@ -98,10 +105,6 @@ group :test do
   gem 'timecop'
   gem 'capybara-email'
 end
-
-# group :production, :staging
-  gem 'unicorn'
-# end
 
 group :production do
   gem 'newrelic_rpm'

@@ -1,0 +1,14 @@
+{
+  "id": "jgrevich",
+  "comment": "Justin Grevich",
+  "groups": [
+    "admin",
+    "rvm"
+  ],
+  "shell": "/bin/bash",
+  "ssh_keys": [
+    "ssh-rsa AAAA_your_key_here== jgrevich@supercomputer.local",
+    "ssh-rsa AAAA_your_key_here== jgrevich@laptop.local"
+  ],
+  "uid": "2601"
+}

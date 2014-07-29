@@ -1,0 +1,18 @@
+{
+	"run_list":[ "role[bare_bones]", "myusa::database", "myusa::app"],
+	"authorization": {
+			"sudo": {
+				"groups": ["adm", "wheel"],
+				"users": ["vagrant"],
+				"passwordless": true
+			}
+	},
+	"ntp": {
+		"apparmor_enabled": false
+	},
+	"myusa": {
+		"user": "vagrant",
+		"group": "vagrant"
+	},
+	"set_fqdn": "hostname.fqdn.tld"
+}

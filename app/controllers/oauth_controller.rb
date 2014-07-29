@@ -32,18 +32,18 @@ class OauthController < ApplicationController
   end
   
   def allow
-    selected_scopes = params[:selected_scopes].select { |k, v|
+    selected_scopes = (params[:selected_scopes] || {}).select { |k, v|
       v == "1"
     }.keys.join(' ')
     new_params = params.dup
     new_params[:scopes] = selected_scopes
     @auth = Songkick::OAuth2::Provider::Authorization.new(current_user, new_params)
-    if params[:allow] == '1' and params[:commit] == 'Allow' && pass_sandbox_check(params)
+    if params[:allow] == '1' and params[:commit] == 'Allow' && pass_sandbox_check
       @auth.grant_access!
     else
       @auth.deny_access!
     end
-    current_user.set_values_from_scopes(params[:new_profile_values])
+    current_user.set_values_from_scopes(params[:new_profile_values]) unless params[:new_profile_values].blank?
     redirect_to @auth.redirect_uri, :status => @auth.response_status
   end
 
@@ -57,11 +57,7 @@ class OauthController < ApplicationController
   protected
 
   def pass_sandbox_check
-    if @app.sandbox?
-      pass = @app.user == current_user ? true : false
-    else
-      pass = true
-    end
+    !@app.sandbox? || @app.user == current_user
   end
 
   def get_redirect_uri(redirect_uri)

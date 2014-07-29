@@ -34,7 +34,7 @@
                <% @oauth2.client.owner.find_scopes(@oauth2.scopes).each do |scope| %>
                   <li>
 	                  <%= check_box_tag "selected_scopes[#{scope.scope_name}]" %><%= scope.description %>
-	                  <% if current_user.scope_field_value(scope.scope_name).blank? %>
+	                  <% if scope.scope_name.downcase.starts_with?("profile.") &&  current_user.scope_field_value(scope.scope_name).blank? %>
 	                  	<%= text_field "new_profile_values", scope.scope_name %>
 	                  <% else %>
 	                  	<%= current_user.scope_field_value(scope.scope_name)%>

@@ -19,12 +19,11 @@
     <![endif]-->
   </head>
   <body>
-
-    <% flash.each do |name, msg| -%>
-      <%= content_tag :div, msg, class: name %>
-    <% end -%>
-
-<%= yield %>
+    <div class="container">
+    <%= render 'layouts/messages' %>
+    <%= render 'layouts/header'%>
+      <%= yield %>
+    </div>
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <%= javascript_include_tag "application" %>

@@ -16,8 +16,8 @@ before_script:
   - cp config/secrets.yml.example config/secrets.yml
   - mysql -e 'create database `myusa-server_test`;'
 script:
-- RAILS_ENV=test bundle exec rake db:setup
-- RAILS_ENV=test bundle exec rake db:schema:load
+  - RAILS_ENV=test bundle exec rake db:setup
+  - RAILS_ENV=test bundle exec rake db:schema:load
   - bundle exec rake spec
 after_script:
   - mysql -e 'drop database `myusa-server_test`;'

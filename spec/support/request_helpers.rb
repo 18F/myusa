@@ -1,7 +1,7 @@
 require 'spec_helper'
 include Warden::Test::Helpers
 
-def create_confirmed_user_with_profile(args)
+def create_confirmed_user_with_profile(args={})
   profile = {
     email: 'joe@citizen.org',
     first_name: 'Joe', last_name: 'Citizen', is_student: true

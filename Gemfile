@@ -27,7 +27,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 ## app dependencies
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 gem 'devise'
 gem 'devise-async'
 gem 'omniauth'
@@ -41,6 +42,8 @@ gem 'validates_email_format_of', :git => 'https://github.com/alexdunae/validates
 gem "paperclip", "~> 4.1"
 gem "permanent_records", "~> 2.3.0"
 gem 'font-awesome-sass'
+gem "attr_encrypted"
+gem "factory_girl"
 
 ## deploy dependencies
 gem 'berkshelf'

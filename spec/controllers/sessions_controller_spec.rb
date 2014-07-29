@@ -21,11 +21,15 @@ describe SessionsController do
 
     context 'email and token are present' do
       let(:user) { User.create(email: email) }
+      let(:remember_me) { nil }
 
       context 'and are valid' do
         before :each do
           raw = user.set_authentication_token
-          get :new, :email => user.email, :token => raw
+          get :new,
+            :email => user.email,
+            :token => raw,
+            :remember_me => remember_me
         end
 
         it 'logs in and redirects the user' do
@@ -37,6 +41,21 @@ describe SessionsController do
         it 'expires the token' do
           expect(controller.current_user.authentication_token).to be_nil
         end
+
+        context 'remember_me is set' do
+          let(:remember_me) { true }
+
+          it 'sets the remember cookie' do
+            expect(@response.cookies).to have_key('remember_user_token')
+          end
+        end
+
+        context 'remember_me is not set' do
+          it 'does not set the remember cookie' do
+            expect(@response.cookies).to_not have_key('remember_user_token')
+          end
+        end
+
       end
 
       context 'token is bad' do

@@ -136,6 +136,21 @@ describe User, type: :model do
         :authentication_instructions, 'raw', anything)
       user.set_authentication_token
     end
+
+    context "called with remember_me option" do
+      it "ensures user has valid remember token" do
+        user.set_authentication_token(remember_me: true)
+        expect(user.remember_token).to be
+        expect(user).to_not be_remember_expired
+      end
+
+      it "passes remember_me option to devise mailer" do
+        expect(user).to receive(:send_devise_notification).with(
+          :authentication_instructions, 'raw', hash_including(:remember_me))
+        user.set_authentication_token(remember_me: true)
+      end
+
+    end
   end
 
   describe "#verify_authentication_token" do

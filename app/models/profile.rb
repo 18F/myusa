@@ -1,5 +1,6 @@
 class Profile < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
+  include ::Encryption
 
   belongs_to :user
   validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
@@ -10,8 +11,11 @@ class Profile < ActiveRecord::Base
 
   after_validation :set_errors
 
-  PROFILE_FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :gender, :marital_status, :is_parent, :is_student, :is_veteran, :is_retired]
-  PROFILE_METHODS = [:email, :phone_number, :mobile_number]
+  FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :gender, :marital_status, :is_parent, :is_student, :is_veteran, :is_retired]
+  METHODS = [:email, :phone_number, :mobile_number]
+
+  ENCRYPTED_FIELDS = FIELDS + [:mobile, :phone]
+  ENCRYPTED_FIELDS.map { |attrib| attr_encrypted attrib.to_sym, key: :key, marshal: true }
 
 #  attr_accessible :title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone_number, :mobile_number, :gender, :marital_status, :is_parent, :is_student, :is_veteran, :is_retired, :as => [:default, :admin]
 #  attr_accessible :user_id, :phone, :mobile, :as => :admin
@@ -47,14 +51,37 @@ class Profile < ActiveRecord::Base
   def as_json(options = {})
     fields, methods = [], []
     if (options[:scope_list] and options[:scope_list].include?("profile")) or options[:scope_list].nil?
-      fields += PROFILE_FIELDS
-      methods += PROFILE_METHODS.collect{|method| method.to_s}
+      fields += FIELDS
+      methods += METHODS.collect{|method| method.to_s}
     else
       profile_scope_list = options[:scope_list].collect{|scope| scope.starts_with?('profile') ? scope.split('.').last : nil}.compact
-      PROFILE_FIELDS.each{|field| fields << field if profile_scope_list.include?(field.to_s)}
-      PROFILE_METHODS.each{|method| methods << method.to_s if profile_scope_list.include?(method.to_s)}
+      FIELDS.each{|field| fields << field if profile_scope_list.include?(field.to_s)}
+      METHODS.each{|method| methods << method.to_s if profile_scope_list.include?(method.to_s)}
     end
-    super(:only => fields, :methods => methods)
+    options[:only], options[:methods] = fields, methods
+
+    attribute_names = attributes.keys.map {|k| k.gsub(Profile.encrypted_column_prefix, '')}
+
+    if only = options[:only]
+      attribute_names &= Array(only).map(&:to_s)
+    elsif except = options[:except]
+      attribute_names -= Array(except).map(&:to_s)
+    end
+
+    hash = {}
+    attribute_names.each { |n| hash[n] = read_attribute_for_serialization(n) }
+
+    Array(options[:methods]).each { |m| hash[m.to_s] = send(m) if respond_to?(m) }
+
+    serializable_add_includes(options) do |association, records, opts|
+      hash[association.to_s] = if records.respond_to?(:to_ary)
+        records.to_ary.map { |a| a.serializable_hash(opts) }
+      else
+        records.serializable_hash(opts)
+      end
+    end
+
+    hash
   end
 
   def to_schema_dot_org_hash(scope_list = [])

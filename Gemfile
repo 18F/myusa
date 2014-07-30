@@ -44,6 +44,7 @@ gem "permanent_records", "~> 2.3.0"
 gem 'font-awesome-sass'
 gem "attr_encrypted"
 gem "factory_girl"
+gem 'unicorn', :require => false
 
 
 # Papertrail prevents records from being deleted.
@@ -73,7 +74,6 @@ group :development do
   gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
   gem 'knife-solo_data_bag'
   gem 'unf'
-  gem 'unicorn', :require => false
   gem 'capistrano-unicorn', :require => false
 end
 

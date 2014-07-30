@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'oauth/authorize' => 'oauth#authorize'
   post 'oauth/authorize' => 'oauth#authorize'
   post 'oauth/allow' => 'oauth#allow'
+
   get 'oauth/unknown_app' => 'oauth#unknown_app', :as => :unknown_app
 
   namespace :api, :defaults => {:format => :json} do
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
       resource :profile, :only => [:show]
       resources :notifications, :only => [:create]
       resources :tasks, :only => [:index, :create, :show, :update]
+      resources :authorized_scopes, :only => [:index]
     end
   end
 

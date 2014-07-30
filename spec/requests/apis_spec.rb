@@ -10,7 +10,6 @@ describe "Profiles Requests" do
       authorization.grant_access!
       token = authorization.access_token
     end
-
     token
   end
 
@@ -25,6 +24,7 @@ describe "Profiles Requests" do
         before do
           @app.oauth_scopes.destroy_all
           @token = build_access_token(@app)
+
         end
 
         it "should return an error and message" do
@@ -38,10 +38,25 @@ describe "Profiles Requests" do
       context "when app has limited scope" do
         before do
           @limited_scope_app = App.create(:name => 'app_limited', :redirect_uri => "http://localhost/")
-          @limited_scope_app.oauth_scopes = OauthScope.top_level_scopes.where(:scope_type => 'user')
+          @limited_scope_app.oauth_scopes = OauthScope.top_level_scopes.where(:scope_type => 'user') 
           # Adding just one profile sub scope to test that only this one is presnt in json.
           @limited_scope_app.oauth_scopes << OauthScope.find_by_scope_name("profile.first_name")
           @token = build_access_token(@limited_scope_app)
+        end
+
+        it "should allow app to request scopes approved by user" do
+          login(@user)
+
+          #response = get "/api/authorized_scopes", {client_id: @limited_scope_app.oauth2_client.client_id} , {'HTTP_AUTHORIZATION' => "Bearer #{@token}",  'response_type' => 'code', 'client_id' => @limited_scope_app.oauth2_client.client_id}
+          response = get "/api/authorized_scopes", nil, {'HTTP_AUTHORIZATION' => "Bearer #{@token}"}
+
+          parsed_json = JSON.parse(response.body)     
+
+          (OauthScope.top_level_scopes.where(:scope_type => 'user').map(&:name) + ["profile.first_name"]).each do |e|
+            expect(parsed_json).to include e.downcase
+          end
+
+          expect(parsed_json).not_to include "profile.last_name"
         end
 
         it "should return JSON with only app requested user profile attritues in addition to an id and a unique identifier" do

@@ -1,6 +1,6 @@
 include_recipe "nodejs"
 
-app_id = 'myusa-server'
+app_id = 'myusa'
 
 deploy_to_dir = "/var/www/#{app_id}"
 

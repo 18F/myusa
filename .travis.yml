@@ -16,7 +16,6 @@ before_script:
   - cp config/secrets.yml.example config/secrets.yml
 script:
   - RAILS_ENV=test bundle exec rake db:setup
-  - RAILS_ENV=test bundle exec rake db:schema:load
   - bundle exec rake spec
 after_failure:
   - mysql -e 'show databases;'

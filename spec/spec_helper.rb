@@ -2,6 +2,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'rspec/its'
 #require 'rspec_api_blueprint'
 require 'capybara/rspec'
 #require 'webmock/rspec'

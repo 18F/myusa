@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Profiles Requests" do
+describe "API" do
   def build_access_token(app)
     scopes = app.oauth_scopes.collect{ |s| s.scope_name }.join(" ")
     token = nil
@@ -18,6 +18,22 @@ describe "Profiles Requests" do
     @app = App.create(:name => 'App1', :redirect_uri => "http://localhost/")
     @app.oauth_scopes = OauthScope.where(:scope_type => 'user')
   end
+  
+  describe "Token validity check" do
+    subject { get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"} }
+    context "with a valid token" do
+      let(:token)  { build_access_token(@app) }
+      its(:status) { should eq 200 }
+    end
+    context "with an invalid token" do
+      let(:token)  { "bad token! No cookie!" }
+      its(:status) { should eq 401 }
+      it "should include an error message" do
+        expect(JSON.parse(subject.body)['message']).to eql 'Invalid token'
+      end
+    end
+  end
+
   describe "GET /api/profile" do
     context "when the request has a valid token" do
       context "when the app does not have permission to read the user's profile" do
@@ -36,31 +52,16 @@ describe "Profiles Requests" do
       end
 
       context "when app has limited scope" do
-        before do
-          @limited_scope_app = App.create(:name => 'app_limited', :redirect_uri => "http://localhost/")
-          @limited_scope_app.oauth_scopes = OauthScope.top_level_scopes.where(:scope_type => 'user') 
-          # Adding just one profile sub scope to test that only this one is presnt in json.
-          @limited_scope_app.oauth_scopes << OauthScope.find_by_scope_name("profile.first_name")
-          @token = build_access_token(@limited_scope_app)
+        let(:scope_app) do
+          app = App.create(:name => 'app_limited', :redirect_uri => "http://localhost/")
+          app.oauth_scopes = OauthScope.top_level_scopes.where(:scope_type => 'user') <<
+                             OauthScope.find_by_scope_name("profile.first_name")
+          app
         end
-
-        it "should allow app to request scopes approved by user" do
-          login(@user)
-
-          #response = get "/api/authorized_scopes", {client_id: @limited_scope_app.oauth2_client.client_id} , {'HTTP_AUTHORIZATION' => "Bearer #{@token}",  'response_type' => 'code', 'client_id' => @limited_scope_app.oauth2_client.client_id}
-          response = get "/api/authorized_scopes", nil, {'HTTP_AUTHORIZATION' => "Bearer #{@token}"}
-
-          parsed_json = JSON.parse(response.body)     
-
-          (OauthScope.top_level_scopes.where(:scope_type => 'user').map(&:name) + ["profile.first_name"]).each do |e|
-            expect(parsed_json).to include e.downcase
-          end
-
-          expect(parsed_json).not_to include "profile.last_name"
-        end
+        let(:token) { build_access_token(scope_app) }
 
         it "should return JSON with only app requested user profile attritues in addition to an id and a unique identifier" do
-          response = get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{@token}"}
+          response = get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
           expect(response.status).to eq 200
           parsed_json = JSON.parse(response.body)
           expect(parsed_json).to_not be_nil
@@ -112,15 +113,6 @@ describe "Profiles Requests" do
             expect(parsed_json["email"]).to eq 'joe@citizen.org'
           end
         end
-      end
-    end
-
-    context "when the request does not have a valid token" do
-      it "should return an error message" do
-        response = get "/api/profile", {"schema" => "true"}, {'HTTP_AUTHORIZATION' => "Bearer bad_token"}
-        expect(response.status).to eq 401
-        parsed_json = JSON.parse(response.body)
-        expect(parsed_json["message"]).to eq "Invalid token"
       end
     end
   end
@@ -177,16 +169,8 @@ describe "Profiles Requests" do
         expect(parsed_json["message"]).to eq "You do not have permission to send notifications to that user."
       end
     end
-
-    context "when the user has an invalid token" do
-      it "should return an error message" do
-        response = post "/api/notifications", {:notification => {:subject => 'Project MyUSA', :body => 'This is a test.'}}, {'HTTP_AUTHORIZATION' => "Bearer fake_token"}
-        expect(response.status).to eq 401
-        parsed_response = JSON.parse(response.body)
-        expect(parsed_response["message"]).to eq "Invalid token"
-      end
-    end
   end
+  
   describe "Tasks API" do
     before do
       @token = build_access_token(@app)
@@ -231,15 +215,6 @@ describe "Profiles Requests" do
           expect(parsed_json["message"]).to eq "You do not have permission to view tasks for that user."
         end
       end
-
-      context "when the request does not have a valid token" do
-        it "should return an error message" do
-          response = get "/api/tasks", nil, {'HTTP_AUTHORIZATION' => "Bearer bad_token"}
-          expect(response.status).to eq 401
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json["message"]).to eq "Invalid token"
-        end
-      end
     end
 
     describe "POST /api/tasks" do
@@ -264,16 +239,8 @@ describe "Profiles Requests" do
           end
         end
       end
-
-      context "when the request does not have a valid token" do
-        it "should return an error message" do
-          response = post "/api/tasks", nil, {'HTTP_AUTHORIZATION' => "Bearer bad_token"}
-          expect(response.status).to eq 401
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json["message"]).to eq "Invalid token"
-        end
-      end
     end
+    
     describe "PUT /api/tasks:id.json" do
       context "when the caller has a valid token" do
         before do
@@ -311,19 +278,8 @@ describe "Profiles Requests" do
           end
         end
       end
-      context "when the caller does not have a valid token" do
-        before do
-          @task = Task.create!({:name => "Super task", :user_id => @user.id, :app_id => @app.id, :task_items_attributes => [{ :name => "Task item one" }]})
-        end
-
-        it "should return authorization error" do
-          response = put "/api/tasks/#{@task.id}", {:task => { :name => 'New Task' , :task_items_attributes => [{ :id => @task.task_items.first.id, :name => "Task item one" }] }}, {'HTTP_AUTHORIZATION' => "Bearer #{@token}_"}
-          expect(response.status).to eq 401
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json["message"]).to eq "Invalid token"
-        end
-      end
     end
+    
     describe "GET /api/tasks/:id.json" do
       before do
         @task = Task.create!({:name => 'New Task', :user_id => @user.id, :app_id => @app.id})
@@ -343,16 +299,34 @@ describe "Profiles Requests" do
           expect(parsed_json["task_items"].last["url"]).to eq "http://valid_url.com"
         end
       end
-
-      context "when the request does not have a valid token" do
-        it "should return an error message" do
-          response = get "/api/tasks/#{@task.id}", nil, {'HTTP_AUTHORIZATION' => "Bearer bad_token"}
-          expect(response.status).to eq 401
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json["message"]).to eq "Invalid token"
+    end
+  end
+  
+  describe "Authorized Scopes API" do
+    describe "GET /api/authorized_scopes" do
+      context "when a valid token is provided" do
+        let(:scopes) do 
+          OauthScope.top_level_scopes.where(:scope_type => 'user') <<
+            OauthScope.find_by_scope_name("profile.first_name")
+        end
+        let(:scope_app) do
+          App.create(name: 'app_limited', 
+                     redirect_uri: "http://localhost/",
+                     oauth_scopes: scopes)
+        end
+        let(:token) { build_access_token(scope_app) }
+    
+        it "returns the list of scopes approved by user" do
+          login(@user)
+    
+          response = get "/api/authorized_scopes", nil, 
+                         {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
+    
+          parsed_json = JSON.parse(response.body)     
+          expected_scopes = scopes.map(&:scope_name)
+          expect(parsed_json.sort).to eql expected_scopes.sort
         end
       end
     end
   end
-
 end

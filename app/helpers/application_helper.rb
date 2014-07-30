@@ -9,4 +9,12 @@ module ApplicationHelper
     }
     bootstrap_key_mapping[msg] || msg
   end
+
+  def bs_button_to(text, action, options = {})
+    form_tag action do
+      button_tag({ type: 'submit' }.merge(options)) do
+        text
+      end
+    end
+  end
 end

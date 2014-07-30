@@ -35,12 +35,12 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -310px;
+  margin-left: -410px;
   margin-top: -200px;
   padding-left: 150px;
   padding-right: 150px;
   height: auto;
-  width: 620px;
+  width: 820px;
   background-color: $myusa_grey;
   z-index: 10;
   /*box-shadow: 1px 1px 1px #888888;*/
@@ -171,6 +171,7 @@ div.moresignin {
 /** SOCIAL BUTTONS **/
 .btn.btn-social {
   padding: 0;
+  margin-bottom: 15px;
   line-height: 2.2em;
 }
 
@@ -197,6 +198,10 @@ div.moresignin {
 }
 .btn-google:active,
 .btn-google.active {
+  color: #ffffff;
+}
+.main .btn:hover,
+.btn:focus {
   color: #ffffff;
 }
 
@@ -356,6 +361,9 @@ div.moresignin {
 .moresignin > span.less-options {
   display: none;
 }
+.moresignin > span.more-options {
+  display: none;
+}
 .content-signup {
   /*display: none;*/
 }
@@ -415,3 +423,4 @@ div.moresignin {
 .usa{
 	color: red;
 }
+

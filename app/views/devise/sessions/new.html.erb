@@ -7,41 +7,32 @@
 			<h5 class="col-md-12 text-center">Your one account for all government</h5>
 		</div>
 		<div class="row">
-			<p class="col-md-12 text-center text-muted"><small>By signing in with MyUSA, you accept our <a>terms and conditions</a></small></p>
+			<p class="col-md-12 text-center text-muted"><small>By signing in with MyUSA, you accept our <a><s>terms and conditions</s></a></small></p>
 		</div>
 		<div class="row">
 			<div class="row">
-	          <div class="col-md-12">
-	          	<%# button_to "Sign In with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-google fullwidth" %>
-	          </div>
-	          <div class="col-md-12">
-                    <button class="btn btn-social btn-google fullwidth">Sign In with Google</button>
-                  </div>
-                </div>
+	        	<div class="col-md-12">
+	        		<%= bs_button_to "Sign In with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-google fullwidth" %>
+	          	</div>
 	        </div>
 	        <div class="hidden-buttons">
-	          <div class="row">
-	            <div class="col-md-12">
-	              <button class="btn btn-social btn-paypal fullwidth">Sign In with PayPal</button>
-	            </div>
-	          </div>
-	          <div class="row">
-	            <div class="col-md-12">
-	              <button class="btn btn-social btn-symantec fullwidth">Sign In with Symantec</button>
-	            </div>
-	          </div>
+	        	<%= render 'devise/sessions/more_options'%>
 	        </div>
+	        <noscript>
+	        	<%= render 'devise/sessions/more_options'%>
+	        </noscript>
+
 
 	        <div class="row">
 	          <div class="col-md-12 moresignin">
 	            <span class="more-options">
 	              <a href="#">
-	              <i class="fa fa-chevron-circle-down"></i> More Options <i class="fa fa-chevron-circle-down"></i>
+	              	<button class="btn btn-primary btn-sm"><i class="fa fa-chevron-circle-down"></i> More Options</button>
 	              </a>
 	            </span>
 	            <span class="less-options">
 	              <a href="#">
-	              <i class="fa fa-chevron-circle-up"></i> Less Options <i class="fa fa-chevron-circle-up"></i>
+	              <button class="btn btn-primary btn-sm"><i class="fa fa-chevron-circle-up"></i> Less Options</button>
 	              </a>
 	            </span>
 	          </div>

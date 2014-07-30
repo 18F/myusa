@@ -13,7 +13,7 @@ namespace :deploy do
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/"
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/secrets.yml #{release_path}/config/"
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/settings.yml #{release_path}/config/"
-    run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/initializers/devise.rb #{release_path}/config/initializers/"
+    # run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/initializers/devise.rb #{release_path}/config/initializers/"
   end
 
 # Created to help with first time database creation

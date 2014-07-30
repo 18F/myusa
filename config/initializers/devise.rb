@@ -4,7 +4,7 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = 'f2d9d5c8d1e6f7a0a43a19bb09e9379ea49a5b6757f8c135c11f59b27c3c3de92f8a460903f8e1aa4ddd0cd2899eaef6846832501d518eed3b72752be10be257'
+  config.secret_key = Rails.application.secrets.devise_secret_key
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -253,7 +253,6 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  config.omniauth :google_oauth2, '190897462398-h2ko8o8geg9bol3cf7h5e6ffa0b45ssu.apps.googleusercontent.com', 'lGKJwPOup-vtok0JVv-2R0q5'
-
+  config.omniauth :google_oauth2, Rails.application.secrets.omniauth_google_app_id, Rails.application.secrets.omniauth_google_secret
   config.add_module :email_authenticatable, controller: :sessions, route: { session: [nil, :new, :destroy] }
 end

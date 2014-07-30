@@ -45,17 +45,6 @@ gem 'font-awesome-sass'
 gem "attr_encrypted"
 gem "factory_girl"
 
-## deploy dependencies
-gem 'berkshelf'
-gem 'capistrano', '~> 2.15'
-gem 'chef'
-gem 'knife-ec2'
-gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
-gem 'knife-solo_data_bag'
-# gem 'rb-fsevent'
-gem 'unf'
-gem 'unicorn', :require => false
-gem 'capistrano-unicorn', :require => false
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
@@ -75,6 +64,17 @@ group :development do
   gem 'spring'
   gem 'thin'
   gem "letter_opener"
+
+  ## deploy dependencies
+  gem 'berkshelf'
+  gem 'capistrano', '~> 2.15'
+  gem 'chef'
+  gem 'knife-ec2'
+  gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
+  gem 'knife-solo_data_bag'
+  gem 'unf'
+  gem 'unicorn', :require => false
+  gem 'capistrano-unicorn', :require => false
 end
 
 group :development, :test do

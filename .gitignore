@@ -11,6 +11,7 @@
 .travis.yml
 .vagrant
 .databag_secret
+.chef/knife.rb
 
 # root files
 bootstrap.sh

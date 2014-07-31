@@ -9,8 +9,7 @@ require 'capistrano-unicorn'
 
 
 set :application, 'myusa'
-# set :user, ENV['USER'] || :deployer
-set :user, "vagrant"
+set :user, ENV['USER'] || :deployer
 set :web_user, "nobody"
 set :web_group, "web"
 
@@ -19,7 +18,7 @@ set :stages, %w(vagrant development staging ec2 production)
 
 set :repository, 'git@github.com:18F/myusa.git'
 # Switch to the following https:// url when publicly available
-# set :repository, "https://github.com/18F/myusa-server.git"
+# set :repository, "https://github.com/18F/myusa.git"
 set :branch, ENV['BRANCH'] || 'devel'
 set :deploy_to, "/var/www/#{application}"
 set :deploy_via, :remote_cache
@@ -34,7 +33,4 @@ set :scm, :git
 
 load 'config/deploy/base'
 before 'deploy:assets:precompile','deploy:symlink_configs'
-
-after 'deploy:restart', 'unicorn:reload'    # app IS NOT preloaded
-# after 'deploy:restart', 'unicorn:restart'   # app preloaded
-# after 'deploy:restart', 'unicorn:duplicate' # before_fork hook implemented (zero downtime deployments)
+after 'deploy:restart', 'unicorn:reload'

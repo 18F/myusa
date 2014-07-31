@@ -8,16 +8,16 @@ require 'bundler/capistrano'
 require 'capistrano-unicorn'
 
 
-set :application, 'myusa-server'
+set :application, 'myusa'
 # set :user, ENV['USER'] || :deployer
 set :user, "vagrant"
 set :web_user, "nobody"
 set :web_group, "web"
 
 set :default_stage, 'vagrant'
-set :stages, %w(vagrant development staging production)
+set :stages, %w(vagrant development staging ec2 production)
 
-set :repository, 'git@github.com:18F/myusa-server.git'
+set :repository, 'git@github.com:18F/myusa.git'
 # Switch to the following https:// url when publicly available
 # set :repository, "https://github.com/18F/myusa-server.git"
 set :branch, ENV['BRANCH'] || 'devel'

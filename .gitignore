@@ -24,6 +24,7 @@ config/*.yml
 config/environments/production.rb
 config/initializers/recaptcha.rb
 config/deploy.rb
+config/deploy/ec2.rb
 config/deploy/development.rb
 config/deploy/vagrant.rb
 kitchen/nodes/localhost.json

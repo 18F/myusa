@@ -1,19 +1,15 @@
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
-  task :restart, roles: :app, except: { no_release: true } do
-    # run "#{try_sudo} kill -HUP `cat #{deploy_to}/shared/pids/unicorn.pid`"
-  end
+  task :restart do ; end
 
   desc "Symlink configs"
   task :symlink_configs, roles: :app do
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/.env #{release_path}/"
 #    run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/newrelic.yml #{current_path}/config/"
-    run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/unicorn.rb #{release_path}/config/"
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/"
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/secrets.yml #{release_path}/config/"
     run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/settings.yml #{release_path}/config/"
-    # run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/initializers/devise.rb #{release_path}/config/initializers/"
   end
 
 # Created to help with first time database creation

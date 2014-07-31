@@ -64,18 +64,6 @@ template  "#{deploy_to_dir}/shared/config/database.yml" do
   )
 end
 
-# # set up unicorn and nginx
-
-template "#{deploy_to_dir}/shared/config/unicorn.rb" do
-  source "unicorn.rb.erb"
-  variables(
-    :working_dir => "#{deploy_to_dir}/current",
-    :pids_dir => "#{deploy_to_dir}/shared",
-    :log_dir => "#{deploy_to_dir}/shared/log",
-    :app_id => app_id
-  )
-end
-
 include_recipe "nginx"
 
 template "/etc/nginx/conf.d/#{app_id}.conf" do

@@ -68,6 +68,7 @@ group :development do
   gem 'spring'
   gem 'thin'
   gem "letter_opener"
+  gem 'rubocop', require: false
 end
 
 group :development, :test do

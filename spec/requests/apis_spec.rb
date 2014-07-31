@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe "API" do
-  def build_access_token(app)
-    scopes = app.oauth_scopes.collect{ |s| s.scope_name }.join(" ")
+  def build_access_token(app, scopes=app.oauth_scopes.collect{ |s| s.scope_name }.join(" "))
     token = nil
     authorization = Songkick::OAuth2::Provider::Authorization.new(@user, 'response_type' => 'token', 'client_id' => app.oauth2_client.client_id, 'redirect_uri' => app.oauth2_client.redirect_uri, 'scope' => scopes)
 
@@ -307,14 +306,21 @@ describe "API" do
       context "when a valid token is provided" do
         let(:scopes) do 
           OauthScope.top_level_scopes.where(:scope_type => 'user') <<
-            OauthScope.find_by_scope_name("profile.first_name")
+            OauthScope.find_by_scope_name("profile.first_name") <<
+            OauthScope.find_by_scope_name("profile.last_name")
         end
+
+        let(:scopes_selected) do 
+          OauthScope.top_level_scopes.where(:scope_type => 'user') <<
+            OauthScope.find_by_scope_name("profile.last_name")
+        end
+
         let(:scope_app) do
           App.create(name: 'app_limited', 
                      redirect_uri: "http://localhost/",
                      oauth_scopes: scopes)
         end
-        let(:token) { build_access_token(scope_app) }
+        let(:token) { build_access_token(scope_app, scopes_selected.map(&:scope_name).join(" ")) }
     
         it "returns the list of scopes approved by user" do
           login(@user)
@@ -323,7 +329,7 @@ describe "API" do
                          {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
     
           parsed_json = JSON.parse(response.body)     
-          expected_scopes = scopes.map(&:scope_name)
+          expected_scopes = scopes_selected.map(&:scope_name)
           expect(parsed_json.sort).to eql expected_scopes.sort
         end
       end

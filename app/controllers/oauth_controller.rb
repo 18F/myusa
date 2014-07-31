@@ -36,7 +36,7 @@ class OauthController < ApplicationController
       v == "1"
     }.keys.join(' ')
     new_params = params.dup
-    new_params[:scopes] = selected_scopes
+    new_params[:scope] = selected_scopes
     @auth = Songkick::OAuth2::Provider::Authorization.new(current_user, new_params)
     if params[:allow] == '1' and params[:commit] == 'Allow' && pass_sandbox_check
       @auth.grant_access!

@@ -139,7 +139,7 @@ class User < ActiveRecord::Base
   def scope_field_value(scope_name)
     field_name = scope_name.split('.').last
     if SCOPE_ATTRIBUTES.member?(field_name.to_sym)
-      send field_name
+      profile.send field_name
     else
       nil
     end

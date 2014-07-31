@@ -11,8 +11,8 @@ describe "OauthApps" do
     @app1 = App.create(name: 'App1', custom_text: 'Custom text for test'){|app| app.redirect_uri = "http://localhost/"; app.url="http://app1host.com"}
     @app1.is_public = true
     @app1.save!
-    @app1.oauth_scopes << OauthScope.top_level_scopes
-    @app1.oauth_scopes << OauthScope.where('scope_name = "profile.email"').first
+    @app1_scopes = ['profile', 'notifications', 'tasks', 'profile.email', 'profile.middle_name']
+    @app1.oauth_scopes = OauthScope.where(scope_name: @app1_scopes)
     @app1_client_auth = @app1.oauth2_client
   end
 
@@ -171,6 +171,85 @@ describe "OauthApps" do
           expect(page).to have_content('Read your email address')
           expect(page).to_not have_content('Read your address')
         end
+      end
+    end
+  end
+
+  def auth_scopes(app, u)
+    a = u.oauth2_authorizations.find { |auth| auth.client.try(:owner) == app }
+    a.try(:scopes).try(:to_a) || []
+  end
+
+  describe 'user selected scopes' do
+    let(:visit_authorize) do
+      visit(url_for(
+          controller: 'oauth',
+          action: 'authorize',
+          response_type: 'code',
+          scope: @app1_scopes.join(' '),
+          client_id: @app1_client_auth.client_id,
+          redirect_uri: @redirect_uri))
+    end
+
+    before do
+      login(user)
+      # expect a user to have no scopes in the database
+      expect(auth_scopes(@app1, user)).to be_blank
+    end
+
+    context 'user has profile data' do
+      before do
+        # expect user to have profile data
+        expect(user.first_name).to be_present
+        expect(user.email).to be_present
+        visit_authorize
+      end
+
+      it 'user scopes should match requested scopes' do
+        # uncheck no checkboxes
+        click_button('Allow')
+        user.reload
+        # user scopes should match checked scopes
+        expect(auth_scopes(@app1, user).sort).to eq @app1_scopes.sort
+      end
+
+      it 'user scopes should match only checked scopes' do
+        # uncheck one checkboxes
+        uncheck('selected_scopes_profile.email')
+        click_button('Allow')
+        user.reload
+        # expect user scopes only be checked scopes
+        app_scopes = @app1_scopes - ['profile.email']
+        expect(auth_scopes(@app1, user).sort).to eq app_scopes.sort
+      end
+    end
+
+    context 'user has incomplete user data' do
+      before do
+        # expect user to have incomlete profile data
+        expect(user.profile.middle_name).to be_blank
+        visit_authorize
+      end
+
+      it 'input box is presented for incomplete fields' do
+        # input box is presented for incomplete fields
+        puts current_url
+        expect(page).to have_field('new_profile_values_profile.middle_name')
+      end
+
+      it 'checkbox is presented for complete fields' do
+        # checkbox is presented for complete fields
+        expect(page).to have_field('selected_scopes_profile.email')
+      end
+
+      it 'data from input box is persisted' do
+        # fill in input
+        fill_in 'new_profile_values_profile.middle_name', with: 'Example'
+        # click allow
+        click_button('Allow')
+        user.reload
+        # expect user data to be field data
+        expect(user.profile.middle_name).to eq 'Example'
       end
     end
   end

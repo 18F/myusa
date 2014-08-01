@@ -12,7 +12,6 @@ install:
   - bundle install --without development
 before_script:
   - cp config/database.yml.example config/database.yml
-  - cp config/initializers/devise.rb.example config/initializers/devise.rb
   - cp config/secrets.yml.example config/secrets.yml
 script:
   - RAILS_ENV=test bundle exec rake db:setup

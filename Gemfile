@@ -44,6 +44,8 @@ gem "permanent_records", "~> 2.3.0"
 gem 'font-awesome-sass'
 gem "attr_encrypted"
 gem "factory_girl"
+gem 'unicorn', :require => false
+
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
@@ -54,11 +56,6 @@ group :doc do
 end
 
 group :development do
-  # Use Capistrano for deployment
-  gem 'capistrano',  '~> 3.1'
-  gem 'capistrano-rails', '~> 1.1'
-#  gem 'capistrano-maintenance', github: "capistrano/capistrano-maintenance"
-  gem 'rvm1-capistrano3', require: false
   gem 'guard-livereload'
   gem 'railroady'
   gem 'quiet_assets'
@@ -69,6 +66,16 @@ group :development do
   gem 'thin'
   gem "letter_opener"
   gem 'rubocop', require: false
+
+  ## deploy dependencies
+  gem 'berkshelf'
+  gem 'capistrano', '~> 2.15'
+  gem 'chef'
+  gem 'knife-ec2'
+  gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
+  gem 'knife-solo_data_bag'
+  gem 'unf'
+  gem 'capistrano-unicorn', :require => false
 end
 
 group :development, :test do

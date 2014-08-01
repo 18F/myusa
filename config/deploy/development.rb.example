@@ -1,0 +1,31 @@
+set :branch, :devel
+
+# New Relic Variables
+#
+# newrelic_appname does not need to be set since it is inherited from config/newrelic.yml
+# set :newrelic_appname, 'bronto' 
+# set :newrelic_desc, 'Bronto, Thesaurus as a Service'
+# 
+# for more info on rails_env see: https://docs.newrelic.com/docs/ruby/recording-deployments-with-the-ruby-agent#Staging
+set :rails_env, 'production'
+set :ip, 'dev.myusa-server.gsa.io'
+#
+# Nginx Variables
+#
+# set :passenger_root,				'usr/local/rvm/gems/ruby-2.1.1/gems/passenger-4.0.27'
+# set :passenger_root,				'usr/local/rvm/gems/ruby-2.1.1/gems/passenger-enterprise-server-4.0.27'
+
+# set :passenger_ruby,				'/usr/local/rvm/wrappers/ruby-2.1.1/ruby'
+# set :passenger_pool_idle_time,	0
+# set :passenger_min_instances,		8
+# set :passenger_max_pool_size		48
+# set :worker_connections,			4096
+# set :worker_processes,			4
+
+
+#
+# Server Role Definitions
+#
+role :app, ip
+role :web, ip
+role :db, ip

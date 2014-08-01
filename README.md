@@ -52,7 +52,7 @@ To get your Rails development environment setup, here's the steps to follow.
     bundle exec rake db:setup
     bundle exec rake db:setup RAILS_ENV=test
     ```
-    
+
     Ignore any errors from the second execution of `db:setup` for the test environment.
 
     **That should be it!  You are ready to develop.**
@@ -81,6 +81,38 @@ Then, open your web browser and visit:
 [http://localhost:3000/](http://localhost:3000/)
 
 That's it!  Use the app just as you would any other web application.
+
+## Creating an Amazon Web Services EC2 host
+
+First, set up environment variables containing your AWS keys:
+
+```sh
+export AWS_ACCESS_KEY=L0T50FUPPERCASEN0N5EN53
+export AWS_SECRET_Key=aM1x0fUpP3rCA5eaNdL0w3rCa5eN0N5En53
+```
+
+Set up your `knife` configuration:
+
+```sh
+cp .chef/knife.rb.example .chef/knife.rb
+```
+
+... and a node configuration:
+
+```sh
+cp kitchen/nodes/ec2.json.example kitchen/nodes/YOUR-LOVELY-HOST.example
+```
+
+Then use `knife` to create an EC2 host and build the environment:
+
+```sh
+bundle exec knife ec2 server create \
+    --groups YOUR-SECURITY-GROUP \
+    --identity-file YOUR-KEY-PAIR.pem \
+    --ssh-key YOUR-KEY-PAIR-NAME \
+    --ssh-user ubuntu \
+    --node-name YOUR-LOVELY-HOST
+```
 
 ## Contributing to MyUSA
 

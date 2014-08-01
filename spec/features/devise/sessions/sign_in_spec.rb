@@ -8,8 +8,8 @@ describe "Sign In" do
       @page.load
     end
 
-    it 'has an app slogan' do
-      expect(@page.slogan.text).to match('Your one account for government.')
+    it "has an app slogan" do
+      expect(@page.slogan.text).to match("Your one account for all government")
     end
 
     describe '"More Options" button,', js: true do

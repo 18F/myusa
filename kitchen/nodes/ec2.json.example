@@ -1,0 +1,14 @@
+{
+  "run_list": [
+    "role[bare_bones]",
+    "role[app_server]",
+    "role[mysql]"
+  ],
+  "authorization": {
+      "sudo": {
+        "groups": ["adm", "wheel"],
+        "users": ["ubuntu"],
+        "passwordless": true
+      }
+  }
+}

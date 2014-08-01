@@ -8,8 +8,9 @@
 .zeus.sock
 .DS_store
 .rspec
-.travis.yml
 .vagrant
+.databag_secret
+.chef/knife.rb
 
 # root files
 bootstrap.sh
@@ -18,12 +19,17 @@ Guardfile
 rerun.txt
 Vagrantfile
 
-# folders
+# other config
 config/*.yml
-config/deploy.rb
-config/deploy
 config/environments/production.rb
 config/initializers/recaptcha.rb
+config/deploy.rb
+config/deploy/ec2.rb
+config/deploy/development.rb
+config/deploy/vagrant.rb
+kitchen/nodes/localhost.json
+
+# folders
 coverage
 log/*
 /public/system

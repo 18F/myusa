@@ -94,7 +94,7 @@ describe "API" do
           expect(parsed_json["email"]).to_not be_nil
           # ...
           expect(parsed_json["is_veteran"]).to be_nil # we did not specify a value for this
-          expect(parsed_json["is_retired"]).to eq "0"
+          expect(parsed_json["is_retired"]).to eq false
         end
       end
 

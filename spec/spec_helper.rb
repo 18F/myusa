@@ -3,9 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/its'
-#require 'rspec_api_blueprint'
 require 'capybara/rspec'
-#require 'webmock/rspec'
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -16,6 +15,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -61,7 +61,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, :js => true) do
+  config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
   end
 
@@ -88,9 +88,8 @@ RSpec.configure do |config|
     OauthScope.seed_data.each { |os| OauthScope.create os } if OauthScope.all.empty?
   end
 
-#  config.include IntegrationSpecHelper, :type => :request
-  config.include Devise::TestHelpers, :type => :controller
-  config.include Rack::Test::Methods
+  config.include Devise::TestHelpers, type: :controller
+  config.include Rack::Test::Methods, type: :request
 end
 
-Capybara.default_host = "http://citizen.org"
+Capybara.default_host = "http://localhost:3000"

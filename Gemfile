@@ -27,7 +27,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 ## app dependencies
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 gem 'devise'
 gem 'devise-async'
 gem 'omniauth'
@@ -41,6 +42,10 @@ gem 'validates_email_format_of', :git => 'https://github.com/alexdunae/validates
 gem "paperclip", "~> 4.1"
 gem "permanent_records", "~> 2.3.0"
 gem 'font-awesome-sass'
+gem "attr_encrypted"
+gem "factory_girl"
+gem 'unicorn', :require => false
+
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
@@ -51,11 +56,6 @@ group :doc do
 end
 
 group :development do
-  # Use Capistrano for deployment
-  gem 'capistrano',  '~> 3.1'
-  gem 'capistrano-rails', '~> 1.1'
-#  gem 'capistrano-maintenance', github: "capistrano/capistrano-maintenance"
-  gem 'rvm1-capistrano3', require: false
   gem 'guard-livereload'
   gem 'railroady'
   gem 'quiet_assets'
@@ -65,6 +65,16 @@ group :development do
   gem 'spring'
   gem 'thin'
   gem "letter_opener"
+
+  ## deploy dependencies
+  gem 'berkshelf', '~> 3.0'
+  gem 'capistrano', '~> 2.15'
+  gem 'chef'
+  gem 'knife-ec2'
+  gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
+  gem 'knife-solo_data_bag'
+  gem 'unf'
+  gem 'capistrano-unicorn', :require => false
 end
 
 group :development, :test do
@@ -93,7 +103,10 @@ group :test do
   gem 'launchy'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-its'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'capybara-email'
 end
 
 group :production do

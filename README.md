@@ -38,6 +38,7 @@ To get your Rails development environment setup, here's the steps to follow.
     ```sh
     cp config/database.yml.example config/database.yml
     cp config/secrets.yml.example config/secrets.yml
+    cp config/initializers/devise.rb.example config/initializers/devise.rb
     rake secret
     ```
 
@@ -51,7 +52,7 @@ To get your Rails development environment setup, here's the steps to follow.
     bundle exec rake db:setup
     bundle exec rake db:setup RAILS_ENV=test
     ```
-    
+
     Ignore any errors from the second execution of `db:setup` for the test environment.
 
     **That should be it!  You are ready to develop.**
@@ -81,12 +82,44 @@ Then, open your web browser and visit:
 
 That's it!  Use the app just as you would any other web application.
 
-## Developing
+## Creating an Amazon Web Services EC2 host
 
-Check out the [MyUSA Contribution Guide](CONTRIBUTING.md)
+First, set up environment variables containing your AWS keys:
+
+```sh
+export AWS_ACCESS_KEY=L0T50FUPPERCASEN0N5EN53
+export AWS_SECRET_Key=aM1x0fUpP3rCA5eaNdL0w3rCa5eN0N5En53
+```
+
+Set up your `knife` configuration:
+
+```sh
+cp .chef/knife.rb.example .chef/knife.rb
+```
+
+... and a node configuration:
+
+```sh
+cp kitchen/nodes/ec2.json.example kitchen/nodes/YOUR-LOVELY-HOST.example
+```
+
+Then use `knife` to create an EC2 host and build the environment:
+
+```sh
+bundle exec knife ec2 server create \
+    --groups YOUR-SECURITY-GROUP \
+    --identity-file YOUR-KEY-PAIR.pem \
+    --ssh-key YOUR-KEY-PAIR-NAME \
+    --ssh-user ubuntu \
+    --node-name YOUR-LOVELY-HOST
+```
+
+## Contributing to MyUSA
+
+Please read the [MyUSA Contribution Guide](CONTRIBUTING.md) and submit a pull request.
 
 ## License
 
-This project constitutes an original work of the United States Government.
+[The project is in the public domain](LICENSE.md), and all contributions will also be released in the public domain. By submitting a pull request, you are agreeing to waive all rights to your contribution under the terms of the [CC0 Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/).
 
-You may use this project under the [MIT License](LICENSE).
+This project constitutes an original work of the United States Government.

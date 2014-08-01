@@ -6,6 +6,7 @@ class SignInPage < SitePrism::Page
 
   element :slogan,           	'.slogan'
   element :email, 				    '#inputEmail3'
+  element :remember_me,       '#user_remember_me'
   element :google_button,     'a', :text => 'Sign in with Google'
   element :more_options,     	'.more-options'
   element :more_options_link,	'.more-options a'

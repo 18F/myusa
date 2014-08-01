@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-def auth_for_user(opts={})
+def auth_for_user(opts = {})
   visit(url_for({
     controller: 'oauth',
     action: 'authorize',
@@ -12,41 +12,50 @@ end
 
 describe 'OauthApps' do
   let(:user) { create_confirmed_user_with_profile(email: 'first@user.org') }
-  let(:owner_user) { create_confirmed_user_with_profile(email: 'owner@user.org') }
+  let(:owner_user) do
+    create_confirmed_user_with_profile(email: 'owner@user.org')
+  end
   let(:redirect_uri) { 'http://localhost/' }
-  let(:app1_scopes) { ['profile', 'notifications', 'tasks', 'profile.email', 'profile.middle_name'] }
+  let(:app1_scopes) do
+    ['profile',
+     'notifications',
+     'tasks',
+     'profile.email',
+     'profile.middle_name']
+  end
   let(:app1_client_id) { app1.oauth2_client.client_id }
   let(:is_public) { true }
-  let(:app1) {
+  let(:app1) do
     a = App.create(
       name: 'App1',
       user_id: owner_user.id,
       custom_text: 'Custom text for test',
       redirect_uri: redirect_uri,
-      url:          "http://app1host.com",
+      url:          'http://app1host.com',
       is_public: is_public
     )
     a.oauth_scopes = OauthScope.where(scope_name: app1_scopes)
     a
-  }
+  end
 
-  context "with a non-public sandboxed app" do
+  context 'with a non-public sandboxed app' do
     let(:is_public) { false }
-    context "when logged in with a user who owns a sandboxed app" do
-      before {login(owner_user)}
+    context 'when logged in with a user who owns a sandboxed app' do
+      before { login(owner_user) }
 
-      describe "Authorize sandbox application by owner" do
+      describe 'Authorize sandbox application by owner' do
         it "should ask for authorization and redirect after clicking 'Allow'" do
           auth_for_user
           click_button('Allow')
           uri = URI.parse(current_url)
-          params = CGI::parse(uri.query)
-          code = (params["code"] || []).first
+          params = CGI.parse(uri.query)
+          code = (params['code'] || []).first
           expect(code).to_not be_empty
         end
 
-        it "should log the sandbox application authorization activity, associated with the user" do
-          pending "app activity logs not added"
+        it 'should log the sandbox application authorization activity, ' \
+            'associated with the user' do
+          pending 'app activity logs not added'
           auth_for_user
           expect(page).to have_content('The App1 application wants to:')
           click_button('Allow')
@@ -56,53 +65,62 @@ describe 'OauthApps' do
       end
     end
 
-    context "when logged in with a user who does not own the sandboxed app" do
+    context 'when logged in with a user who does not own the sandboxed app' do
       before do
         login(user)
       end
 
-      describe "Does not allow sandbox application installation by non owner" do
-        it "code in params should not have a value" do
+      describe 'Does not allow sandbox application installation by non owner' do
+        it 'code in params should not have a value' do
           auth_for_user
-          expect(page).to  have_content("You are accessing an application that doesn't exist or hasn't given you sufficient access.")
+          expect(page).to have_content('You are accessing an application ' \
+            "that doesn't exist or hasn't given you sufficient access.")
         end
       end
     end
 
-    context "when NON logged in with a user who does not own the sandboxed app" do
-      describe "Does not allow sandbox application installation by non owner" do
-        it "should present the login page" do
+    context 'when NON logged in with a user who does not own the sandboxed ' \
+      'app' do
+      before do
+        logout
+      end
+
+      describe 'Does not allow sandbox application installation by non owner' do
+        it 'should present the login page' do
           auth_for_user
-          expect(page).to have_content("You need to sign in or sign up before continuing.")
+          expect(page).to have_content('You need to sign in or sign up ' \
+            'before continuing.')
         end
       end
     end
   end
 
-  describe "Authorize application" do
-    context "when the app is known" do
-      it "should redirect to a login page to authorize a new app" do
+  describe 'Authorize application' do
+    context 'when the app is known' do
+      it 'should redirect to a login page to authorize a new app' do
         auth_for_user
         expect(current_path).to eql new_user_session_path
         expect(page).to have_content('Sign in with Google')
       end
     end
 
-    context "when the app is not known" do
-      it "should redirect to a friendly error page if the app is unknown" do
+    context 'when the app is not known' do
+      it 'should redirect to a friendly error page if the app is unknown' do
         auth_for_user client_id: 'xyz'
         expect(page).to have_content("We're Sorry")
-        expect(page).to have_content("You are accessing an application that doesn't exist or hasn't given you sufficient access.")
+        expect(page).to have_content('You are accessing an application that ' \
+          "doesn't exist or hasn't given you sufficient access.")
       end
     end
   end
 
-  context "when logged in" do
-    before {login(user)}
+  context 'when logged in' do
+    before { login(user) }
 
-    describe "Authorize application" do
-      it "should log the application authorization activity, associated with the user" do
-        pending "app activity logs not added"
+    describe 'Authorize application' do
+      it 'should log the application authorization activity, associated with ' \
+          'the user' do
+        pending 'app activity logs not added'
         auth_for_user
         expect(page).to have_content('The App1 application wants to:')
         click_button('Allow')
@@ -111,20 +129,23 @@ describe 'OauthApps' do
       end
     end
 
-    describe "Authorize application with scopes" do
-      context "When redirect URI has parameters" do
+    describe 'Authorize application with scopes' do
+      context 'When redirect URI has parameters' do
         let(:redirect_uri) { 'http://apphost.com?something=true' }
 
-        it "should maintain those parameters when redirecting with unauthorized scopes error" do
+        it 'should maintain those parameters when redirecting with ' \
+            'unauthorized scopes error' do
           auth_for_user scope: 'profile.email profile.address', redirect_uri: 'http://apphost.com/'
-          expect(current_url).to include(redirect_uri.split("?").second)
-          expect(current_url).to include("error=access_denied")
+          expect(current_url).to include(redirect_uri.split('?').second)
+          expect(current_url).to include('error=access_denied')
         end
       end
 
-      it "should not allow requests that contain unauthorized scopes" do
+      it 'should not allow requests that contain unauthorized scopes' do
         auth_for_user scope: 'profile.email profile.address'
-        expect(CGI.unescape(current_url)).to have_content("#{redirect_uri}?error=access_denied&error_description=#{I18n.t('unauthorized_scope')}")
+        expect(CGI.unescape(current_url)).to have_content(
+          "#{redirect_uri}?error=access_denied&error_description=" \
+          "#{I18n.t('unauthorized_scope')}")
       end
 
       it "should ask for authorization and redirect after clicking 'Allow'" do
@@ -136,20 +157,19 @@ describe 'OauthApps' do
         expect(page).to_not have_content('Read your address')
         check('selected_scopes_profile')
         click_button('Allow')
-        expect(page.current_url.split("?").first).to eq redirect_uri
+        expect(page.current_url.split('?').first).to eq redirect_uri
       end
 
-
-      context "when the user does not approve" do
-        it "should return an error when trying to authorize" do
+      context 'when the user does not approve' do
+        it 'should return an error when trying to authorize' do
           auth_for_user scope: 'profile notifications'
-          expect(page).to  have_content('The App1 application wants to:')
-          expect(page).to  have_content('Read your profile information')
-          expect(page).to  have_content('Send you notifications')
+          expect(page).to have_content('The App1 application wants to:')
+          expect(page).to have_content('Read your profile information')
+          expect(page).to have_content('Send you notifications')
         end
       end
 
-      context "when logged into an app" do
+      context 'when logged into an app' do
         before do
           auth_for_user scope: 'profile notifications profile.email'
           expect(page).to have_content('The App1 application wants to:')

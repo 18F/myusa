@@ -26,7 +26,7 @@ class OauthController < ApplicationController
       headers.merge!(@oauth2.response_headers)
       is_exchange = (@oauth2.class == Songkick::OAuth2::Provider::Exchange)
       if is_exchange ? @oauth2.response_body : !@oauth2.valid?
-        render text: (is_exchange? ? @oauth2.response_body : ''),
+        render text: (is_exchange ? @oauth2.response_body : ''),
                status: @oauth2.response_status
       else
         # TODO: What if user isn't authenticated? -- yoz

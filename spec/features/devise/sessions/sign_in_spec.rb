@@ -173,6 +173,7 @@ describe "Sign In" do
 
       context "user has not signed in" do
         before :each do
+          logout
           @target_page.load
           @sign_in_page.google_button.click
         end

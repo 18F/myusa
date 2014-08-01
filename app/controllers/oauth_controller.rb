@@ -24,8 +24,10 @@ class OauthController < ApplicationController
       redirect_to @oauth2.redirect_uri, status: @oauth2.response_status
     else
       headers.merge!(@oauth2.response_headers)
-      if @oauth2.response_body
-        render text: @oauth2.response_body, status: @oauth2.response_status
+      is_exchange = (@oauth2.class == Songkick::OAuth2::Provider::Exchange)
+      if is_exchange ? @oauth2.response_body : !@oauth2.valid?
+        render text: (is_exchange? ? @oauth2.response_body : ''),
+               status: @oauth2.response_status
       else
         # TODO: What if user isn't authenticated? -- yoz
         session[:user_return_to] = request.original_fullpath if authenticate_user!

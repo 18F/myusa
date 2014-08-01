@@ -9,7 +9,6 @@ describe 'Sign In', js: true do
     end
 
     it 'has an app slogan' do
-      save_and_open_page
       expect(@page.slogan.text).to match('Your one account for government.')
     end
 

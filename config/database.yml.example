@@ -15,9 +15,9 @@ default: &default
   pool: 5
   username: root
   password:
-  socket: /tmp/mysql.sock
-# For Ubuntu systems, such as Ubuntu 12.04:
-#  socket: /var/run/mysqld/mysqld.sock
+  socket: /var/run/mysqld/mysqld.sock
+# For other systems, such as Mac OS:
+#  socket: /tmp/mysql.sock
 
 development:
   <<: *default
@@ -57,4 +57,3 @@ production:
   username: myusa-server
   password: <%= ENV['MYUSA-SERVER_DATABASE_PASSWORD'] %>
   encryption_key: <%= ENV['MYUSA-SERVER_DATABASE_ENCRYPTION_KEY'] %>
-

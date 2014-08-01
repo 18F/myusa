@@ -29,7 +29,6 @@ describe "Sign In" do
         specify { expect(@page).to have_less_options }
       end
     end
-
   end
 
   describe "with email" do
@@ -53,6 +52,7 @@ describe "Sign In" do
         let(:email) { 'testy@example.gov' }
         let(:link_text) { 'Clicky' }
         let(:instructions) { "CYM, #{email}" }
+        let(:remember_me) { false  }
 
         before :each do
           @token_instructions_page = TokenInstructionsPage.new
@@ -61,29 +61,47 @@ describe "Sign In" do
 
           @target_page.load
           @sign_in_page.email.set email
+          @sign_in_page.remember_me.set 1
           @sign_in_page.submit.click
         end
 
-        it "should create a new user" do
+        it "creates a new user" do
           expect(User.find_by_email(email)).to be
         end
 
-        it "should let user know about the token email" do
+        it "lets user know about the token email" do
           expect(@token_instructions_page).to be_displayed
           expect(@token_instructions_page.source).to match body
         end
 
-        it "should send the user an email with the token" do
+        it "sends the user an email with the token" do
           open_email(email)
           expect(current_email).to have_link(link_text)
         end
 
-        it "should allow user to authenticate with token" do
+        it "allows user to authenticate with token" do
           open_email(email)
           current_email.click_link(link_text)
 
           expect(@target_page).to be_displayed
           expect(@target_page.source).to match body
+        end
+
+        context "with remember  me set" do
+          let(:remember_me) { true }
+
+          it "sets remember cookie" do
+            open_email(email)
+            current_email.click_link(link_text)
+            # CP: This is a crude hack. I couldn't find another way to ensure
+            # the cookie was present. Ideally, Capybara would let me selectively
+            # expire the session cookie to test that remember token authenticates
+            # the new session automagically, but that didn't work at all. I did
+            # not try to use Timecop to expire tokens because it has been shown
+            # to break Capybara timeouts.
+            cookies = Capybara.current_session.driver.request.cookies
+            expect(cookies).to have_key("remember_user_token")
+          end
         end
       end
     end

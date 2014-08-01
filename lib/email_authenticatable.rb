@@ -5,14 +5,19 @@ module Devise
     module EmailAuthenticatable
       extend ActiveSupport::Concern
 
-      def set_authentication_token
+      def set_authentication_token(opts={})
         raw, enc = Devise.token_generator.generate(self.class, :authentication_token)
 
         self.authentication_token   = enc
         self.authentication_sent_at = Time.now.utc
         self.save!(validate: false)
 
-        send_devise_notification(:authentication_instructions, raw, {})
+        if opts[:remember_me] && respond_to?(:remember_me!)
+          self.remember_me!
+        end
+
+        self.send_devise_notification(:authentication_instructions, raw, opts)
+
         raw
       end
 
@@ -25,6 +30,11 @@ module Devise
         self.authentication_token = nil
         self.save!(validate: false)
       end
+
+      def authentication_token_expired?
+        self.authentication_sent_at && self.authentication_sent_at < 30.minutes.ago
+      end
+
     end
   end
 end

@@ -22,8 +22,6 @@ after_failure:
   - echo $RAILS_ENV
   - bundle exec rake --version
   - python other/slack/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
-after_success:
-  - python other/slack/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN -s
 notifications:
   email:
     on_success: change

@@ -38,7 +38,6 @@ describe 'OauthApps' do
       describe "Authorize sandbox application by owner" do
         it "should ask for authorization and redirect after clicking 'Allow'" do
           auth_for_user
-          page.should have_content('The App1 application wants to:')
           click_button('Allow')
           uri = URI.parse(current_url)
           params = CGI::parse(uri.query)
@@ -49,7 +48,7 @@ describe 'OauthApps' do
         it "should log the sandbox application authorization activity, associated with the user" do
           pending "app activity logs not added"
           auth_for_user
-          expect(page).to  have_content('The App1 application wants to:')
+          expect(page).to have_content('The App1 application wants to:')
           click_button('Allow')
           expect(user.app_activity_logs.count).to_eq 1
           expect(user.app_activity_logs.first.app).to_eq app1
@@ -74,7 +73,7 @@ describe 'OauthApps' do
       describe "Does not allow sandbox application installation by non owner" do
         it "should present the login page" do
           auth_for_user
-          page.should have_content("You need to sign in or sign up before continuing.")
+          expect(page).to have_content("You need to sign in or sign up before continuing.")
         end
       end
     end
@@ -84,7 +83,7 @@ describe 'OauthApps' do
     context "when the app is known" do
       it "should redirect to a login page to authorize a new app" do
         auth_for_user
-        (current_path).should == new_user_session_path
+        expect(current_path).to eql new_user_session_path
         expect(page).to have_content('Sign in with Google')
       end
     end
@@ -125,7 +124,7 @@ describe 'OauthApps' do
 
       it "should not allow requests that contain unauthorized scopes" do
         auth_for_user scope: 'profile.email profile.address'
-        CGI::unescape(current_url).should have_content("#{redirect_uri}?error=access_denied&error_description=#{I18n.t('unauthorized_scope')}")
+        expect(CGI.unescape(current_url)).to have_content("#{redirect_uri}?error=access_denied&error_description=#{I18n.t('unauthorized_scope')}")
       end
 
       it "should ask for authorization and redirect after clicking 'Allow'" do

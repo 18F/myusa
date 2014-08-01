@@ -4,6 +4,7 @@
 *.sassc
 **.orig
 .powrc
+.rubocop.yml
 .sass-cache
 .zeus.sock
 .DS_store

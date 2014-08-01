@@ -137,7 +137,6 @@ describe 'OauthApps' do
         expect(page).to_not have_content('Read your address')
         check('selected_scopes_profile')
         click_button('Allow')
-        puts current_url
         expect(page.current_url.split("?").first).to eq redirect_uri
       end
 

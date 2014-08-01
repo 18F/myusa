@@ -1,3 +1,4 @@
+$myusa_grey: #F9F9F9;
 @font-face {
     font-family: 'zocial';
     src: url('./zocial-regular-webfont.eot');
@@ -22,15 +23,8 @@
   font-weight: normal;
   font-style: normal;
 }
-
-html { 
-  background-color: #d8d8d8;
-  background: url(https://farm4.staticflickr.com/3788/12927640984_e992e45694_o.jpg) no-repeat center center fixed; 
-  background: url(https://farm4.staticflickr.com/3379/3179274044_5d4915e4d0_o.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+header{
+	background-color: $myusa_grey;
 }
 
 body {
@@ -41,17 +35,15 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -190px;
+  margin-left: -410px;
   margin-top: -200px;
+  padding-left: 150px;
+  padding-right: 150px;
   height: auto;
-  width: 380px;
-  background-color: #ffffff;
-  background-color: rgba(255,255,255,.85);
-  border-width: 1px;
-  border-style: solid;
-  border-color: #808080;
-  border-radius: 4px;
+  width: 820px;
+  background-color: $myusa_grey;
   z-index: 10;
+  /*box-shadow: 1px 1px 1px #888888;*/
 }
 
 .footer {
@@ -179,6 +171,7 @@ div.moresignin {
 /** SOCIAL BUTTONS **/
 .btn.btn-social {
   padding: 0;
+  margin-bottom: 15px;
   line-height: 2.2em;
 }
 
@@ -205,6 +198,10 @@ div.moresignin {
 }
 .btn-google:active,
 .btn-google.active {
+  color: #ffffff;
+}
+.main .btn:hover,
+.btn:focus {
   color: #ffffff;
 }
 
@@ -364,6 +361,9 @@ div.moresignin {
 .moresignin > span.less-options {
   display: none;
 }
+.moresignin > span.more-options {
+  display: none;
+}
 .content-signup {
   /*display: none;*/
 }
@@ -412,5 +412,15 @@ div.moresignin {
 }
 .debug > .buttons {
   padding: 10px;
+}
+
+.pad-top{
+	top: 20px;
+}
+.my{
+	color: blue;
+}
+.usa{
+	color: red;
 }
 

@@ -1,5 +1,7 @@
 $(document).ready(function () {
   var background = false;
+
+  $(".more-options").show();
   // hide or show the sign in buttons
   $(".more-options").click(function (e) {
     $(".hidden-buttons").show(400);

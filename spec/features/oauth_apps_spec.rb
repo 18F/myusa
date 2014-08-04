@@ -149,36 +149,38 @@ describe 'OauthApps' do
           "#{I18n.t('unauthorized_scope')}")
       end
 
-      it "should ask for authorization and redirect after clicking 'Allow'" do
+      it "asks for authorization and redirect after clicking 'Allow'" do
         auth_for_user scope: 'profile notifications profile.email'
         expect(page).to have_content('The App1 application wants to:')
         expect(page).to have_content('Read your profile information')
         expect(page).to have_content('Send you notifications')
         expect(page).to have_content('Read your email address')
         expect(page).to_not have_content('Read your address')
-        check('selected_scopes_profile')
+        expect(page).to have_checked_field('selected_scopes_profile')
+        user.reload
+        expect(user.oauth2_authorization_for(app1.oauth2_client)).to be_nil
         click_button('Allow')
+        user.reload
+        expect(user.oauth2_authorization_for(app1.oauth2_client).scope).to match(/email/)
         expect(page.current_url.split('?').first).to eq redirect_uri
       end
 
-      context 'when the user does not approve' do
-        it 'should return an error when trying to authorize' do
-          auth_for_user scope: 'profile notifications'
-          expect(page).to have_content('The App1 application wants to:')
-          expect(page).to have_content('Read your profile information')
-          expect(page).to have_content('Send you notifications')
-        end
+      it 'does not add an authorization when user clicks cancel' do
+        auth_for_user scope: 'profile notifications'
+        user.reload
+        expect(user.oauth2_authorization_for(app1.oauth2_client)).to be_nil
+        click_button('Cancel')
+        user.reload
+        expect(user.oauth2_authorization_for(app1.oauth2_client)).to be_nil
+        expect(page.current_url.split('?').first).to eq redirect_uri
       end
 
-      context 'when logged into an app' do
-        before do
-          auth_for_user scope: 'profile notifications profile.email'
-          expect(page).to have_content('The App1 application wants to:')
-          expect(page).to have_content('Read your profile information')
-          expect(page).to have_content('Send you notifications')
-          expect(page).to have_content('Read your email address')
-          expect(page).to_not have_content('Read your address')
-        end
+      it 'does not display authorization screen after authorizing' do
+        auth_for_user scope: 'profile notifications profile.email'
+        click_button('Allow')
+        auth_for_user scope: 'profile notifications profile.email'
+        expect(page).to_not have_content('The App1 application wants to:')
+        expect(page.current_url.split('?').first).to eq redirect_uri
       end
     end
   end

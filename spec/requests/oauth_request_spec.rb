@@ -31,7 +31,7 @@ describe 'OauthApps' do
 
       describe 'receives a valid token' do
         its(:status) { should == 200 }
-        its(:body)   { should match /access_token/ }
+        its(:body)   { should include 'access_token' }
       end
     end
 

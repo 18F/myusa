@@ -68,7 +68,7 @@ group :development do
   gem 'rubocop', require: false
 
   ## deploy dependencies
-  gem 'berkshelf'
+  gem 'berkshelf', '~> 3.0'
   gem 'capistrano', '~> 2.15'
   gem 'chef'
   gem 'knife-ec2'

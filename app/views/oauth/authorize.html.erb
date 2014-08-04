@@ -1,0 +1,62 @@
+<% if user_signed_in? %>
+  <div class="row" style="padding-left:50px;">
+    <div class="ten columns centered">
+      <div class="panel group">
+        <div class="ten columns">
+          <h3>
+            Allow 
+            <em><%= @oauth2.client.name %></em>
+            to access your MyUSA account?
+          </h3>
+                      <p class="disclaimer">
+              You can revoke access to any application at any time from your Apps page.
+            </p>
+          <p>
+            The
+            <b>
+              <%= @oauth2.client.name %>
+            </b>
+            application wants to:
+          </p>
+        </div>
+        <div class="two columns hide-for-small panel">
+          <p class="info">
+            <%= @oauth2.client.owner.short_description %>
+          </p>
+        </div>
+        <div class="row">
+          <div class="twelve columns">
+            <%= form_tag "/oauth/allow" do %>
+              <% @oauth2.params.each do |key, value| %>
+                <%= hidden_field nil, key, {:value => value} %>
+              <% end %>
+              <ul>
+               <% @oauth2.client.owner.find_scopes(@oauth2.scopes).each do |scope| %>
+                  <li>
+	                  <%= check_box_tag "selected_scopes[#{scope.scope_name}]", "1", true  %><%= scope.description %>
+	                  <% if scope.scope_name.downcase.starts_with?("profile.") &&  current_user.scope_field_value(scope.scope_name).blank? %>
+	                  	<%= text_field "new_profile_values", scope.scope_name %>
+	                  <% else %>
+	                  	<%= current_user.scope_field_value(scope.scope_name)%>
+	                  <% end %>
+                  </li>
+              <% end %>
+              </ul>
+              </br>
+              <%= hidden_field_tag :user_id, current_user.id %>
+              <%= hidden_field_tag :allow, "1", :id => "allow" %>
+              <%= submit_tag 'Allow', :class => 'large button positive' %>
+              <%= submit_tag 'Cancel', :class => 'large button negative'       %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <p>
+    Please
+    <%= link_to 'sign in', sign_in_path %>
+    to continue.
+  </p>
+<% end %>

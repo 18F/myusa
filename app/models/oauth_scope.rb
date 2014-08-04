@@ -2,8 +2,7 @@ class OauthScope < ActiveRecord::Base
   validates_presence_of :name, :scope_name, :scope_type
   validates_uniqueness_of :scope_name
   validates :scope_type, :inclusion => {:in => ["app", "user"]}
-#  attr_accessible :description, :name, :scope_name, :scope_type, :as => [:default, :admin]
-  
+
   scope :top_level_scopes, -> { where("scope_name NOT LIKE :dot", :dot => "%.%") }
   scope :profile_scopes, -> {where("scope_name LIKE :profile_pattern", :profile_pattern => "profile%")}
   
@@ -11,18 +10,6 @@ class OauthScope < ActiveRecord::Base
     OauthScope.all.any?{|s| s.scope_name.match(/#{self.name}\./i)}
   end
 
-  def parent_readable_name
-    return "Read user's profile information" if self.name == "Profile"
-    return "Create tasks in user's account" if self.name == "Tasks"
-    return "Send notifications to user"     if self.name == "Notifications"
-
-    return self.description
-  end
-
-  def readable_name
-    self.scope_name.sub(/^.+\./, "").gsub(/_/, " ").gsub(/(\d+)/," " + '\1' + " ").capitalize
-  end
-  
   def self.seed_data
     [
       {name: 'Verify credentials', description: 'Verify application credentials', scope_name: 'verify_credentials', :scope_type => 'app'},

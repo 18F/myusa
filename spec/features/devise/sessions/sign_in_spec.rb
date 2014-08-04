@@ -1,9 +1,9 @@
 require 'feature_helper'
 
 describe "Sign In" do
-
   describe "page" do
     before do
+      logout
       @page = SignInPage.new
       @page.load
     end
@@ -13,13 +13,12 @@ describe "Sign In" do
     end
 
     describe '"More Options" button,', js: true do
-
       describe 'at load time,' do
         specify { expect(@page).to have_more_options }
         specify { expect(@page).to_not have_less_options }
       end
 
-      describe  'when clicked once,' do
+      describe 'when clicked once,' do
         before do
           @page.more_options_link.click
           @page.wait_for_less_options
@@ -174,6 +173,7 @@ describe "Sign In" do
 
       context "user has not signed in" do
         before :each do
+          logout
           @target_page.load
           @sign_in_page.google_button.click
         end
@@ -183,6 +183,4 @@ describe "Sign In" do
 
     end
   end
-
-
 end

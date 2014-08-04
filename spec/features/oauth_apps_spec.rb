@@ -44,7 +44,7 @@ describe 'OauthApps' do
       before { login(owner_user) }
 
       describe 'Authorize sandbox application by owner' do
-        it "should ask for authorization and redirect after clicking 'Allow'" do
+        it "asks for authorization and redirect after clicking 'Allow'" do
           auth_for_user
           click_button('Allow')
           uri = URI.parse(current_url)
@@ -86,7 +86,7 @@ describe 'OauthApps' do
       end
 
       describe 'Does not allow sandbox application installation by non owner' do
-        it 'should present the login page' do
+        it 'presents the login page' do
           auth_for_user
           expect(page).to have_content('You need to sign in or sign up ' \
             'before continuing.')
@@ -97,7 +97,7 @@ describe 'OauthApps' do
 
   describe 'Authorize application' do
     context 'when the app is known' do
-      it 'should redirect to a login page to authorize a new app' do
+      it 'redirects to a login page to authorize a new app' do
         logout
         auth_for_user
         expect(current_path).to eql new_user_session_path
@@ -106,7 +106,7 @@ describe 'OauthApps' do
     end
 
     context 'when the app is not known' do
-      it 'should redirect to a friendly error page if the app is unknown' do
+      it 'redirects to a friendly error page if the app is unknown' do
         auth_for_user client_id: 'xyz'
         expect(page).to have_content("We're Sorry")
         expect(page).to have_content('You are accessing an application that ' \
@@ -142,7 +142,7 @@ describe 'OauthApps' do
         end
       end
 
-      it 'should not allow requests that contain unauthorized scopes' do
+      it 'does not allow requests that contain unauthorized scopes' do
         auth_for_user scope: 'profile.email profile.address'
         expect(CGI.unescape(current_url)).to have_content(
           "#{redirect_uri}?error=access_denied&error_description=" \
@@ -203,13 +203,13 @@ describe 'OauthApps' do
         auth_for_user scope: app1_scopes.join(' ')
       end
 
-      it 'user scopes should match requested scopes' do
+      it 'user scopes match requested scopes' do
         click_button('Allow')
         user.reload
         expect(auth_scopes(app1, user).sort).to eq app1_scopes.sort
       end
 
-      it 'user scopes should match only checked scopes' do
+      it 'user scopes only contain checked scopes' do
         uncheck('selected_scopes_profile.email')
         click_button('Allow')
         user.reload

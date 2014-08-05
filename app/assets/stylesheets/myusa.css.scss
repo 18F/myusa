@@ -41,9 +41,12 @@ body {
   padding-right: 150px;
   height: auto;
   width: 820px;
-  background-color: $myusa_grey;
   z-index: 10;
   /*box-shadow: 1px 1px 1px #888888;*/
+}
+
+.callout-box{
+  background-color: $myusa_grey;
 }
 
 .footer {
@@ -424,3 +427,10 @@ div.moresignin {
 	color: red;
 }
 
+.rotate{
+    -webkit-transform: rotate(90deg);
+       -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+         -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+}

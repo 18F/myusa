@@ -103,7 +103,7 @@ class App < ActiveRecord::Base
 
   def remove_parent_scope
     scopes = self.app_oauth_scopes
-    scopes.each {|s| scopes.delete(s) if s.oauth_scope.is_parent? }    
+    scopes.each {|s| scopes.delete(s) if s.oauth_scope.is_parent? }
   end
 
   def generate_slug
@@ -118,7 +118,7 @@ class App < ActiveRecord::Base
 
   def update_oauth2_client
     client = self.oauth2_client
-    return true if client.nil? || @redirect_uri.blank?    
+    return true if client.nil? || @redirect_uri.blank?
     client.redirect_uri = @redirect_uri
     client.save
   end

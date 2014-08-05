@@ -100,24 +100,24 @@ class User < ActiveRecord::Base
     self.oauth2_authorizations.map(&:client).map(&:oauth2_client_owner)
   end
 
-  def grouped_activity_logs
-    logs = self.app_activity_logs
-
-    # create container for grouped logs that will be returned
-    grouped_logs = {}
-
-    # iterate over current logs
-    logs.each do |log|
-      key = log.created_at.strftime('%B %e')
-      if grouped_logs[key]
-        grouped_logs[key] << log
-      else
-        grouped_logs[key] = [log]
-      end
-    end
-
-    grouped_logs
-  end
+  # def grouped_activity_logs
+  #   logs = self.app_activity_logs
+  #
+  #   # create container for grouped logs that will be returned
+  #   grouped_logs = {}
+  #
+  #   # iterate over current logs
+  #   logs.each do |log|
+  #     key = log.created_at.strftime('%B %e')
+  #     if grouped_logs[key]
+  #       grouped_logs[key] << log
+  #     else
+  #       grouped_logs[key] = [log]
+  #     end
+  #   end
+  #
+  #   grouped_logs
+  # end
 
   def send_reset_password_confirmation
     # TODO commented out mailer

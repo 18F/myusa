@@ -98,7 +98,7 @@ class OauthController < ApplicationController
     end
   end
 
-  def log_app_authorization(controller)
-    AppActivityLog.create!(:app => @app, :controller => controller.controller_name, :action => controller.action_name, :user => current_user)
-  end
+  # def log_app_authorization(controller)
+  #   AppActivityLog.create!(:app => @app, :controller => controller.controller_name, :action => controller.action_name, :user => current_user)
+  # end
 end

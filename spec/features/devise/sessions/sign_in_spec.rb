@@ -3,7 +3,6 @@ require 'feature_helper'
 describe "Sign In" do
   describe "page" do
     before do
-      logout
       @page = SignInPage.new
       @page.load
     end
@@ -30,12 +29,24 @@ describe "Sign In" do
     end
   end
 
-  describe "with email" do
-    def sign_in_to_target(target_page, sign_in_page)
-      target_page.load
-      sign_in_page.google_button.click
+  describe "with an email address and token" do
+    let(:email) { 'testy@example.gov' }
+    let(:user) { User.create!(email: email) }
+
+    before :each do
+      @target_page = TargetPage.new
     end
 
+    it "visiting the new session url logs them in", :js => true do
+      token = user.set_authentication_token
+      visit new_user_session_path(email: user.email, token: token)
+
+      @target_page.load
+      expect(@target_page).to be_displayed
+    end
+  end
+
+  describe "with email" do
     before :each do
       @target_page = TargetPage.new
       @sign_in_page = SignInPage.new
@@ -173,7 +184,6 @@ describe "Sign In" do
 
       context "user has not signed in" do
         before :each do
-          logout
           @target_page.load
           @sign_in_page.google_button.click
         end

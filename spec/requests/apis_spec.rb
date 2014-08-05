@@ -17,7 +17,7 @@ describe "API" do
     @app = App.create(:name => 'App1', :redirect_uri => "http://localhost/")
     @app.oauth_scopes = OauthScope.where(:scope_type => 'user')
   end
-  
+
   describe "Token validity check" do
     subject { get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"} }
     context "with a valid token" do
@@ -122,7 +122,6 @@ describe "API" do
       @other_user = create_confirmed_user_with_profile(email: 'jane@citizen.org', first_name: 'Jane')
       @app2 = App.create!(:name => 'App2', :redirect_uri => "http://localhost:3000/")
       @app2.oauth_scopes << OauthScope.top_level_scopes
-      login(@user)
       1.upto(14) do |index|
         @notification = Notification.create!({:subject => "Notification ##{index}", :received_at => Time.now - 1.hour, :body => "This is notification ##{index}.", :user_id => @user.id, :app_id => @app.id})
       end
@@ -169,7 +168,7 @@ describe "API" do
       end
     end
   end
-  
+
   describe "Tasks API" do
     before do
       @token = build_access_token(@app)
@@ -239,7 +238,7 @@ describe "API" do
         end
       end
     end
-    
+
     describe "PUT /api/tasks:id.json" do
       context "when the caller has a valid token" do
         before do
@@ -278,7 +277,7 @@ describe "API" do
         end
       end
     end
-    
+
     describe "GET /api/tasks/:id.json" do
       before do
         @task = Task.create!({:name => 'New Task', :user_id => @user.id, :app_id => @app.id})
@@ -300,35 +299,32 @@ describe "API" do
       end
     end
   end
-  
   describe "Authorized Scopes API" do
     describe "GET /api/authorized_scopes" do
       context "when a valid token is provided" do
-        let(:scopes) do 
+        let(:scopes) do
           OauthScope.top_level_scopes.where(:scope_type => 'user') <<
             OauthScope.find_by_scope_name("profile.first_name") <<
             OauthScope.find_by_scope_name("profile.last_name")
         end
 
-        let(:scopes_selected) do 
+        let(:scopes_selected) do
           OauthScope.top_level_scopes.where(:scope_type => 'user') <<
             OauthScope.find_by_scope_name("profile.last_name")
         end
 
         let(:scope_app) do
-          App.create(name: 'app_limited', 
+          App.create(name: 'app_limited',
                      redirect_uri: "http://localhost/",
                      oauth_scopes: scopes)
         end
         let(:token) { build_access_token(scope_app, scopes_selected.map(&:scope_name).join(" ")) }
-    
+
         it "returns the list of scopes approved by user" do
-          login(@user)
-    
-          response = get "/api/authorized_scopes", nil, 
+          response = get "/api/authorized_scopes", nil,
                          {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-    
-          parsed_json = JSON.parse(response.body)     
+
+          parsed_json = JSON.parse(response.body)
           expected_scopes = scopes_selected.map(&:scope_name)
           expect(parsed_json.sort).to eql expected_scopes.sort
         end

@@ -417,6 +417,23 @@ div.moresignin {
 .pad-top{
 	top: 20px;
 }
+.padding-top{
+  padding-top: 20px;
+}
+
+.back-to-app{
+  padding: 2px;
+  color: white;
+  background-color: blue;
+}
+.back-to-app:before {
+  content:"\00ab  ";
+}
+.back-to-app:hover {
+  color: white;
+  text-decoration: underline;
+}
+
 .my{
 	color: blue;
 }

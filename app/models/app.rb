@@ -85,6 +85,19 @@ class App < ActiveRecord::Base
     self.oauth_scopes.where("oauth_scopes.scope_name" => scopes)
   end
 
+  def self.find_by_return_to_url(return_to_url)
+    return nil unless return_to_url
+    starts_with_http = return_to_url.starts_with?('http:')
+    starts_with_slash = return_to_url.starts_with?('/')
+    client_id = nil
+    if starts_with_http || starts_with_slash
+      uri = URI.extract("#{'http://' if starts_with_slash}#{return_to_url}").try(:first)
+      query = uri && URI.parse(uri).try(:query)
+      client_id = query && (CGI.parse(query) || {})['client_id'].try(:first)
+    end
+    client_id && Songkick::OAuth2::Model::Client.find_by_client_id(client_id).try(:owner)
+  end
+
   # def self.compare_domains(request_domain, app_url) # For apps/leaving
   #   app_uri        = Domainatrix.parse(app_url)
   #   request_domain = Domainatrix.parse(request_domain).domain_with_public_suffix

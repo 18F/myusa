@@ -1,16 +1,16 @@
 class Api::V1::TasksController < Api::ApiController
-  before_filter :oauthorize_scope
+  doorkeeper_for :all, scopes: ['tasks']
 
   def index
-    tasks = @user.tasks.where(:app_id => @app.id).joins(:task_items)
+    tasks = current_resource_owner.tasks.where(:app_id => doorkeeper_token.application.id).joins(:task_items)
     render :json => tasks.to_json(:include => :task_items), :status => 200
   end
 
   def create
     begin
       ActionController::Parameters.action_on_unpermitted_parameters = :raise
-      task = @user.tasks.build(task_params)
-      task.app_id = @app.id
+      task = current_resource_owner.tasks.build(task_params)
+      task.app_id = doorkeeper_token.application.id
       if task.save
         render :json => task.to_json(:include => :task_items), :status => 200
       else
@@ -24,14 +24,14 @@ class Api::V1::TasksController < Api::ApiController
   end
 
   def show
-    task = @token.owner.tasks.find_by_id(params[:id])
+    task = current_resource_owner.tasks.find_by_id(params[:id])
     render :json => task.to_json(:include => :task_items), :status => 200
   end
 
   def update
       begin
         ActionController::Parameters.action_on_unpermitted_parameters = :raise
-        task = @user.tasks.find(params[:id])
+        task = current_resource_owner.tasks.find(params[:id])
         if task
           task.assign_attributes(update_task_params)
           task.complete! if params[:task][:completed]
@@ -48,11 +48,11 @@ class Api::V1::TasksController < Api::ApiController
     end
 
   protected
-  
+
   def task_params
     params.require(:task).permit(:name, :completed_at, task_items_attributes:[:name])
   end
-  
+
   def update_task_params
     params.require(:task).permit(:name, :completed_at, task_items_attributes:[:id, :name])
   end

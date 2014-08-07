@@ -84,11 +84,7 @@ RSpec.configure do |config|
   #   DeferredGarbageCollection.reconsider
   # end
 
-  config.before(:each) do
-    OauthScope.seed_data.each { |os| OauthScope.create os } if OauthScope.all.empty?
-  end
-
-  config.include Devise::TestHelpers, type: :controller
+    config.include Devise::TestHelpers, type: :controller
   config.include Rack::Test::Methods, type: :request
 end
 

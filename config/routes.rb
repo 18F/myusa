@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
+    controllers  :authorizations => 'oauth/authorizations'
   end
 
   devise_for :users,

@@ -2,20 +2,15 @@
     <div class="panel group">
       <div class="ten columns">
         <h3>
-          Allow
-          <em><%= @pre_auth.client.application.name %></em>
-          to access your MyUSA account?
-        </h3><p class="disclaimer">
-            You can revoke access to any application at any time from your Apps page.
-          </p>
+          Allow <em><%= @pre_auth.client.application.name %></em> to access your MyUSA account?
+        </h3>
+
+        <p class="disclaimer">
+          You can revoke access to any application at any time from your Apps page.
+        </p>
 
         <p>
           The <strong><%= @pre_auth.client.application.name %></strong> application wants to:
-        </p>
-      </div>
-      <div class="two columns hide-for-small panel">
-        <p class="info">
-          <%= @pre_auth.client.application.owner_id %>
         </p>
       </div>
       <div class="row">
@@ -25,18 +20,20 @@
             <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
             <%= hidden_field_tag :state, @pre_auth.state %>
             <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-            <%= hidden_field_tag :scope, @pre_auth.scope %>
             <ul>
               <% @pre_auth.scopes.each do |scope| %>
                 <li>
-                  <%= check_box_tag "selected_scopes", scope, true  %><%= t("doorkeeper.scopes.#{scope}") %>
+                  <%= label_tag do %>
+                    <%= check_box_tag 'scope[]', scope, true, multiple: true %>
+                    <%= t("doorkeeper.scopes.#{scope}") %>
+                  <% end %>
                   <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
                     <%= text_field "new_profile_values", scope %>
                   <% else %>
                     <%= current_user.scope_field_value(scope)%>
                   <% end %>
                 </li>
-            <% end %>
+              <% end %>
             </ul>
             </br>
             <%= submit_tag 'Allow', :class => 'large button positive' %>
@@ -54,23 +51,4 @@
     </div>
   </div>
 </div>
-<!--
-  <div class="actions">
-    <%= form_tag oauth_authorization_path, method: :post do %>
-      <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-      <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-      <%= hidden_field_tag :state, @pre_auth.state %>
-      <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-      <%= hidden_field_tag :scope, @pre_auth.scope %>
-      <%= submit_tag "Authorize", class: "btn btn-success btn-lg btn-block" %>
-    <% end %>
-    <%= form_tag oauth_authorization_path, method: :delete do %>
-      <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-      <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-      <%= hidden_field_tag :state, @pre_auth.state %>
-      <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-      <%= hidden_field_tag :scope, @pre_auth.scope %>
-      <%= submit_tag "Deny", class: "btn btn-danger btn-lg btn-block" %>
-    <% end %>
-  </div> -->
 </main>

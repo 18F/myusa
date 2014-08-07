@@ -56,7 +56,7 @@ class OauthController < ApplicationController
   def cancel
     app = App.find_by_return_to_url(session[:user_return_to])
     session[:user_return_to] = nil
-    redirect_to app.url
+    redirect_to app.try(:url) || root_url
   end
 
   protected

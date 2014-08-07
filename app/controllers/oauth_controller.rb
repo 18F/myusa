@@ -53,6 +53,12 @@ class OauthController < ApplicationController
   def unknown_app
   end
 
+  def cancel
+    app = App.find_by_return_to_url(session[:user_return_to])
+    session[:user_return_to] = nil
+    redirect_to app.url
+  end
+
   protected
 
   def create_authorization_from_params(params)

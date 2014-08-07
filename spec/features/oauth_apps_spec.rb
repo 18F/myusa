@@ -25,7 +25,7 @@ describe 'OauthApps' do
   end
   let(:app1_client_id) { app1.oauth2_client.client_id }
   let(:is_public) { true }
-  let(:app1_url) { 'http://app1host.com' }
+  let(:app1_url) { 'http://app1host.com/' }
   let(:app1) do
     a = App.create(
       name: 'App1',
@@ -98,7 +98,18 @@ describe 'OauthApps' do
         auth_for_user
         expect(current_path).to eql new_user_session_path
         expect(page).to have_content('Sign In with Google')
-        expect(page).to have_link('Return to App1', href: app1_url)
+        expect(page).to have_link('Return to App1', href: cancel_auth_path)
+      end
+
+      it 'cancels the authorization when clicking back-to-app' do
+        auth_for_user
+        expect(current_path).to eql new_user_session_path
+        expect(page).to have_content('Sign In with Google')
+        expect(page).to have_link('Return to App1', href: cancel_auth_path)
+        click_link 'Return to App1'
+        expect(current_url).to eq app1_url
+        visit new_user_session_path
+        expect(page).to_not have_link('Return to App1')
       end
     end
 
@@ -120,10 +131,20 @@ describe 'OauthApps' do
         pending 'app activity logs not added'
         auth_for_user
         expect(page).to have_content('The App1 application wants to:')
-        expect(page).to have_link('Return to App1', href: app1_url)
+        expect(page).to have_link('Return to App1', href: cancel_auth_path)
         click_button('Allow')
         expect(user.app_activity_logs.count).to_eq 1
         expect(user.app_activity_logs.first.app).to_eq App.find_by_name('App1')
+      end
+    end
+
+    describe 'Cancel Authorization' do
+      it 'cancels the authorization when back-to-application link is clicked' do
+        auth_for_user
+        expect(page).to have_content('The App1 application wants to:')
+        expect(page).to have_link('Return to App1', href: cancel_auth_path)
+        click_link('Return to App1')
+        expect(current_url).to eq app1_url
       end
     end
 
@@ -153,7 +174,7 @@ describe 'OauthApps' do
         expect(page).to have_content('Send you notifications')
         expect(page).to have_content('Read your email address')
         expect(page).to_not have_content('Read your address')
-        expect(page).to have_link('Return to App1', href: app1_url)
+        expect(page).to have_link('Return to App1', href: cancel_auth_path)
         expect(page).to have_checked_field('selected_scopes_profile')
         user.reload
         expect(user.oauth2_authorization_for(app1.oauth2_client)).to be_nil

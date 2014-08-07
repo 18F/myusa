@@ -21,6 +21,6 @@ module ApplicationHelper
   def return_to_app_link
     app = App.find_by_return_to_url(session[:user_return_to])
     return nil if app.nil? || app.url.blank?
-    link_to("Return to #{app.name}", app.url, class: 'back-to-app')
+    link_to("Return to #{app.name}", cancel_auth_path, class: 'back-to-app')
   end
 end

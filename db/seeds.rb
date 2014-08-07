@@ -5,4 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-OauthScope.seed_data.each { |os| OauthScope.create os }
+# OauthScope.seed_data.each { |os| OauthScope.create os }

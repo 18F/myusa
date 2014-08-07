@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   root to: "application#index"
   get "secret" => "application#secret"
 
-  use_doorkeeper
+  use_doorkeeper do
+    controllers :applications => 'oauth/applications'
+  end
 
   devise_for :users,
     controllers: {

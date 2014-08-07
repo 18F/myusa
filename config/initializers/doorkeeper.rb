@@ -47,8 +47,8 @@ Doorkeeper.configure do
   # default_scopes  :public
   # optional_scopes :write, :update
 
-  optional_scopes Profile.scopes + %w(verify_credentials notifications tasks)
-  
+  optional_scopes *(Profile.scopes + %w(verify_credentials notifications tasks))
+
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
   # falls back to the `:client_id` and `:client_secret` params from the `params` object.

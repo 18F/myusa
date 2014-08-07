@@ -12,6 +12,10 @@ class Api::ApiController < ApplicationController
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
 
+  def current_scopes
+    doorkeeper_token.scopes.to_a
+  end
+
   def doorkeeper_unauthorized_render_options
     {json: {message: 'Not Authorized'}}
   end

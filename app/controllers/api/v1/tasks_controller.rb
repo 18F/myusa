@@ -57,11 +57,4 @@ class Api::V1::TasksController < Api::ApiController
     params.require(:task).permit(:name, :completed_at, task_items_attributes:[:id, :name])
   end
 
-  def no_scope_message
-    "You do not have permission to #{self.action_name == 'create' ? 'create' : 'view'} tasks for that user."
-  end
-
-  def oauthorize_scope
-    validate_oauth(OauthScope.where(scope_name: 'tasks'))
-  end
 end

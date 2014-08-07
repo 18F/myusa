@@ -19,12 +19,4 @@ class Api::V1::NotificationsController < Api::ApiController
     params.require(:notification).permit(:body, :subject)
   end
 
-  # def no_scope_message
-  #   "You do not have permission to send notifications to that user."
-  # end
-
-  # def oauthorize_scope
-  #   validate_oauth(OauthScope.where(scope_name: 'notifications'))
-  # end
-
 end

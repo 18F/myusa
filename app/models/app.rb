@@ -87,7 +87,7 @@ class App < ActiveRecord::Base
 
   def self.find_by_return_to_url(return_to_url)
     return nil unless return_to_url
-    starts_with_http = return_to_url =~ /^http[s]*/
+    starts_with_http = return_to_url =~ /^https?:/
     starts_with_slash = return_to_url.starts_with?('/')
     client_id = nil
     if starts_with_http || starts_with_slash

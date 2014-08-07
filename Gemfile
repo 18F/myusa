@@ -91,6 +91,7 @@ group :development, :test do
   gem 'pry-plus', git: 'https://github.com/nhemsley/pry-plus.git'
   gem 'spring-commands-rspec'
 #  gem 'rspec_api_blueprint', require: false
+  gem 'better_errors'
 
 end
 

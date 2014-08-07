@@ -1,16 +1,7 @@
 Doorkeeper.configure do
-  # Change the ORM that doorkeeper will use.
-  # Currently supported options are :active_record, :mongoid2, :mongoid3, :mongo_mapper
   orm :active_record
 
-  # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    # Put your resource owner authentication logic here.
-    # Example implementation:
-    # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
-    # binding.pry
-    # pp current_user
-    # current_user || redirect_to(new_user_session_url)
     current_user || warden.authenticate!(:scope => :user)
   end
 
@@ -95,3 +86,5 @@ Doorkeeper.configure do
   # set to true if you want this to be allowed
   # wildcard_redirect_uri false
 end
+
+Doorkeeper::Application.send :belongs_to, :owner, polymorphic: true

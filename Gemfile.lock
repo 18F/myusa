@@ -85,6 +85,9 @@ GEM
       thor (~> 0.18)
     berkshelf-api-client (1.2.0)
       faraday (~> 0.9.0)
+    better_errors (1.1.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bond (0.5.1)
@@ -607,6 +610,7 @@ DEPENDENCIES
   autoprefixer-rails
   awesome_print
   berkshelf (~> 3.0)
+  better_errors
   bootstrap-sass (~> 3.2.0)
   brakeman
   capistrano (~> 2.15)

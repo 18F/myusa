@@ -69,3 +69,8 @@ en:
       authorized_applications:
         destroy:
           notice: 'Application revoked.'
+    scopes:
+      profile:
+        default: 'Read your profile information'
+        email: 'Read your email address'
+      notifications: 'Send you notifications'

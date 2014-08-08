@@ -55,6 +55,19 @@ describe "API" do
         end
       end
 
+      pending "when app has profile scope" do
+        let(:token) { build_access_token(client_app, ['profile']) }
+
+        it "should return profile limited to requested scopes" do
+          response = get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
+          expect(response.status).to eq 200
+          parsed_json = JSON.parse(response.body)
+          expect(parsed_json).to be
+          expect(parsed_json["first_name"]).to eq 'Joe'
+          expect(parsed_json["email"]).to eq 'joe@citizen.org'
+        end
+      end
+
       context "when the user queried exists" do
         let(:token) { build_access_token(client_app, ['profile']) }
         context "when the schema parameter is set" do
@@ -63,6 +76,7 @@ describe "API" do
               response = get "/api/profile", {"schema" => "true"}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
               expect(response.status).to eq 200
               parsed_json = JSON.parse(response.body)
+              puts response.body
               expect(parsed_json).to_not be_nil
               expect(parsed_json["email"]).to eq 'joe@citizen.org'
             end

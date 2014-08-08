@@ -2,19 +2,12 @@
 require 'feature_helper'
 
 def auth_for_user(opts = {})
-  # visit(url_for({
-    # controller: 'oauth',
-    # action: 'authorize',
-  foo = {
+  visit(oauth_authorization_path({
     response_type: 'code',
     client_id: app1.uid,
     redirect_uri: redirect_uri,
     only_path: true
-  }.merge(opts)
-
-  # pp foo
-
-  visit(oauth_authorization_path(foo))
+  }.merge(opts)))
 end
 
 describe 'OauthApps' do
@@ -28,21 +21,17 @@ describe 'OauthApps' do
      'profile.email',
      'profile.middle_name']
   end
-  # let(:app1_client_id) { app1.oauth2_client.client_id }
   let(:is_public) { true }
   let(:app1) do
-    a = Doorkeeper::Application.create(
+    Doorkeeper::Application.create(
       name: 'App1',
       owner: owner_user,
-      # custom_text: 'Custom text for test',
       redirect_uri: redirect_uri,
       url:          'http://app1host.com'
-      # is_public: is_public
     )
-    # a.oauth_scopes = OauthScope.where(scope_name: app1_scopes)
-    a
   end
 
+  # Sandboxing is not implemented with Doorkeeper yet
   pending 'with a non-public sandboxed app' do
 
     let(:is_public) { false }
@@ -138,13 +127,11 @@ describe 'OauthApps' do
       end
 
       it "asks for authorization and redirect after clicking 'Allow'" do
-        auth_for_user scope: 'profile notifications profile.email'
+        auth_for_user scope: 'notifications profile.email'
         expect(page).to have_content('The App1 application wants to:')
-        expect(page).to have_content('Read your profile information')
         expect(page).to have_content('Send you notifications')
         expect(page).to have_content('Read your email address')
         expect(page).to_not have_content('Read your address')
-        # expect(page).to have_checked_field('selected_scopes_profile')
       end
     end
   end
@@ -152,7 +139,6 @@ describe 'OauthApps' do
   pending 'user selected scopes' do
     before do
       login(user)
-      # expect(auth_scopes(app1, user)).to be_blank
     end
 
     context 'user has profile data' do

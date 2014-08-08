@@ -1,11 +1,9 @@
 require 'email_authenticatable'
 
 class User < ActiveRecord::Base
-  include Songkick::OAuth2::Model::ResourceOwner
-
   has_many :authentications, :dependent => :destroy
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
   has_one :profile, :dependent => :destroy
-  has_many :apps, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   validates_acceptance_of :terms_of_service
@@ -100,24 +98,24 @@ class User < ActiveRecord::Base
     self.oauth2_authorizations.map(&:client).map(&:oauth2_client_owner)
   end
 
-  def grouped_activity_logs
-    logs = self.app_activity_logs
-
-    # create container for grouped logs that will be returned
-    grouped_logs = {}
-
-    # iterate over current logs
-    logs.each do |log|
-      key = log.created_at.strftime('%B %e')
-      if grouped_logs[key]
-        grouped_logs[key] << log
-      else
-        grouped_logs[key] = [log]
-      end
-    end
-
-    grouped_logs
-  end
+  # def grouped_activity_logs
+  #   logs = self.app_activity_logs
+  #
+  #   # create container for grouped logs that will be returned
+  #   grouped_logs = {}
+  #
+  #   # iterate over current logs
+  #   logs.each do |log|
+  #     key = log.created_at.strftime('%B %e')
+  #     if grouped_logs[key]
+  #       grouped_logs[key] << log
+  #     else
+  #       grouped_logs[key] = [log]
+  #     end
+  #   end
+  #
+  #   grouped_logs
+  # end
 
   def send_reset_password_confirmation
     # TODO commented out mailer

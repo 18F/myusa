@@ -18,3 +18,8 @@ end
 Capybara.javascript_driver = :poltergeist
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+def login(user)
+  token = user.set_authentication_token
+  visit new_user_session_path(email: user.email, token: token)
+end

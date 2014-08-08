@@ -11,11 +11,17 @@ class Profile < ActiveRecord::Base
 
   after_validation :set_errors
 
-  FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :gender, :marital_status, :is_parent, :is_student, :is_veteran, :is_retired]
+  FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address,
+    :address2, :city, :state, :zip, :gender, :marital_status, :is_parent,
+    :is_student, :is_veteran, :is_retired]
   METHODS = [:email, :phone_number, :mobile_number]
 
   ENCRYPTED_FIELDS = FIELDS + [:mobile, :phone]
   ENCRYPTED_FIELDS.map { |attrib| attr_encrypted attrib.to_sym, key: :key, marshal: true }
+
+  def self.scopes
+    ["profile"] + (FIELDS + METHODS).map {|f| "profile.#{f}"}
+  end
 
 #  attr_accessible :title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone_number, :mobile_number, :gender, :marital_status, :is_parent, :is_student, :is_veteran, :is_retired, :as => [:default, :admin]
 #  attr_accessible :user_id, :phone, :mobile, :as => :admin

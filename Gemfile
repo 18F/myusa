@@ -32,7 +32,6 @@ gem 'autoprefixer-rails'
 gem 'devise'
 gem 'devise-async'
 gem 'omniauth'
-gem 'songkick-oauth2-provider', :git => 'https://github.com/adam-at-mobomo/oauth2-provider.git', :branch => 'rails-4-compatibility-with-bearer-and-client-credential-support', :require => 'songkick/oauth2/provider'
 gem 'oauth2'
 gem 'omniauth-openid' #, :git => 'https://github.com/GSA/omniauth-openid.git', :branch => 'pape'
 gem 'omniauth-google-oauth2'
@@ -44,8 +43,11 @@ gem "permanent_records", "~> 2.3.0"
 gem 'font-awesome-sass'
 gem "attr_encrypted"
 gem "factory_girl"
+gem 'capistrano', '~> 2.15'
+gem 'capistrano-unicorn', :require => false
 gem 'unicorn', :require => false
 
+gem 'doorkeeper'
 
 # Papertrail prevents records from being deleted.
 # gem 'papertrail'
@@ -69,13 +71,11 @@ group :development do
 
   ## deploy dependencies
   gem 'berkshelf', '~> 3.0'
-  gem 'capistrano', '~> 2.15'
   gem 'chef'
   gem 'knife-ec2'
   gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
   gem 'knife-solo_data_bag'
   gem 'unf'
-  gem 'capistrano-unicorn', :require => false
 end
 
 group :development, :test do
@@ -91,6 +91,7 @@ group :development, :test do
   gem 'pry-plus', git: 'https://github.com/nhemsley/pry-plus.git'
   gem 'spring-commands-rspec'
 #  gem 'rspec_api_blueprint', require: false
+  gem 'better_errors'
 
 end
 

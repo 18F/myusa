@@ -46,13 +46,13 @@ describe SessionsController do
           let(:remember_me) { true }
 
           it 'sets the remember cookie' do
-            expect(@response.cookies).to have_key('remember_user_token')
+            expect(response.cookies).to have_key('remember_user_token')
           end
         end
 
         context 'remember_me is not set' do
           it 'does not set the remember cookie' do
-            expect(@response.cookies).to_not have_key('remember_user_token')
+            expect(response.cookies).to_not have_key('remember_user_token')
           end
         end
 

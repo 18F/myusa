@@ -87,4 +87,5 @@ Doorkeeper.configure do
   # wildcard_redirect_uri false
 end
 
+# Monkeypatch the client application model so that it has a relation back to the User/Owner
 Doorkeeper::Application.send :belongs_to, :owner, polymorphic: true

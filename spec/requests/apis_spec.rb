@@ -49,9 +49,9 @@ describe "API" do
           response = get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
           expect(response.status).to eq 200
           parsed_json = JSON.parse(response.body)
-          expect(parsed_json).to_not be_nil
+          expect(parsed_json).to be
           expect(parsed_json["first_name"]).to eq 'Joe'
-          expect(parsed_json["email"]).to be_nil
+          expect(parsed_json).to_not include("email")
         end
       end
 

@@ -19,7 +19,8 @@ module ApplicationHelper
   end
 
   def return_to_app_link
-    app = App.find_by_return_to_url(session[:user_return_to])
+    client_id = (session[:user_return_to] || '').match(/[\?&;]client_id=([^&;]+)/).try(:[], 1)
+    app = client_id && Doorkeeper::Application.find_by_uid(client_id)
     return nil if app.nil? || app.url.blank?
     link_to("Return to #{app.name}", cancel_auth_path, class: 'back-to-app')
   end

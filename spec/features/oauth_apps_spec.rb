@@ -104,7 +104,6 @@ describe 'OauthApps' do
       it 'cancels the authorization when clicking back-to-app' do
         auth_for_user
         expect(current_path).to eql new_user_session_path
-        expect(page).to have_content('Sign In with Google')
         expect(page).to have_link('Return to App1', href: cancel_auth_path)
         click_link 'Return to App1'
         expect(current_url).to eq app1_url

@@ -1,11 +1,9 @@
 require 'email_authenticatable'
 
 class User < ActiveRecord::Base
-  include Songkick::OAuth2::Model::ResourceOwner
-
   has_many :authentications, :dependent => :destroy
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
   has_one :profile, :dependent => :destroy
-  has_many :apps, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   validates_acceptance_of :terms_of_service

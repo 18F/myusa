@@ -10,7 +10,7 @@ def auth_for_user(opts = {})
   }.merge(opts)))
 end
 
-describe 'OauthApps' do
+describe 'OAuth' do
   let(:user) { create_confirmed_user_with_profile(email: 'first@user.org') }
   let(:owner_user) { create_confirmed_user_with_profile(email: 'owner@user.org') }
   let(:redirect_uri) { 'http://example.gov/' }
@@ -126,13 +126,13 @@ describe 'OauthApps' do
         expect(page).to have_content('The requested scope is invalid, unknown, or malformed')
       end
 
-      it "asks for authorization and redirect after clicking 'Allow'" do
-        auth_for_user scope: 'notifications profile.email'
-        expect(page).to have_content('The App1 application wants to:')
-        expect(page).to have_content('Send you notifications')
-        expect(page).to have_content('Read your email address')
-        expect(page).to_not have_content('Read your address')
-      end
+      # it "asks for authorization and redirect after clicking 'Allow'" do
+      #   auth_for_user scope: 'notifications profile.email'
+      #   expect(page).to have_content('The App1 application wants to:')
+      #   expect(page).to have_content('Send you notifications')
+      #   expect(page).to have_content('Read your email address')
+      #   expect(page).to_not have_content('Read your address')
+      # end
     end
   end
 

@@ -88,4 +88,4 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods, type: :request
 end
 
-Capybara.default_host = "http://localhost:3000"
+# Capybara.default_host = "http://localhost:3000"

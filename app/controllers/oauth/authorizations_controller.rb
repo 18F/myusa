@@ -7,11 +7,8 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   end
 
   def cancel
-    client_id = (session[:user_return_to] || '').
-      match(/[\?&;]client_id=([^&;]+)/).try(:[], 1)
-    app = Doorkeeper::Application.find_by_uid(client_id)
     session[:user_return_to] = nil
-    url = app.try(:url)
+    url = params[:app_uri]
     if url
       redirect_to url
     else

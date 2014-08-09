@@ -12,6 +12,8 @@ MyUSA capabilities can be embedded in websites or accessed through APIs by clien
 
 Use of MyUSA is governed by the [MyUSA Terms and Conditions](https://github.com/18F/myusa/wiki/Terms-of-Service).
 
+MyUSA is a service of [18F](https://18f.gsa.gov) and the [Office of Citizen Services and Innovative Technologies](http://www.gsa.gov/portal/category/25729) at the [General Services Administration](http://gsa.gov).
+
 ## Running MyUSA
 
 Please read the [MyUSA Installation and Deployment Guide](INSTALL.md) for information about how to set up your development environment and deploy the MyUSA application server.

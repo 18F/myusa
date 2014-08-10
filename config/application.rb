@@ -29,6 +29,8 @@ module MyusaServer
     config.to_prepare do
       # Only Authorization endpoint
       Doorkeeper::AuthorizationsController.layout "application"
+      Doorkeeper::ApplicationsController.layout "application"
+
     end
   end
 end

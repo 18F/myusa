@@ -89,11 +89,10 @@ end
 
 Doorkeeper::Application.send :include, Doorkeeper::Models::Scopes
 
-class Doorkeeper::OAuth::PreAuthorization
+module Doorkeeper::OAuth::ValidateApplicationScopes
   def validate_scopes
-    return true unless scope.present?
-    return scope.present? &&
-      scope !~ /[\n|\r|\t]/ &&
-      client.application.scopes.has_scopes?(scopes)
+    super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
   end
 end
+
+Doorkeeper::OAuth::PreAuthorization.prepend Doorkeeper::OAuth::ValidateApplicationScopes

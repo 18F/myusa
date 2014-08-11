@@ -76,7 +76,7 @@ describe 'OAuth' do
           expect(token).to_not be_expired
         end
 
-        scenario 'user can selecte scopes' do
+        scenario 'user can select scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
           @auth_page.scopes.uncheck('Read your email address')
@@ -93,12 +93,37 @@ describe 'OAuth' do
 
       end
 
+      context 'with non-public (sandboxed) app' do
+        let(:owner) do
+          User.create do |u|
+            u.email = 'owner.mctesterson@gsa.gov'
+          end
+        end
+
+        let(:client_app) do
+          Doorkeeper::Application.create do |a|
+            a.name = 'Client App'
+            a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
+            a.scopes = client_application_scopes
+            a.owner = owner
+            a.public = false
+          end
+        end
+
+        pending 'displays unknown application error' do
+          expect(@auth_page).to be_displayed
+          expect(@auth_page).to have_error_message
+          expect(@auth_page.error_message.text).to include('Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.')
+        end
+      end
+
       context 'with bad scope value' do
         let(:requested_scope) { 'foo bar baz' }
 
         scenario 'displays scope error' do
-          expect(page).to have_content('An error has occurred')
-          expect(page).to have_content('The requested scope is invalid, unknown, or malformed.')
+          expect(@auth_page).to be_displayed
+          expect(@auth_page).to have_error_message
+          expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
         end
       end
 
@@ -106,8 +131,9 @@ describe 'OAuth' do
         let(:requested_scope) { 'profile.city' }
 
         scenario 'displays scope error' do
-          expect(page).to have_content('An error has occurred')
-          expect(page).to have_content('The requested scope is invalid, unknown, or malformed.')
+          expect(@auth_page).to be_displayed
+          expect(@auth_page).to have_error_message
+          expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
         end
       end
 

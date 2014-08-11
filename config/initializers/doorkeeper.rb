@@ -89,10 +89,14 @@ end
 
 Doorkeeper::Application.send :include, Doorkeeper::Models::Scopes
 
-module Doorkeeper::OAuth::ValidateApplicationScopes
+module OAuthValidations
   def validate_scopes
     super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
   end
+
+  def validate_client
+    super
+  end
 end
 
-Doorkeeper::OAuth::PreAuthorization.prepend Doorkeeper::OAuth::ValidateApplicationScopes
+Doorkeeper::OAuth::PreAuthorization.prepend OAuthValidations

@@ -19,7 +19,7 @@ To get your Rails development environment setup, here's the steps to follow.
     In the directory where you want to store your development files, do the following:
 
     ```sh
-    git clone https://github.com/18F/myusa-server.git
+    git clone https://github.com/18F/myusa.git
     ```
 
 3. Install Ruby Gems
@@ -37,15 +37,16 @@ To get your Rails development environment setup, here's the steps to follow.
     ```sh
     cp config/database.yml.example config/database.yml
     cp config/secrets.yml.example config/secrets.yml
-    cp config/initializers/devise.rb.example config/initializers/devise.rb
     rake secret
     ```
 
-    Copy the result of the above rake command to the RAILS_SECRET_TOKEN variables in config/secrets.yml
+    Copy the result of the above rake command to the `RAILS_SECRET_TOKEN` variables in `config/secrets.yml`
 
 5. Create the development and test databases
 
     Make sure you have MySQL running.  By default, the development environment looks to connect to MySQL using the root MySQL user with no password.
+
+    If you're running on an OS or distribution other than Ubuntu, ensure that the `socket` setting in `config/database.yml` is correct for your platform.
 
     ```sh
     bundle exec rake db:setup
@@ -56,10 +57,7 @@ To get your Rails development environment setup, here's the steps to follow.
 
     **That should be it!  You are ready to develop.**
 
-## Running the MyUSA-server locally
-
-Make sure you have MySQL running.  By default, the development environment
-looks to connect to MySQL using the root MySQL user with no password.
+## Running MyUSA locally
 
 From the command line in the Rails root, do the following:
 
@@ -88,6 +86,7 @@ First, set up environment variables containing your AWS keys:
 ```sh
 export AWS_ACCESS_KEY=<key>
 export AWS_SECRET_KEY=<secret>
+```
 
 Set up your `knife` configuration:
 
@@ -114,9 +113,36 @@ bundle exec knife ec2 server create \
 
 ## Deploying to Amazon Web Services with Capistrano
 
-A few simple commands can deploy to a running AWS instance:
+A few simple commands can deploy to a running AWS instance.
+
+To set up a configuration for a particular environment, create the config file
+from the EC2 example and name it after the environment type; for example, `staging`:
+
+```sh
+cp config/deploy/ec2.rb.example config/deploy/staging.rb
+```
+
+The EC2 example gets the target server address from the `MYUSA_STAGING`
+environment variable. (Alternatively, you can edit the new configuration file directly.)
 
 ```sh
 export MYUSA_STAGING=<staging_server_address>
+```
+
+For your first deploy, run `deploy:setup`. This creates the necessary databases
+and configuration files, then deploys the `devel` branch and restarts the
+Rails server and web server processes.
+```sh
+bundle exec cap staging deploy:setup
+```
+
+Once `deploy:setup` has been run on a given host, all future deploys can
+just use the `deploy` command:
+```sh
+bundle exec cap staging deploy
+```
+
+To deploy a branch other than `devel`, use the `BRANCH` environment variable:
+```sh
 BRANCH=feature/my-lovely-branch cap staging deploy
 ```

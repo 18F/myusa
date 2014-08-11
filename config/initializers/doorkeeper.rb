@@ -30,7 +30,7 @@ Doorkeeper.configure do
   # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
   # a registered application
   # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
-  # enable_application_owner :confirmation => false
+  enable_application_owner :confirmation => false
 
   # Define access token scopes for your provider
   # For more information go to
@@ -87,5 +87,12 @@ Doorkeeper.configure do
   # wildcard_redirect_uri false
 end
 
-# Monkeypatch the client application model so that it has a relation back to the User/Owner
-Doorkeeper::Application.send :belongs_to, :owner, polymorphic: true
+Doorkeeper::Application.send :include, Doorkeeper::Models::Scopes
+
+module Doorkeeper::OAuth::ValidateApplicationScopes
+  def validate_scopes
+    super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
+  end
+end
+
+Doorkeeper::OAuth::PreAuthorization.prepend Doorkeeper::OAuth::ValidateApplicationScopes

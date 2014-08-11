@@ -87,5 +87,3 @@ RSpec.configure do |config|
     config.include Devise::TestHelpers, type: :controller
   config.include Rack::Test::Methods, type: :request
 end
-
-Capybara.default_host = "http://localhost:3000"

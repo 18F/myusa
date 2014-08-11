@@ -13,12 +13,15 @@ describe 'OAuth' do
   let(:client_app) do
     Doorkeeper::Application.create do |a|
       a.name = 'Client App'
+      # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
       a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
       a.scopes = client_application_scopes
     end
   end
 
   let(:oauth_client) do
+    # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
+    # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
     OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application

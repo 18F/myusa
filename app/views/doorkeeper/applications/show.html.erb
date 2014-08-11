@@ -12,6 +12,12 @@
 
     <p><code id="secret"><%= @application.secret %></code></p>
 
+    <h4>Scopes:</h4>
+
+    <% @application.scopes.each do |scope| %>
+      <p><code><%= scope %></code></p>
+    <% end %>
+
     <h4>Callback urls:</h4>
 
     <table>

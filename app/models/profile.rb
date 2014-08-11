@@ -23,8 +23,12 @@ class Profile < ActiveRecord::Base
     ["profile"] + (FIELDS + METHODS).map {|f| "profile.#{f}"}
   end
 
-#  attr_accessible :title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone_number, :mobile_number, :gender, :marital_status, :is_parent, :is_student, :is_veteran, :is_retired, :as => [:default, :admin]
-#  attr_accessible :user_id, :phone, :mobile, :as => :admin
+  def self.attribute_from_scope(scope)
+    parsed_scope = scope.split('.')
+    return nil unless parsed_scope.first == 'profile'
+    field = parsed_scope.second
+    (FIELDS + METHODS).select {|attribute| attribute.to_s == field }.first
+  end
 
   def name
     (first_name.blank? or last_name.blank?) ? nil : [first_name, last_name].join(" ")

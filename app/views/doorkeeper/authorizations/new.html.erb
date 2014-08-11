@@ -24,13 +24,11 @@
               <% @pre_auth.scopes.each do |scope| %>
                 <li>
                   <%= label_tag do %>
-                    <%= check_box_tag 'scope[]', scope, true, multiple: true %>
+                    <%= scope_check_box_tag scope %>
                     <%= t("doorkeeper.scopes.#{scope}") %>
                   <% end %>
-                  <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                    <%= text_field "new_profile_values", scope %>
-                  <% else %>
-                    <%= current_user.scope_field_value(scope)%>
+                  <% if scope.downcase.start_with?('profile.') %>
+                    <%= profile_text_field scope %>
                   <% end %>
                 </li>
               <% end %>

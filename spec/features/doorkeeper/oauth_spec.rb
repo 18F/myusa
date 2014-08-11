@@ -85,7 +85,7 @@ describe 'OAuth' do
           expect(token).to_not be_expired
         end
 
-        scenario 'user can selecte scopes' do
+        scenario 'user can select scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
           @auth_page.scopes.uncheck('Read your email address')
@@ -98,6 +98,24 @@ describe 'OAuth' do
           # Turn the code into a token
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
           expect(token["scope"]).to eq("profile.last_name")
+        end
+
+        scenario 'user can enter profile data if not already present' do
+          # Authorize the client app
+          expect(@auth_page).to be_displayed
+          @auth_page.profile_last_name.set 'McTesterson'
+          expect(@auth_page.profile_email).to be_disabled
+          @auth_page.allow_button.click
+
+          # Retrieve the code
+          expect(@token_page).to be_displayed
+          code = @token_page.code.text
+
+          # Turn the code into a token and use it to query the API server
+          token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+          profile = JSON.parse token.get('/api/profile').body
+          expect(profile['last_name']).to eq('McTesterson')
+          expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
         end
 
       end

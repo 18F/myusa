@@ -3,12 +3,14 @@
 		<div class="col-md-12 pad-top">
 		<% if current_user %>
 				<h5 class="pull-right">
-					<%= current_user.email %> | <span class="glyphicon glyphicon-cog"></span>
+					<div class='action-blue-user' style='display:inline;'><b><%= current_user.email %></b></div> <div style='color:gray; display:inline;'>|</div> <span class="glyphicon glyphicon-cog"></span>
 				</h5>
 			<% end %>
 		</div>
 	</div>
 	<hr>
-	<div class="row">
+
+	<div class="row text-center">
+		<img class='myusa-shield' src='/assets/myusa-shield.png'>
 	</div>
 </header>

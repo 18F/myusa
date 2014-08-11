@@ -43,6 +43,10 @@ $(document).ready(function () {
     $(this).children().eq(0).children().eq(0).toggleClass("rotate");
   });
 
+  $(".scope-list li p").click(function(){
+    event.stopPropagation();
+  });
+
   // DEBUG functions
   $("#debug-hide").click(function (e) {
     $(".debug").hide(400);

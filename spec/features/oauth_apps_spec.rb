@@ -128,7 +128,7 @@ describe 'OauthApps' do
 
       it "asks for authorization and redirect after clicking 'Allow'" do
         auth_for_user scope: 'notifications profile.email'
-        expect(page).to have_content('The App1 application wants to:')
+        expect(page).to have_content('App1 is requesting permission to:')
         expect(page).to have_content('Send you notifications')
         expect(page).to have_content('Read your email address')
         expect(page).to_not have_content('Read your address')

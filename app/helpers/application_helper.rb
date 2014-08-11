@@ -17,4 +17,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def prettify_scope(scope)
+    scope.split(/\./).last.split(/_/).join(' ').capitalize
+  end
 end

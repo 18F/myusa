@@ -9,4 +9,5 @@ class OAuth2::AuthorizationPage < SitePrism::Page
   element :allow_button, "input[value='Allow']"
   element :cancel_button, "input[value='Cancel']"
 
+  element :error_message, "div.page-header[contains('An error has occurred')] ~ main"
 end

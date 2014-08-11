@@ -25,6 +25,21 @@ describe 'OAuth' do
     end
   end
 
+  def visit_oauth_authorize_url
+    visit(oauth_client.auth_code.authorize_url(
+      redirect_uri: client_app.redirect_uri,
+      scope: requested_scope,
+      state: 'state'
+    ))
+  end
+
+  shared_examples 'scope error' do
+    scenario 'displays scope error message' do
+      expect(@auth_page).to be_displayed
+      expect(@auth_page).to have_error_message
+      expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
+    end
+  end
 
   describe 'Authorization' do
     let(:requested_scope) { 'profile.email profile.last_name' }
@@ -36,11 +51,7 @@ describe 'OAuth' do
 
     context 'when not logged in' do
       before :each do
-        visit oauth_client.auth_code.authorize_url(
-          redirect_uri: client_app.redirect_uri,
-          scope: requested_scope,
-          state: 'state'
-        )
+        visit_oauth_authorize_url
       end
 
       scenario 'redirects to login page' do
@@ -53,12 +64,7 @@ describe 'OAuth' do
     context 'when logged in' do
       before :each do
         login user
-
-        visit oauth_client.auth_code.authorize_url(
-          redirect_uri: client_app.redirect_uri,
-          scope: requested_scope,
-          state: 'state'
-        )
+        visit_oauth_authorize_url
       end
 
       context 'with valid url params' do
@@ -96,19 +102,13 @@ describe 'OAuth' do
       context 'with bad scope value' do
         let(:requested_scope) { 'foo bar baz' }
 
-        scenario 'displays scope error' do
-          expect(page).to have_content('An error has occurred')
-          expect(page).to have_content('The requested scope is invalid, unknown, or malformed.')
-        end
+        it_behaves_like 'scope error'
       end
 
       context 'with scope not in client application scopes' do
         let(:requested_scope) { 'profile.city' }
 
-        scenario 'displays scope error' do
-          expect(page).to have_content('An error has occurred')
-          expect(page).to have_content('The requested scope is invalid, unknown, or malformed.')
-        end
+        it_behaves_like 'scope error'
       end
 
     end

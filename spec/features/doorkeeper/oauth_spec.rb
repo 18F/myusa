@@ -85,10 +85,16 @@ describe 'OAuth' do
           expect(token).to_not be_expired
         end
 
+        scenario 'user can deny' do
+          expect(@auth_page).to be_displayed
+          @auth_page.cancel_button.click
+          expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
+        end
+
         scenario 'user can selecte scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
-          find(:css, "input[value='profile.email']").set(false)
+          @auth_page.scopes.uncheck('Read your email address')
           @auth_page.allow_button.click
 
           # Retrieve the code

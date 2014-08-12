@@ -1,4 +1,3 @@
-<% if user_signed_in? %>
 <div class="main">
   <div class="row">
     <div class="col-md-12"><h3 class='action-blue'><%= @pre_auth.client.application.name %> is requesting permission to:</h3></div>
@@ -75,16 +74,8 @@
     <span><b>Still not convinced?</b></span>
     <br>
     <p>
-      Feel free to head back to <a href='<%= @pre_auth.client.application.url %>'> <%= @pre_auth.client.application.name %></a>  or visit your <a href="#">MyUSA profile</a>.
+      Feel free to head back to <%= link_to @auth.deny %> <%= @pre_auth.client.application.name %></a>  or visit your <a href="#">MyUSA profile</a>.
     </p>
   </div>
   <br><br>
-
-<% else %>
-  <p>
-    Please
-    <%= link_to 'sign in', sign_in_path %>
-    to continue.
-  </p>
-<% end %>
 </div>

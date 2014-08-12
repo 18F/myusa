@@ -13,18 +13,36 @@ describe 'OAuth' do
   let(:client_app) do
     Doorkeeper::Application.create do |a|
       a.name = 'Client App'
+      # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
       a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
       a.scopes = client_application_scopes
     end
   end
 
   let(:oauth_client) do
+    # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
+    # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
     OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application
     end
   end
 
+  def visit_oauth_authorize_url
+    visit(oauth_client.auth_code.authorize_url(
+      redirect_uri: client_app.redirect_uri,
+      scope: requested_scope,
+      state: 'state'
+    ))
+  end
+
+  shared_examples 'scope error' do
+    scenario 'displays scope error message' do
+      expect(@auth_page).to be_displayed
+      expect(@auth_page).to have_error_message
+      expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
+    end
+  end
 
   describe 'Authorization' do
     let(:requested_scope) { 'profile.email profile.last_name' }
@@ -36,11 +54,7 @@ describe 'OAuth' do
 
     context 'when not logged in' do
       before :each do
-        visit oauth_client.auth_code.authorize_url(
-          redirect_uri: client_app.redirect_uri,
-          scope: requested_scope,
-          state: 'state'
-        )
+        visit_oauth_authorize_url
       end
 
       scenario 'redirects to login page' do
@@ -53,12 +67,7 @@ describe 'OAuth' do
     context 'when logged in' do
       before :each do
         login user
-
-        visit oauth_client.auth_code.authorize_url(
-          redirect_uri: client_app.redirect_uri,
-          scope: requested_scope,
-          state: 'state'
-        )
+        visit_oauth_authorize_url
       end
 
       context 'with valid url params' do
@@ -74,6 +83,12 @@ describe 'OAuth' do
           # Turn the code into a token
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
           expect(token).to_not be_expired
+        end
+
+        scenario 'user can deny' do
+          expect(@auth_page).to be_displayed
+          @auth_page.cancel_button.click
+          expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
         end
 
         scenario 'user can select scopes' do
@@ -120,21 +135,13 @@ describe 'OAuth' do
       context 'with bad scope value' do
         let(:requested_scope) { 'foo bar baz' }
 
-        scenario 'displays scope error' do
-          expect(@auth_page).to be_displayed
-          expect(@auth_page).to have_error_message
-          expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
-        end
+        it_behaves_like 'scope error'
       end
 
       context 'with scope not in client application scopes' do
         let(:requested_scope) { 'profile.city' }
 
-        scenario 'displays scope error' do
-          expect(@auth_page).to be_displayed
-          expect(@auth_page).to have_error_message
-          expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
-        end
+        it_behaves_like 'scope error'
       end
 
     end

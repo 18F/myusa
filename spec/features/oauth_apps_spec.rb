@@ -118,49 +118,11 @@ describe 'OAuth' do
         end
       end
     end
-
-    describe 'Authorize application with scopes' do
-      it 'does not allow requests that contain unauthorized scopes' do
-        auth_for_user scope: 'foobar'
-        expect(page).to have_content('An error has occurred')
-        expect(page).to have_content('The requested scope is invalid, unknown, or malformed')
-      end
-
-      # it "asks for authorization and redirect after clicking 'Allow'" do
-      #   auth_for_user scope: 'notifications profile.email'
-      #   expect(page).to have_content('The App1 application wants to:')
-      #   expect(page).to have_content('Send you notifications')
-      #   expect(page).to have_content('Read your email address')
-      #   expect(page).to_not have_content('Read your address')
-      # end
-    end
   end
 
-  pending 'user selected scopes' do
+  pending 'updating profile data' do
     before do
       login(user)
-    end
-
-    context 'user has profile data' do
-      before do
-        expect(user.first_name).to be_present
-        expect(user.email).to be_present
-        auth_for_user scope: app1_scopes.join(' ')
-      end
-
-      it 'user scopes match requested scopes' do
-        click_button('Allow')
-        user.reload
-        expect(auth_scopes(app1, user).sort).to eq app1_scopes.sort
-      end
-
-      it 'user scopes only contain checked scopes' do
-        uncheck('selected_scopes_profile.email')
-        click_button('Allow')
-        user.reload
-        app_scopes = app1_scopes - ['profile.email']
-        expect(auth_scopes(app1, user).sort).to eq app_scopes.sort
-      end
     end
 
     context 'user has incomplete user data' do

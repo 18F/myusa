@@ -15,6 +15,7 @@ Use of MyUSA is governed by the [MyUSA Terms and Conditions](https://github.com/
 Technically, MyUSA consists of:
 
 - An OAuth 2.0 / OpenID Connect provider
+- An account system that authenticates via email, phone, or external identity providers
 - APIs for reading user profiles
 - APIs for sending notifications or creating tasks for users
 - A web application for managing your interaction with MyUSA, such as updating your profile

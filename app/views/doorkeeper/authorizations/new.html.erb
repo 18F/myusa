@@ -1,9 +1,9 @@
 <div class="main">
   <div class="row">
-    <div class="col-md-12"><h3 class='action-blue'><%= @pre_auth.client.application.name %> is requesting permission to:</h3></div>
+    <div class="col-md-12"><div class='action-blue'><%= @pre_auth.client.application.name %> is requesting permission to:</div></div>
   </div>
   <div class="row">
-    <div class="col-md-12"><h5><p class="muted-major">Your MyUSA data is yours to grant or deny access at will.</p></h5></div>
+    <div class="col-md-12"><div class="muted-minor"><p class="muted-major">Your MyUSA data is yours to grant or deny access at will.</p></div></div>
   </div>
   </br>
 
@@ -30,16 +30,16 @@
          <% @pre_auth.scopes.each do |scope| %>
             <li>
 
-              <h5>
+              <div class="header-large">
                 <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("doorkeeper.scopes.#{scope}") %></span>
-              </h5>
+              </div>
               <p>
               <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
               </br>
               <span class='label_pad'>
                 <label><%= check_box_tag 'scope[]', scope, true, multiple: true%>
                 <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                  </label><%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
+                  </label> <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
                   <% else %>
                     <%= current_user.scope_field_value(scope)%></label>
                   <% end %>              

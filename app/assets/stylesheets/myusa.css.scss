@@ -10,6 +10,15 @@ $heading_text: 'raleway';
 $button_text: 'Open Sans';
 $grey_accent: #F9F9F9;
 
+/*******************
+  Base Classes
+********************/
+
+.header-large{
+  font-size: 1.25em;
+  color:$blue_header;
+}
+
 .scope_description{
   color:$blue_header;
   cursor:pointer;
@@ -54,6 +63,10 @@ $grey_accent: #F9F9F9;
   padding:10px;
 }
 
+
+/*******************
+  Zocial
+********************/
 
 
 @font-face {

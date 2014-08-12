@@ -20,7 +20,7 @@ class Profile < ActiveRecord::Base
   ENCRYPTED_FIELDS.map { |attrib| attr_encrypted attrib.to_sym, key: :key, marshal: true }
 
   def self.scopes
-    ["profile"] + (FIELDS + METHODS).map {|f| "profile.#{f}"}
+    (FIELDS + METHODS).map {|f| "profile.#{f}"}
   end
 
   def self.attribute_from_scope(scope)

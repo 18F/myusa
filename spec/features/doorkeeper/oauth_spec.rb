@@ -94,7 +94,7 @@ describe 'OAuth' do
         scenario 'user can selecte scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
-          @auth_page.scopes.uncheck('Read your email address')
+          @auth_page.scope_email_checkbox.set(false)
           @auth_page.allow_button.click
 
           # Retrieve the code

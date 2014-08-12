@@ -43,6 +43,7 @@ en:
         last_name: 'Last name'
         suffix: 'Suffix'
         address: 'Address'
+        address2: 'Address Line 2'
         city: 'City'
         state: 'State'
         zip: 'Zip'

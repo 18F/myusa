@@ -88,7 +88,7 @@ describe 'OAuth' do
         scenario 'user can selecte scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
-          find(:css, "input[value='profile.email']").set(false)
+          @auth_page.scopes.uncheck('Read your email address')
           @auth_page.allow_button.click
 
           # Retrieve the code

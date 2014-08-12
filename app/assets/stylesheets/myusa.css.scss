@@ -1,3 +1,7 @@
+/*******************
+  Color Variables
+********************/
+
 $grey: #666;
 $blue: #00495C;
 $blue_header: #004976;
@@ -6,70 +10,48 @@ $heading_text: 'raleway';
 $button_text: 'Open Sans';
 $grey_accent: #F9F9F9;
 
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Raleway'), url(http://fonts.gstatic.com/s/raleway/v8/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2) format('woff2'), url(http://fonts.gstatic.com/s/raleway/v8/cIFypx4yrWPDz3zOxk7hIQLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(http://fonts.gstatic.com/s/opensans/v9/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2'), url(http://fonts.gstatic.com/s/opensans/v9/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-}
-
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(http://fonts.gstatic.com/s/sourcesanspro/v8/ODelI1aHBYDBqgeIAH2zlJbPFduIYtoLzwST68uhz_Y.woff2) format('woff2'), url(http://fonts.gstatic.com/s/sourcesanspro/v8/ODelI1aHBYDBqgeIAH2zlNHq-FFgoDNV3GTKpHwuvtI.woff) format('woff');
-}
-
 .scope_description{
-	color:$blue_header;
-	cursor:pointer;
+  color:$blue_header;
+  cursor:pointer;
 }
 
 .allow_button{
-	width:200px;
+  width:200px;
 }
 
 .label_pad{
-	padding-left:15px;
+  padding-left:15px;
 }
 .action-blue-user{
-  	font-family: $heading_text;
-	color:$blue_header;
-	font-weight:bold;
-	font-size:1.25em;
+    font-family: $heading_text;
+  color:$blue_header;
+  font-weight:bold;
+  font-size:1.25em;
 }
 
 .action-blue{
   font-family:$heading_text;
-	color:$blue;
-	font-weight:bold;
-	font-size:1.5em;
+  color:$blue;
+  font-weight:bold;
+  font-size:1.5em;
 }
 
 .muted-major{
-	font-family: $sub_heading_text;
-	color: $grey;
-	font-size:1.25em;
+  font-family: $sub_heading_text;
+  color: $grey;
+  font-size:1.25em;
 }
 
 .muted-minor{
-	font-family: $sub_heading_text;
-	color: $grey;
-	font-size:0.85em;
+  font-family: $sub_heading_text;
+  color: $grey;
+  font-size:0.85em;
 }
 
 .scope-warning{
-	background-color:#FCF8E3;
-	color:#8A6D3B;
-	padding:10px;
+  background-color:#FCF8E3;
+  color:#8A6D3B;
+  padding:10px;
 }
 
 

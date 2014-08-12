@@ -37,11 +37,11 @@
               <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
               </br>
               <span class='label_pad'>
-                <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                <label><%= check_box_tag 'scope[]', scope, true, multiple: true%>
                 <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                  <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
+                  </label><%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
                   <% else %>
-                    <%= current_user.scope_field_value(scope)%>
+                    <%= current_user.scope_field_value(scope)%></label>
                   <% end %>
                 </span>
               </p>

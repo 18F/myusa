@@ -2,11 +2,8 @@ require 'feature_helper'
 
 describe 'OAuth' do
 
-  let(:user) do
-    User.create! do |u|
-      u.email = 'testy.mctesterson@gsa.gov'
-    end
-  end
+  let(:user) { User.create!(email: 'testy.mctesterson@gsa.gov') }
+  let(:owner) { User.create!(email: 'owner.mctesterson@gsa.gov') }
 
   let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name' }
 
@@ -16,6 +13,8 @@ describe 'OAuth' do
       # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
       a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
       a.scopes = client_application_scopes
+      a.owner = owner
+      a.public = true
     end
   end
 
@@ -109,11 +108,7 @@ describe 'OAuth' do
       end
 
       context 'with non-public (sandboxed) app' do
-        let(:owner) do
-          User.create do |u|
-            u.email = 'owner.mctesterson@gsa.gov'
-          end
-        end
+
 
         let(:client_app) do
           Doorkeeper::Application.create do |a|
@@ -125,10 +120,27 @@ describe 'OAuth' do
           end
         end
 
-        pending 'displays unknown application error' do
-          expect(@auth_page).to be_displayed
-          expect(@auth_page).to have_error_message
-          expect(@auth_page.error_message.text).to include('Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.')
+        context 'current user is client application owner' do
+          let(:owner) { user }
+
+          scenario 'user can authorize' do
+            expect(@auth_page).to be_displayed
+            @auth_page.allow_button.click
+
+            expect(@token_page).to be_displayed
+            code = @token_page.code.text
+
+            token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+            expect(token).to_not be_expired
+          end
+        end
+
+        context 'current user is not client application owner' do
+          scenario 'displays unknown application error' do
+            expect(@auth_page).to be_displayed
+            expect(@auth_page).to have_error_message
+            expect(@auth_page.error_message.text).to include('Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.')
+          end
         end
       end
 

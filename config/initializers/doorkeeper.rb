@@ -90,13 +90,27 @@ end
 Doorkeeper::Application.send :include, Doorkeeper::Models::Scopes
 
 module OAuthValidations
+  def initialize(server, client, resource_owner, attrs = {})
+    super(server, client, attrs)
+    @resource_owner = resource_owner
+  end
+
   def validate_scopes
     super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
   end
 
   def validate_client
-    super
+    client.present? && client.valid_for?(@resource_owner)
   end
 end
 
 Doorkeeper::OAuth::PreAuthorization.prepend OAuthValidations
+
+module OAuthClientEnhancements
+  def valid_for?(user)
+    return true if application.public
+    return user == application.owner
+  end
+end
+
+Doorkeeper::OAuth::Client.send :include, OAuthClientEnhancements

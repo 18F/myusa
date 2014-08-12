@@ -50,13 +50,14 @@
         </ul>
         </br>
         <div class="row">
-          <div class="col-md-5">
+          <div class="col-md-6">
             <%= hidden_field_tag :user_id, current_user.id %>
             <%= hidden_field_tag :allow, "1", :id => "allow" %>
             <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
-      <% end %>
+          </div>
         </div>
-        <div class="col-md-7">
+        </br>
+      <% end %>
       <%= form_tag oauth_authorization_path, method: :delete do %>
         <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
         <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
@@ -65,9 +66,6 @@
         <%= hidden_field_tag :scope, @pre_auth.scope %>
         <%= submit_tag 'No Thanks', :class => 'btn btn-default' %>
       <% end %>
-        </div>
-      </div>
-      </br>
     </div>
   </div>
   <div class="row">

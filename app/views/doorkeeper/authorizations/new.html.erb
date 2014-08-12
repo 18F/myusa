@@ -11,7 +11,7 @@
     <span><b>No info for <%= @pre_auth.client.application.name %>?</b></span>
     <br>
     <p>
-      If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>, 
+      If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,
       one of the following pieces of information to get your conversation started.
       <br>
       We've exposed all the context of their requests.
@@ -42,7 +42,7 @@
                   <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
                   <% else %>
                     <%= current_user.scope_field_value(scope)%>
-                  <% end %>              
+                  <% end %>
                 </span>
               </p>
             </li>
@@ -81,7 +81,7 @@
     <span><b>Still not convinced?</b></span>
     <br>
     <p>
-      Feel free to head back to <a>YOUR APP</a> <%= @pre_auth.client.application.name %></a>  or visit your <a href="#">MyUSA profile</a>.
+      Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <a href="#">MyUSA profile</a>.
     </p>
   </div>
   <br><br>

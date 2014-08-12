@@ -31,15 +31,15 @@
             <li>
 
               <h5>
-                <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope_description'><%= t("doorkeeper.scopes.#{scope}") %></span>
+                <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("doorkeeper.scopes.#{scope}") %></span>
               </h5>
               <p>
-              <span class="muted-minor label_pad"><%= prettify_scope(scope) %></span>
+              <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
               </br>
               <span class='label_pad'>
                 <%= check_box_tag 'scope[]', scope, true, multiple: true%>
                 <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                  <%= text_field "new_profile_values", scope, placeholder: t("doorkeeper.scopes.#{scope.sub(/^profile\./, 'enter.')}"), class:'form-control', style: 'width:40%;display:inline;'%>
+                  <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
                   <% else %>
                     <%= current_user.scope_field_value(scope)%>
                   <% end %>              

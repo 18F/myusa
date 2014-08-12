@@ -20,6 +20,7 @@
             <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
             <%= hidden_field_tag :state, @pre_auth.state %>
             <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+            <%= hidden_field_tag :original_scope, @pre_auth.scope %>
             <ul>
               <% @pre_auth.scopes.each do |scope| %>
                 <li>

@@ -9,7 +9,7 @@ module OauthHelper
   def profile_text_field(scope)
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
-    text_field_tag("profile[#{field}]", current_user.send(field),
+    text_field_tag("profile[#{field}]", current_user.profile.send(field),
       disabled: value.present?
     )
   end

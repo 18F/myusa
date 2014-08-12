@@ -8,7 +8,7 @@ describe 'OAuth' do
     end
   end
 
-  let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name' }
+  let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name profile.phone_number' }
 
   let(:client_app) do
     Doorkeeper::Application.create do |a|
@@ -39,8 +39,8 @@ describe 'OAuth' do
   shared_examples 'scope error' do
     scenario 'displays scope error message' do
       expect(@auth_page).to be_displayed
-      expect(@auth_page).to have_error_message
-      expect(@auth_page.error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
+      expect(@auth_page).to have_oauth_error_message
+      expect(@auth_page.oauth_error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
     end
   end
 
@@ -85,39 +85,47 @@ describe 'OAuth' do
           expect(token).to_not be_expired
         end
 
+        scenario 'user can deny' do
+          expect(@auth_page).to be_displayed
+          @auth_page.cancel_button.click
+          expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
+        end
+
         scenario 'user can select scopes' do
-          # Authorize the client app
           expect(@auth_page).to be_displayed
           @auth_page.scopes.uncheck('Read your email address')
           @auth_page.allow_button.click
 
-          # Retrieve the code
-          expect(@token_page).to be_displayed
           code = @token_page.code.text
-
-          # Turn the code into a token
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
           expect(token["scope"]).to eq("profile.last_name")
         end
 
-        scenario 'user can enter profile data if not already present' do
-          # Authorize the client app
+        scenario 'user can update profile' do
           expect(@auth_page).to be_displayed
           @auth_page.profile_last_name.set 'McTesterson'
           expect(@auth_page.profile_email).to be_disabled
           @auth_page.allow_button.click
 
-          # Retrieve the code
-          expect(@token_page).to be_displayed
           code = @token_page.code.text
-
-          # Turn the code into a token and use it to query the API server
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
           profile = JSON.parse token.get('/api/profile').body
           expect(profile['last_name']).to eq('McTesterson')
           expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
         end
 
+        context 'profile data is invalid' do
+          let(:requested_scope) { 'profile.phone_number' }
+          scenario 'user cannot save or authorize' do
+            expect(@auth_page).to be_displayed
+            # puts @auth_page.body
+            @auth_page.profile_phone_number.set 'foobar'
+            @auth_page.allow_button.click
+
+            expect(@auth_page).to be_displayed
+            expect(@auth_page.flash_error_message).to have_content("Phone number")
+          end
+        end
       end
 
       context 'with bad scope value' do

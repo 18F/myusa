@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>
+      <%= t('profile.settings_title') %>
+    </h2>
+    <h3>
+      <%= t('profile.heading') %>
+    </h3>
+  </div>
+  <%= link_to edit_profile_path, :class => 'small button' do %>
+    <i class="foundicon-edit"></i>
+    <%= t(:edit_your_profile) %>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel listing">
+      <h3>
+        <%= t('profile.name_heading') %>
+      </h3>
+      <ul class="profile">
+        <li>
+          <%= Profile.human_attribute_name(:title) %>: <%= @profile.title %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:first_name) %>: <%= @profile.first_name %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:middle_name) %>: <%= @profile.middle_name %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:last_name) %>: <%= @profile.last_name %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:suffix) %>: <%= @profile.suffix %>
+        </li>
+      </ul>
+    </div>
+    <div class="panel listing">
+      <h3>
+        <%= t('profile.address_heading') %>
+      </h3>
+      <ul class="profile">
+        <li>
+          <%= Profile.human_attribute_name(:address) %>: <%= @profile.address %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:address2) %>: <%= @profile.address2 %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:city) %>: <%= @profile.city %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:state) %>: <%= @profile.state %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:zip) %>: <%= @profile.zip %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="six columns">
+    <div class="panel listing">
+      <h3>
+        <%= t('profile.phone_heading') %>
+      </h3>
+      <ul class="profile">
+        <li>
+          <%= Profile.human_attribute_name(:phone_number) %>: <%= @profile.phone_number %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:mobile_number) %>: <%= @profile.mobile_number %>
+        </li>
+      </ul>
+    </div>
+    <div class="panel listing">
+      <h3>
+        <%= t('profile.about_you_heading') %>
+      </h3>
+      <ul class="profile">
+        <li>
+          <%= Profile.human_attribute_name(:email) %>: <%= @user.email %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:gender) %>: <%= @profile.print_gender %>
+        </li>
+        <li>
+          <%= t(:marital_status) %>: <%= @profile.print_marital_status %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:is_parent) %>: <%= yes_or_no(@profile.is_parent) %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:is_veteran) %>: <%= yes_or_no(@profile.is_veteran) %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:is_student) %>: <%= yes_or_no(@profile.is_student) %>
+        </li>
+        <li>
+          <%= Profile.human_attribute_name(:is_retired) %>: <%= yes_or_no(@profile.is_retired) %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row"></div>

@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>
+      <%= t('profile.settings_title') %>
+    </h2>
+    <h3>
+      <%= t('profile.heading') %>
+    </h3>
+    <%= form_for @profile do |form| %>
+      <fieldset>
+        <legend>
+          <%= t('profile.name_heading') %>
+        </legend>
+        <ol>
+          <li>
+            <%= form.label :title %>
+            <%= form.select :title, title_options, :include_blank => true %>
+          </li>
+          <li>
+            <%= form.label :first_name %>
+            <%= form.text_field :first_name %>
+          </li>
+          <li>
+            <%= form.label :middle_name %>
+            <%= form.text_field :middle_name %>
+          </li>
+          <li>
+            <%= form.label :last_name %>
+            <%= form.text_field :last_name %>
+          </li>
+          <li>
+            <%= form.label :suffix %>
+            <%= form.select :suffix, suffix_options, :include_blank => true %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.address_heading') %>
+        </legend>
+        <ol>
+          <li>
+            <%= form.label :address %>
+            <%= form.text_field :address %>
+          </li>
+          <li>
+            <%= form.label :address2 %>
+            <%= form.text_field :address2 %>
+          </li>
+          <li>
+            <%= form.label :city %>
+            <%= form.text_field :city %>
+          </li>
+          <li>
+            <%= form.label :state %>
+            <%= form.select :state, us_state_options, :include_blank => true %>
+          </li>
+          <li>
+            <%= form.label :zip %>
+            <%= form.text_field :zip  %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.phone_heading') %>
+        </legend>
+        <ol>
+          <li>
+            <%= form.label :phone_number %>
+            <%= form.phone_field :phone_number %>
+          </li>
+          <li>
+            <%= form.label :mobile_number %>
+            <%= form.phone_field :mobile_number     %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.gender_heading') %>
+        </legend>
+        <ol>
+          <li>
+            <%= form.label :gender %>
+            <%= form.select :gender, gender_options, :include_blank => true %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.marital_status_heading') %>
+        </legend>
+        <ol>
+          <li>
+            <%= form.label :marital_status %>
+            <%= form.select :marital_status, marital_status_options, :include_blank => true %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.about_you_heading') %>
+        </legend>
+        <ol class="inline">
+          <li class="full">
+            <%= form.check_box :is_parent %>
+            <%= form.label :is_parent %>
+          </li>
+          <li class="full">
+            <%= form.check_box :is_veteran %>
+            <%= form.label :is_veteran %>
+          </li>
+          <li class="full">
+            <%= form.check_box :is_student %>
+            <%= form.label :is_student %>
+          </li>
+          <li class="full">
+            <%= form.check_box :is_retired %>
+            <%= form.label :is_retired %>
+          </li>
+        </ol>
+      </fieldset>
+      <%= form.submit t('profile.update'), :class => 'large button positive' %>
+      <%= link_to t(:cancel), profile_path %>
+    <% end %>
+  </div>
+</div>

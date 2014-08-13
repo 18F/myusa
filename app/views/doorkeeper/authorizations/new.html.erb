@@ -25,38 +25,35 @@
             <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
             <%= hidden_field_tag :state, @pre_auth.state %>
             <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+            <%= hidden_field_tag :original_scope, @pre_auth.scope %>
 
-    <ul class="list-unstyled scope-list">
-         <% @pre_auth.scopes.each do |scope| %>
-            <li>
 
-              <div class="header-large">
-                <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("doorkeeper.scopes.#{scope}") %></span>
-              </div>
-              <p>
-              <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
-              </br>
-              <span class='label_pad'>
-                <label><%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                  </label> <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
-                  <% else %>
-                    <%= current_user.scope_field_value(scope)%></label>
-                  <% end %>
-                </span>
-              </p>
-            </li>
-        <% end %>
+            <ul class="list-unstyled scope-list">
+              <% @pre_auth.scopes.each do |scope| %>
+                <li>
+                  <div class="header-large">
+                    <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("doorkeeper.scopes.#{scope}") %></span>
+                  </div>
+                  <p>
+                    <label class='label_pad'>
+                      <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
+                      </br>
+                      <%= scope_check_box_tag scope %>
+                    </label>
+                    <% if scope.downcase.starts_with?("profile.") %>
+                      <%= profile_text_field scope, class:'form-control profile', style: 'width:40%;display:inline;'%>
+                    <% end %>
+                  </p>
+              </li>
+          <% end %>
         </ul>
         </br>
         <div class="row">
           <div class="col-md-5">
-            <%= hidden_field_tag :user_id, current_user.id %>
-            <%= hidden_field_tag :allow, "1", :id => "allow" %>
             <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
           </div>
           <div class="col-md-7">
-           <%= oauth_deny_link @pre_auth, "No Thanks", "btn btn-default" %>
+           <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default" %>
           </div>
         </div>
         </br>

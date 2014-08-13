@@ -95,7 +95,7 @@ $grey_accent: #F9F9F9;
 }
 
 body {
-  font-family: 'Open Sans', 'sans-serif';  
+  font-family: 'Open Sans', 'sans-serif';
 }
 
 .main {
@@ -159,7 +159,7 @@ div.moresignin {
   font-size: 12px
 }
 .moresignin > span {
-  display: inline-block;    
+  display: inline-block;
 }
 .moresignin > span:before,
 .moresignin > span:after {
@@ -546,4 +546,11 @@ div.moresignin {
 
 .search-field:-ms-input-placeholder {
     color: white;
+}
+
+.scope-list input.profile:disabled {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  cursor: auto;
 }

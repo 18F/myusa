@@ -10,12 +10,13 @@ describe 'Users' do
         login(user)
         @page = EditProfilePage.new
         @page.load
+        @results_page = ProfilePage.new
       end
 
       it "should change the user's name when first or last name changes" do
-        fill_in 'First name', with: 'Jane'
-        click_button 'Update Profile'
-        expect(page).to have_content 'Your profile was sucessfully updated.'
+        @page.first_name.set 'Jane'
+        @page.submit.click
+        @results_page.should be_displayed
         expect(page).to have_content 'First name: Jane'
       end
     end

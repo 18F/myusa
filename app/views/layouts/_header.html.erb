@@ -22,7 +22,7 @@
 		<% else %>
 			<% if request.path != "/users/sign_in" %>
 			<div class="pull-right">
-				<button id="myusa-connect" class="btn btn-primary">Connect with MyUSA</button>
+				<%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-primary' %>
 			</div>
 			<% end %>
 		<% end %>

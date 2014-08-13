@@ -13,9 +13,11 @@ install:
 before_script:
   - cp config/database.yml.example config/database.yml
   - cp config/secrets.yml.example config/secrets.yml
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
 script:
   - RAILS_ENV=test bundle exec rake db:setup
-  - bundle exec rake spec
+  - bundle exec rspec -f JUnit -o shippable/testresults/results.xml
 after_failure:
   - mysql -e 'show databases;'
   - cat ./config/database.yml

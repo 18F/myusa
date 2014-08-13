@@ -28,4 +28,8 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
       'client_id', 'redirect_uri', 'state', 'response_type'
     ).merge(scope: params[:original_scope])
   end
+
+  def pre_auth
+    @pre_auth ||= Doorkeeper::OAuth::PreAuthorization.new(Doorkeeper.configuration, server.client_via_uid, current_resource_owner, params)
+  end
 end

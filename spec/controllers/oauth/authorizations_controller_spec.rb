@@ -12,6 +12,7 @@ describe Oauth::AuthorizationsController do
       # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
       a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
       a.scopes = client_application_scopes
+      a.owner = user
     end
   end
 
@@ -25,7 +26,7 @@ describe Oauth::AuthorizationsController do
   end
 
   describe "#create" do
-    let(:raw_token) { 'uneak' }
+    let(:raw_token) { 'unique token' }
     let(:requested_scope) { nil }
     let(:profile) { nil }
 

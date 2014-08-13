@@ -87,12 +87,49 @@ Doorkeeper.configure do
   # wildcard_redirect_uri false
 end
 
+# The following are a couple hacks to get Doorkeeper to support features that
+# are important to MyUSA. We are currently investigating whether we can work
+# the Doorkeeper maintainers to get these features implemented (or get a better
+# way to add features) in the core Doorkeeper repository.
+#
+# Client Application Scopes:
+#
+# We added a `scopes` field to the Doorkeeper::Application model and here we
+# include some scopes related utility functions (the model mix-in) and patch the
+# PreAuthorization class to check both server (specified in this config file)
+# and client application scopes.
+#
+# Client Sandbox (public/private applications):
+#
+# We added a `public` field to the Doorkeeper::Application model and have and a
+# valid_for(...) method to Doorkeeper::OAuth::Client. We then patch the
+# validate_client to check that method to ensure that the current user is
+# allowed to use the current client application.
+
 Doorkeeper::Application.send :include, Doorkeeper::Models::Scopes
 
-module Doorkeeper::OAuth::ValidateApplicationScopes
+module OAuthValidations
+  def initialize(server, client, resource_owner, attrs = {})
+    super(server, client, attrs)
+    @resource_owner = resource_owner
+  end
+
   def validate_scopes
     super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
   end
+
+  def validate_client
+    client.present? && client.valid_for?(@resource_owner)
+  end
 end
 
-Doorkeeper::OAuth::PreAuthorization.prepend Doorkeeper::OAuth::ValidateApplicationScopes
+Doorkeeper::OAuth::PreAuthorization.prepend OAuthValidations
+
+module OAuthClientEnhancements
+  def valid_for?(user)
+    return true if application.public
+    return user == application.owner
+  end
+end
+
+Doorkeeper::OAuth::Client.send :include, OAuthClientEnhancements

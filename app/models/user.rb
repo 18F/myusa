@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   before_validation :generate_uid
   after_create :create_profile
 
-  devise :omniauthable, :email_authenticatable, :rememberable
+  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
   attr_accessor :just_created, :auto_approve
 

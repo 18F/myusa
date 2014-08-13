@@ -1,4 +1,74 @@
-$myusa_grey: #F9F9F9;
+/*******************
+  Color Variables
+********************/
+
+$grey: #666;
+$blue: #00495C;
+$blue_header: #004976;
+$sub_heading_text: 'source sans pro';
+$heading_text: 'raleway';
+$button_text: 'Open Sans';
+$grey_accent: #F9F9F9;
+
+/*******************
+  Base Classes
+********************/
+
+.header-large{
+  font-size: 1.25em;
+  color:$blue_header;
+}
+
+.scope_description{
+  color:$blue_header;
+  cursor:pointer;
+}
+
+.allow_button{
+  width:200px;
+}
+
+.label_pad{
+  padding-left:15px;
+}
+.action-blue-user{
+    font-family: $heading_text;
+  color:$blue_header;
+  font-weight:bold;
+  font-size:1.25em;
+}
+
+.action-blue{
+  font-family:$heading_text;
+  color:$blue;
+  font-weight:bold;
+  font-size:1.5em;
+}
+
+.muted-major{
+  font-family: $sub_heading_text;
+  color: $grey;
+  font-size:1.25em;
+}
+
+.muted-minor{
+  font-family: $sub_heading_text;
+  color: $grey;
+  font-size:0.85em;
+}
+
+.scope-warning{
+  background-color:#FCF8E3;
+  color:#8A6D3B;
+  padding:10px;
+}
+
+
+/*******************
+  Zocial
+********************/
+
+
 @font-face {
     font-family: 'zocial';
     src: url('./zocial-regular-webfont.eot');
@@ -23,12 +93,9 @@ $myusa_grey: #F9F9F9;
   font-weight: normal;
   font-style: normal;
 }
-header{
-	background-color: $myusa_grey;
-}
 
 body {
-  font-family: 'Open Sans', 'sans-serif';  
+  font-family: 'Open Sans', 'sans-serif';
 }
 
 .main {
@@ -41,9 +108,12 @@ body {
   padding-right: 150px;
   height: auto;
   width: 820px;
-  background-color: $myusa_grey;
   z-index: 10;
   /*box-shadow: 1px 1px 1px #888888;*/
+}
+
+.callout-box{
+  background-color: $grey_accent;
 }
 
 .footer {
@@ -89,7 +159,7 @@ div.moresignin {
   font-size: 12px
 }
 .moresignin > span {
-  display: inline-block;    
+  display: inline-block;
 }
 .moresignin > span:before,
 .moresignin > span:after {
@@ -424,3 +494,60 @@ div.moresignin {
 	color: red;
 }
 
+.myusa-shield{
+	position:relative;
+	top:-45px;
+}
+
+.rotate{
+    -webkit-transform: rotate(90deg);
+       -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+         -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+    background-color:#303030;
+    font-size: 13px;
+    color:white;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    /*  pointer-events: none; */
+    cursor: pointer;
+    color:white;
+}
+
+
+
+
+
+.search-field::-webkit-input-placeholder {
+    color: green;
+}
+
+.search-field:-moz-placeholder {
+    color: white;
+}
+
+.search-field::-moz-placeholder {
+    color: white;
+}
+
+.search-field:-ms-input-placeholder {
+    color: white;
+}
+
+.scope-list input.profile:disabled {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  cursor: auto;
+}

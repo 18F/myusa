@@ -1,20 +1,16 @@
 <header>
 	<div class="row">
-		<div class="col-md-1">
-			<%= image_tag "myusa-shield.png" , :alt => "MyUSA Shield", :class => "img-responsive" %>
-		</div>
-		<div class="col-md-3">
-			<h1><span class="my">My</span><span class="usa">USA</span></h1>
-		</div>
-		<div class="col-md-8 pad-top">
-			<div class="pull-right">
-				   <a href="#"><s>About MyUSA</s></a>
-				 | <a href="#"><s>Contact Us</s></a>
-				 | <a href="#"><s>Help</s></a> 
-			</div>
+		<div class="col-md-12 pad-top">
+		<% if current_user %>
+				<div class="header-large pull-right">
+					<div class='action-blue-user' style='display:inline;'><b><%= current_user.email %></b></div> <div style='color:gray; display:inline;'>|</div> <span class="glyphicon glyphicon-cog"></span>
+				</div>
+			<% end %>
 		</div>
 	</div>
-	<div class="row">
-		
+	<hr>
+
+	<div class="row text-center">
+		<img class='myusa-shield' src='/assets/myusa-shield.png'>
 	</div>
 </header>

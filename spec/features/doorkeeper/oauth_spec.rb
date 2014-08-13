@@ -85,16 +85,22 @@ describe 'OAuth' do
           expect(token).to_not be_expired
         end
 
-        scenario 'user can deny' do
+        scenario 'user can deny by clicking "No Thanks"' do
           expect(@auth_page).to be_displayed
           @auth_page.cancel_button.click
+          expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
+        end
+
+        scenario 'user can deny by clicking "head back to" link' do
+          expect(@auth_page).to be_displayed
+          @auth_page.head_back_link.click
           expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
         end
 
         scenario 'user can selecte scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
-          @auth_page.scopes.uncheck('Read your email address')
+          @auth_page.scope_email_checkbox.set(false)
           @auth_page.allow_button.click
 
           # Retrieve the code

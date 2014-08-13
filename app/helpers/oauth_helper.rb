@@ -1,14 +1,14 @@
 module OauthHelper
-  def oauth_deny_link(pre_auth, text)
+  def oauth_deny_link(pre_auth, text, css_class = '')
     error = Doorkeeper::OAuth::ErrorResponse.new(
       state: pre_auth.state,
       name: :access_denied,
       redirect_uri: pre_auth.redirect_uri
     )
     if error.redirectable?
-      link_to text, error.redirect_uri
+      link_to text, error.redirect_uri, class: css_class
     else
-      link_to(text, oauth_pre_auth_delete_uri(pre_auth), method: :delete)
+      link_to(text, oauth_pre_auth_delete_uri(pre_auth), method: :delete, class: css_class)
     end
   end
 
@@ -21,5 +21,4 @@ module OauthHelper
       scope: pre_auth.scope
     )
   end
-
 end

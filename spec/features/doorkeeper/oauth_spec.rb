@@ -171,9 +171,6 @@ describe 'OAuth' do
         expect(@auth_page).to have_public_nav
       end
 
-      it 'has sign in button' do
-        expect(@auth_page).to have_sign_in_button
-      end
     end
   end
 end

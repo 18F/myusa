@@ -20,7 +20,7 @@
 			  	</ul>
 			</div>
 		<% else %>
-			<% if request.path == "/users/sign_in" %>
+			<% if request.path != "/users/sign_in" %>
 			<div class="pull-right">
 				<button id="myusa-connect" class="btn btn-primary">Connect with MyUSA</button>
 			</div>

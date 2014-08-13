@@ -483,6 +483,10 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.0)
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
     rubocop (0.24.1)
       json (>= 1.7.7, < 2)
       parser (>= 2.2.0.pre.3, < 3.0)
@@ -656,6 +660,7 @@ DEPENDENCIES
   rails (= 4.1.0)
   rspec-its
   rspec-rails (~> 3.0.0)
+  rspec_junit_formatter
   rubocop
   ruby_parser
   sass-rails (~> 4.0.3)

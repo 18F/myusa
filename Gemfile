@@ -107,6 +107,7 @@ group :test do
   gem 'rspec-its'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
+  gem 'rspec_junit_formatter', require: false # used by Shippable
   gem 'timecop'
   gem 'capybara-email'
 end

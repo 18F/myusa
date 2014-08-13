@@ -9,15 +9,71 @@ $sub_heading_text: 'source sans pro';
 $heading_text: 'raleway';
 $button_text: 'Open Sans';
 $grey_accent: #F9F9F9;
+$light_yellow: #FCF8E3;
+$menu_line_height: 1.25em;
+$sub_menu_font_size: .875em;
+$dropdown_menu_active_color: #8A6D38;
 
 /*******************
   Base Classes
 ********************/
 
+/*** header ***/
+
 .header-large{
-  font-size: 1.25em;
+  font-size: $menu_line_height;
   color:$blue_header;
 }
+
+header .header-nav a{
+  font-size: $menu_line_height;
+  color: $grey;
+  font-family: $sub_heading_text;
+}
+
+header .header-nav a:hover{
+  font-size: $menu_line_height;
+  color: $blue_header;
+  font-family: $sub_heading_text;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+header .settings-menu li a{
+  color: $grey;
+  font-family: $button_text;
+  line-height: $menu_line_height;
+  font-size: $sub_menu_font_size;
+}
+
+header .settings-menu li a:hover{
+  color: $dropdown_menu_active_color;
+  font-family: $button_text;
+  line-height: $menu_line_height;
+  font-size: $sub_menu_font_size;
+  background-color: $light_yellow;
+}
+
+/*** footer ***/
+
+footer{
+ height:40px;
+ margin-top:-40px;
+ margin-bottom:20px;
+}
+
+footer a, p{
+  color: $grey;
+  font-family: $button_text;
+  line-height: $menu_line_height;
+  font-size: $sub_menu_font_size;
+}
+
+footer img{
+  height:16px;
+}
+
+/*** body   ***/
 
 .scope_description{
   color:$blue_header;
@@ -31,11 +87,12 @@ $grey_accent: #F9F9F9;
 .label_pad{
   padding-left:15px;
 }
+
 .action-blue-user{
-    font-family: $heading_text;
+  font-family: $heading_text;
   color:$blue_header;
-  font-weight:bold;
-  font-size:1.25em;
+  font-weight:600;
+  font-size:1em;
 }
 
 .action-blue{
@@ -58,7 +115,7 @@ $grey_accent: #F9F9F9;
 }
 
 .scope-warning{
-  background-color:#FCF8E3;
+  background-color: $light_yellow;
   color:#8A6D3B;
   padding:10px;
 }
@@ -94,16 +151,19 @@ $grey_accent: #F9F9F9;
   font-style: normal;
 }
 
-body {
+html, body {
   font-family: 'Open Sans', 'sans-serif';  
+  height: 100%;
+}
+.container:first-child{
+  min-height:100%;
 }
 
 .main {
-  position: absolute;
-  top: 50%;
+  position: relative;
+  margin-top: 5%;
   left: 50%;
   margin-left: -410px;
-  margin-top: -200px;
   padding-left: 150px;
   padding-right: 150px;
   height: auto;

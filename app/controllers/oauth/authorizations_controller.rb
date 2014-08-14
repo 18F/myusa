@@ -1,4 +1,6 @@
 class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
+  prepend_before_action :redirect_to_tokens, only: [:create]
+
   def create
     if params.has_key?(:profile)
       current_user.profile.tap do |profile|
@@ -18,6 +20,15 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   end
 
   private
+
+  def redirect_to_tokens
+    # legacy implementation used POST /oauth/authorize for both the user facing
+    # authorization screen and the API endpoint to request a token ... so, we
+    # have to support it here.
+    if params.has_key?(:grant_type)
+      redirect_to oauth_token_path
+    end
+  end
 
   def profile_params
     params.require(:profile).permit(Profile::FIELDS + Profile::METHODS)

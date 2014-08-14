@@ -15,6 +15,6 @@
  *= require_self
  */
 
-@import "bootstrap-sprockets";
-@import "myusa-theme";
-@import "bootstrap";
+@import "partials/bootstrap-theme";
+@import "font-awesome";
+@import "partials/myusa";

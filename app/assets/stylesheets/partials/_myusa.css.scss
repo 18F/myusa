@@ -1,68 +1,196 @@
 /*******************
-  Color Variables
+  Variables
 ********************/
 
-$grey: #666;
-$blue: #00495C;
-$blue_header: #004976;
-$sub_heading_text: 'source sans pro';
-$heading_text: 'raleway';
-$button_text: 'Open Sans';
-$grey_accent: #F9F9F9;
+@import "colors";
+@import "fonts";
+
+$menu_line_height: 1.25em;
+$sub_menu_font_size: .875em;
+$dropdown_menu_active_color: $blue_darker;
 
 /*******************
-  Base Classes
+  Authorization Page
+  for OAuth and Scope Selection
 ********************/
 
+/*** header ***/
+
 .header-large{
-  font-size: 1.25em;
-  color:$blue_header;
+  font-size: $menu_line_height;
+  color:$blue_lighter;
 }
 
-.scope_description{
-  color:$blue_header;
-  cursor:pointer;
+header .header-nav a{
+  font-size: $menu_line_height;
+  color: $gray;
+  font-family: $font_headings_sub;
 }
 
-.allow_button{
-  width:200px;
+header .header-nav a:hover{
+  font-size: $menu_line_height;
+  color: $blue_lighter;
+  font-family: $font_headings_sub;
+  font-weight: 600;
+  text-decoration: underline;
 }
 
-.label_pad{
-  padding-left:15px;
+header .settings-menu li a{
+  color: $gray;
+  font-family: $font_base;
+  line-height: $menu_line_height;
+  font-size: $sub_menu_font_size;
 }
-.action-blue-user{
-    font-family: $heading_text;
-  color:$blue_header;
-  font-weight:bold;
+header .settings-menu li a.large {
+  font-family: $font_base;
+  color:$blue_darkest;
   font-size:1.25em;
 }
 
+header .settings-menu li a:hover{
+  color: $dropdown_menu_active_color;
+  font-family: $font_base;
+  line-height: $menu_line_height;
+  font-size: $sub_menu_font_size;
+  background-color: $light_yellow;
+}
+header .settings-menu li a.large:hover {
+  font-family: $font_base;
+  color:$blue_darkest;
+  font-size:1.25em;
+  background-color: $light_yellow;
+}
+
+/*** footer ***/
+
+footer{
+ height:40px;
+ margin-top:-40px;
+ margin-bottom:20px;
+}
+
+footer a, p{
+  color: $gray;
+  font-family: $font_base;
+  line-height: $menu_line_height;
+  font-size: $sub_menu_font_size;
+}
+
+footer img{
+  height:16px;
+}
+
+/*** body   ***/
+
+html, body {
+  font-family: 'Open Sans', 'sans-serif';  
+  height: 100%;
+}
+
+.container:first-child{
+  min-height:100%;
+}
+
+.main {
+  position: relative;
+  margin-top: 5%;
+  left: 50%;
+  margin-left: -410px;
+  padding-left: 150px;
+  padding-right: 150px;
+  height: auto;
+  width: 820px;
+  z-index: 10;
+  /*box-shadow: 1px 1px 1px #888888;*/
+}
+
+.callout-box{
+  background-color: $gray_lighter;
+}
+
+.scope-description{
+  color:$blue_lighter;
+  cursor:pointer;
+}
+
+.allow-button{
+  width:200px;
+}
+
+.label-pad{
+  padding-left:15px;
+}
+
+.action-blue-user{
+  font-family: $font_headings;
+  color:$blue_lighter;
+  font-weight:600;
+  font-size:1em;
+}
+
 .action-blue{
-  font-family:$heading_text;
+  font-family:$font_headings;
   color:$blue;
   font-weight:bold;
   font-size:1.5em;
 }
 
 .muted-major{
-  font-family: $sub_heading_text;
-  color: $grey;
+  font-family: $font_headings_sub;
+  color: $gray;
   font-size:1.25em;
 }
 
 .muted-minor{
-  font-family: $sub_heading_text;
-  color: $grey;
+  font-family: $font_headings_sub;
+  color: $gray;
   font-size:0.85em;
 }
 
 .scope-warning{
-  background-color:#FCF8E3;
+  background-color: $light_yellow;
   color:#8A6D3B;
   padding:10px;
 }
+.scope-list {
+  h2 {
+    cursor: pointer;    
+  }
+  h2:before {
+    font-family: FontAwesome;
+    content: "\f054";
+    padding-right: 10px;
+  }
+  h2.open:before {
+    font-family: FontAwesome;
+    content: "\f078";
+    padding-right: 4px;
+  }
+  .form-group {
+    margin-left: 25px;
+    label {
+      color: $gray;
+    }
+  }
+  margin-bottom: 25px;
+}
 
+.disclaimer-info {
+  line-height: .8em;
+  margin: 15px 0;
+  color: $gray;
+}
+
+.subhead {
+  font-size: 1em;
+  line-height: 1em;
+  color: $gray;
+}
+
+/***
+ ** TODO:
+ ** EVERYTHING BELOW IS OLD PROTOTYPING CSS AND SHOULD BE REMOVED
+ **/
 
 /*******************
   Zocial
@@ -92,28 +220,6 @@ $grey_accent: #F9F9F9;
     url('./symantec.svg?94e6hc#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
-}
-
-body {
-  font-family: 'Open Sans', 'sans-serif';
-}
-
-.main {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -410px;
-  margin-top: -200px;
-  padding-left: 150px;
-  padding-right: 150px;
-  height: auto;
-  width: 820px;
-  z-index: 10;
-  /*box-shadow: 1px 1px 1px #888888;*/
-}
-
-.callout-box{
-  background-color: $grey_accent;
 }
 
 .footer {

@@ -1,16 +1,53 @@
 <header>
 	<div class="row">
-		<div class="col-md-12 pad-top">
+		<div class="col-md-6 pad-top">
+			<%= image_tag "header-logo.png" %>
+		</div>
+		<div class="col-md-6 pad-top">
 		<% if current_user %>
-				<div class="header-large pull-right">
-					<div class='action-blue-user' style='display:inline;'><b><%= current_user.email %></b></div> <div style='color:gray; display:inline;'>|</div> <span class="glyphicon glyphicon-cog"></span>
-				</div>
+			<div class="header-large pull-right">
+				<div id="settings" class="action-blue-user dropdown-toggle" type="button" data-toggle="dropdown" style='display:inline;'>
+					<%= current_user.email %>
+				</div> 
+				<div style='color:gray; display:inline;'>|</div> 
+				<span class="glyphicon glyphicon-chevron-down dropdown-toggle" type="button" data-toggle="dropdown"></span>
+				<ul class="dropdown-menu settings-menu" role="menu" aria-labelledby="settings">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Account</a></li>
+			    	<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Privacy</a></li>
+			    	<li role="presentation"><a role="menuitem" tabindex="-1" href="#">This is not me</a></li>
+			    	<li role="presentation" class="divider"></li>
+   				 	<li role="presentation" class="text-center"><a class="large" role="menuitem" tabindex="-1" href="#">Log Out</a></li>
+			  	</ul>
+			</div>
+		<% else %>
+			<% if request.path != "/users/sign_in" %>
+			<div class="pull-right">
+				<%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-primary' %>
+			</div>
 			<% end %>
+		<% end %>
 		</div>
 	</div>
-	<hr>
-
-	<div class="row text-center">
-		<img class='myusa-shield' src='/assets/myusa-shield.png'>
+	<br/>
+	<div class=" header-nav row text-center">
+	<% if current_user %>
+		<div id="private-nav">
+			<div class="col-md-2"></div>
+			<div class="col-md-1"><a>Home</a></div>
+			<div class="col-md-3"><a>Personal Info</a></div>
+			<div class="col-md-3"><a>Security &amp; Permissions</a></div>
+			<div class="col-md-1"><a>Help</a></div>
+			<div class="col-md-2"></div>
+		</div>
+	<% else %>
+		<div id="public-nav">
+			<div class="col-md-3"></div>
+			<div class="col-md-2"><a>For the People</a></div>
+			<div class="col-md-2"><a>For Angencies</a></div>
+			<div class="col-md-2"><a>For Developers</a></div>
+			<div class="col-md-3"></div>
+		</div>
+	<% end %>
 	</div>
+	<hr>
 </header>

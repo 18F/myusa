@@ -30,7 +30,7 @@
               <li>
                 <h2 class="open"><%= t("doorkeeper.scopes.#{scope}") %></h2>
                 <div class="form-group">
-                  <label for="<%= scope.gsub(/\./, '_') %>">
+                  <label for="scope_<%= scope.gsub(/\./, '_') %>">
                     <%= t("scopes.#{scope}.label") %>
                   </label>
                   <div>

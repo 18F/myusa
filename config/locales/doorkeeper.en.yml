@@ -93,28 +93,5 @@ en:
         is_veteran: 'Read your veteran status'
         is_retired: 'Read your retiree status'
 
-      enter:
-        default: 'Enter your profile information'
-        email: 'Enter your email address'
-        title: 'Enter your title (Mr./Mrs./Miss, etc.)'
-        first_name: 'Enter your first name'
-        middle_name: 'Enter your middle name'
-        last_name: 'Enter your last name'
-        suffix: 'Enter your suffix (Sr./Jr./III, etc.)'
-        address: 'Enter your address'
-        address2: 'Enter your address (2)'
-        city: 'Enter your city'
-        state: 'Enter your state'
-        zip: 'Enter your zip code'
-        phone_number: 'Enter your phone number'
-        mobile_number: 'Enter your mobile number'
-        gender: 'Enter your gender'
-        marital_status: 'Enter your marital status'
-        is_parent: 'Enter your parent status'
-        is_student: 'Enter your student status'
-        is_veteran: 'Enter your veteran status'
-        is_retired: 'Enter your retiree status'
-
-
       tasks: 'Create tasks in your account'
       notifications: 'Send you notifications'

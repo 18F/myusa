@@ -2,7 +2,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'simplecov'
-SimpleCov.start # has to start before application is loaded
+SimpleCov.start 'rails' # has to start before application is loaded
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'

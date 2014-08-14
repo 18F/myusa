@@ -10,24 +10,27 @@
   for OAuth and Scope Selection
 ********************/
 
-.scope-list h2 {
-  cursor: pointer;  
-}
-.scope-list h2:before {
-  font-family: FontAwesome;
-  content: "\f054";
-  padding-right: 10px;
-}
-.scope-list h2.open:before {
-  font-family: FontAwesome;
-  content: "\f078";
-  padding-right: 4px;
-}
-.scope-list .form-group {
-  margin-left: 25px;
-}
-.scope-list .form-group > label {
-  color: $gray;
+.scope-list {
+  h2 {
+    cursor: pointer;    
+  }
+  h2:before {
+    font-family: FontAwesome;
+    content: "\f054";
+    padding-right: 10px;
+  }
+  h2.open:before {
+    font-family: FontAwesome;
+    content: "\f078";
+    padding-right: 4px;
+  }
+  .form-group {
+    margin-left: 25px;
+    label {
+      color: $gray;
+    }
+  }
+  margin-bottom: 25px;
 }
 
 .disclaimer-info {

@@ -13,6 +13,32 @@ $(document).ready(function () {
     $(this).parent().children().eq(1).slideToggle();
   });
 
+  $(".scope-list input[type='checkbox']").click(function (e) {
+    // if something is checked, abort
+    if ($(this).is(":checked")) {
+      // if the empty alert is visible, hide it
+      if ($("#scopes-alert-none").is(":visible")) {
+        $("#scopes-alert-none").slideToggle({ complete: function() {
+          $("#scopes-alert-none").addClass('hidden');
+        }});
+      }
+      return;
+    }
+    var checkboxes = $(".scope-list input[type='checkbox']");
+    var checked = false;
+    // check if any of the checkboxes are check
+    for (var i = 0; i < checkboxes.length; i++) {
+      if ($(checkboxes[i]).is(":checked") === true) {
+        checked = true;
+        break;
+      }
+    }
+    // if none are checked, show the alert message
+    if (checked === false) {
+      $("#scopes-alert-none").slideToggle().removeClass('hidden');
+    }
+  });
+
   $(".more-options").show();
   // hide or show the sign in buttons
   $(".more-options").click(function (e) {

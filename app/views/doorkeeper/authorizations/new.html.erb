@@ -4,7 +4,7 @@
     <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
     <p class="subhead">Your MyUSA data is yours to grant or deny access at will.</p>
 
-    <div class='alert alert-warning'>
+    <div class="alert alert-warning hidden" id ="scopes-alert-none">
       <h1>No info for <%= @pre_auth.client.application.name %>?</h1>
       <p>
         If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,

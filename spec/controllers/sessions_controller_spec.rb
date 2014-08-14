@@ -25,6 +25,10 @@ describe SessionsController do
 
       context 'and are valid' do
         before :each do
+          if self.respond_to?(:return_to)
+            controller.store_location_for(:user, return_to)
+          end
+
           raw = user.set_authentication_token
           get :new,
             :email => user.email,
@@ -32,14 +36,26 @@ describe SessionsController do
             :remember_me => remember_me
         end
 
-        it 'logs in and redirects the user' do
+        it 'logs in the user' do
           expect(controller.current_user).to be
           expect(controller.current_user.email).to eq(user.email)
-          expect(response).to redirect_to(root_path)
         end
 
         it 'expires the token' do
           expect(controller.current_user.authentication_token).to be_nil
+        end
+
+        context 'return to path is not set' do
+          it 'redirects to the root path' do
+            expect(response).to redirect_to(root_path)
+          end
+        end
+        context 'return to path is set' do
+          let(:return_to) { secret_path }
+
+          it 'redirects to the return path' do
+            expect(response).to redirect_to(return_to)
+          end
         end
 
         context 'remember_me is set' do
@@ -55,7 +71,6 @@ describe SessionsController do
             expect(response.cookies).to_not have_key('remember_user_token')
           end
         end
-
       end
 
       context 'token is bad' do

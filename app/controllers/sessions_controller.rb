@@ -7,7 +7,10 @@ class SessionsController < Devise::SessionsController
     user = User.find_by_email(params[:user][:email]) ||
            User.create!(email: params[:user][:email])
 
-    token = user.set_authentication_token(remember_me: params[:user][:remember_me] == '1')
+    token = user.set_authentication_token(
+      remember_me: params[:user][:remember_me] == '1',
+      return_to: stored_location_for(:user)
+    )
 
     # TODO: template with instructions for completing token authentication.
     render text: "CYM, #{user.email}"
@@ -30,7 +33,8 @@ class SessionsController < Devise::SessionsController
         remember_me user
       end
 
-      sign_in_and_redirect user
+      sign_in(:user, user)
+      redirect_to params[:return_to] || after_sign_in_path_for(user)
     else
       logger.warn "Invalid token #{user.authentication_token} from user " +
                   user.uid

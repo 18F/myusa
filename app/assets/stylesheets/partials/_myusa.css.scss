@@ -2,67 +2,44 @@
   Color Variables
 ********************/
 
-$grey: #666;
-$blue: #00495C;
-$blue_header: #004976;
-$sub_heading_text: 'source sans pro';
-$heading_text: 'raleway';
-$button_text: 'Open Sans';
-$grey_accent: #F9F9F9;
+@import "colors";
+@import "fonts";
 
 /*******************
-  Base Classes
+  Authorization Page
+  for OAuth and Scope Selection
 ********************/
 
-.header-large{
-  font-size: 1.25em;
-  color:$blue_header;
+.scope-list h2 {
+  cursor: pointer;  
+}
+.scope-list h2:before {
+  font-family: FontAwesome;
+  content: "\f054";
+  padding-right: 10px;
+}
+.scope-list h2.open:before {
+  font-family: FontAwesome;
+  content: "\f078";
+  padding-right: 4px;
+}
+.scope-list .form-group {
+  margin-left: 25px;
+}
+.scope-list .form-group > label {
+  color: $gray;
 }
 
-.scope_description{
-  color:$blue_header;
-  cursor:pointer;
+.disclaimer-info {
+  line-height: .8em;
+  margin: 15px 0;
+  color: $gray;
 }
 
-.allow_button{
-  width:200px;
-}
-
-.label_pad{
-  padding-left:15px;
-}
-.action-blue-user{
-    font-family: $heading_text;
-  color:$blue_header;
-  font-weight:bold;
-  font-size:1.25em;
-}
-
-.action-blue{
-  font-family:$heading_text;
-  color:$blue;
-  font-weight:bold;
-  font-size:1.5em;
-}
-
-.muted-major{
-  font-family: $sub_heading_text;
-  color: $grey;
-  font-size:1.25em;
-}
-
-.muted-minor{
-  font-family: $sub_heading_text;
-  color: $grey;
-  font-size:0.85em;
-}
-
-.scope-warning{
-  background-color:#FCF8E3;
-  color:#8A6D3B;
-  padding:10px;
-}
-
+/***
+ ** TODO:
+ ** EVERYTHING BELOW IS OLD PROTOTYPING CSS AND SHOULD BE REMOVED
+ **/
 
 /*******************
   Zocial
@@ -94,52 +71,8 @@ $grey_accent: #F9F9F9;
   font-style: normal;
 }
 
-body {
-  font-family: 'Open Sans', 'sans-serif';
-}
-
-.main {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -410px;
-  margin-top: -200px;
-  padding-left: 150px;
-  padding-right: 150px;
-  height: auto;
-  width: 820px;
-  z-index: 10;
-  /*box-shadow: 1px 1px 1px #888888;*/
-}
-
 .callout-box{
-  background-color: $grey_accent;
-}
-
-.footer {
-  margin-top: -30px;
-  padding: 10px;
-  color: #808080;
-  font-size: 10px;
-}
-
-.attribution {
-  position: absolute;
-  z-index: -1;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  background-color: rgba(0,0,0, 0.7);
-  font-size: 10px;
-  padding: 5px;
-  color: #c0c0c0;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-right-radius: 5px;
-  border-top-color: #606060;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: #606060;
+  background-color: $gray-lighter;
 }
 
 .content-signin,
@@ -523,31 +456,4 @@ div.moresignin {
     /*  pointer-events: none; */
     cursor: pointer;
     color:white;
-}
-
-
-
-
-
-.search-field::-webkit-input-placeholder {
-    color: green;
-}
-
-.search-field:-moz-placeholder {
-    color: white;
-}
-
-.search-field::-moz-placeholder {
-    color: white;
-}
-
-.search-field:-ms-input-placeholder {
-    color: white;
-}
-
-.scope-list input.profile:disabled {
-  border: 0;
-  background: none;
-  box-shadow: none;
-  cursor: auto;
 }

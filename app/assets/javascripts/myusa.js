@@ -2,11 +2,15 @@ $(document).ready(function () {
   var background = false;
 
   $(".scope-list li").each(function(){
-
     if($(this).children().find('input[type=text]').length < 1){
-      $(this).children().eq(1).delay(500).slideToggle();
-      $(this).children().eq(0).children().eq(0).delay(500).toggleClass("rotate");
+      $(this).children().eq(1).hide();
+      $(this).children().eq(0).toggleClass("open");
     }
+  });
+
+  $(".scope-list li h2").click(function () {
+    $(this).toggleClass("open");
+    $(this).parent().children().eq(1).slideToggle();
   });
 
   $(".more-options").show();
@@ -36,15 +40,6 @@ $(document).ready(function () {
     $("#cta-signin").show();
     $(".content-signin").hide();
     $(".content-signup").show();
-  });
-
-  $(".scope-list li").click(function(){
-    $(this).children().eq(1).slideToggle();
-    $(this).children().eq(0).children().eq(0).toggleClass("rotate");
-  });
-
-  $(".scope-list li p").click(function(){
-    event.stopPropagation();
   });
 
   // DEBUG functions

@@ -1,80 +1,70 @@
-<div class="main">
-  <div class="row">
-    <div class="col-md-12"><div class='action-blue'><%= @pre_auth.client.application.name %> is requesting permission to:</div></div>
-  </div>
-  <div class="row">
-    <div class="col-md-12"><div class="muted-minor"><p class="muted-major">Your MyUSA data is yours to grant or deny access at will.</p></div></div>
-  </div>
-  </br>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
 
-  <div class='scope-warning'>
-    <span><b>No info for <%= @pre_auth.client.application.name %>?</b></span>
-    <br>
-    <p>
-      If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,
-      one of the following pieces of information to get your conversation started.
-      <br>
-      We've exposed all the context of their requests.
-    </p>
-  </div>
+    <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
+    <p>Your MyUSA data is yours to grant or deny access at will.</p>
 
-  <div class="row">
-    <div class="col-md-12">
-          <%= form_tag oauth_authorization_path, method: :post do %>
-            <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-            <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-            <%= hidden_field_tag :state, @pre_auth.state %>
-            <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-            <%= hidden_field_tag :original_scope, @pre_auth.scope %>
+    <div class='alert alert-warning'>
+      <h1>No info for <%= @pre_auth.client.application.name %>?</h1>
+      <p>
+        If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,
+        please select one of the following pieces of information to get your conversation started.
+      </p>
+      <p>
+        We've exposed all the context for their requests.
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <%= form_tag oauth_authorization_path, role:'form', class:'form-inline', method: :post do %>
+          <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+          <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+          <%= hidden_field_tag :state, @pre_auth.state %>
+          <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+          <%= hidden_field_tag :original_scope, @pre_auth.scope %>
 
 
-            <ul class="list-unstyled scope-list">
-              <% @pre_auth.scopes.each do |scope| %>
-                <li>
-                  <div class="header-large">
-                    <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("doorkeeper.scopes.#{scope}") %></span>
-                  </div>
-                  <p>
-                    <label class='label_pad'>
-                      <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
-                      </br>
-                      <%= scope_check_box_tag scope %>
-                    </label>
+          <ul class="list-unstyled scope-list">
+            <% @pre_auth.scopes.each do |scope| %>
+              <li>
+                <h2 class="open"><%= t("doorkeeper.scopes.#{scope}") %></h2>
+                <div class="form-group">
+                  <label for="<%= scope.gsub(/\./, '_') %>">
+                    <%= t("scopes.#{scope}.label") %>
+                  </label>
+                  <div>
                     <% if scope.downcase.starts_with?("profile.") %>
-                      <%= profile_text_field scope, class:'form-control profile', style: 'width:40%;display:inline;'%>
+                      <%= scope_check_box_tag scope %>
+                      <%= profile_text_field scope, class:'form-control' %>
                     <% end %>
-                  </p>
+                  </div>
+                </div>
               </li>
-          <% end %>
-        </ul>
-        </br>
-        <div class="row">
-          <div class="col-md-5">
-            <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
+            <% end %>
+          </ul>
+          <div class="row">
+            <div class="col-md-7 col-sm-8 col-xs-8">
+              <%= submit_tag 'Allow Access', :class => 'btn btn-primary width-100'%>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+             <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
+            </div>
           </div>
-          <div class="col-md-7">
-           <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default" %>
-          </div>
-        </div>
-        </br>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
+    <p class="disclaimer-info">
       <small>
-        <p class="text-muted">
-          Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
-        </p>
+        Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
       </small>
-    </div>
-  </div>
-    <div class='scope-warning'>
-    <span><b>Still not convinced?</b></span>
-    <br>
-    <p>
-      Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <a href="#">MyUSA profile</a>.
     </p>
+    <div class='alert alert-warning'>
+      <h1>Still not convinced?</h1>
+      <p>
+        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <a href="#">MyUSA profile</a>.
+      </p>
+    </div>
+
   </div>
-  <br><br>
 </div>

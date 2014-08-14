@@ -1,0 +1,24 @@
+@import "colors";
+
+$state-warning-text: #8a6d3b;
+
+h2, .h2 {
+  color: $blue-lighter;
+}
+h3, .h3 {
+  color: $gray;
+}
+
+.alert {
+  font-size: 0.875em;
+  margin-bottom: 5px;
+}
+
+.alert.alert-warning > h1 {
+  color: $state-warning-text;
+  margin-top: 0;
+}
+
+.width-100 {
+  width: 100%;
+}

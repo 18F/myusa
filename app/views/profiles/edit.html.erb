@@ -6,26 +6,32 @@
     <h3>
       <%= t('profile.heading') %>
     </h3>
-    <%= form_for @profile do |form| %>
+    <%= form_for @profile, html: { class: 'form-horizontal' } do |form| %>
       <fieldset>
         <legend>
           <%= t('profile.name_heading') %>
         </legend>
         <div class='form-group'>
-          <%= form.label :title %>
-          <%= form.select :title, title_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.label :title, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :title, title_options, { include_blank: true }, { class: 'form-control' } %>
+          </div>
         </div>
         <div class='form-inline'>
-          <%= form.label :first_name %>
-          <%= form.text_field :first_name, class: 'form-control' %>
-          <%= form.label :middle_name %>
-          <%= form.text_field :middle_name, class: 'form-control' %>
-          <%= form.label :last_name %>
-          <%= form.text_field :last_name, class: 'form-control' %>
+          <%= form.label :first_name, t('profile.name_heading'), class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.text_field :first_name, class: 'form-control', placeholder: Profile.human_attribute_name(:first_name) %>
+            <%= form.label :middle_name, class: 'hidden-label' %>
+            <%= form.text_field :middle_name, class: 'form-control', placeholder: Profile.human_attribute_name(:middle_name) %>
+            <%= form.label :last_name, class: 'hidden-label' %>
+            <%= form.text_field :last_name, class: 'form-control', placeholder: Profile.human_attribute_name(:last_name) %>
+          </div>
         </div>
         <div class='form-group'>
-          <%= form.label :suffix %>
-          <%= form.select :suffix, suffix_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.label :suffix, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :suffix, suffix_options, { include_blank: true }, { class: 'form-control' } %>
+          <div>
         </div>
       </fieldset>
       <fieldset>
@@ -33,20 +39,28 @@
           <%= t('profile.address_heading') %>
         </legend>
         <div class='form-group'>
-          <%= form.label :address %>
-          <%= form.text_field :address, class: 'form-control' %>
+          <%= form.label :address, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.text_field :address, class: 'form-control' %>
+          </div>
         </div>
         <div class='form-group'>
-          <%= form.label :address2, class: 'hidden-label' %>
-          <%= form.text_field :address2, class: 'form-control' %>
+          <div class='col-md-2'>
+            <%= form.label :address2, class: 'hidden-label' %>
+          </div>
+          <div class='col-md-10'>
+            <%= form.text_field :address2, class: 'form-control' %>
+          </div>
         </div>
         <div class='form-inline'>
-          <%= form.label :city %>
-          <%= form.text_field :city, class: 'form-control' %>
-          <%= form.label :state %>
-          <%= form.select :state, us_state_options, { include_blank: true }, { class: 'form-control' } %>
-          <%= form.label :zip %>
-          <%= form.text_field :zip, class: 'form-control' %>
+          <%= form.label :city, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.text_field :city, class: 'form-control' %>
+            <%= form.label :state %>
+            <%= form.select :state, us_state_options, { include_blank: true }, { class: 'form-control' } %>
+            <%= form.label :zip %>
+            <%= form.text_field :zip, class: 'form-control' %>
+          </div>
         </div>
       </fieldset>
       <fieldset>
@@ -54,12 +68,16 @@
           <%= t('profile.phone_heading') %>
         </legend>
         <div class='form-group'>
-          <%= form.label :phone_number %>
-          <%= form.phone_field :phone_number, class: 'form-control' %>
+          <%= form.label :phone_number, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.phone_field :phone_number, class: 'form-control' %>
+          </div>
         </div>
         <div class='form-group'>
-          <%= form.label :mobile_number %>
-          <%= form.phone_field :mobile_number, class: 'form-control' %>
+          <%= form.label :mobile_number, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.phone_field :mobile_number, class: 'form-control' %>
+          </div>
         </div>
       </fieldset>
       <fieldset>
@@ -67,8 +85,10 @@
           <%= t('profile.gender_heading') %>
         </legend>
         <div class='form-group'>
-          <%= form.label :gender %>
-          <%= form.select :gender, gender_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.label :gender, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :gender, gender_options, { include_blank: true }, { class: 'form-control' } %>
+          </div>
         </div>
       </fieldset>
       <fieldset>
@@ -76,8 +96,10 @@
           <%= t('profile.marital_status_heading') %>
         </legend>
         <div class='form-group'>
-          <%= form.label :marital_status %>
-          <%= form.select :marital_status, marital_status_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.label :marital_status, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :marital_status, marital_status_options, { include_blank: true }, { class: 'form-control' } %>
+          </div>
         </div>
       </fieldset>
       <fieldset>
@@ -85,20 +107,36 @@
           <%= t('profile.about_you_heading') %>
         </legend>
           <div class="form-group">
-            <%= form.check_box :is_parent %>
-            <%= form.label :is_parent %>
+            <div class='col-md-2'>
+            </div>
+            <div class='col-md-10'>
+              <%= form.check_box :is_parent, class: 'control-label' %>
+              <%= form.label :is_parent %>
+            </div>
           </div>
           <div class="form-group">
-            <%= form.check_box :is_veteran %>
-            <%= form.label :is_veteran %>
+            <div class='col-md-2'>
+            </div>
+            <div class='col-md-10'>
+              <%= form.check_box :is_veteran, class: 'control-label' %>
+              <%= form.label :is_veteran %>
+            </div>
           </div>
           <div class="form-group">
-            <%= form.check_box :is_student %>
-            <%= form.label :is_student %>
+            <div class='col-md-2'>
+            </div>
+            <div class='col-md-10'>
+              <%= form.check_box :is_student, class: 'control-label' %>
+              <%= form.label :is_student %>
+            </div>
           </div>
           <div class="form-group">
-            <%= form.check_box :is_retired %>
-            <%= form.label :is_retired %>
+            <div class='col-md-2'>
+            </div>
+            <div class='col-md-10'>
+              <%= form.check_box :is_retired, class: 'control-label' %>
+              <%= form.label :is_retired %>
+            </div>
           </div>
       </fieldset>
       <div class='row'>

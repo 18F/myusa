@@ -633,6 +633,7 @@ DEPENDENCIES
   guard-livereload
   guard-migrate
   guard-rspec
+  hashie
   jbuilder (~> 2.0)
   jquery-rails
   knife-ec2

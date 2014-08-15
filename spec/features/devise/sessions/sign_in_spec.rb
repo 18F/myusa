@@ -38,8 +38,8 @@ describe "Sign In" do
     end
 
     it "visiting the new session url logs them in", :js => true do
-      token = user.set_authentication_token
-      visit new_user_session_path(email: user.email, token: token)
+      token = AuthenticationToken.generate(user_id: user.id)
+      visit new_user_session_path(email: user.email, token: token.raw)
 
       @target_page.load
       expect(@target_page).to be_displayed

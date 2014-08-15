@@ -63,6 +63,7 @@ group :development do
   gem 'quiet_assets'
   gem 'ruby_parser'
   gem 'slim'
+  gem 'hashie'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/Spring
   gem 'spring'
   gem 'thin'

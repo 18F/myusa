@@ -56,9 +56,9 @@
           <%= form.label :city, class: 'control-label col-md-2' %>
           <div class='col-md-10'>
             <%= form.text_field :city, class: 'form-control' %>
-            <%= form.label :state %>
+            <%= form.label :state, class: 'control-label' %>
             <%= form.select :state, us_state_options, { include_blank: true }, { class: 'form-control' } %>
-            <%= form.label :zip %>
+            <%= form.label :zip, class: 'control-label' %>
             <%= form.text_field :zip, class: 'form-control' %>
           </div>
         </div>

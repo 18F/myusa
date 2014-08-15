@@ -2,7 +2,11 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-SimpleCov.coverage_dir ENV['COVERAGE_REPORTS'] || 'coverage'
+if ENV['COVERAGE_REPORTS']
+  require 'simplecov-csv'
+  SimpleCov.coverage_dir ENV['COVERAGE_REPORTS']
+  SimpleCov.formatter = SimpleCov::Formatter::CSVFormatter
+end
 SimpleCov.start 'rails' # has to start before application is loaded
 
 require File.expand_path("../../config/environment", __FILE__)

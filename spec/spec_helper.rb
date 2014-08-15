@@ -1,5 +1,14 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV['RAILS_ENV'] ||= 'test'
+
+require 'simplecov'
+if ENV['COVERAGE_REPORTS']
+  require 'simplecov-csv'
+  SimpleCov.coverage_dir ENV['COVERAGE_REPORTS']
+  SimpleCov.formatter = SimpleCov::Formatter::CSVFormatter
+end
+SimpleCov.start 'rails' # has to start before application is loaded
+
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/its'

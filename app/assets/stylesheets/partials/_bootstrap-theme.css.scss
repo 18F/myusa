@@ -36,6 +36,19 @@ $font-size-h2: 1.25em;
 $font-size-h3: 0.875em;
 $font-size-small: ceil(($font-size-base * 0.7));
 
+/**
+ * Dropdowns
+ */
+$dropdown-link-hover-bg: $yellow-light;
+$dropdown-link-color: $gray;
+$dropdown-link-active-color: $blue-darker;
+
+/**
+ * Pills for header navigation
+ */
+$nav-pills-active-link-hover-color: $blue-lighter;
+$nav-pills-border-radius: 0;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootstrap-overrides";

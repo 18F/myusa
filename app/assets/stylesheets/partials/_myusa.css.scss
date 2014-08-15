@@ -45,6 +45,64 @@
   color: $gray;
 }
 
+/*******************
+  Header
+********************/
+header {
+  margin-top: 20px;
+  .header-nav {
+    text-align: center;
+  }
+  .settings-menu li {
+    a.large {
+      color: $blue-darkest;
+      font-size:1.25em;
+    }
+  }
+  .header-hr {
+    width: 100%;
+    border-bottom: 1px solid $gray-lighter;
+    position: relative;
+  }
+  .header-hr.shield {
+    margin-bottom: 40px;
+    div {
+      width: 100%;
+      text-align: center;
+      z-index: 5;
+      position: absolute;
+      top: -24px;
+    }
+  }
+  .header-signedin {
+    z-index: 15;
+    color: $blue-lighter;
+    font-family: $font-headings;
+    font-weight: 600;
+    padding-top: 8px;
+    a, a:hover, a:active {
+      text-decoration: none;
+    }
+  }
+  .nav > li > a {
+    border-bottom: 2px solid transparent;
+  }
+  .nav > li > a:hover, .nav > li > a:focus {
+    border-bottom: 2px solid $blue-lighter;
+  }
+
+}
+header.auth {
+  .header-hr {
+    margin-top: 10px;
+  }
+  .header-signedin {
+    padding-top: 15px;
+  }
+}
+
+
+
 /***
  ** TODO:
  ** EVERYTHING BELOW IS OLD PROTOTYPING CSS AND SHOULD BE REMOVED
@@ -81,7 +139,7 @@
 }
 
 .callout-box{
-  background-color: $gray-lighter;
+  background-color: $gray-lightest;
 }
 
 .content-signin,
@@ -426,9 +484,6 @@ div.moresignin {
   padding: 10px;
 }
 
-.pad-top{
-	top: 20px;
-}
 .my{
 	color: blue;
 }

@@ -1,0 +1,17 @@
+<header class="auth">
+  <div class="row">
+    <div class="col-md-5 col-sm-5">
+      <%= image_tag "header-logo.png", :alt => 'MyUSA Logo' %>
+    </div>
+    <div class="col-md-7 col-sm-7">
+      <% if user_signed_in? %>
+        <%= render 'layouts/header_signedin'%>
+      <% end %>
+    </div>
+  </div>
+  <div class="header-hr shield">
+    <div>
+      <%= image_tag "myusa-shield.png", :alt => 'MyUSA Shield Logo' %>
+    </div>
+  </div>
+</header>

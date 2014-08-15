@@ -1,0 +1,54 @@
+@import "colors";
+@import "fonts";
+
+/**
+ * BOOTSTRAP OVERRIDES
+ *
+ * This file overrides the bootstrap defaults for the
+ * 18F / MyUSA theme
+ */
+
+/**
+ * Button colors
+ */
+$btn-primary-color: white;
+$btn-primary-bg:    $blue;
+$btn-default-color: $gray;
+$btn-default-bg:    white;
+
+/**
+ * Brand colors
+ */
+$brand-primary: $blue;
+
+/**
+ * Fonts
+ */
+$font-family-sans-serif: $font_base, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: $font_headings, Georgia, "Times New Roman", Times, serif;
+$font-family-base: $font_base;
+$font-size-base: 16px;
+$headings-font-family: $font_headings;
+$headings-font-weight: 700;
+$headings-color: $blue;
+$font-size-h1: 1.5em;
+$font-size-h2: 1.25em;
+$font-size-h3: 0.875em;
+$font-size-small: ceil(($font-size-base * 0.7));
+
+/**
+ * Dropdowns
+ */
+$dropdown-link-hover-bg: $yellow-light;
+$dropdown-link-color: $gray;
+$dropdown-link-active-color: $blue-darker;
+
+/**
+ * Pills for header navigation
+ */
+$nav-pills-active-link-hover-color: $blue-lighter;
+$nav-pills-border-radius: 0;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "bootstrap-overrides";

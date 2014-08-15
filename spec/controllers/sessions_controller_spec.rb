@@ -41,7 +41,7 @@ describe SessionsController do
         end
 
         it 'expires the token' do
-          expect(AuthenticationToken.find_by_user_id(user.id)).to be_nil
+          expect(AuthenticationToken.find_by_user_id(user.id)).to_not be_valid
         end
 
         context 'return to path is not set' do
@@ -71,27 +71,6 @@ describe SessionsController do
           end
         end
 
-      end
-
-      context 'token is bad' do
-        it 'does not log user in' do
-          get :new, :email => user.email, :token => 'foobar'
-
-          expect(controller.current_user).to be_nil
-        end
-      end
-
-      context 'token is old' do
-        before :each do
-          Timecop.travel(date - 1.day)
-          raw = user.set_authentication_token
-          Timecop.travel(date)
-          get :new, :email => user.email, :token => raw
-        end
-
-        it 'does not log user in' do
-          expect(controller.current_user).to be_nil
-        end
       end
     end
   end

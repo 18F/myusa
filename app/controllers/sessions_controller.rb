@@ -19,24 +19,8 @@ class SessionsController < Devise::SessionsController
   private
 
   def authenticate_user_from_token!
-    user = params[:email].present? && User.find_by_email(params[:email])
-    token = user.present? && AuthenticationToken.find_by_user_id(user.id)
-
-    return unless user && token
-
-    token.raw = params[:token]
-    if token.valid?
-      token.delete
-
-      if token.remember_me
-        remember_me user
-      end
-
-      sign_in :user, user
-      redirect_to token.return_to || after_sign_in_path_for(user)
-
-    else
-      logger.warn "Invalid token #{user.authentication_token} from user #{user.uid}"
+    if warden.authenticate(:email_authenticatable)
+      redirect_to after_sign_in_path_for(current_user)
     end
   end
 end

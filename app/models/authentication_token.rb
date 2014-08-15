@@ -3,16 +3,17 @@ require 'hashie'
 class AuthenticationToken # < Hashie::Dash
   attr_accessor :user_id, :raw, :token, :remember_me, :return_to
 
-  def self.generate(attrs={})
+  def self.create(attrs={})
     token = new(attrs)
-    token.generate_token
-    token.save
-    token
+    if block_given?
+      yield(token)
+    end
+    token.save && token
   end
 
   def self.find_by_user_id(user_id)
-    from_cache = Rails::cache.fetch(cache_key(user_id))
-    return nil unless from_cache.present?
+    from_cache = Rails::cache.fetch(cache_key(user_id)) || {}
+    # return nil unless from_cache.present?
     new(from_cache)
   end
 
@@ -31,6 +32,12 @@ class AuthenticationToken # < Hashie::Dash
 
   def delete
     Rails::cache.delete(cache_key)
+  end
+  
+  def self.generate(attrs={})
+    create(attrs) do |t|
+      t.generate_token
+    end
   end
 
   def generate_token

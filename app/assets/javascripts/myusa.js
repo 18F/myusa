@@ -12,14 +12,10 @@ $(document).ready(function () {
   $(".more-options").show();
   // hide or show the sign in buttons
   $(".more-options").click(function (e) {
-    $(".hidden-buttons").show(400);
+    $(".hidden-buttons").show();
     $(".more-options").hide();
     $(".less-options").show();
-  });
-  $(".less-options").click(function (e) {
-    $(".hidden-buttons").hide(400);
-    $(".less-options").hide();
-    $(".more-options").show();
+    $(".omniauth-buttons").hide();
   });
 
   // toggle sign in and sign up forms

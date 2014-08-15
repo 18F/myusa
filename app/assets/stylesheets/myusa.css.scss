@@ -14,6 +14,10 @@ $grey_accent: #F9F9F9;
   Base Classes
 ********************/
 
+.blue_header{
+  color: $blue_header;
+}
+
 .header-large{
   font-size: 1.25em;
   color:$blue_header;
@@ -22,6 +26,13 @@ $grey_accent: #F9F9F9;
 .scope_description{
   color:$blue_header;
   cursor:pointer;
+}
+
+.connect_button{
+  width:100px;
+  float: left;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 .allow_button{
@@ -208,8 +219,8 @@ div.moresignin {
 
 .slogan {
   padding: 0 10px 10px 10px;
-  font-size: 18px;
-  color: #1c6485;
+  font-size: 14px;
+  color: #666666;
 }
 
 .cta,
@@ -456,6 +467,10 @@ div.moresignin {
   width: 100%;
 }
 
+.shortwidth {
+  width: 48%;
+}
+
 .btn {
   border-radius: 4px;
 }
@@ -524,10 +539,6 @@ div.moresignin {
     cursor: pointer;
     color:white;
 }
-
-
-
-
 
 .search-field::-webkit-input-placeholder {
     color: green;

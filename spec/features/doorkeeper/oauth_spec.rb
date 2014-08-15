@@ -109,8 +109,8 @@ describe 'OAuth' do
 
         scenario 'user can update profile' do
           expect(@auth_page).to be_displayed
+          expect(@auth_page).to have_no_profile_email
           @auth_page.profile_last_name.set 'McTesterson'
-          expect(@auth_page.profile_email).to be_disabled
           @auth_page.allow_button.click
 
           code = @token_page.code.text

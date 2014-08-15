@@ -5,11 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!, only: :secret
 
-  def index
-    render :text => 'Home page'
-  end
-
-  def secret
-    render :text => 'You got me ' + current_user.email
-  end
+  layout "marketing", only: [:index]
+  def secret; end
 end

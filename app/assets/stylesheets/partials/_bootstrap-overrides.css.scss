@@ -1,0 +1,36 @@
+@import "colors";
+
+h2, .h2 {
+  color: $blue-lighter;
+}
+h3, .h3 {
+  color: $gray;
+}
+
+.alert {
+  font-size: 0.875em;
+  margin-bottom: 5px;
+}
+
+.alert.alert-warning > h1 {
+  color: $state-warning-text;
+  margin-top: 0;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+ul.dropdown-menu {
+  font-size: 14px;
+}
+
+/**
+ * for some reason, the pills variables are not being
+ * overridden in sass, so directly overwrite the classes here
+ */
+.nav > li > a:hover, .nav > li > a:focus {
+  color: $blue-lighter;
+  background-color: transparent;
+  font-weight: 700;
+}

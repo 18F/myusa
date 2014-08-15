@@ -17,7 +17,8 @@ describe 'Users' do
         @page.first_name.set 'Jane'
         @page.submit.click
         @results_page.should be_displayed
-        expect(@page.profile_properties).to have_content 'Jane'
+        binding.pry
+        expect(page).to have_content 'Jane'
       end
     end
   end

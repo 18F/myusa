@@ -62,7 +62,7 @@
     <div class='alert alert-warning'>
       <h1>Still not convinced?</h1>
       <p>
-        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <a href="#">MyUSA profile</a>.
+        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <%= link_to 'MyUSA Profile', profile_path, :title => 'MyUSA Profile' %>.
       </p>
     </div>
 

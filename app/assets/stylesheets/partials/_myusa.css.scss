@@ -101,7 +101,26 @@ header.auth {
   }
 }
 
-
+/*******************
+  Header
+********************/
+footer {
+  font-size: 12px;
+  border-top: 1px solid $gray-lighter;
+  margin-top: 20px;
+  padding: 10px;
+  .muted {
+    font-size: 10px;
+    width: 3%;
+  }
+  .nav > li, .nav-justified > li {
+    white-space: nowrap;
+    a:hover, a:focus {
+      font-weight: normal;
+      text-decoration: underline;
+    }
+  }
+}
 
 /***
  ** TODO:

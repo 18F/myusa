@@ -15,7 +15,7 @@ describe "API" do
   let(:user) { create_confirmed_user_with_profile(is_student: nil, is_retired: false) }
 
   describe "Token validity check" do
-    subject { get "/apis/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"} }
+    subject { get "/api/profile", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"} }
     context "with a valid token" do
       let(:token)  { build_access_token(client_app, ['profile.email']) }
       its(:status) { should eq 200 }

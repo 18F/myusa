@@ -5,7 +5,7 @@ services:
   - mysql
 env:
   global:
-    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=coverage
+    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
     - SLACK_ORG=18f PROJECT=myusa
     - secure: K6fmrnBxiermK5s96QoOaBEhjvkLzbtSOB34FHXggiYDt8BrrH8Po+8xQ186/rx1uWrm9w4ZL/ZBZpwVaSUA9ZFwTfQ4MtO/fMF0DkL2u/pCXI6ywwRRsBCQfSPQLD5rQdStcn6rFjL8oEfAybKf4N2eTLC/IR+amp/le0SHb3gvgE9lk5E5AfVkWMRMuwjNW3h15eR9jwmDDMCAgMGEmPvIgDdqFVThALOd5cXs7SoZlAMeBrAgOGGYph3SxFicf3OBuDdNOpinECMih/Tu99FUiEUqHXLdt1vwp6ppasiV/WqjEyOXe6Kp9mHhgRJr7xFIpK8X83rfSajUiYO3xA==
 install:
@@ -18,6 +18,8 @@ before_script:
 script:
   - RAILS_ENV=test bundle exec rake db:setup
   - bundle exec rspec --format RspecJunitFormatter -o shippable/testresults/results.xml
+after_success:
+  - mv coverage $COVERAGE_REPORTS
 after_failure:
   - mysql -e 'show databases;'
   - cat ./config/database.yml

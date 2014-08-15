@@ -18,9 +18,9 @@
     <![endif]-->
   </head>
   <body>
+    <%= yield :header %>
     <div class="container">
       <%= render 'layouts/messages' %>
-      <%= yield :header %>
       <%= yield %>
     </div>
 

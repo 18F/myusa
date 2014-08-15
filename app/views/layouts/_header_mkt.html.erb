@@ -1,33 +1,31 @@
 <header>
-  <div class="row">
-    <div class="col-md-5 col-sm-5">
-      <%= image_tag "header-logo.png", :alt => 'MyUSA Logo' %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-5">
+        <%= image_tag "header-logo.png", :alt => 'MyUSA Logo' %>
+      </div>
+      <div class="col-md-7 col-sm-7">
+        <% if user_signed_in? %>
+          <%= render 'layouts/header_signed_in'%>
+        <% else %>
+          <div class="pull-right">
+            <%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <div class="col-md-7 col-sm-7">
-      <% if user_signed_in? %>
-        <%= render 'layouts/header_signed_in'%>
-      <% else %>
-        <div class="pull-right">
-          <%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-primary' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <ul class="nav nav-pills nav-justified">
-      <li>
-        <a href="#">For the People</a>
-      </li>
-      <li>
-        <a href="#">For Government Agencies</a>
-      </li>
-      <li>
-        <a href="#">For Developers</a>
-      </li>
-    </ul>
-  </div>
-  <div class="row">
-    <div class="header-hr">
+    <div class="row">
+      <ul class="nav nav-pills nav-justified">
+        <li>
+          <a href="#">For the People</a>
+        </li>
+        <li>
+          <a href="#">For Government Agencies</a>
+        </li>
+        <li>
+          <a href="#">For Developers</a>
+        </li>
+      </ul>
     </div>
   </div>
 </header>

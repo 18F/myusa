@@ -50,6 +50,7 @@
 ********************/
 header {
   margin-top: 20px;
+  border-bottom: 1px solid $gray-lighter;
   .header-nav {
     text-align: center;
   }
@@ -61,17 +62,15 @@ header {
   }
   .header-hr {
     width: 100%;
-    border-bottom: 1px solid $gray-lighter;
     position: relative;
   }
   .header-hr.shield {
-    margin-bottom: 40px;
     div {
       width: 100%;
       text-align: center;
       z-index: 5;
       position: absolute;
-      top: -24px;
+      top: -25px;
     }
   }
   .header-signedin {
@@ -93,6 +92,7 @@ header {
 
 }
 header.auth {
+  margin-bottom: 40px;
   .header-hr {
     margin-top: 10px;
   }

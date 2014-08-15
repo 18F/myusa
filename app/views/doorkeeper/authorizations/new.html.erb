@@ -27,23 +27,25 @@
             <%= hidden_field_tag :response_type, @pre_auth.response_type %>
 
     <ul class="list-unstyled scope-list">
-         <% @pre_auth.scopes.each do |scope| %>
+         <% @pre_auth_groups.each do |group| %>
             <li>
 
               <div class="header-large">
-                <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("doorkeeper.scopes.#{scope}") %></span>
+                <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("scope_groups.#{group[:name]}.header")%></span>
               </div>
               <p>
-              <span class="muted-minor label_pad"><%= t("scopes.#{scope}.label") %></span>
+              <span class="muted-minor label_pad"><%= t("scope_groups.#{group[:name]}.sub") %></span>
               </br>
-              <span class='label_pad'>
-                <label><%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                  </label> <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:40%;display:inline;'%>
-                  <% else %>
-                    <%= current_user.scope_field_value(scope)%></label>
-                  <% end %>
-                </span>
+                <% group[:scopes].each do |scope| %>
+                <span class='label_pad'>
+                  <label><%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                  <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
+                    </label> <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:30%;display:inline;font-size:10px;height:2px;'%>
+                    <% else %>
+                      <%= current_user.scope_field_value(scope)%></label>
+                    <% end %>
+                  </span>
+                <% end %>
               </p>
             </li>
         <% end %>

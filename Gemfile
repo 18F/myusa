@@ -38,15 +38,11 @@ gem 'omniauth-google-oauth2'
 gem 'mysql2'
 gem 'secure_headers'
 gem 'validates_email_format_of', :git => 'https://github.com/alexdunae/validates_email_format_of.git'
-gem "paperclip", "~> 4.1"
-gem "permanent_records", "~> 2.3.0"
+gem 'paperclip', '~> 4.1'
+gem 'permanent_records', '~> 2.3.0'
 gem 'font-awesome-sass'
-gem "attr_encrypted"
-gem "factory_girl"
-gem 'capistrano', '~> 2.15'
-gem 'capistrano-unicorn', :require => false
-gem 'unicorn', :require => false
-
+gem 'attr_encrypted'
+gem 'factory_girl'
 gem 'doorkeeper'
 
 # Papertrail prevents records from being deleted.
@@ -66,9 +62,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/Spring
   gem 'spring'
   gem 'thin'
-  gem "letter_opener"
+  gem 'letter_opener'
   gem 'rubocop', require: false
+end
 
+group :deploy do
   ## deploy dependencies
   gem 'berkshelf', '~> 3.0'
   gem 'chef'
@@ -76,6 +74,8 @@ group :development do
   gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
   gem 'knife-solo_data_bag'
   gem 'unf'
+  gem 'capistrano', '~> 2.15'
+  gem 'capistrano-unicorn', :require => false
 end
 
 group :development, :test do
@@ -92,7 +92,6 @@ group :development, :test do
   gem 'spring-commands-rspec'
 #  gem 'rspec_api_blueprint', require: false
   gem 'better_errors'
-
 end
 
 group :test do
@@ -111,6 +110,10 @@ group :test do
   gem 'rspec_junit_formatter', require: false # used by Shippable
   gem 'timecop'
   gem 'capybara-email'
+end
+
+group :staging, :production do
+  gem 'unicorn', :require => false
 end
 
 group :production do

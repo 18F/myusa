@@ -1,4 +1,5 @@
-<%= render 'layouts/meta'%>
-<%= render 'layouts/header_dashboard'%>
-<%= yield %>
-<%= render 'layouts/footer'%>
+<% content_for :header do %>
+  <%= render 'layouts/header_dashboard'%>
+<% end %>
+
+<%= render 'layouts/layout' %>

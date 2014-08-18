@@ -9,13 +9,13 @@
           <%= render 'layouts/header_signed_in'%>
         <% else %>
           <div class="pull-right">
-            <%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-primary' %>
+            <%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-social btn-myusa' %>
           </div>
         <% end %>
       </div>
     </div>
     <div class="row">
-      <ul class="nav nav-pills nav-justified">
+      <ul class="nav nav-pills nav-4">
         <li>
           <a href="#">Home</a>
         </li>

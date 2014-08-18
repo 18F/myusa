@@ -16,8 +16,8 @@ describe 'Users' do
       it "should change the user's name when first or last name changes" do
         @page.first_name.set 'Jane'
         @page.submit.click
-        @results_page.should be_displayed
-        expect(page).to have_content 'Jane'
+        expect(@results_page).to be_displayed
+        expect(@results_page.first_name).to have_content('Jane')
       end
     end
   end

@@ -1,6 +1,24 @@
-</div>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <%= javascript_include_tag "application" %>
-  </body>
-</html>
+<footer>
+  <div class="container">
+    <div class="row">
+      <ul class="nav nav-pills nav-justified">
+        <li>
+          <%= image_tag "header-logo.png", :width => 53, :height => 15 %>
+        </li>
+        <li>
+          <%= link_to 'Terms & Privacy', '#', :title => 'Terms & Privacy' %>
+        </li>
+        <li>
+          <%= link_to 'FAQs', '#', :title => 'Frequently Asked Questions' %>
+        </li>
+        <li>
+          <%= link_to 'Help', '#', :title => 'Help using MyUSA' %>
+        <li>
+        <li class="muted text-right">
+          <%= image_tag "usa-flag.png", :alt => 'USA Flag' %>
+          MyUSA is an official website of the United States Government
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>

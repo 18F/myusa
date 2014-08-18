@@ -20,7 +20,6 @@ module ApplicationHelper
   end
 
   def yes_or_no(value)
-    true_values = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES
-    true_values.include?(value) ? 'Yes' : 'No'
+    (value != '0' && value) ? 'Yes' : 'No'
   end
 end

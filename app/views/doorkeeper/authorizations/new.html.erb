@@ -1,85 +1,80 @@
-<div class="main">
-  <div class="row">
-    <div class="col-md-12"><div class='action-blue'><%= @pre_auth.client.application.name %> is requesting permission to:</div></div>
-  </div>
-  <div class="row">
-    <div class="col-md-12"><div class="muted-minor"><p class="muted-major">Your MyUSA data is yours to grant or deny access at will.</p></div></div>
-  </div>
-  </br>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
+    <p class="subhead">Your MyUSA data is yours to grant or deny access at will.</p>
+    <div class="alert alert-warning hidden" id ="scopes-alert-none">
+      <h1>No info for <%= @pre_auth.client.application.name %>?</h1>
+      <p>
+        If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,
+        please select one of the following pieces of information to get your conversation started.
+      </p>
+      <p>
+        We've exposed all the context for their requests.
+      </p>
+    </div>
 
-  <div class='scope-warning'>
-    <span><b>No info for <%= @pre_auth.client.application.name %>?</b></span>
-    <br>
-    <p>
-      If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,
-      one of the following pieces of information to get your conversation started.
-      <br>
-      We've exposed all the context of their requests.
-    </p>
-  </div>
+    <div class="row">
+      <div class="col-md-12">
+        <%= form_tag oauth_authorization_path,  class: 'form-inline', method: :post do %>
+          <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+          <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+          <%= hidden_field_tag :state, @pre_auth.state %>
+          <%= hidden_field_tag :response_type, @pre_auth.response_type %>
 
-  <div class="row">
-    <div class="col-md-12">
-          <%= form_tag oauth_authorization_path, method: :post do %>
-            <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-            <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-            <%= hidden_field_tag :state, @pre_auth.state %>
-            <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-
-    <ul class="list-unstyled scope-list">
-         <% @pre_auth_groups.each do |group| %>
-            <li>
-
-              <div class="header-large">
-                <span class="glyphicon glyphicon-chevron-right rotate expand"></span><span class='scope-description'><%= t("scope_groups.#{group[:name]}.header")%></span>
-              </div>
-              <p>
-              <span class="muted-minor label_pad"><%= t("scope_groups.#{group[:name]}.sub") %></span>
-              </br>
-                <% group[:scopes].each do |scope| %>
-                <span class='label_pad'>
-                  <label><%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                  <% if scope.downcase.starts_with?("profile.") && current_user.scope_field_value(scope).blank? %>
-                    </label> <%= text_field "new_profile_values", scope, placeholder: t("scopes.#{scope}.placeholder"), class:'form-control', style: 'width:30%;display:inline;font-size:10px;height:2px;'%>
-                    <% else %>
-                      <%= current_user.scope_field_value(scope)%></label>
-                    <% end %>
+          <ul class="list-unstyled scope-list">
+            <% @pre_auth_groups.each do |group| %>
+              <li>
+                <h2 class='open group'>
+                  <%= t("scope_groups.#{group[:name]}.header") %>
+                </h2>
+                <p>
+                  <span class="muted-minor label-pad">
+                    <%= t("scope_groups.#{group[:name]}.sub") %>
                   </span>
-                <% end %>
-              </p>
-            </li>
+                  </br>
+                  <% group[:scopes].each do |scope| %>
+                    <span class='label-pad'>
+                      <label >
+                        <%= t("scopes.#{scope}.label")%>
+                        <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                      <% if scope.downcase.starts_with?("profile.")  %>
+                        </label>
+                        <%= profile_text_field scope, class:'form-control', placeholder: t("scopes.#{scope}.placeholder") %>
+                        <% else %>
+                          <%= profile_text_field scope, class:'form-control' %>
+                          </label>
+                        <% end %>
+                      </span>
+                  <% end %>
+                </p>
+              </li>
+            <% end %>
+          </ul>
+          </br>
+          <div class="row">
+            <div class="col-md-2">
+              <%= hidden_field_tag :user_id, current_user.id %>
+              <%= hidden_field_tag :allow, "1", :id => "allow" %>
+              <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
+            </div>
+            <div class="col-md-2">
+              <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
+            </div>
+            <br/>
+            <br/>
         <% end %>
-        </ul>
-        </br>
-        <div class="row">
-          <div class="col-md-5">
-            <%= hidden_field_tag :user_id, current_user.id %>
-            <%= hidden_field_tag :allow, "1", :id => "allow" %>
-            <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
-          </div>
-          <div class="col-md-7">
-           <%= oauth_deny_link @pre_auth, "No Thanks", "btn btn-default" %>
-          </div>
-        </div>
-        </br>
-      <% end %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
+    <p class="disclaimer-info label-pad">
       <small>
-        <p class="text-muted">
-          Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
-        </p>
+        Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
       </small>
+    </p>
+    <div class='alert alert-warning'>
+      <h1>Still not convinced?</h1>
+      <p>
+        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <a href="#">MyUSA profile</a>.
+      </p>
     </div>
   </div>
-    <div class='scope-warning'>
-    <span><b>Still not convinced?</b></span>
-    <br>
-    <p>
-      Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <a href="#">MyUSA profile</a>.
-    </p>
-  </div>
-  <br><br>
 </div>

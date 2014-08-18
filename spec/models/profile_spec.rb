@@ -22,6 +22,20 @@ describe Profile do
     end
   end
 
+  describe '#attribute_from_scope' do
+    it 'returns attribute symbol from valid profile scope' do
+      expect(Profile.attribute_from_scope('profile.email')).to eq(:email)
+    end
+
+    it 'returns nil for invalid profile scope' do
+      expect(Profile.attribute_from_scope('profile.foobar')).to be_nil
+    end
+
+    it 'returns nil for non-profile scope' do
+      expect(Profile.attribute_from_scope('notifications')).to be_nil
+    end
+  end
+  
   it "strips dashes out of phone numbers" do
     profile_with_phone = create(:full_profile, phone_number: '123-456-7890')
     expect(profile_with_phone.phone).to eq '1234567890'
@@ -99,6 +113,6 @@ describe Profile do
         expect(json["gender"]).to be_nil
         expect(json["mobile_number"]).to be_blank
       end
-    end   
+    end
   end
 end

@@ -2,64 +2,124 @@
   Color Variables
 ********************/
 
+@import "colors";
+@import "fonts";
+
 $grey: #666;
-$blue: #00495C;
-$blue_header: #004976;
 $sub_heading_text: 'source sans pro';
-$heading_text: 'raleway';
-$button_text: 'Open Sans';
-$grey_accent: #F9F9F9;
 
 /*******************
-  Base Classes
+  Authorization Page
+  for OAuth and Scope Selection
 ********************/
 
-.header-large{
-  font-size: 1.25em;
-  color:$blue_header;
+.scope-list {
+  h2 {
+    cursor: pointer;    
+  }
+  h2:before {
+    font-family: FontAwesome;
+    content: "\f054";
+    padding-right: 10px;
+  }
+
+  .group{
+    font-size: 1.25em;
+
+  }  
+  .label-pad{
+    padding-left:15px;
+  }
+
+  h2.open:before {
+    font-family: FontAwesome;
+    content: "\f078";
+    padding-right: 4px;
+  }
+  .form-group {
+    margin-left: 25px;
+    label {
+      color: $gray;
+    }
+  }
+  margin-bottom: 25px;
 }
 
-.scope_description{
-  color:$blue_header;
-  cursor:pointer;
+.disclaimer-info {
+  line-height: .8em;
+  margin: 15px 0;
+  color: $gray;
+  padding-left:15px;
 }
 
-.allow_button{
-  width:200px;
-}
-
-.action-blue-user{
-    font-family: $heading_text;
-  color:$blue_header;
-  font-weight:bold;
-  font-size:1.25em;
-}
-
-.action-blue{
-  font-family:$heading_text;
-  color:$blue;
-  font-weight:bold;
-  font-size:1.5em;
-}
-
-.muted-major{
+.subhead {
+  font-size:1.125em;
+  color: #666;
   font-family: $sub_heading_text;
-  color: $grey;
-  font-size:1.25em;
 }
 
-.muted-minor{
-  font-family: $sub_heading_text;
-  color: $grey;
-  font-size:0.85em;
+/*******************
+  Header
+********************/
+header {
+  margin-top: 20px;
+  .header-nav {
+    text-align: center;
+  }
+  .settings-menu li {
+    a.large {
+      color: $blue-darkest;
+      font-size:1.25em;
+    }
+  }
+  .header-hr {
+    width: 100%;
+    border-bottom: 1px solid $gray-lighter;
+    position: relative;
+  }
+  .header-hr.shield {
+    margin-bottom: 40px;
+    div {
+      width: 100%;
+      text-align: center;
+      z-index: 5;
+      position: absolute;
+      top: -24px;
+    }
+  }
+  .header-signedin {
+    z-index: 15;
+    color: $blue-lighter;
+    font-family: $font-headings;
+    font-weight: 600;
+    padding-top: 8px;
+    a, a:hover, a:active {
+      text-decoration: none;
+    }
+  }
+  .nav > li > a {
+    border-bottom: 2px solid transparent;
+  }
+  .nav > li > a:hover, .nav > li > a:focus {
+    border-bottom: 2px solid $blue-lighter;
+  }
+
+}
+header.auth {
+  .header-hr {
+    margin-top: 10px;
+  }
+  .header-signedin {
+    padding-top: 15px;
+  }
 }
 
-.scope-warning{
-  background-color:#FCF8E3;
-  color:#8A6D3B;
-  padding:10px;
-}
 
+
+/***
+ ** TODO:
+ ** EVERYTHING BELOW IS OLD PROTOTYPING CSS AND SHOULD BE REMOVED
+ **/
 
 /*******************
   Zocial
@@ -91,52 +151,8 @@ $grey_accent: #F9F9F9;
   font-style: normal;
 }
 
-body {
-  font-family: 'Open Sans', 'sans-serif';  
-}
-
-.main {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -410px;
-  margin-top: -200px;
-  padding-left: 150px;
-  padding-right: 150px;
-  height: auto;
-  width: 820px;
-  z-index: 10;
-  /*box-shadow: 1px 1px 1px #888888;*/
-}
-
 .callout-box{
-  background-color: $grey_accent;
-}
-
-.footer {
-  margin-top: -30px;
-  padding: 10px;
-  color: #808080;
-  font-size: 10px;
-}
-
-.attribution {
-  position: absolute;
-  z-index: -1;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  background-color: rgba(0,0,0, 0.7);
-  font-size: 10px;
-  padding: 5px;
-  color: #c0c0c0;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-right-radius: 5px;
-  border-top-color: #606060;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: #606060;
+  background-color: $gray-lightest;
 }
 
 .content-signin,
@@ -156,7 +172,7 @@ div.moresignin {
   font-size: 12px
 }
 .moresignin > span {
-  display: inline-block;    
+  display: inline-block;
 }
 .moresignin > span:before,
 .moresignin > span:after {
@@ -481,9 +497,6 @@ div.moresignin {
   padding: 10px;
 }
 
-.pad-top{
-	top: 20px;
-}
 .my{
 	color: blue;
 }
@@ -520,24 +533,4 @@ div.moresignin {
     /*  pointer-events: none; */
     cursor: pointer;
     color:white;
-}
-
-
-
-
-
-.search-field::-webkit-input-placeholder {
-    color: green;
-}
-
-.search-field:-moz-placeholder {
-    color: white;
-}
-
-.search-field::-moz-placeholder {
-    color: white;
-}
-
-.search-field:-ms-input-placeholder {
-    color: white;
 }

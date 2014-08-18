@@ -12,7 +12,7 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module MyusaServer
+module MyUSA
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -28,8 +28,7 @@ module MyusaServer
 
     config.to_prepare do
       # Only Authorization endpoint
-      Doorkeeper::AuthorizationsController.layout "application"
-      Doorkeeper::ApplicationsController.layout "application"
+      Doorkeeper::ApplicationController.layout "application"
 
     end
   end

@@ -1,8 +1,8 @@
 {
   "run_list": [
     "role[bare_bones]",
-    "role[app_server]",
-    "role[mysql]"
+    "role[app]",
+    "role[database]"
   ],
   "authorization": {
       "sudo": {

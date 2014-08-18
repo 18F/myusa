@@ -6,12 +6,30 @@
 @import "fonts";
 
 $grey: #666;
+$placeholder_color: #767676;
 $sub_heading_text: 'source sans pro';
+$placeholder_text: 'Open Sans';
 
 /*******************
   Authorization Page
   for OAuth and Scope Selection
 ********************/
+
+.form-control::-moz-placeholder {
+  color: $placeholder_color;
+  font-size: 0.875em;
+  font-family: $placeholder_text;
+}
+.form-control:-ms-input-placeholder {
+  color: $placeholder_color;
+  font-size: 0.875em;
+  font-family: $placeholder_text;
+}
+.form-control::-webkit-input-placeholder {
+  color: $placeholder_color;
+  font-size: 0.875em;
+  font-family: $placeholder_text;
+}
 
 .scope-list {
   h2 {

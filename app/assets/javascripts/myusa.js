@@ -2,22 +2,6 @@ $(document).ready(function () {
   var background = false;
 
   /**
-   * Footer
-   */
-  function resizeElements() {
-    footerHeight = $('footer').height();
-    if (($(document.body).height() + footerHeight) < $(window).height()) {
-      $('footer').addClass('navbar-fixed-bottom');
-    } else {
-      $('footer').removeClass('navbar-fixed-bottom');
-    }
-  }
-  resizeElements();
-  // every time container is modified, recomputer where to put the footer
-  $(".container").bind("DOMSubtreeModified", resizeElements);
-
-
-  /**
    * Authorization page
    */
   $(".scope-list li").each(function(){

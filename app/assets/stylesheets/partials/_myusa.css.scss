@@ -53,8 +53,14 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-bottom: 60px;
+}
+@media (min-width: 400px) and (max-width: 767px) {
+  body {
+    margin-bottom: 200px;
+  }
 }
 
 /*******************
@@ -134,6 +140,7 @@ header.auth {
 footer {
   position: absolute;
   bottom: 0;
+  width:100%;
   font-size: 12px;
   border-top: 1px solid $gray-lighter;
   margin-top: 20px;

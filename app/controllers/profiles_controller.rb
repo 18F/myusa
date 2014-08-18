@@ -2,7 +2,6 @@
 # ProfilesController
 class ProfilesController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :assign_user
   before_filter :assign_profile
 
   def show
@@ -23,11 +22,7 @@ class ProfilesController < ApplicationController
   private
 
   def assign_profile
-    @profile = @user.profile
-  end
-
-  def assign_user
-    @user = current_user
+    @profile = current_user.profile
   end
 
   def profile_attributes

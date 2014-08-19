@@ -39,7 +39,7 @@ describe "Sign In" do
     end
 
     context "with an email address and valid token" do
-      it "logs them in", :js => true do
+      it "logs them in" do
         token = AuthenticationToken.generate(user_id: user.id)
         visit new_user_session_path(email: user.email, token: token.raw)
 
@@ -48,7 +48,7 @@ describe "Sign In" do
       end
     end
     context "with an email address and bad token" do
-      it "does not log them in", :js => true do
+      it "does not log them in" do
         token = AuthenticationToken.generate(user_id: user.id)
         visit new_user_session_path(email: user.email, token: 'foobar')
 

@@ -20,6 +20,7 @@ module ApplicationHelper
   end
 
   def yes_or_no(value)
+    return '' if value.nil?
     value ? 'Yes' : 'No'
   end
 end

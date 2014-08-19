@@ -81,28 +81,27 @@ $placeholder_text: 'Open Sans';
 ********************/
 header {
   margin-top: 20px;
+  border-bottom: 1px solid $gray-lighter;
   .header-nav {
     text-align: center;
   }
   .settings-menu li {
     a.large {
-      color: $blue-darkest;
+      color: $blue-lightest;
       font-size:1.25em;
     }
   }
   .header-hr {
     width: 100%;
-    border-bottom: 1px solid $gray-lighter;
     position: relative;
   }
   .header-hr.shield {
-    margin-bottom: 40px;
     div {
       width: 100%;
       text-align: center;
       z-index: 5;
       position: absolute;
-      top: -24px;
+      top: -25px;
     }
   }
   .header-signedin {
@@ -115,15 +114,31 @@ header {
       text-decoration: none;
     }
   }
+  .nav > li {
+    text-align: center;
+  }
   .nav > li > a {
     border-bottom: 2px solid transparent;
   }
   .nav > li > a:hover, .nav > li > a:focus {
     border-bottom: 2px solid $blue-lighter;
   }
+  .nav.nav-3 > li {
+    width: 33%;
+    @media (max-width: $screen-xs-max) {
+      width: 100%;
+    }
+  }
+  .nav.nav-4 > li {
+    width: 25%;
+    @media (max-width: $screen-xs-max) {
+      width: 100%;
+    }
+  }
 
 }
 header.auth {
+  margin-bottom: 40px;
   .header-hr {
     margin-top: 10px;
   }
@@ -132,7 +147,106 @@ header.auth {
   }
 }
 
+/*******************
+  Footer
+********************/
+footer {
+  font-size: 12px;
+  border-top: 1px solid $gray-lighter;
+  margin-top: 20px;
+  padding: 10px;
+  .muted {
+    font-size: 10px;
+    width: 3%;
+  }
+  .nav > li, .nav-justified > li {
+    white-space: nowrap;
+    a:hover, a:focus {
+      font-weight: normal;
+      text-decoration: underline;
+    }
+  }
+}
 
+/*******************
+  MyUSA Button
+********************/
+/** SOCIAL BUTTONS **/
+.btn-social {
+  padding: 0;
+  margin-bottom: 15px;
+  line-height: 2.2em;
+}
+/** MyUSA Icon Font **/
+@font-face {
+  font-family: 'MyUSA';
+  src:url('./MyUSA.eot?m9u969');
+  src:url('./MyUSA.eot?#iefixm9u969') format('embedded-opentype'),
+    url('./MyUSA.woff?m9u969') format('woff'),
+    url('./MyUSA.ttf?m9u969') format('truetype'),
+    url('./MyUSA.svg?m9u969#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/** MyUSA Button **/
+.btn-myusa:before {
+  font-family: 'MyUSA';
+  content: "\e600";
+  border-right: 0.075em solid rgba(0,0,0,0.15);
+  float: left;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-size: 120%;
+  margin: 0 0.5em 0 0;
+  padding: 0 0.5em;
+}
+.btn-myusa {
+  background-color: $blue-lightest;
+  border-color: $blue;
+  color: $gray-lightest;
+  padding-right: 10px;
+}
+.btn-myusa:hover,
+.btn-myusa:focus {
+  background-color: $blue;
+  color: #ffffff;
+}
+.btn-myusa:active,
+.btn-myusa.active {
+  color: #ffffff;
+}
+.btn-myusa-white:before {
+  font-family: 'MyUSA';
+  color: #32689a;
+  content: "\e600";
+  border-right: 0.075em solid rgba(0,0,0,0.1);
+  float: left;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-size: 120%;
+  margin: 0 0.5em 0 0;
+  padding: 0 0.5em;
+}
+.btn-myusa-white {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+  color: $blue;
+}
+.btn-myusa-white:hover:before,
+.btn-myusa-white:focus:before {
+  color: #ffffff;
+}
+.btn-myusa-white:hover,
+.btn-myusa-white:focus {
+  background-color: $blue;
+  border-color: $blue-lightest;
+  color: #ffffff;
+}
+.btn-myusa-white:active:before,
+.btn-myusa-white:active,
+.btn-myusa-white.active {
+  color: #ffffff;
+}
 
 /***
  ** TODO:
@@ -267,13 +381,6 @@ div.moresignin {
   background-color: #112136;
   border-color: #28a4c9;
   color: #f0f0f0;
-}
-
-/** SOCIAL BUTTONS **/
-.btn.btn-social {
-  padding: 0;
-  margin-bottom: 15px;
-  line-height: 2.2em;
 }
 
 .btn-google:before {
@@ -457,6 +564,9 @@ div.moresignin {
 
 /** INITIALLY HIDDEN ELEMENTS **/
 .hidden-buttons {
+  display: none;
+}
+.hidden-label {
   display: none;
 }
 .moresignin > span.less-options {

@@ -17,4 +17,10 @@ class OAuth2::AuthorizationPage < SitePrism::Page
 
   element :flash_error_message, "div.alert.alert-danger"
   element :oauth_error_message, "div.page-header[contains('An error has occurred')] ~ main"
+
+  element :header, 'header'
+  element :footer, 'footer'
+  element :sign_in_button, "#myusa-connect"
+  element :settings, "#user-settings"
+  element :ownership, "footer[contains('MyUSA is an official website of the United States Government')]"
 end

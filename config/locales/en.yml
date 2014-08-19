@@ -35,6 +35,7 @@ en:
     is_student:     'Student status'
     is_veteran:     'Veteran status'
 
+
   scope_groups:
     email:
       header: 'Identify you by your email address'
@@ -121,3 +122,39 @@ en:
       is_retired: 
         label: 'Retiree status'
         placeholder: 'Enter your retiree status'
+
+  cancel: 'Cancel'
+  profile:
+    settings_title: 'Settings'
+    heading: 'Your Profile'
+    name_heading: 'Name'
+    address_heading: 'Address'
+    phone_heading: 'Phone'
+    gender_heading: 'Gender'
+    marital_status_heading: 'Marital Status'
+    about_you_heading: 'About You'
+    update: 'Update Profile'
+
+  activerecord:
+    models:
+      profile: 'Profile'
+    attributes:
+      profile:
+        title: 'Title'
+        first_name: 'First name'
+        middle_name: 'Middle name'
+        last_name: 'Last name'
+        suffix: 'Suffix'
+        address: 'Address'
+        address2: 'Address Line 2'
+        city: 'City'
+        state: 'State'
+        zip: 'Zip'
+        phone_number: 'Phone number'
+        mobile_number: 'Mobile number'
+        gender: 'Gender'
+        is_parent: 'Parent'
+        is_veteran: 'Veteran'
+        is_student: 'Student'
+        is_retired: 'Retired'
+        marital_status: 'Marital status'

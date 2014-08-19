@@ -59,8 +59,7 @@ prepend_before_action :redirect_to_tokens, only: [:create]
         groups: sets[set_name]
       )
     end
-    puts pre_auth_groups
-    pre_auth_groups #= []
+    pre_auth_groups
   end
 
   def redirect_to_tokens

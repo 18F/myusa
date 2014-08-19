@@ -22,31 +22,39 @@
           <%= hidden_field_tag :response_type, @pre_auth.response_type %>
 
           <ul class="list-unstyled scope-list">
-            <% @pre_auth_groups.each do |group| %>
+            <% @pre_auth_groups.each do |set| %>
               <li>
                 <h2 class='open group'>
-                  <%= t("scope_groups.#{group[:name]}.header") %>
+                  <%= t("scope_groups.#{set[:name]}.header") %>
                 </h2>
-                <p>
-                  <span class="muted-minor label-pad">
-                    <%= t("scope_groups.#{group[:name]}.sub") %>
+                <div class="label-pad">
+                  <span class="muted-minor">
+                    <%= t("scope_groups.#{set[:name]}.sub") %>
                   </span>
                   </br>
-                  <% group[:scopes].each do |scope| %>
-                    <span class='label-pad'>
-                      <label >
-                        <%= t("scopes.#{scope}.label")%>
-                        <%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                      <% if scope.downcase.starts_with?("profile.")  %>
+                  <% set[:groups].each do |group| %>
+                    <div class='row'>
+                      <div class = 'col-sm-1'>
+                        <label>
+                        <%=t("group_labels.#{group[:label]}")%>
                         </label>
-                        <%= profile_text_field scope, class:'form-control', placeholder: t("scopes.#{scope}.placeholder") %>
-                        <% else %>
-                          <%= profile_text_field scope, class:'form-control' %>
-                          </label>
-                        <% end %>
-                      </span>
+                      </div>
+                      <div class = 'col-sm-11'>
+                      <% group[:group].each do |scope| %>
+                        <span class='label-pad'>
+                          <% if scope.downcase.starts_with?("profile.")  %>
+                            <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                            <%= profile_text_field scope, class:'form-control', style: 'width:170px; font-size:14px;'%>
+                          <% else %>
+                            <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                            <%= profile_text_field scope, class:'form-control' %>
+                          <% end %>
+                        </span>
+                      <% end %>
+                      </div>
+                    </div>
                   <% end %>
-                </p>
+                </div>
               </li>
             <% end %>
           </ul>

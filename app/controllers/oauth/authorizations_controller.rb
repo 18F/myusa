@@ -6,13 +6,14 @@ prepend_before_action :redirect_to_tokens, only: [:create]
   def new
     # Check for address and address2
     pre_auth_scopes = pre_auth.scopes.to_a
+
     scopes = insert_extra_scope pre_auth_scopes,
                                 'profile.address',
                                 'profile.address2'
 
     # Sort array of scopes according to requirements
     pre_auth_scopes = scopes.sort_by do |x|
-      SCOPE_GROUPS.map { |k| k[1] }.flatten.index x
+      SCOPE_SETS.map { |k| k[1] }.flatten.index x
     end
 
     @pre_auth_groups = create_groups pre_auth_scopes
@@ -44,16 +45,22 @@ prepend_before_action :redirect_to_tokens, only: [:create]
 
   def create_groups(pre_auth_scopes)
     pre_auth_groups = []
-
-    SCOPE_GROUPS.keys.each do |group|
-      inter = pre_auth_scopes & SCOPE_GROUPS[group]
-      next if inter.empty?
+    sets            = {}
+    SCOPE_SETS.keys.each do |set_name|
+      sets[set_name] = []
+      SCOPE_SETS[set_name].each do |set|
+        inter = pre_auth_scopes & set[:group]
+        next if inter.empty?
+        sets[set_name] << {label: set[:label], group: inter}
+      end
+      next if sets[set_name].empty?
       pre_auth_groups.push(
-        name:   group,
-        scopes: inter
+        name:   set_name,
+        groups: sets[set_name]
       )
     end
-    pre_auth_groups
+    puts pre_auth_groups
+    pre_auth_groups #= []
   end
 
   def redirect_to_tokens

@@ -20,6 +20,21 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  group_labels:
+    email:    'Email'
+    title:    'Title'
+    name:     'Name'
+    suffix:   'Suffix'
+    address:  'Address'
+    address2: ''
+    address3: ''
+    phone:    'Phone'
+    gender:   'Gender'
+    marital_status: 'Marital Status'
+    is_parent:      'Parent status'
+    is_student:     'Student status'
+    is_veteran:     'Veteran status'
+
   scope_groups:
     email:
       header: 'Identify you by your email address'

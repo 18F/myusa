@@ -14,6 +14,16 @@ $grey_accent: #F9F9F9;
   Base Classes
 ********************/
 
+.google-connect-option{
+  position:relative;
+  top:45px;
+}
+
+.email-connect-option{
+  position:relative;
+  top:25px;
+}
+
 .blue_header{
   color: $blue_header;
 }
@@ -125,6 +135,7 @@ body {
 
 .callout-box{
   background-color: $grey_accent;
+  border-bottom: 1px #c0c0c0 solid
 }
 
 .footer {
@@ -219,7 +230,7 @@ div.moresignin {
 
 .slogan {
   padding: 0 10px 10px 10px;
-  font-size: 14px;
+  font-size: 16px;
   color: #666666;
 }
 

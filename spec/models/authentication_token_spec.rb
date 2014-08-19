@@ -7,6 +7,12 @@ describe AuthenticationToken, type: :model do
       token = AuthenticationToken.generate(user_id: 1)
       expect(token.token).to be
     end
+
+    it 'does not invalidate old tokens' do
+      token1 = AuthenticationToken.generate(user_id: 1)
+      token2 = AuthenticationToken.generate(user_id: 1)
+      expect(token1).to be_valid
+    end
   end
 
   describe '#save' do

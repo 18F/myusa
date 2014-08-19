@@ -18,11 +18,13 @@
     <![endif]-->
   </head>
   <body>
+    <%= yield :header %>
     <div class="container">
       <%= render 'layouts/messages' %>
-      <%= yield :header %>
       <%= yield %>
     </div>
+
+    <%= render 'layouts/footer' %>
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <%= javascript_include_tag "application" %>

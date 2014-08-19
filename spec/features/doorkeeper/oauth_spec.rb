@@ -182,4 +182,36 @@ describe 'OAuth' do
 
     end
   end
+
+  # TODO move these specs to home page spec upon creation
+  describe 'header and footer content' do
+    let(:requested_scope) { 'profile.email profile.last_name' }
+
+    before :each do
+      @auth_page = OAuth2::AuthorizationPage.new
+      @token_page = OAuth2::TokenPage.new
+    end
+
+    context 'user is logged in' do
+      before :each do
+        login user
+        visit_oauth_authorize_url
+      end
+
+      it 'has settings menu' do
+        expect(@auth_page).to have_settings
+      end
+      it 'does not have sign in button' do
+        expect(@auth_page).to_not have_sign_in_button
+      end
+
+      it 'has footer content' do
+        expect(@auth_page).to have_footer
+      end
+      it 'has ownership statement' do
+        expect(@auth_page).to have_ownership
+      end
+    end
+  end
+
 end

@@ -25,6 +25,6 @@ class Api::ApiController < ApplicationController
   end
 
   def log_activity(controller)
-#    AppActivityLog.create!(:app => @app, :controller => controller.controller_name, :action => controller.action_name, :user => @user)
+#    AppActivityLog.create!(:app => @app, :controller => controller.controller_name, :action => controller.action_name, :user => current_user)
   end
 end

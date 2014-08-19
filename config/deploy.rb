@@ -26,10 +26,10 @@ set :copy_exclude, [ '.ruby-gemset' ]
 set :ssh_options, { :forward_agent => true }
 set :default_shell, '/bin/bash -l'
 # set :use_sudo, true
-# set :rvm_ruby_string, '2.1.2'
-# set :rvm_type, :system
 set :keep_releases, 6
 set :scm, :git
+
+set :bundle_without, [ :development, :test, :deploy ]
 
 load 'config/deploy/base'
 before 'deploy:assets:precompile','deploy:symlink_configs'

@@ -77,6 +77,19 @@ $placeholder_text: 'Open Sans';
 }
 
 /*******************
+  Body
+********************/
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 5em;
+}
+
+/*******************
   Header
 ********************/
 header {
@@ -151,6 +164,10 @@ header.auth {
   Footer
 ********************/
 footer {
+  position: absolute;
+  bottom: 0;
+  height: 5em;
+  width: 100%;
   font-size: 12px;
   border-top: 1px solid $gray-lighter;
   margin-top: 20px;

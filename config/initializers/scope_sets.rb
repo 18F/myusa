@@ -49,3 +49,5 @@ SCOPE_SETS = {
                     }
                   ]
 }
+
+SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran)

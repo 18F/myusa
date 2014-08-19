@@ -16,6 +16,7 @@
     <div class="row">
       <div class="col-md-12">
         <%= form_tag oauth_authorization_path,  class: 'form-inline', method: :post do %>
+          <div class='form-group'>
           <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
           <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
           <%= hidden_field_tag :state, @pre_auth.state %>
@@ -34,20 +35,23 @@
                   </br>
                   <% set[:groups].each do |group| %>
                     <div class='row'>
-                      <div class = 'col-sm-1'>
+                      <div class = 'col-md-1'>
                         <label>
                         <%=t("group_labels.#{group[:label]}")%>
                         </label>
                       </div>
-                      <div class = 'col-sm-11'>
+                      <div class = 'col-md-11'>
                       <% group[:group].each do |scope| %>
                         <span class='label-pad'>
                           <% if scope.downcase.starts_with?("profile.")  %>
                             <%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                            <%= profile_text_field scope, class:'form-control', style: 'width:170px; font-size:14px;'%>
+                            <% if SELECT_MENU_SCOPES.include? scope %>
+                              <%= profile_select_menu scope, class:'form-control', style: 'width:170px; font-size:14px;'%>
+                            <% else %>
+                              <%= profile_text_field scope, class:'form-control', style: 'width:170px; font-size:14px;'%>
+                            <% end %>
                           <% else %>
-                            <%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                            <%= profile_text_field scope, class:'form-control' %>
+                            <%= current_user.scope_field_value(scope)%></label>
                           <% end %>
                         </span>
                       <% end %>
@@ -70,6 +74,7 @@
             </div>
             <br/>
             <br/>
+            </div>
         <% end %>
       </div>
     </div>

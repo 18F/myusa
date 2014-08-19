@@ -4,6 +4,7 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
 prepend_before_action :redirect_to_tokens, only: [:create]
 
   def new
+    flash[:notice] = "You have successfully logged out."
     # Check for address and address2
     pre_auth_scopes = pre_auth.scopes.to_a
 
@@ -11,9 +12,11 @@ prepend_before_action :redirect_to_tokens, only: [:create]
                                 'profile.address',
                                 'profile.address2'
 
+    ordered_scopes = SCOPE_SETS.map { |k| k[1].map { |g| g[:group] } }.flatten
+
     # Sort array of scopes according to requirements
     pre_auth_scopes = scopes.sort_by do |x|
-      SCOPE_SETS.map { |k| k[1] }.flatten.index x
+      ordered_scopes.map { |k| k }.flatten.index x
     end
 
     @pre_auth_groups = create_groups pre_auth_scopes
@@ -21,7 +24,7 @@ prepend_before_action :redirect_to_tokens, only: [:create]
   end
 
   def create
-    if params.has_key?(:profile)
+    if params.key?(:profile)
       current_user.profile.tap do |profile|
         if !profile.update_attributes(profile_params)
           flash[:error] = profile.errors.full_messages.to_sentence
@@ -32,12 +35,13 @@ prepend_before_action :redirect_to_tokens, only: [:create]
     end
 
     if params[:scope].is_a?(Array)
-      params[:scope] = params[:scope].join(" ")
+      params[:scope] = params[:scope].join(' ')
     end
     super
   end
 
   private
+
   def insert_extra_scope(arry, first, second)
     arry.push second if arry.include?(first) && !arry.include?(second)
     arry

@@ -21,7 +21,6 @@ class AuthenticationToken # < Hashie::Dash
     @user_id = attrs[:user_id]
     @remember_me = attrs[:remember_me]
     @return_to = attrs[:return_to]
-    @digest = attrs[:digest] || 'SHA256'
     @raw = attrs[:raw]
     @token = attrs[:token]
   end
@@ -33,7 +32,7 @@ class AuthenticationToken # < Hashie::Dash
   def delete
     Rails::cache.delete(cache_key)
   end
-  
+
   def self.generate(attrs={})
     create(attrs) do |t|
       t.generate_token
@@ -42,11 +41,11 @@ class AuthenticationToken # < Hashie::Dash
 
   def generate_token
     @raw = Devise.friendly_token
-    @token = OpenSSL::HMAC.hexdigest(@digest, @user_id.to_s, @raw)
+    @token = OpenSSL::HMAC.hexdigest('SHA256', @user_id.to_s, @raw)
   end
 
   def valid?
-    digested = self.raw.present? && OpenSSL::HMAC.hexdigest(@digest, @user_id.to_s, self.raw.to_s)
+    digested = self.raw.present? && OpenSSL::HMAC.hexdigest('SHA256', @user_id.to_s, self.raw.to_s)
     Devise.secure_compare(digested, self.token)
   end
 

@@ -1,6 +1,9 @@
 $(document).ready(function () {
   var background = false;
 
+  /**
+   * Authorization page
+   */
   $(".scope-list li").each(function(){
     if($(this).children().find('input[type=text]').length < 1){
       $(this).children().eq(1).hide();

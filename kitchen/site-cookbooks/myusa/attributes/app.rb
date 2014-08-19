@@ -8,5 +8,6 @@ default[:myusa][:secrets][:devise_secret_key] = '322a03b72aac1e453a21cec4120d585
 
 default[:myusa][:database][:name] = 'myusa_staging' #default[:myusa][:rails_env]
 default[:myusa][:database][:host] = 'localhost'
+default[:myusa][:database][:port] = '3306'
 default[:myusa][:database][:username] = 'root' #TODO: fixme
 default[:myusa][:database][:password] = nil #TODO: fixme

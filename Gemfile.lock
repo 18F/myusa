@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/matschaffer/knife-solo.git
+  revision: 865f09ef169e3bb136ebf120d0ddd9ca4052db85
+  submodules: true
+  specs:
+    knife-solo (0.5.0)
+      chef (>= 10.12)
+      erubis (~> 2.7.0)
+      net-ssh (>= 2.2.2, < 3.0)
+
+GIT
   remote: https://github.com/avantcredit/pry-plus.git
   revision: 9170ad3bc651b09c1185badd74553b1b37e3505c
   specs:
@@ -10,16 +20,6 @@ GIT
       pry-docmore
       pry-rescue
       pry-stack_explorer
-
-GIT
-  remote: git://github.com/matschaffer/knife-solo.git
-  revision: 865f09ef169e3bb136ebf120d0ddd9ca4052db85
-  submodules: true
-  specs:
-    knife-solo (0.5.0)
-      chef (>= 10.12)
-      erubis (~> 2.7.0)
-      net-ssh (>= 2.2.2, < 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -400,7 +400,6 @@ GEM
       ruby-openid (>= 2.1.8)
     rack-test (0.6.2)
       rack (>= 1.0)
-    railroady (1.1.2)
     rails (4.1.5)
       actionmailer (= 4.1.5)
       actionpack (= 4.1.5)
@@ -609,7 +608,6 @@ DEPENDENCIES
   database_cleaner
   devise
   doorkeeper
-  factory_girl
   factory_girl_rails
   fakeweb
   font-awesome-sass
@@ -636,7 +634,6 @@ DEPENDENCIES
   pry-plus!
   pry-rails
   quiet_assets
-  railroady
   rails (~> 4.1.0)
   rspec-its
   rspec-rails
@@ -650,7 +647,6 @@ DEPENDENCIES
   simplecov
   simplecov-csv
   site_prism
-  slim
   thin
   timecop
   turbolinks

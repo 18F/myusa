@@ -20,6 +20,6 @@ module ApplicationHelper
   end
 
   def yes_or_no(value)
-    (value != '0' && value) ? 'Yes' : 'No'
+    value ? 'Yes' : 'No'
   end
 end

@@ -107,7 +107,27 @@ class Profile < ActiveRecord::Base
     defined?(@email) ? @email : (self.user ? self.user.email : nil)
   end
 
-  def filtered_profile(scope_list=[])
+  alias_method :'is_parent_enc=', :'is_parent='
+  def is_parent=(parent_val)
+    self.is_parent_enc = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(parent_val)
+  end
+
+  alias_method :'is_student_enc=', :'is_student='
+  def is_student=(student_val)
+    self.is_student_enc = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(student_val)
+  end
+
+  alias_method :'is_veteran_enc=', :'is_veteran='
+  def is_veteran=(veteran_val)
+    self.is_veteran_enc = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(veteran_val)
+  end
+
+  alias_method :'is_retired_enc=', :'is_retired='
+  def is_retired=(retired_val)
+    self.is_retired_enc = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(retired_val)
+  end
+
+  def filtered_profile(scope_list = [])
     field_scope_mapping = {
       :title          => 'profile.title',
       :email          => 'profile.email',

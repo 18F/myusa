@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819194140) do
+ActiveRecord::Schema.define(version: 20140819200441) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 20140819194140) do
     t.string   "url"
     t.string   "scopes"
     t.boolean  "public",       default: false
+    t.string   "description"
+    t.string   "image"
   end
 
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree

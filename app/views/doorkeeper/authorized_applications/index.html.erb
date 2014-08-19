@@ -6,22 +6,24 @@
 <div class="main">
   <div class="row">
     <div class="col-md-12">
-      <div class="list-group">
-        <% @applications.each do |application| %>
-          <a href="#" class="list-group-item">
-            <div class="col-md-7"><h4 class="list-group-item-heading"><%= application.name %></h4></div>
-            <div class="col-md-5 right">Granted: <%= application.created_at.strftime('%m/%d/%Y') %> <%= render 'delete_form', application: application %></div>
-            <p class="list-group-item-text"><%= application.description %></p>
-            <hr />
-            <h5>Permissions</h5>
+      <% @applications.each do |application| %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-7"><h3 class="panel-title"><%= application.name %></h3></div>
+              <div class="col-md-5 text-right"><h3 class="panel-title">Granted: <%= application.created_at.strftime('%m/%d/%Y') %> <%= render 'delete_form', application: application %></h3></div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <h4>Permissions</h4>
             <ul>
             <% application.scopes.each do |scope| %>
               <li><%= scope %></li>
             <% end %>
             </ul>
-          </a>
-        <% end %>
-      </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -107,35 +107,27 @@
           <%= t('profile.about_you_heading') %>
         </legend>
           <div class="form-group">
-            <div class='col-md-2'>
-            </div>
+            <%= form.label :is_parent, class: 'control-label col-md-2' %>
             <div class='col-md-10'>
-              <%= form.check_box :is_parent, class: 'control-label' %>
-              <%= form.label :is_parent %>
+              <%= form.select :is_parent, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
             </div>
           </div>
           <div class="form-group">
-            <div class='col-md-2'>
-            </div>
+            <%= form.label :is_veteran, class: 'control-label col-md-2' %>
             <div class='col-md-10'>
-              <%= form.check_box :is_veteran, class: 'control-label' %>
-              <%= form.label :is_veteran %>
+              <%= form.select :is_veteran, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
             </div>
           </div>
           <div class="form-group">
-            <div class='col-md-2'>
-            </div>
+            <%= form.label :is_student, class: 'control-label col-md-2' %>
             <div class='col-md-10'>
-              <%= form.check_box :is_student, class: 'control-label' %>
-              <%= form.label :is_student %>
+              <%= form.select :is_student, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
             </div>
           </div>
           <div class="form-group">
-            <div class='col-md-2'>
-            </div>
+            <%= form.label :is_retired, class: 'control-label col-md-2' %>
             <div class='col-md-10'>
-              <%= form.check_box :is_retired, class: 'control-label' %>
-              <%= form.label :is_retired %>
+              <%= form.select :is_retired, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
             </div>
           </div>
       </fieldset>

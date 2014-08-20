@@ -29,11 +29,41 @@
           </div>
           <div class="panel-body">
             <h4>Permissions</h4>
-            <ul>
-            <% application.scopes.each do |scope| %>
-              <li><%= t("doorkeeper.scopes.#{scope}") %></li>
-            <% end %>
-            </ul>
+              <ul class="list-unstyled scope-list">
+                <% scope_groups(application.scopes).each do |set| %>
+                  <li>
+                    <h2 class='open group'>
+                      <%= t("scope_groups.#{set[:name]}.header") %>
+                    </h2>
+                    <div class="label-pad">
+                      <span class="muted-minor">
+                        <%= t("scope_groups.#{set[:name]}.sub") %>
+                      </span>
+                      </br>
+                      <% set[:groups].each do |group| %>
+                        <div class='row'>
+                          <div class = 'col-md-3'>
+                            <label>
+                            <%=t("group_labels.#{group[:label]}")%>
+                            </label>
+                          </div>
+                          <div class = 'col-md-9'>
+                          <% group[:group].each do |scope| %>
+                            <span class='label-pad'>
+                              <% if scope.downcase.starts_with?("profile.")  %>
+                                <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                              <% else %>
+                                <%= current_user.scope_field_value(scope)%></label>
+                              <% end %>
+                            </span>
+                          <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
           </div>
         </div>
       <% end %>

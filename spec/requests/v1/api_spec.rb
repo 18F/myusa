@@ -30,57 +30,62 @@ describe Api::V1 do
     end
   end
 
+  describe 'GET /oauth/token/info' do
+    let(:scopes) { ['profile.first_name', 'profile.last_name'] }
+    let(:token)  { build_access_token(client_app, scopes) }
+    describe "response status" do
+      subject { get '/oauth/token/info', nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
+      its(:status) { should eq 200 }
+    end
+    describe "response body" do
+      subject { JSON.parse(get('/oauth/token/info', nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}").body) }
+      its(['resource_owner_id'])  { should eq user.id }
+      its(['scopes'])             { should eq scopes }
+      its(['expires_in_seconds']) { should be_within(2).of Doorkeeper.configuration.access_token_expires_in }
+      its(['application'])        { should eql 'uid'=>client_app.uid }
+      its(:size)                  { should eq 4 }
+      it "looks like" do
+        puts subject.inspect
+      end
+    end
+  end
+
   describe 'GET /api/v1/profile' do
     let(:token) { build_access_token(client_app) }
 
-    context 'when the request has a valid token' do
-      context 'when app does not specify required scopes' do
-        it 'should return an error and message' do
-          response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 403
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json['message']).to eq 'Forbidden'
-        end
+    context 'when app does not specify required scopes' do
+      it 'should return an error and message' do
+        response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
+        expect(response.status).to eq 403
+        parsed_json = JSON.parse(response.body)
+        expect(parsed_json['message']).to eq 'Forbidden'
       end
+    end
 
-      context 'when app has limited scope' do
-        let(:token) { build_access_token(client_app, ['profile.first_name', 'profile.last_name']) }
+    context 'when app has limited scope' do
+      let(:token) { build_access_token(client_app, ['profile.first_name', 'profile.last_name']) }
 
-        it 'should return profile limited to requested scopes' do
-          response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 200
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json).to be
-          expect(parsed_json['first_name']).to eq 'Joe'
-          expect(parsed_json).to_not include('email')
-        end
+      it 'should return profile limited to requested scopes' do
+        response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
+        expect(response.status).to eq 200
+        parsed_json = JSON.parse(response.body)
+        expect(parsed_json).to be
+        expect(parsed_json['first_name']).to eq 'Joe'
+        expect(parsed_json).to_not include('email')
       end
+    end
 
-      pending 'when app has profile scope' do
-        let(:token) { build_access_token(client_app, ['profile']) }
-
-        it 'should return profile limited to requested scopes' do
-          response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 200
-          parsed_json = JSON.parse(response.body)
-          expect(parsed_json).to be
-          expect(parsed_json['first_name']).to eq 'Joe'
-          expect(parsed_json['email']).to eq 'joe@citizen.org'
-        end
-      end
-
-      context 'when the user queried exists' do
-        let(:token) { build_access_token(client_app, ['profile']) }
-        context 'when the schema parameter is set' do
-          pending 'need to understand Schema.org requirement' do
-            it 'should render the response in a Schema.org hash' do
-              response = get '/api/v1/profile', {'schema' => 'true'}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-              expect(response.status).to eq 200
-              parsed_json = JSON.parse(response.body)
-              puts response.body
-              expect(parsed_json).to_not be_nil
-              expect(parsed_json['email']).to eq 'joe@citizen.org'
-            end
+    context 'when the user queried exists' do
+      let(:token) { build_access_token(client_app, ['profile']) }
+      context 'when the schema parameter is set' do
+        pending 'need to understand Schema.org requirement' do
+          it 'should render the response in a Schema.org hash' do
+            response = get '/api/v1/profile', {'schema' => 'true'}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
+            expect(response.status).to eq 200
+            parsed_json = JSON.parse(response.body)
+            puts response.body
+            expect(parsed_json).to_not be_nil
+            expect(parsed_json['email']).to eq 'joe@citizen.org'
           end
         end
       end

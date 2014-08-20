@@ -23,4 +23,8 @@ module ApplicationHelper
     return '' if value.nil?
     value ? 'Yes' : 'No'
   end
+
+  def yes_no_options
+    [['Yes', true], ['No', false]]
+  end
 end

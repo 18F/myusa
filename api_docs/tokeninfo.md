@@ -1,5 +1,5 @@
 
-# Group Token Info
+# Group OAuth
 
 ## GET /api/v1/tokeninfo
 

@@ -53,8 +53,12 @@ SCOPE_SETS = {
                     },
                     {
                       label: 'is_veteran', group: ['profile.is_veteran']
+                    },
+                    {
+                      label: 'is_retired', group: ['profile.is_retired']
                     }
+
                   ]
 }
 
-SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran)
+SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran is_retired)

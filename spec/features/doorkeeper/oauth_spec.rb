@@ -1,7 +1,7 @@
+
 require 'feature_helper'
 
 describe 'OAuth' do
-
   let(:user) { User.create!(email: 'testy.mctesterson@gsa.gov') }
   let(:owner) { User.create!(email: 'owner.mctesterson@gsa.gov') }
 
@@ -45,6 +45,50 @@ describe 'OAuth' do
       expect(@auth_page).to be_displayed
       expect(@auth_page).to have_oauth_error_message
       expect(@auth_page.oauth_error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
+    end
+  end
+
+  describe 'Authorizations' do
+    let(:requested_scope) { 'profile.email profile.last_name' }
+
+    before :each do
+      @auths_page = OAuth2::AuthorizationsPage.new
+    end
+
+    context 'when not logged in' do
+      before :each do
+        @auths_page.load
+      end
+
+      scenario 'redirects to login page' do
+        @sign_in_page = SignInPage.new
+        expect(@sign_in_page).to be_displayed
+      end
+    end
+
+    context 'when logged in' do
+      before :each do
+        login user
+        @auth_page = OAuth2::AuthorizationPage.new
+        @token_page = OAuth2::TokenPage.new
+        visit_oauth_authorize_url
+        expect(@auth_page).to be_displayed
+        @auth_page.allow_button.click
+
+        # Retrieve the code
+        expect(@token_page).to be_displayed
+        code = @token_page.code.text
+
+        # Turn the code into a token
+        token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+        expect(token).to_not be_expired
+        @auths_page.load
+      end
+
+      it 'displays the authorizations' do
+        expect(@auths_page).to be_displayed
+        #TODO...
+      end
     end
   end
 

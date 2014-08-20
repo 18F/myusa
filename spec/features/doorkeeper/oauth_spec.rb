@@ -11,6 +11,7 @@ describe 'OAuth' do
     'profile.address2 profile.zip profile.gender profile.marital_status ' \
     'profile.is_parent profile.is_student profile.is_veteran profile.is_retired'
   end
+
   let(:client_app) do
     Doorkeeper::Application.create do |a|
       a.name = 'Client App'

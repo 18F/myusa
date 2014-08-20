@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       sessions: "sessions"
     }
 
+  resource :profile, only: [:show, :edit, :update]
 
 
   namespace :api, defaults: {format: :json} do
@@ -36,6 +37,4 @@ Rails.application.routes.draw do
       resources :tasks, only: [:index, :create, :show, :update]
     end
   end
-
-
 end

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       sessions: "sessions"
     }
 
+  resource :profile, only: [:show, :edit, :update]
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do

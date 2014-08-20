@@ -1,8 +1,10 @@
 name "bare-bones"
 description "The base role for all systems"
 run_list ["apt", "build-essential", "fail2ban", "git", "hostname", "openssl", "ntp", 'ssl_certificate', "sudo", "users_solo::admins"]
-default_attributes "sudo" {
-  'groups': ["adm", "wheel"],
-  'users': ["ubuntu"],
-  'passwordless': true
-}
+default_attributes "authorization" => {
+                    "sudo" => {
+                      "groups" => ["adm", "wheel"],
+                      "users" => ["ubuntu"],
+                      "passwordless" => true
+                    }
+                  }

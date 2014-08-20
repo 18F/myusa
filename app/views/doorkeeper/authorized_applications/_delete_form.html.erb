@@ -1,5 +1,5 @@
 <%- submit_btn_css ||= 'btn btn-link' %>
-<%= form_tag oauth_authorized_application_path(application), style: 'display: inline-block' do %>
+<%= form_tag oauth_authorized_application_path(application) do %>
   <input type="hidden" name="_method" value="delete">
-  <%= submit_tag 'Revoke Access', onclick: "return confirm('Are you sure?')", class: 'btn btn-link' %>
+  <%= submit_tag 'Revoke Access', onclick: "return confirm('Are you sure?')", class: 'btn btn-link-like' %>
 <% end %>

@@ -12,8 +12,9 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
     ordered_scopes = SCOPE_SETS.map { |k| k[1].map { |g| g[:group] } }.flatten
     # Sort array of scopes according to requirements
     pre_auth_scopes = scopes.sort_by do |x|
-      ordered_scopes.map { |k| k }.flatten.index x
+      ordered_scopes.index(x) || ordered_scopes.length
     end
+
     @pre_auth_groups = create_groups pre_auth_scopes
     super
   end

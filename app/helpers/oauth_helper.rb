@@ -10,10 +10,7 @@ module OauthHelper
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
     menu_options = select_options(scope)
-    if value.present?
-      if field.match(/^is_/)
-        value = (value == '0' ? 'false' : 'true')
-      end
+    if value.present? || value == false
       value = menu_options.find { |o| o[1].to_s == value.to_s }.try(:first) if field_type.to_s == 'select'
       return value
     else

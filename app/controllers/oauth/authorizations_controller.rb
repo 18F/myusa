@@ -1,24 +1,19 @@
 
 # Oauth::AuthorizationsController
 class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
-prepend_before_action :redirect_to_tokens, only: [:create]
+  prepend_before_action :redirect_to_tokens, only: [:create]
+  before_filter :pre_auth, only: [:new]
 
   def new
-    flash[:notice] = "You have successfully logged out."
-    # Check for address and address2
     pre_auth_scopes = pre_auth.scopes.to_a
-
     scopes = insert_extra_scope pre_auth_scopes,
                                 'profile.address',
                                 'profile.address2'
-
     ordered_scopes = SCOPE_SETS.map { |k| k[1].map { |g| g[:group] } }.flatten
-
     # Sort array of scopes according to requirements
     pre_auth_scopes = scopes.sort_by do |x|
       ordered_scopes.map { |k| k }.flatten.index x
     end
-
     @pre_auth_groups = create_groups pre_auth_scopes
     super
   end
@@ -26,17 +21,14 @@ prepend_before_action :redirect_to_tokens, only: [:create]
   def create
     if params.key?(:profile)
       current_user.profile.tap do |profile|
-        if !profile.update_attributes(profile_params)
+        unless profile.update_attributes(profile_params)
           flash[:error] = profile.errors.full_messages.to_sentence
           redirect_to oauth_authorization_path(redirect_back_params)
           return
         end
       end
     end
-
-    if params[:scope].is_a?(Array)
-      params[:scope] = params[:scope].join(' ')
-    end
+    params[:scope] = params[:scope].join(' ') if params[:scope].is_a?(Array)
     super
   end
 
@@ -70,9 +62,7 @@ prepend_before_action :redirect_to_tokens, only: [:create]
     # legacy implementation used POST /oauth/authorize for both the user facing
     # authorization screen and the API endpoint to request a token ... so, we
     # have to support it here.
-    if params.has_key?(:grant_type)
-      redirect_to oauth_token_path
-    end
+    redirect_to oauth_token_path if params.key?(:grant_type)
   end
 
   def profile_params

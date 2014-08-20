@@ -12,6 +12,7 @@ describe AuthenticationToken, type: :model do
       token1 = AuthenticationToken.generate(user_id: 1)
       token2 = AuthenticationToken.generate(user_id: 1)
       expect(token1).to be_valid
+      expect(token2).to be_valid
     end
   end
 

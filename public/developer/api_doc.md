@@ -2,7 +2,8 @@ FORMAT: 1A
 
 # MyUSA API Documentation
 
-# Group Getting Started
+# Group Authentication
+
 # Getting started with MyUSA Authentication
 
 MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the [developers](https://my.usa.gov/developer) section of MyUSA.
@@ -15,11 +16,11 @@ MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create
 4. Your application validates the access token.
 5. The access token allows your application to access scope information from MyUSA.gov.
 
-### Scopes
+## Scopes
 
 The scopes you define when you setup your app on MyUSA.gov define what information your app will require from the user. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.
 
-### API Versions
+## API Versions
 
 To access the MyUSA API, your app should use URLs which include the API version number.
 API URLs are constructed using this template:
@@ -40,9 +41,7 @@ By using API URLs with specified versions, your application can continue operati
 **Note that only two versions of the API are officially supported at any time: the current version, and the version preceding it.**
 If your app uses the MyUSA API, you'll need to keep track of new versions to ensure that the app stays functional.
 
-
-# Group Before You Begin
-## Before You Begin
+## Connecting with OAuth
 
 1. Sign in to [MyUSA](https://my.usa.gov/developer) to register an application.
 2. Provide a redirect URI which is `YOUR_SITE/auth/myusa/callback` by default.

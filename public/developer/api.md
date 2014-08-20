@@ -2,7 +2,8 @@ FORMAT: 1A
 
 # MyUSA API Documentation
 
-# Group Getting Started
+# Group Authentication
+
 # Getting started with MyUSA Authentication
 
 MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the [developers](https://my.usa.gov/developer) section of MyUSA.
@@ -15,11 +16,11 @@ MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create
 4. Your application validates the access token.
 5. The access token allows your application to access scope information from MyUSA.gov.
 
-### Scopes
+## Scopes
 
 The scopes you define when you setup your app on MyUSA.gov define what information your app will require from the user. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.
 
-### API Versions
+## API Versions
 
 To access the MyUSA API, your app should use URLs which include the API version number.
 API URLs are constructed using this template:
@@ -40,9 +41,7 @@ By using API URLs with specified versions, your application can continue operati
 **Note that only two versions of the API are officially supported at any time: the current version, and the version preceding it.**
 If your app uses the MyUSA API, you'll need to keep track of new versions to ensure that the app stays functional.
 
-
-# Group Before You Begin
-## Before You Begin
+## Connecting with OAuth
 
 1. Sign in to [MyUSA](https://my.usa.gov/developer) to register an application.
 2. Provide a redirect URI which is `YOUR_SITE/auth/myusa/callback` by default.
@@ -124,11 +123,10 @@ View the OmniAuth 1.0 docs for more information about strategy implementation: h
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-
 # Group Profile
 
 
-## GET /api/profile?schema=
+## GET /api/v1/profile?schema=
 
 Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
 
@@ -153,7 +151,7 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "gender": null
     }
 
-## GET /api/profile
+## GET /api/v1/profile
 
 Get the user profile with attributes limited to just those chosen by app owner during app registration.
 
@@ -186,7 +184,7 @@ Get the user profile with attributes limited to just those chosen by app owner d
 # Group Task
 
 
-## PUT /api/task/:id
+## PUT /api/v1/task/:id
 
 Update a task
 
@@ -232,7 +230,7 @@ Update a task
       ]
     }
 
-## POST /api/tasks
+## POST /api/v1/tasks
 
 Create a new task for the user for this application.
 
@@ -264,7 +262,7 @@ Create a new task for the user for this application.
       ]
     }
 
-## GET /api/tasks
+## GET /api/v1/tasks
 
 List all tasks, and associated attributes, created by the calling application
 
@@ -293,7 +291,7 @@ List all tasks, and associated attributes, created by the calling application
       }
     ]
 
-## GET /api/task/:id
+## GET /api/v1/task/:id
 
 Get a single task.
 
@@ -332,7 +330,7 @@ Get a single task.
 # Group Notification
 
 
-## POST /api/notifications
+## POST /api/v1/notifications
 
 This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.
 

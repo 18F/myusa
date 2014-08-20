@@ -5,7 +5,12 @@ describe 'OAuth' do
   let(:user) { User.create!(email: 'testy.mctesterson@gsa.gov') }
   let(:owner) { User.create!(email: 'owner.mctesterson@gsa.gov') }
 
-  let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name profile.phone_number' }
+  let(:client_application_scopes) do
+    'profile.email profile.title profile.first_name profile.middle_name ' \
+    'profile.last_name profile.phone_number profile.suffix profile.address ' \
+    'profile.address2 profile.zip profile.gender profile.marital_status ' \
+    'profile.is_parent profile.is_student profile.is_veteran profile.is_retired'
+  end
 
   let(:client_app) do
     Doorkeeper::Application.create do |a|

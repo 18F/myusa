@@ -1,7 +1,7 @@
 # Group Task
 
 
-## PUT /api/task/:id
+## PUT /api/v1/task/:id
 
 Update a task
 
@@ -47,7 +47,7 @@ Update a task
       ]
     }
 
-## POST /api/tasks
+## POST /api/v1/tasks
 
 Create a new task for the user for this application.
 
@@ -79,7 +79,7 @@ Create a new task for the user for this application.
       ]
     }
 
-## GET /api/tasks
+## GET /api/v1/tasks
 
 List all tasks, and associated attributes, created by the calling application
 
@@ -108,7 +108,7 @@ List all tasks, and associated attributes, created by the calling application
       }
     ]
 
-## GET /api/task/:id
+## GET /api/v1/task/:id
 
 Get a single task.
 
@@ -143,4 +143,3 @@ Get a single task.
         }
       ]
     }
-

@@ -18,7 +18,7 @@
             <h4>Permissions</h4>
             <ul>
             <% application.scopes.each do |scope| %>
-              <li><%= scope %></li>
+              <li><%= t("doorkeeper.scopes.#{scope}") %></li>
             <% end %>
             </ul>
           </div>

@@ -1,14 +1,4 @@
 GIT
-  remote: git://github.com/matschaffer/knife-solo.git
-  revision: 865f09ef169e3bb136ebf120d0ddd9ca4052db85
-  submodules: true
-  specs:
-    knife-solo (0.5.0)
-      chef (>= 10.12)
-      erubis (~> 2.7.0)
-      net-ssh (>= 2.2.2, < 3.0)
-
-GIT
   remote: https://github.com/avantcredit/pry-plus.git
   revision: 9170ad3bc651b09c1185badd74553b1b37e3505c
   specs:
@@ -20,6 +10,16 @@ GIT
       pry-docmore
       pry-rescue
       pry-stack_explorer
+
+GIT
+  remote: git://github.com/matschaffer/knife-solo.git
+  revision: 865f09ef169e3bb136ebf120d0ddd9ca4052db85
+  submodules: true
+  specs:
+    knife-solo (0.5.0)
+      chef (>= 10.12)
+      erubis (~> 2.7.0)
+      net-ssh (>= 2.2.2, < 3.0)
 
 GEM
   remote: https://rubygems.org/

@@ -180,11 +180,8 @@ ActiveRecord::Schema.define(version: 20140820180428) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
-    t.string   "authentication_token"
-    t.datetime "authentication_sent_at"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree

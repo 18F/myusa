@@ -29,20 +29,33 @@ describe "Sign In" do
     end
   end
 
-  describe "with an email address and token" do
+  describe "visiting the new session url" do
     let(:email) { 'testy@example.gov' }
     let(:user) { User.create!(email: email) }
 
     before :each do
       @target_page = TargetPage.new
+      @sign_in_page = SignInPage.new
     end
 
-    it "visiting the new session url logs them in", :js => true do
-      token = user.set_authentication_token
-      visit new_user_session_path(email: user.email, token: token)
+    context "with an email address and valid token" do
+      it "logs them in" do
+        token = AuthenticationToken.generate(user_id: user.id)
+        visit new_user_session_path(email: user.email, token: token.raw)
 
-      @target_page.load
-      expect(@target_page).to be_displayed
+        @target_page.load
+        expect(@target_page).to be_displayed
+      end
+    end
+    context "with an email address and bad token" do
+      it "does not log them in" do
+        token = AuthenticationToken.generate(user_id: user.id)
+        visit new_user_session_path(email: user.email, token: 'foobar')
+
+        @target_page.load
+        puts page.current_url
+        expect(@sign_in_page).to be_displayed
+      end
     end
   end
 
@@ -71,7 +84,7 @@ describe "Sign In" do
 
           @target_page.load
           @sign_in_page.email.set email
-          @sign_in_page.remember_me.set 1
+          @sign_in_page.remember_me.set remember_me
           @sign_in_page.submit.click
         end
 
@@ -97,10 +110,8 @@ describe "Sign In" do
           expect(@target_page.source).to match body
         end
 
-        context "with remember  me set" do
-          let(:remember_me) { true }
-
-          it "sets remember cookie" do
+        describe 'remember me' do
+          before :each do
             open_email(email)
             current_email.click_link(link_text)
             # CP: This is a crude hack. I couldn't find another way to ensure
@@ -109,8 +120,21 @@ describe "Sign In" do
             # the new session automagically, but that didn't work at all. I did
             # not try to use Timecop to expire tokens because it has been shown
             # to break Capybara timeouts.
-            cookies = Capybara.current_session.driver.request.cookies
-            expect(cookies).to have_key("remember_user_token")
+            @cookies = Capybara.current_session.driver.request.cookies
+          end
+
+          context "without remember me set" do
+            it "does not set remember cookie" do
+              expect(@cookies).to_not have_key("remember_user_token")
+            end
+          end
+
+          context "with remember me set" do
+            let(:remember_me) { true }
+
+            it "sets remember cookie" do
+              expect(@cookies).to have_key("remember_user_token")
+            end
           end
         end
       end

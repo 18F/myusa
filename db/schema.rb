@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819200441) do
+ActiveRecord::Schema.define(version: 20140820180428) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -81,17 +81,17 @@ ActiveRecord::Schema.define(version: 20140819200441) do
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: true do |t|
-    t.string   "name",                         null: false
-    t.string   "uid",                          null: false
-    t.string   "secret",                       null: false
-    t.text     "redirect_uri",                 null: false
+    t.string   "name",                                      null: false
+    t.string   "uid",                                       null: false
+    t.string   "secret",                                    null: false
+    t.text     "redirect_uri",                              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "owner_type"
     t.string   "url"
-    t.string   "scopes"
-    t.boolean  "public",       default: false
+    t.string   "scopes",       limit: 2000
+    t.boolean  "public",                    default: false
     t.string   "description"
     t.string   "image"
   end

@@ -1,7 +1,8 @@
+
 # Group Notification
 
 
-## POST /api/notifications
+## POST /api/v1/notifications
 
 This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.
 
@@ -33,4 +34,3 @@ This will create a notification for the authenticated user.  The user will be ab
       "deleted_at": null,
       "viewed_at": null
     }
-

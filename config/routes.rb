@@ -16,12 +16,14 @@ Rails.application.routes.draw do
     }
 
 
+
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do
       resource :profile, only: [:show]
       resources :notifications, only: [:create]
       resources :tasks, only: [:index, :create, :show, :update]
-    end
+      get 'tokeninfo', to: '/doorkeeper/token_info#show'
+  end
 
     # For legacy reasons, we translate any API request without a version
     # in the path as a version 1 request.

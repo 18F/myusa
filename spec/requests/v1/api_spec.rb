@@ -30,23 +30,21 @@ describe Api::V1 do
     end
   end
 
-  describe 'GET /oauth/token/info' do
+  describe 'GET /api/v1/tokeninfo' do
+    let(:path)   { '/api/v1/tokeninfo' }
     let(:scopes) { ['profile.first_name', 'profile.last_name'] }
     let(:token)  { build_access_token(client_app, scopes) }
     describe "response status" do
-      subject { get '/oauth/token/info', nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
+      subject { get path, nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
       its(:status) { should eq 200 }
     end
     describe "response body" do
-      subject { JSON.parse(get('/oauth/token/info', nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}").body) }
+      subject { JSON.parse(get(path, nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}").body) }
       its(['resource_owner_id'])  { should eq user.id }
       its(['scopes'])             { should eq scopes }
       its(['expires_in_seconds']) { should be_within(2).of Doorkeeper.configuration.access_token_expires_in }
       its(['application'])        { should eql 'uid'=>client_app.uid }
       its(:size)                  { should eq 4 }
-      it "looks like" do
-        puts subject.inspect
-      end
     end
   end
 

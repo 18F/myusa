@@ -6,31 +6,42 @@ module OauthHelper
     )
   end
 
-  def profile_text_field(scope, options={})
+  def profile_field(field_type, scope, options={})
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
+    menu_options = select_options(scope)
     if value.present?
-      return current_user.profile.send(field)
+      if field.match(/^is_/)
+        value = (value == '0' ? 'false' : 'true')
+      end
+      value = menu_options.find { |o| o[1].to_s == value.to_s }.try(:first) if field_type.to_s == 'select'
+      return value
     else
-      options.merge!(placeholder: t("scopes.#{scope}.placeholder"), disabled: value.present?)
-      text_field_tag "profile[#{field}]", current_user.profile.send(field), options
+      options.merge!(placeholder: t("scopes.#{scope}.placeholder"))
+      if field_type.to_s == 'select'
+        options.merge!(include_blank: true, placeholder: t("scopes.#{scope}.placeholder"))
+        select_tag "profile[#{field}]", options_for_select(menu_options, value), options
+      else
+        text_field_tag "profile[#{field}]", value, options
+      end
     end
   end
 
-  def select_options(scope)
-    return gender_options if scope.match(/gender/)
-    return marital_status_options if scope.match(/marital/)
-    return title_options    if scope.match(/title/)
-    return suffix_options   if scope.match(/suffix/)
-    return us_state_options if scope.match(/state/)
-    return yes_no_options   if scope.match(/(is_parent|is_student|is_veteran)/)
+  def profile_text_field(scope, options={})
+    profile_field('text', scope, options)
   end
 
   def profile_select_menu(scope, options={})
-    field = Profile.attribute_from_scope(scope)
-    value = current_user.profile.send(field)
-    options.merge!(include_blank: true, placeholder: t("scopes.#{scope}.placeholder"), disabled: value.present?)
-    select_tag "profile[#{field}]", options_for_select(select_options(scope), value), options
+    profile_field('select', scope, options)
+  end
+
+  def select_options(scope)
+    return gender_options         if scope.match(/gender/)
+    return marital_status_options if scope.match(/marital/)
+    return title_options          if scope.match(/title/)
+    return suffix_options         if scope.match(/suffix/)
+    return us_state_options       if scope.match(/state/)
+    return yes_no_options         if scope.match(/(is_parent|is_retired|is_student|is_veteran)/)
   end
 
   def oauth_deny_link(pre_auth, text, options={})

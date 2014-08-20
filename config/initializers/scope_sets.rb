@@ -7,8 +7,15 @@ SCOPE_SETS = {
                       label: 'title', group: ['profile.title']
                     },
                     {
-                      label: 'name', group: %w(profile.first_name profile.middle_name profile.last_name)
+                      label: 'First name', group: %w(profile.first_name)
                     },
+                    {
+                      label: 'Middle name', group: %w(profile.middle_name)
+                    },
+                    {
+                      label: 'Last name', group: %w(profile.last_name)
+                    },
+
                     {
                       label: 'suffix', group: ['profile.suffix']
                     },

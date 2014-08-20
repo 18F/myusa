@@ -2,6 +2,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
     <p class="subhead">Your MyUSA data is yours to grant or deny access at will.</p>
+
     <div class="alert alert-warning hidden" id ="scopes-alert-none">
       <h1>No info for <%= @pre_auth.client.application.name %>?</h1>
       <p>
@@ -35,20 +36,20 @@
                   </br>
                   <% set[:groups].each do |group| %>
                     <div class='row'>
-                      <div class = 'col-md-1'>
+                      <div class = 'col-md-3'>
                         <label>
                         <%=t("group_labels.#{group[:label]}")%>
                         </label>
                       </div>
-                      <div class = 'col-md-11'>
+                      <div class = 'col-md-9'>
                       <% group[:group].each do |scope| %>
                         <span class='label-pad'>
                           <% if scope.downcase.starts_with?("profile.")  %>
                             <%= check_box_tag 'scope[]', scope, true, multiple: true%>
                             <% if SELECT_MENU_SCOPES.include? scope %>
-                              <%= profile_select_menu scope, class:'form-control', style: 'width:170px; font-size:14px;'%>
+                              <%= profile_select_menu scope, class:'form-control'%>
                             <% else %>
-                              <%= profile_text_field scope, class:'form-control', style: 'width:170px; font-size:14px;'%>
+                              <%= profile_text_field scope, class:'form-control'%>
                             <% end %>
                           <% else %>
                             <%= current_user.scope_field_value(scope)%></label>
@@ -64,12 +65,12 @@
           </ul>
           </br>
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <%= hidden_field_tag :user_id, current_user.id %>
               <%= hidden_field_tag :allow, "1", :id => "allow" %>
               <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
             </div>
             <br/>

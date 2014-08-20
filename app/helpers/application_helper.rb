@@ -1,3 +1,4 @@
+
 # ApplicationHelper
 module ApplicationHelper
   def standard_flash(msg)
@@ -16,5 +17,14 @@ module ApplicationHelper
         text
       end
     end
+  end
+
+  def yes_or_no(value)
+    return '' if value.nil?
+    value ? 'Yes' : 'No'
+  end
+
+  def yes_no_options
+    [['Yes', true], ['No', false]]
   end
 end

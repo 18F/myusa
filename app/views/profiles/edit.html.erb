@@ -1,0 +1,143 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>
+      <%= t('profile.settings_title') %>
+    </h2>
+    <h3>
+      <%= t('profile.heading') %>
+    </h3>
+    <%= form_for @profile, html: { class: 'form-horizontal' } do |form| %>
+      <fieldset>
+        <legend>
+          <%= t('profile.name_heading') %>
+        </legend>
+        <div class='form-group'>
+          <%= form.label :title, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :title, title_options, { include_blank: true }, { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class='form-inline'>
+          <%= form.label :first_name, t('profile.name_heading'), class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.text_field :first_name, class: 'form-control', placeholder: Profile.human_attribute_name(:first_name) %>
+            <%= form.label :middle_name, class: 'hidden-label' %>
+            <%= form.text_field :middle_name, class: 'form-control', placeholder: Profile.human_attribute_name(:middle_name) %>
+            <%= form.label :last_name, class: 'hidden-label' %>
+            <%= form.text_field :last_name, class: 'form-control', placeholder: Profile.human_attribute_name(:last_name) %>
+          </div>
+        </div>
+        <div class='form-group'>
+          <%= form.label :suffix, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :suffix, suffix_options, { include_blank: true }, { class: 'form-control' } %>
+          <div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.address_heading') %>
+        </legend>
+        <div class='form-group'>
+          <%= form.label :address, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.text_field :address, class: 'form-control' %>
+          </div>
+        </div>
+        <div class='form-group'>
+          <div class='col-md-2'>
+            <%= form.label :address2, class: 'hidden-label' %>
+          </div>
+          <div class='col-md-10'>
+            <%= form.text_field :address2, class: 'form-control' %>
+          </div>
+        </div>
+        <div class='form-inline'>
+          <%= form.label :city, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.text_field :city, class: 'form-control' %>
+            <%= form.label :state, class: 'control-label' %>
+            <%= form.select :state, us_state_options, { include_blank: true }, { class: 'form-control' } %>
+            <%= form.label :zip, class: 'control-label' %>
+            <%= form.text_field :zip, class: 'form-control' %>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.phone_heading') %>
+        </legend>
+        <div class='form-group'>
+          <%= form.label :phone_number, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.phone_field :phone_number, class: 'form-control' %>
+          </div>
+        </div>
+        <div class='form-group'>
+          <%= form.label :mobile_number, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.phone_field :mobile_number, class: 'form-control' %>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.gender_heading') %>
+        </legend>
+        <div class='form-group'>
+          <%= form.label :gender, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :gender, gender_options, { include_blank: true }, { class: 'form-control' } %>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.marital_status_heading') %>
+        </legend>
+        <div class='form-group'>
+          <%= form.label :marital_status, class: 'control-label col-md-2' %>
+          <div class='col-md-10'>
+            <%= form.select :marital_status, marital_status_options, { include_blank: true }, { class: 'form-control' } %>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= t('profile.about_you_heading') %>
+        </legend>
+          <div class="form-group">
+            <%= form.label :is_parent, class: 'control-label col-md-2' %>
+            <div class='col-md-10'>
+              <%= form.select :is_parent, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= form.label :is_veteran, class: 'control-label col-md-2' %>
+            <div class='col-md-10'>
+              <%= form.select :is_veteran, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= form.label :is_student, class: 'control-label col-md-2' %>
+            <div class='col-md-10'>
+              <%= form.select :is_student, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= form.label :is_retired, class: 'control-label col-md-2' %>
+            <div class='col-md-10'>
+              <%= form.select :is_retired, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+            </div>
+          </div>
+      </fieldset>
+      <div class='row'>
+        <%= form.submit t('profile.update'), :class => 'large button positive' %>
+        <%= link_to t(:cancel), profile_path %>
+      </div>
+      <div class='row'>
+        &nbsp;
+      </div>
+    <% end %>
+  </div>
+</div>

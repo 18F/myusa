@@ -5,7 +5,12 @@ describe 'OAuth' do
   let(:user) { User.create!(email: 'testy.mctesterson@gsa.gov') }
   let(:owner) { User.create!(email: 'owner.mctesterson@gsa.gov') }
 
-  let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name profile.phone_number' }
+  let(:client_application_scopes) do
+    'profile.email profile.title profile.first_name profile.middle_name ' \
+    'profile.last_name profile.phone_number profile.suffix profile.address ' \
+    'profile.address2 profile.zip profile.gender profile.marital_status ' \
+    'profile.is_parent profile.is_student profile.is_veteran profile.is_retired'
+  end
 
   let(:client_app) do
     Doorkeeper::Application.create do |a|
@@ -109,8 +114,8 @@ describe 'OAuth' do
 
         scenario 'user can update profile' do
           expect(@auth_page).to be_displayed
+          expect(@auth_page).to have_no_profile_email
           @auth_page.profile_last_name.set 'McTesterson'
-          expect(@auth_page.profile_email).to be_disabled
           @auth_page.allow_button.click
 
           code = @token_page.code.text
@@ -183,4 +188,36 @@ describe 'OAuth' do
 
     end
   end
+
+  # TODO move these specs to home page spec upon creation
+  describe 'header and footer content' do
+    let(:requested_scope) { 'profile.email profile.last_name' }
+
+    before :each do
+      @auth_page = OAuth2::AuthorizationPage.new
+      @token_page = OAuth2::TokenPage.new
+    end
+
+    context 'user is logged in' do
+      before :each do
+        login user
+        visit_oauth_authorize_url
+      end
+
+      it 'has settings menu' do
+        expect(@auth_page).to have_settings
+      end
+      it 'does not have sign in button' do
+        expect(@auth_page).to_not have_sign_in_button
+      end
+
+      it 'has footer content' do
+        expect(@auth_page).to have_footer
+      end
+      it 'has ownership statement' do
+        expect(@auth_page).to have_ownership
+      end
+    end
+  end
+
 end

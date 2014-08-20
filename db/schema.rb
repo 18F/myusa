@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811170332) do
+ActiveRecord::Schema.define(version: 20140820180428) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -22,26 +22,6 @@ ActiveRecord::Schema.define(version: 20140811170332) do
 
   add_index "app_oauth_scopes", ["app_id"], name: "index_app_oauth_scopes_on_app_id", using: :btree
   add_index "app_oauth_scopes", ["oauth_scope_id"], name: "index_app_oauth_scopes_on_oauth_scope_id", using: :btree
-
-  create_table "apps", force: true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.text     "description"
-    t.string   "short_description"
-    t.string   "url"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.datetime "logo_updated_at"
-    t.integer  "user_id"
-    t.boolean  "is_public",         default: false
-    t.datetime "deleted_at"
-    t.string   "custom_text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "apps", ["slug"], name: "index_apps_on_slug", using: :btree
 
   create_table "authentications", force: true do |t|
     t.string   "provider"
@@ -72,38 +52,6 @@ ActiveRecord::Schema.define(version: 20140811170332) do
   add_index "notifications", ["deleted_at"], name: "index_notifications_on_deleted_at", using: :btree
   add_index "notifications", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
-  create_table "oauth2_authorizations", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "oauth2_resource_owner_type"
-    t.integer  "oauth2_resource_owner_id"
-    t.integer  "client_id"
-    t.string   "scope",                      limit: 2000
-    t.string   "code",                       limit: 40
-    t.string   "access_token_hash",          limit: 40
-    t.string   "refresh_token_hash",         limit: 40
-    t.datetime "expires_at"
-  end
-
-  add_index "oauth2_authorizations", ["access_token_hash"], name: "index_oauth2_authorizations_on_access_token_hash", unique: true, using: :btree
-  add_index "oauth2_authorizations", ["client_id", "code"], name: "index_oauth2_authorizations_on_client_id_and_code", unique: true, using: :btree
-  add_index "oauth2_authorizations", ["client_id", "oauth2_resource_owner_type", "oauth2_resource_owner_id"], name: "index_owner_client_pairs", unique: true, using: :btree
-  add_index "oauth2_authorizations", ["client_id", "refresh_token_hash"], name: "index_oauth2_authorizations_client_id_refresh_token_hash_u", unique: true, using: :btree
-
-  create_table "oauth2_clients", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "oauth2_client_owner_type"
-    t.integer  "oauth2_client_owner_id"
-    t.string   "name"
-    t.string   "client_id"
-    t.string   "client_secret_hash"
-    t.string   "redirect_uri"
-  end
-
-  add_index "oauth2_clients", ["client_id"], name: "index_oauth2_clients_on_client_id", unique: true, using: :btree
-  add_index "oauth2_clients", ["name"], name: "index_oauth2_clients_on_name", unique: true, using: :btree
-
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
     t.integer  "application_id",    null: false
@@ -133,17 +81,19 @@ ActiveRecord::Schema.define(version: 20140811170332) do
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: true do |t|
-    t.string   "name",                         null: false
-    t.string   "uid",                          null: false
-    t.string   "secret",                       null: false
-    t.text     "redirect_uri",                 null: false
+    t.string   "name",                                      null: false
+    t.string   "uid",                                       null: false
+    t.string   "secret",                                    null: false
+    t.text     "redirect_uri",                              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "owner_type"
     t.string   "url"
-    t.string   "scopes"
-    t.boolean  "public",       default: false
+    t.string   "scopes",       limit: 2000
+    t.boolean  "public",                    default: false
+    t.string   "description"
+    t.string   "image"
   end
 
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree

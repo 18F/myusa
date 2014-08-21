@@ -42,14 +42,6 @@ template  "#{deploy_to_dir}/shared/config/secrets.yml" do
   source "secrets.yml.erb"
 end
 
-# TODO: this file should reference secrets.yml
-template  "#{deploy_to_dir}/shared/config/initializers/devise.rb" do
-  source "devise.rb.erb"
-  variables(
-    :devise_secret_key => node[:myusa][:secrets][:devise_secret_key]
-  )
-end
-
 # set up the database
 include_recipe "mysql::client"
 

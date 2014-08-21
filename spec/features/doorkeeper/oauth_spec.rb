@@ -46,7 +46,7 @@ describe 'OAuth' do
   let(:oauth_client2) do
     # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
     # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
-    OAuth2::Client.new(client_app2.uid, client_app2.secret, site: 'http://www.example2.com') do |b|
+    OAuth2::Client.new(client_app2.uid, client_app2.secret, site: 'http://www.example.com') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application
     end
@@ -119,9 +119,7 @@ describe 'OAuth' do
         client_app.redirect_uri = 'http://localhost:3000'
         client_app.save!
 
-        login user
         visit_oauth_authorize_url2
-        # save_and_open_page
         expect(@auth_page).to be_displayed
         @auth_page.allow_button.click
 
@@ -134,6 +132,7 @@ describe 'OAuth' do
         expect(token).to_not be_expired
 
         @auths_page.load
+        save_and_open_page
       end
 
       it 'displays the authorizations' do

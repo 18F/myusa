@@ -9,9 +9,9 @@ class SignInPage < SitePrism::Page
   element :google_button,     'button', text: 'Connect with Google'
   element :remember_me,       '.hidden-buttons #user_remember_me'
   element :more_options,     	'.more-options'
-  element :more_options_link,	'.more-options a'
+  element :more_options_link,	'.more-options button'
   element :less_options,     	'.less-options'
-  element :less_options_link,	'.less-options a'
+  element :less_options_link,	'.less-options button'
   element :submit, 		'.hidden-buttons input[value="Connect"]'
   element :alert,      '.alert'
 end

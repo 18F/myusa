@@ -23,6 +23,17 @@ describe 'OAuth' do
     end
   end
 
+  let(:client_app2) do
+    Doorkeeper::Application.create do |a|
+      a.name = 'Client App 2'
+      # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
+      a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
+      a.scopes = client_application_scopes
+      a.owner = owner
+      a.public = true
+    end
+  end
+
   let(:oauth_client) do
     # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
     # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
@@ -32,9 +43,26 @@ describe 'OAuth' do
     end
   end
 
+  let(:oauth_client2) do
+    # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
+    # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
+    OAuth2::Client.new(client_app2.uid, client_app2.secret, site: 'http://www.example2.com') do |b|
+      b.request :url_encoded
+      b.adapter :rack, Rails.application
+    end
+  end
+
   def visit_oauth_authorize_url
     visit(oauth_client.auth_code.authorize_url(
       redirect_uri: client_app.redirect_uri,
+      scope: requested_scope,
+      state: 'state'
+    ))
+  end
+
+  def visit_oauth_authorize_url2
+    visit(oauth_client2.auth_code.authorize_url(
+      redirect_uri: client_app2.redirect_uri,
       scope: requested_scope,
       state: 'state'
     ))
@@ -49,7 +77,13 @@ describe 'OAuth' do
   end
 
   describe 'Authorizations' do
-    let(:requested_scope) { 'profile.email profile.last_name' }
+    let(:requested_scope) do
+      'profile.email profile.title profile.first_name profile.middle_name ' \
+      'profile.last_name profile.phone_number profile.suffix profile.address ' \
+      'profile.address2 profile.zip profile.gender profile.marital_status ' \
+      'profile.is_parent profile.is_student profile.is_veteran ' \
+      'profile.is_retired'
+    end
 
     before :each do
       @auths_page = OAuth2::AuthorizationsPage.new
@@ -82,11 +116,29 @@ describe 'OAuth' do
         # Turn the code into a token
         token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
         expect(token).to_not be_expired
+        client_app.redirect_uri = 'http://localhost:3000'
+        client_app.save!
+
+        login user
+        visit_oauth_authorize_url2
+        # save_and_open_page
+        expect(@auth_page).to be_displayed
+        @auth_page.allow_button.click
+
+        # Retrieve the code
+        expect(@token_page).to be_displayed
+        code = @token_page.code.text
+
+        # Turn the code into a token
+        token = oauth_client2.auth_code.get_token(code, redirect_uri: client_app2.redirect_uri)
+        expect(token).to_not be_expired
+
         @auths_page.load
       end
 
       it 'displays the authorizations' do
         expect(@auths_page).to be_displayed
+        # save_and_open_page
         #TODO...
       end
     end
@@ -229,30 +281,6 @@ describe 'OAuth' do
         it_behaves_like 'scope error'
       end
 
-    end
-  end
-
-  describe "additional scopes" do
-    let(:requested_scope) do
-      'profile.email profile.title profile.first_name profile.middle_name ' \
-      'profile.last_name profile.phone_number profile.suffix profile.address ' \
-      'profile.address2 profile.zip profile.gender profile.marital_status ' \
-      'profile.is_parent profile.is_student profile.is_veteran ' \
-      'profile.is_retired'
-    end
-
-    it "should allow for scopes with more than 255 characrers" do
-      login user
-        @auth_page = OAuth2::AuthorizationPage.new
-        @token_page = OAuth2::TokenPage.new
-        visit_oauth_authorize_url
-        expect(@auth_page).to be_displayed
-        @auth_page.allow_button.click
-        expect(@token_page).to be_displayed
-        code = @token_page.code.text
-        # Turn the code into a token
-        token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
-        expect(token).to_not be_expired
     end
   end
 

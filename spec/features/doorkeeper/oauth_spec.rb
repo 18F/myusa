@@ -173,7 +173,6 @@ describe 'OAuth' do
           let(:requested_scope) { 'profile.phone_number' }
           scenario 'user cannot save or authorize' do
             expect(@auth_page).to be_displayed
-            # puts @auth_page.body
             @auth_page.profile_phone_number.set 'foobar'
             @auth_page.allow_button.click
 

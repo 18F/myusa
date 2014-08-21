@@ -19,7 +19,7 @@ mysql_database node[:myusa][:database][:name] do
   action :create
 end
 
-mysql_database_user node[:myusa][:database][:username]
+mysql_database_user node[:myusa][:database][:username] do
   connection mysql_connection_info
   password node[:myusa][:database][:password]
   database_name node[:myusa][:database][:name]

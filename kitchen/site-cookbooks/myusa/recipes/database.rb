@@ -3,11 +3,27 @@ include_recipe 'mysql::server'
 include_recipe 'mysql::client'
 include_recipe 'database::mysql'
 
-mysql_database node[:myusa][:database][:dbname] do
-  connection(
-    :host => node[:myusa][:database][:host],
-    :username => 'root',
-    :password => node[:mysql][:server_root_password]
-  )
+#
+# host: node[:myusa][:database][:host],
+# username: node[:myusa][:database][:user],
+# password: node[:mysql][:database][:password]
+
+mysql_connection_info = {
+  host: 'localhost',
+  username: 'root',
+  password: ''
+}
+
+mysql_database node[:myusa][:database][:name] do
+  connection mysql_connection_info
   action :create
+end
+
+mysql_database_user node[:myusa][:database][:username]
+  connection mysql_connection_info
+  password node[:myusa][:database][:password]
+  database_name node[:myusa][:database][:name]
+  privileges [:all] # TOOO: FIXME
+  host '%' # TODO: FIXME
+  action :grant
 end

@@ -1,7 +1,8 @@
+
 # Group Profile
 
 
-## GET /api/profile?schema=
+## GET /api/v1/profile?schema=
 
 Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
 
@@ -26,7 +27,7 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "gender": null
     }
 
-## GET /api/profile
+## GET /api/v1/profile
 
 Get the user profile with attributes limited to just those chosen by app owner during app registration.
 
@@ -55,4 +56,3 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "uid": "a83dead6-d98d-4377-9e69-eb00488839f5",
       "id": "a83dead6-d98d-4377-9e69-eb00488839f5"
     }
-

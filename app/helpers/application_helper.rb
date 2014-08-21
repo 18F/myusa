@@ -120,5 +120,4 @@ module ApplicationHelper
   def yes_no_options
     [['Yes', true], ['No', false]]
   end
-
 end

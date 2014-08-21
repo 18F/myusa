@@ -2,10 +2,9 @@ class DeviseMailer < Devise::Mailer
   helper :application
   include Devise::Controllers::UrlHelpers # Optional. eg. `confirmation_url`
 
-  def authentication_instructions(record, token, opts = {})
+  def authentication_instructions(resource, token)
     @token = token
-    @remember_me = true if opts[:remember_me]
-    devise_mail(record, :authentication_instructions, opts)
+    devise_mail(resource, :authentication_instructions)
   end
 
 end

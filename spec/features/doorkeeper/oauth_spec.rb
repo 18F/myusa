@@ -5,7 +5,12 @@ describe 'OAuth' do
   let(:user) { User.create!(email: 'testy.mctesterson@gsa.gov') }
   let(:owner) { User.create!(email: 'owner.mctesterson@gsa.gov') }
 
-  let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name profile.phone_number' }
+  let(:client_application_scopes) do
+    'profile.email profile.title profile.first_name profile.middle_name ' \
+    'profile.last_name profile.phone_number profile.suffix profile.address ' \
+    'profile.address2 profile.zip profile.gender profile.marital_status ' \
+    'profile.is_parent profile.is_student profile.is_veteran profile.is_retired'
+  end
 
   let(:client_app) do
     Doorkeeper::Application.create do |a|
@@ -125,7 +130,6 @@ describe 'OAuth' do
           let(:requested_scope) { 'profile.phone_number' }
           scenario 'user cannot save or authorize' do
             expect(@auth_page).to be_displayed
-            # puts @auth_page.body
             @auth_page.profile_phone_number.set 'foobar'
             @auth_page.allow_button.click
 
@@ -182,6 +186,30 @@ describe 'OAuth' do
         it_behaves_like 'scope error'
       end
 
+    end
+  end
+
+  describe "additional scopes" do
+    let(:requested_scope) do
+      'profile.email profile.title profile.first_name profile.middle_name ' \
+      'profile.last_name profile.phone_number profile.suffix profile.address ' \
+      'profile.address2 profile.zip profile.gender profile.marital_status ' \
+      'profile.is_parent profile.is_student profile.is_veteran ' \
+      'profile.is_retired'
+    end
+
+    it "should allow for scopes with more than 255 characrers" do
+      login user
+        @auth_page = OAuth2::AuthorizationPage.new
+        @token_page = OAuth2::TokenPage.new
+        visit_oauth_authorize_url
+        expect(@auth_page).to be_displayed
+        @auth_page.allow_button.click
+        expect(@token_page).to be_displayed
+        code = @token_page.code.text
+        # Turn the code into a token
+        token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+        expect(token).to_not be_expired
     end
   end
 

@@ -3,13 +3,11 @@ default_run_options[:pty] = true
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
 #require 'new_relic/recipes'
-# require 'rvm/capistrano'
-
 require 'capistrano-unicorn'
 
-
 set :application, 'myusa'
-set :user, ENV['USER'] || :deployer
+set :user, 'myusa'
+set :deployer, 'myusa'
 set :web_user, "nobody"
 set :web_group, "web"
 
@@ -23,7 +21,7 @@ set :deploy_via, :remote_cache
 set :copy_exclude, [ '.ruby-gemset' ]
 set :ssh_options, { :forward_agent => true }
 set :default_shell, '/bin/bash -l'
-# set :use_sudo, true
+set :use_sudo, false
 set :keep_releases, 6
 set :scm, :git
 

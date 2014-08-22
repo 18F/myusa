@@ -3,11 +3,6 @@ include_recipe 'mysql::server'
 include_recipe 'mysql::client'
 include_recipe 'database::mysql'
 
-#
-# host: node[:myusa][:database][:host],
-# username: node[:myusa][:database][:user],
-# password: node[:mysql][:database][:password]
-
 mysql_connection_info = {
   host: 'localhost',
   username: 'root',

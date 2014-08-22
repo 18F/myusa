@@ -5,9 +5,9 @@ namespace :deploy do
 
   desc "Symlink configs"
   task :symlink_configs, roles: :app do
-    run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/.env #{release_path}/"
-    run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/"
-    run "#{try_sudo} ln -nfs #{deploy_to}/shared/config/secrets.yml #{release_path}/config/"
+    run "ln -nfs #{deploy_to}/shared/config/.env #{release_path}/"
+    run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/"
+    run "ln -nfs #{deploy_to}/shared/config/secrets.yml #{release_path}/config/"
   end
 
 # Created to help with first time database creation

@@ -3,7 +3,7 @@ include_recipe 'mysql::server'
 include_recipe 'mysql::client'
 include_recipe 'database::mysql'
 
-mysql_database node[:myusa][:database][:dbname] do
+mysql_database node[:myusa][:database][:name] do
   connection(
     :host => node[:myusa][:database][:host],
     :username => 'root',

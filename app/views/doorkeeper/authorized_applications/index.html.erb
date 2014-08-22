@@ -32,7 +32,7 @@
               <ul class="list-unstyled scope-list">
                 <% pre_auth_groups(application.scopes).each do |set| %>
                   <li>
-                    <h2 class='open group'>
+                    <h2 class="open group">
                       <%= t("scope_groups.#{set[:name]}.header") %>
                     </h2>
                     <div class="label-pad">
@@ -41,13 +41,11 @@
                       </span>
                       </br>
                       <% set[:groups].each do |group| %>
-                        <div class='row top-buffer'>
-                          <div class = 'col-md-3'>
-                            <label>
-                            <%=t("group_labels.#{group[:label]}")%>
-                            </label>
+                        <div class="row top-buffer">
+                          <div class="col-md-3">
+                            <%= label_tag nil, t("group_labels.#{group[:label]}") %>
                           </div>
-                          <div class = 'col-md-9'>
+                          <div class="col-md-9">
                           </div>
                         </div>
                       <% end %>

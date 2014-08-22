@@ -25,6 +25,11 @@ $(document).ready(function () {
           $("#scopes-alert-none").addClass('hidden');
         }});
       }
+      if ($("#scopes-alert-none2").is(":visible")) {
+        $("#scopes-alert-none2").slideToggle({ complete: function() {
+          $("#scopes-alert-none2").addClass('hidden');
+        }});
+      }
       return;
     }
     var checkboxes = $(".scope-list input[type='checkbox']");
@@ -39,16 +44,36 @@ $(document).ready(function () {
     // if none are checked, show the alert message
     if (checked === false) {
       $("#scopes-alert-none").slideToggle().removeClass('hidden');
+      $("#scopes-alert-none2").slideToggle().removeClass('hidden');
     }
   });
 
-  $(".more-options").show();
-  // hide or show the sign in buttons
+  /**
+   * Show either the OAuth or Email login page
+   */
+  var showOption = function (opt) {
+    if (opt == '#email') {
+      $(".hidden-buttons").show();
+      $(".more-options").hide();
+      $(".less-options").show();
+      $(".omniauth-buttons").hide();
+      $("#inputEmail").focus();
+    } else {
+      $(".hidden-buttons").hide();
+      $(".less-options").hide();
+      $(".more-options").show();
+      $(".omniauth-buttons").show();
+    }
+  };
+
+  // initially use the location hash to show the page
+  showOption(window.location.hash);
+  // hide or show based on which button is clicked
   $(".more-options").click(function (e) {
-    $(".hidden-buttons").show();
-    $(".more-options").hide();
-    $(".less-options").show();
-    $(".omniauth-buttons").hide();
+    showOption('#email');
+  });
+  $(".less-options").click(function (e) {
+    showOption('#');
   });
 
   // toggle sign in and sign up forms

@@ -1,16 +1,14 @@
 class SessionsController < Devise::SessionsController
   include Devise::Controllers::Rememberable
 
+  layout "login", only: [:new]
   before_action :authenticate_user_from_token!, only: [:new]
 
   def create
-    user = User.find_by_email(params[:user][:email]) ||
-           User.create!(email: params[:user][:email])
-
+    @email = params[:user][:email]
+    user = User.find_by_email(@email) ||
+           User.create!(email: @email)
     token = user.set_authentication_token(remember_me: params[:user][:remember_me] == '1')
-
-    # TODO: template with instructions for completing token authentication.
-    render text: "CYM, #{user.email}"
   end
 
   private

@@ -5,28 +5,6 @@
 @import "colors";
 @import "fonts";
 
-/**
- Login
-*/
-.google-connect-option{
-  position:relative;
-  top:45px;
-}
-
-.email-connect-option{
-  position:relative;
-  top:25px;
-}
-
-.blue_header{
-  color: $blue;
-}
-
-.header-large{
-  font-size: 1.25em;
-  color:$blue;
-}
-
 /*******************
   Authorization Page
   for OAuth and Scope Selection
@@ -187,11 +165,89 @@ footer {
 }
 
 /*******************
+ Login
+********************/
+.callout-box{
+  background-color: $gray-lightest;
+  border-bottom: 1px $gray-highlight solid;
+}
+.login {
+  h1, h2 {
+    margin: 0;
+  }
+  h1 {
+    font-size: 2.0em;
+  }
+  h2 {
+    font-size: 1.0em;
+    color: $gray;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  .connect-option{
+    position:relative;
+    top:25px;
+  }
+  .hidden-buttons > .row {
+    margin-top: 10px;
+  }
+
+  div.more-signin {
+    text-align: center;
+    min-height: 2.5em;
+    margin-top: -20px;
+  }
+  .more-signin > span.less-options {
+    display: none;
+  }
+  .more-signin > span.more-options {
+    display: none;
+  }
+  .omniauth-buttons {
+    .btn-lg {
+      width: 50%;
+      @media (max-width: $screen-sm-max) {
+        width: 60%;
+      }
+      @media (max-width: $screen-xs-max) {
+        width: 80%;
+      }
+    }
+  }
+  .shield {
+    top: -21px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    .icon-myusa {
+      font-size: 60px;
+      color: $gray-lighter;
+    }
+  }
+  .text-muted {
+    margin: 13px 0;
+    font-size: 0.75em;
+  }
+  .form-group {
+    @media (max-width: $screen-xs-max) {
+      padding: 0 20px;
+    }
+  }
+}
+.login-buffer {
+  width: 100%;
+  min-height: 30px;
+  height: 30px;
+}
+
+
+/*******************
   MyUSA Button
 ********************/
 /** SOCIAL BUTTONS **/
 .btn-social {
-  padding: 0;
+  padding: 0 10px 0 0;
   margin-bottom: 15px;
   line-height: 2.2em;
 }
@@ -205,6 +261,11 @@ footer {
     url('./MyUSA.svg?m9u969#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
+}
+/** MyUSA Icon **/
+.icon-myusa:before {
+  font-family: 'MyUSA';
+  content: "\e600";
 }
 /** MyUSA Button **/
 .btn-myusa:before {
@@ -222,7 +283,6 @@ footer {
   background-color: $blue-lightest;
   border-color: $blue;
   color: $gray-lightest;
-  padding-right: 10px;
 }
 .btn-myusa:hover,
 .btn-myusa:focus {
@@ -274,8 +334,6 @@ footer {
 /*******************
   Zocial
 ********************/
-
-
 @font-face {
     font-family: 'zocial';
     src: url('./zocial-regular-webfont.eot');
@@ -299,116 +357,6 @@ footer {
     url('./symantec.svg?94e6hc#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
-}
-
-.callout-box{
-  background-color: $gray-lightest;
-  border-bottom: 1px #c0c0c0 solid
-}
-
-.footer {
-  margin-top: -30px;
-  padding: 10px;
-  color: #808080;
-  font-size: 10px;
-}
-
-.attribution {
-  position: absolute;
-  z-index: -1;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  background-color: rgba(0,0,0, 0.7);
-  font-size: 10px;
-  padding: 5px;
-  color: #c0c0c0;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-right-radius: 5px;
-  border-top-color: #606060;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: #606060;
-  background-color: $gray-lightest;
-}
-
-.content-signin,
-.content-signup {
-  padding: 0 10px 10px 10px;
-}
-
-.hidden-buttons > .row {
-  margin-top: 10px;
-}
-
-div.moresignin {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  text-align: center;
-  color: #808080;
-  font-size: 12px
-}
-.moresignin > span {
-  display: inline-block;
-}
-.moresignin > span:before,
-.moresignin > span:after {
-  border-top: 1px solid #c0c0c0;
-  display: block;
-  height: 1px;
-  content: " ";
-  width: 33%;
-  position: absolute;
-  left: 5px;
-  top: 0.65em;
-}
-.moresignin > span:after {
-  right: 5px;
-  left: auto;
-}
-.moresignin a {
-  text-decoration: none;
-  color: #808080;
-}
-
-.logo {
-  width: 100%;
-  padding: 10px 10px 0 10px;
-}
-
-.logo > .image {
-  display: table-cell;
-}
-.logo img {
-  height: 50px;
-}
-.logo > .content {
-  display: table-cell;
-  padding-left: 5px;
-  height: 50px;
-  vertical-align: middle;
-  color: #1c6485;
-  font-size: 30px;
-  font-weight: 300;
-}
-.logo > .content > .my {
-  color: #112136;
-  font-weight: 700;
-}
-
-.slogan {
-  padding: 0 10px 10px 10px;
-  font-size: 16px;
-  color: #666666;
-}
-
-.cta,
-.cta {
-  display: table-cell;
-  width: 100%;
-  text-align: right;
-  vertical-align: top;
 }
 
 .btn-blue {
@@ -615,12 +563,6 @@ div.moresignin {
 .hidden-label {
   display: none;
 }
-.moresignin > span.less-options {
-  display: none;
-}
-.moresignin > span.more-options {
-  display: none;
-}
 .content-signup {
   /*display: none;*/
 }
@@ -641,10 +583,6 @@ div.moresignin {
 
 .fullwidth {
   width: 100%;
-}
-
-.shortwidth {
-  width: 48%;
 }
 
 .btn {
@@ -727,11 +665,4 @@ div.moresignin {
 
 .search-field:-ms-input-placeholder {
     color: white;
-}
-
-.scope-list input.profile:disabled {
-  border: 0;
-  background: none;
-  box-shadow: none;
-  cursor: auto;
 }

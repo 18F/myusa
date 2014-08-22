@@ -30,8 +30,9 @@ module ScopeGroups
     scope_groups
   end
 
-  def pre_auth_groups(pre_auth_scopes = @pre_auth.scopes.to_a)
-    scopes = insert_extra_scope pre_auth_scopes,
+  def pre_auth_groups(pre_auth_scopes = @pre_auth.scopes)
+    orig_scopes = pre_auth_scopes.to_a
+    scopes = insert_extra_scope orig_scopes,
                                 'profile.address',
                                 'profile.address2'
     ordered_scopes = SCOPE_SETS.map { |k| k[1].map { |g| g[:group] } }.flatten

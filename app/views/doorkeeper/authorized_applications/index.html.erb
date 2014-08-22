@@ -48,20 +48,6 @@
                             </label>
                           </div>
                           <div class = 'col-md-9'>
-                          <% group[:group].each do |scope| %>
-                            <span class='label-pad'>
-                              <% if scope.downcase.starts_with?("profile.")  %>
-                                <%= check_box_tag 'scope[]', scope, true, multiple: true%>
-                                <% if SELECT_MENU_SCOPES.include? scope %>
-                                  <%= profile_select_menu scope, class:'form-control'%>
-                                <% else %>
-                                  <%= profile_text_field scope, class:'form-control'%>
-                                <% end %>
-                              <% else %>
-                                <%= current_user.scope_field_value(scope)%></label>
-                              <% end %>
-                            </span>
-                          <% end %>
                           </div>
                         </div>
                       <% end %>

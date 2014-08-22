@@ -45,7 +45,9 @@
                       <% group[:group].each do |scope| %>
                         <span class='label-pad'>
                           <% if scope.downcase.starts_with?("profile.")  %>
-                            <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                            <% id = scope.downcase %>
+                            <%= label_tag id, t("scopes.#{id}.label"), class: 'hidden-label' %>
+                            <%= check_box_tag 'scope[]', scope, true, id: id, multiple: true%>
                             <% if SELECT_MENU_SCOPES.include? scope %>
                               <%= profile_select_menu scope, class:'form-control'%>
                             <% else %>

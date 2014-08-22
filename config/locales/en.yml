@@ -114,14 +114,14 @@ en:
         label: 'Parent status'
         placeholder: 'Enter your parent status'       
       is_student: 
-        label: 'student status'
+        label: 'Student status'
         placeholder: 'Enter your student status'       
       is_veteran: 
-        label: 'veteran status'
+        label: 'Veteran status'
         placeholder: 'Enter your veteran status'       
       is_retired: 
-        label: 'Retiree status'
-        placeholder: 'Enter your retiree status'
+        label: 'Retired status'
+        placeholder: 'Enter your retired status'
 
   cancel: 'Cancel'
   profile:

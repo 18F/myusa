@@ -132,7 +132,6 @@ describe 'OAuth' do
         expect(token).to_not be_expired
 
         @auths_page.load
-        save_and_open_page
       end
 
       it 'displays the authorizations' do
@@ -199,7 +198,7 @@ describe 'OAuth' do
         scenario 'user can select scopes' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
-          @auth_page.scopes.uncheck('Email')
+          @auth_page.profile_email_checkbox.set(false)
           @auth_page.allow_button.click
 
           code = @token_page.code.text

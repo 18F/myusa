@@ -30,7 +30,7 @@
           <div class="panel-body">
             <h4>Permissions</h4>
               <ul class="list-unstyled scope-list">
-                <% scope_groups(application.scopes).each do |set| %>
+                <% pre_auth_groups(application.scopes).each do |set| %>
                   <li>
                     <h2 class='open group'>
                       <%= t("scope_groups.#{set[:name]}.header") %>
@@ -41,7 +41,7 @@
                       </span>
                       </br>
                       <% set[:groups].each do |group| %>
-                        <div class='row'>
+                        <div class='row top-buffer'>
                           <div class = 'col-md-3'>
                             <label>
                             <%=t("group_labels.#{group[:label]}")%>
@@ -52,6 +52,11 @@
                             <span class='label-pad'>
                               <% if scope.downcase.starts_with?("profile.")  %>
                                 <%= check_box_tag 'scope[]', scope, true, multiple: true%>
+                                <% if SELECT_MENU_SCOPES.include? scope %>
+                                  <%= profile_select_menu scope, class:'form-control'%>
+                                <% else %>
+                                  <%= profile_text_field scope, class:'form-control'%>
+                                <% end %>
                               <% else %>
                                 <%= current_user.scope_field_value(scope)%></label>
                               <% end %>

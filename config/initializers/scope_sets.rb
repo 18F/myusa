@@ -38,14 +38,12 @@ SCOPE_SETS = {
     identifiers:  [
                     {
                       label: 'gender', group: ['profile.gender']
-
                     },
                     {
                       label: 'marital_status', group: ['profile.marital_status']
                     },
                     {
                       label: 'is_parent', group: ['profile.is_parent']
-
                     },
                     {
                       label: 'is_student', group: ['profile.is_student']
@@ -59,4 +57,4 @@ SCOPE_SETS = {
                   ]
 }
 
-SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran)
+SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran profile.is_retired)

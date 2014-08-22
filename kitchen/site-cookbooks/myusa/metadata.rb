@@ -13,3 +13,5 @@ depends 'rbenv'
 # depends 'ruby_build'
 depends 'unicorn'
 depends 'nginx'
+
+depends 'user'

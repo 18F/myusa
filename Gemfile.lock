@@ -1,26 +1,3 @@
-GIT
-  remote: git://github.com/matschaffer/knife-solo.git
-  revision: 865f09ef169e3bb136ebf120d0ddd9ca4052db85
-  submodules: true
-  specs:
-    knife-solo (0.5.0)
-      chef (>= 10.12)
-      erubis (~> 2.7.0)
-      net-ssh (>= 2.2.2, < 3.0)
-
-GIT
-  remote: https://github.com/avantcredit/pry-plus.git
-  revision: 9170ad3bc651b09c1185badd74553b1b37e3505c
-  specs:
-    pry-plus (1.0.1)
-      bond
-      jist
-      pry-byebug
-      pry-doc
-      pry-docmore
-      pry-rescue
-      pry-stack_explorer
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -60,7 +37,6 @@ GEM
       encryptor (>= 1.3.0)
     autoprefixer-rails (2.2.0.20140804)
       execjs
-    awesome_print (1.2.0)
     bcrypt (3.1.7)
     berkshelf (3.1.5)
       addressable (~> 2.3.4)
@@ -79,25 +55,12 @@ GEM
       thor (~> 0.18)
     berkshelf-api-client (1.2.0)
       faraday (~> 0.9.0)
-    better_errors (1.1.0)
+    better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
-    bond (0.5.1)
+      rack (>= 0.9.0)
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
-    brakeman (2.6.2)
-      erubis (~> 2.6)
-      fastercsv (~> 1.5)
-      haml (>= 3.0, < 5.0)
-      highline (~> 1.6.20)
-      multi_json (~> 1.2)
-      ruby2ruby (~> 2.1.1)
-      ruby_parser (~> 3.5.0)
-      sass (~> 3.0)
-      slim (>= 1.3.6, < 3.0)
-      terminal-table (~> 1.4)
     buff-config (1.0.1)
       buff-extensions (~> 1.0)
       varia_model (~> 0.4)
@@ -107,9 +70,6 @@ GEM
     buff-shell_out (0.2.0)
       buff-ruby_engine (~> 0.1.0)
     builder (3.2.2)
-    byebug (2.7.0)
-      columnize (~> 0.3)
-      debugger-linecache (~> 1.2)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -164,13 +124,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
-    columnize (0.8.9)
-    crack (0.4.2)
-      safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     database_cleaner (1.3.0)
-    debug_inspector (0.0.2)
-    debugger-linecache (1.2.0)
     dep-selector-libgecode (1.0.2)
     dep_selector (1.0.3)
       dep-selector-libgecode (~> 1.0)
@@ -182,7 +137,6 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    docile (1.1.5)
     doorkeeper (1.4.0)
       railties (>= 3.1)
     em-websocket (0.5.1)
@@ -206,7 +160,6 @@ GEM
     fakeweb (1.3.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
-    fastercsv (1.5.5)
     ffi (1.9.3)
     ffi-yajl (1.0.2)
       ffi (~> 1.5)
@@ -231,23 +184,12 @@ GEM
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-brakeman (0.8.2)
-      brakeman (>= 2.1.1)
-      guard (>= 1.1.0)
     guard-livereload (2.3.0)
       em-websocket (~> 0.5)
       guard (~> 2.0)
       multi_json (~> 1.8)
-    guard-migrate (1.1.0)
-      activerecord (>= 4.1.0)
-      guard (>= 2.3.0)
-    guard-rspec (4.3.1)
-      guard (~> 2.1)
-      rspec (>= 2.14, < 4.0)
     gyoku (1.1.1)
       builder (>= 2.1.2)
-    haml (4.0.5)
-      tilt
     hashie (2.1.2)
     highline (1.6.21)
     hike (1.2.3)
@@ -257,13 +199,7 @@ GEM
     httpi (0.9.7)
       rack
     i18n (0.6.11)
-    interception (0.5)
     ipaddress (0.8.0)
-    jbuilder (2.1.3)
-      activesupport (>= 3.0.0, < 5)
-      multi_json (~> 1.2)
-    jist (1.5.1)
-      json
     jquery-rails (3.1.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -273,6 +209,10 @@ GEM
     knife-ec2 (0.8.0)
       fog (~> 1.20.0)
       knife-windows (>= 0.5.12)
+    knife-solo (0.4.2)
+      chef (>= 10.12)
+      erubis (~> 2.7.0)
+      net-ssh (>= 2.2.2, < 3.0)
     knife-solo_data_bag (1.1.0)
     knife-windows (0.6.0)
       em-winrm (~> 0.5, >= 0.5.4)
@@ -375,23 +315,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-byebug (1.3.3)
-      byebug (~> 2.7)
-      pry (~> 0.10)
-    pry-doc (0.6.0)
-      pry (~> 0.9)
-      yard (~> 0.8)
-    pry-docmore (0.1.1)
-      pry
-      pry-doc
     pry-rails (0.3.2)
       pry (>= 0.9.10)
-    pry-rescue (1.4.1)
-      interception (>= 0.5)
-      pry
-    pry-stack_explorer (0.4.9.1)
-      binding_of_caller (>= 0.7)
-      pry (>= 0.9.11)
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -443,10 +368,6 @@ GEM
       retryable
       semverse (~> 1.1)
       varia_model (~> 0.4)
-    rspec (3.0.0)
-      rspec-core (~> 3.0.0)
-      rspec-expectations (~> 3.0.0)
-      rspec-mocks (~> 3.0.0)
     rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.4)
@@ -466,10 +387,6 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
     rubocop (0.25.0)
       parser (>= 2.2.0.pre.4, < 3.0)
       powerpack (~> 0.0.6)
@@ -477,13 +394,9 @@ GEM
       ruby-progressbar (~> 1.4)
     ruby-openid (2.5.0)
     ruby-progressbar (1.5.1)
-    ruby2ruby (2.1.1)
-      ruby_parser (~> 3.1)
-      sexp_processor (~> 4.0)
     ruby_parser (3.5.0)
       sexp_processor (~> 4.1)
     rubyntlm (0.1.1)
-    safe_yaml (1.0.3)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -509,19 +422,9 @@ GEM
     sexp_processor (4.4.4)
     shoulda-matchers (2.6.2)
       activesupport (>= 3.0.0)
-    simplecov (0.9.0)
-      docile (~> 1.1.0)
-      multi_json
-      simplecov-html (~> 0.8.0)
-    simplecov-csv (0.1.3)
-      simplecov
-    simplecov-html (0.8.0)
     site_prism (2.6)
       addressable (~> 2.3.3)
       capybara (>= 2.1, < 3.0)
-    slim (2.0.3)
-      temple (~> 0.6.6)
-      tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
     solve (1.2.1)
       dep_selector (~> 1.0)
@@ -536,8 +439,6 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     systemu (2.6.4)
-    temple (0.6.8)
-    terminal-table (1.4.5)
     thin (1.6.2)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -586,7 +487,6 @@ GEM
     wmi-lite (1.0.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    yard (0.8.7.4)
 
 PLATFORMS
   ruby
@@ -594,34 +494,25 @@ PLATFORMS
 DEPENDENCIES
   attr_encrypted
   autoprefixer-rails
-  awesome_print
   berkshelf (~> 3.0)
   better_errors
   bootstrap-sass (~> 3.2.0)
-  brakeman
   capistrano (~> 2.15)
   capistrano-unicorn
   capybara
   capybara-email
   chef
-  crack
   database_cleaner
   devise
   doorkeeper
   factory_girl_rails
   fakeweb
   font-awesome-sass
-  guard
-  guard-brakeman
   guard-livereload
-  guard-migrate
-  guard-rspec
-  jbuilder (~> 2.0)
   jquery-rails
   knife-ec2
-  knife-solo!
+  knife-solo
   knife-solo_data_bag
-  launchy
   letter_opener
   mysql2
   newrelic_rpm
@@ -631,21 +522,17 @@ DEPENDENCIES
   omniauth-openid
   permanent_records (~> 2.3.0)
   poltergeist
-  pry-plus!
   pry-rails
   quiet_assets
   rails (~> 4.1.0)
   rspec-its
   rspec-rails
-  rspec_junit_formatter
   rubocop
   ruby_parser
   sass-rails (~> 4.0.3)
   sdoc
   secure_headers
   shoulda-matchers
-  simplecov
-  simplecov-csv
   site_prism
   thin
   timecop

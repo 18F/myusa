@@ -6,9 +6,15 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
 
   def new
     pre_auth_scopes = pre_auth.scopes.to_a
-    scopes = insert_extra_scope pre_auth_scopes,
-                                'profile.address',
-                                'profile.address2'
+    if pre_auth.client
+      scopes = insert_extra_scope pre_auth_scopes,
+                                  pre_auth.client.application.scopes,
+                                  'profile.address',
+                                  'profile.address2'
+    else
+      scopes = []
+    end
+
     ordered_scopes = SCOPE_SETS.map { |k| k[1].map { |g| g[:group] } }.flatten
     # Sort array of scopes according to requirements
     pre_auth_scopes = scopes.sort_by do |x|
@@ -35,9 +41,11 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
 
   private
 
-  def insert_extra_scope(arry, first, second)
-    arry.push second if arry.include?(first) && !arry.include?(second)
-    arry
+  def insert_extra_scope(requested_scopes, allowed_scopes, first, second)
+    requested_scopes.push second if requested_scopes.include?(first) &&
+                                    !requested_scopes.include?(second) &&
+                                     allowed_scopes.include?(second)
+    requested_scopes
   end
 
   def create_groups(pre_auth_scopes)

@@ -33,7 +33,6 @@ describe Devise::Strategies::EmailAuthenticatable do
   describe '#authenticate!' do
     let(:email) { 'test@example.com' }
     let(:session) { Hash.new }
-    let(:params) { { email: email, token: 'foobar' } }
 
     before :each do
       @user = User.create(email: email)
@@ -43,8 +42,8 @@ describe Devise::Strategies::EmailAuthenticatable do
       allow(subject).to receive(:session).and_return(session)
     end
 
-    context 'invalid email and token combination' do
-      it 'does not set the userr' do
+    shared_context 'bad token' do
+      it 'does not set the user' do
         subject.authenticate!
         expect(subject.user).to be_nil
       end
@@ -58,6 +57,22 @@ describe Devise::Strategies::EmailAuthenticatable do
         subject.authenticate!
         expect(subject.message).to eq(:invalid_token)
       end
+    end
+
+    context 'with nonsense string for token' do
+      let(:params) { { email: email, token: 'foobar' } }
+      include_examples 'bad token'
+    end
+
+    context 'with another user''s token' do
+      let(:params) do
+        user2 = User.create(email: 'otherguy@gsa.gov')
+        token2 = AuthenticationToken.generate(user_id: user2.id, return_to: '/foobar')
+
+        { email: email, token: token2.raw }
+      end
+
+      include_examples 'bad token'
     end
 
     context 'valid email and token combination' do
@@ -75,7 +90,7 @@ describe Devise::Strategies::EmailAuthenticatable do
 
       it 'invalidates the token' do
         subject.authenticate!
-        expect(AuthenticationToken.find_by_user_id(@user.id)).to_not be_valid
+        expect(AuthenticationToken.find(@raw)).to_not be_valid
       end
     end
   end

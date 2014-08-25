@@ -24,7 +24,7 @@ describe SessionsController do
 
       context 'and are valid' do
         before :each do
-          token = AuthenticationToken.generate(
+          @token = AuthenticationToken.generate(
             user_id: user.id,
             remember_me: self.respond_to?(:remember_me) ? remember_me : nil,
             return_to: self.respond_to?(:return_to) ? return_to : nil
@@ -32,7 +32,7 @@ describe SessionsController do
 
           get :new,
             :email => user.email,
-            :token => token.raw
+            :token => @token.raw
         end
 
         it 'logs in the user' do
@@ -41,7 +41,7 @@ describe SessionsController do
         end
 
         it 'expires the token' do
-          expect(AuthenticationToken.find_by_user_id(user.id)).to_not be_valid
+          expect(AuthenticationToken.find(@token.raw)).to_not be_valid
         end
 
         context 'return to path is not set' do
@@ -77,11 +77,13 @@ describe SessionsController do
 
   describe '#create' do
     shared_examples "token creation" do
-
       it 'creates a token' do
-        expect(AuthenticationToken.find_by_user_id(@user.id)).to be
+        expect(AuthenticationToken).to have_received(:generate)
       end
+    end
 
+    before :each do
+      allow(AuthenticationToken).to receive(:generate).and_call_original
     end
 
     context 'when user does not exist' do

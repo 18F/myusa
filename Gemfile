@@ -5,7 +5,6 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
 gem 'mysql2'
 
 ## app dependencies
@@ -36,14 +35,18 @@ group :development do
   gem 'thin'
   gem 'letter_opener'
   gem 'rubocop', require: false
+  gem 'better_errors'
+  gem 'pry-rails'
+  # this fork of pry-plus is 2.1.x-compatible
+  # gem 'pry-plus', git: 'https://github.com/avantcredit/pry-plus.git'
 end
 
+## deploy dependencies
 group :deploy do
-  ## deploy dependencies
   gem 'berkshelf', '~> 3.0'
   gem 'chef'
   gem 'knife-ec2'
-  gem 'knife-solo', github: 'matschaffer/knife-solo', submodules: true
+  gem 'knife-solo' #, github: 'matschaffer/knife-solo', submodules: true
   gem 'knife-solo_data_bag'
   gem 'unf'
   gem 'capistrano', '~> 2.15'
@@ -51,18 +54,7 @@ group :deploy do
 end
 
 group :development, :test do
-  gem 'awesome_print'
-  gem 'brakeman', require: false
-  gem 'crack'
-  gem 'guard'
-  gem 'guard-brakeman'
-  gem 'guard-migrate'
-  gem 'guard-rspec'
-  gem 'pry-rails'
-  # this fork of pry-plus is 2.1.x-compatible
-  gem 'pry-plus', git: 'https://github.com/avantcredit/pry-plus.git'
-#  gem 'rspec_api_blueprint', require: false
-  gem 'better_errors'
+  gem 'oauth2'
 end
 
 group :test do
@@ -72,16 +64,11 @@ group :test do
   gem 'factory_girl_rails'
   gem 'site_prism'
   gem 'fakeweb'
-  gem 'launchy'
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
-  gem 'simplecov-csv', require: false
-  gem 'rspec_junit_formatter', require: false # used by Shippable
   gem 'timecop'
   gem 'capybara-email'
-  gem 'oauth2'
 end
 
 group :staging, :production do

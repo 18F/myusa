@@ -3,26 +3,14 @@ rvm:
   - 2.1.2
 services:
   - mysql
-env:
-  global:
-    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-    - SLACK_ORG=18f PROJECT=myusa
-    - secure: K6fmrnBxiermK5s96QoOaBEhjvkLzbtSOB34FHXggiYDt8BrrH8Po+8xQ186/rx1uWrm9w4ZL/ZBZpwVaSUA9ZFwTfQ4MtO/fMF0DkL2u/pCXI6ywwRRsBCQfSPQLD5rQdStcn6rFjL8oEfAybKf4N2eTLC/IR+amp/le0SHb3gvgE9lk5E5AfVkWMRMuwjNW3h15eR9jwmDDMCAgMGEmPvIgDdqFVThALOd5cXs7SoZlAMeBrAgOGGYph3SxFicf3OBuDdNOpinECMih/Tu99FUiEUqHXLdt1vwp6ppasiV/WqjEyOXe6Kp9mHhgRJr7xFIpK8X83rfSajUiYO3xA==
-install:
-  - bundle install --without development
+before_install:
+  - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc' # skip installing docs for gems
+  - bundle config build.nokogiri --use-system-libraries
+bundler_args: --without production development staging deploy
 before_script:
   - cp config/database.yml.example config/database.yml
   - cp config/secrets.yml.example config/secrets.yml
-  - mkdir -p shippable/testresults
-  - mkdir -p shippable/codecoverage
-script:
   - RAILS_ENV=test bundle exec rake db:setup
-  - bundle exec rspec --format RspecJunitFormatter -o shippable/testresults/results.xml
-after_failure:
-  - python other/slack/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
-notifications:
-  email:
-    on_success: change
-    on_failure: always
-    recipients:
-      - jeremy.grahame@gsa.gov
+addons:
+  code_climate:
+    repo_token: 14c7fdac115a182c6738d336fd55fb6ceb90b3d5af0d0659d8671dff2b3e7f16 

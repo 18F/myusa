@@ -1,14 +1,18 @@
 {
   "run_list": [
-    "role[bare_bones]",
-    "role[app]",
-    "role[database]"
-  ],
-  "authorization": {
-      "sudo": {
-        "groups": ["adm", "wheel"],
-        "users": ["ubuntu"],
-        "passwordless": true
-      }
-  }
+    # Uncomment *one* of these lines according to the kind of host you want:
+    # 'role[app]'
+    # 'role[database']
+    # 'role[all-in-one]'
+    ]
+
+  # If you uncommented `'role[app]'` above, uncomment the lines below
+  # and replace `DATABASE-ADDRESS` with the address the app server will use
+  # to reach the database server.
+  #
+  # , "myusa" {
+  #      "database" {
+  #        "host": "DATABASE-ADDRESS"
+  #      }
+  #  }
 }

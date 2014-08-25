@@ -18,31 +18,30 @@ describe AuthenticationToken, type: :model do
 
   describe '#save' do
     let(:token) { AuthenticationToken.create(user_id: 1) }
-    # end
 
     it 'writes token to cache' do
-      expect(Rails.cache.fetch(token.send(:cache_key))).to be
+      expect(Rails.cache.fetch(AuthenticationToken.send(:cache_key, token.raw))).to be
     end
 
     it 'omits raw token' do
-      expect(Rails.cache.fetch(token.send(:cache_key))[:raw]).to be_nil
+      expect(Rails.cache.fetch(AuthenticationToken.send(:cache_key, token.raw))[:raw]).to be_nil
     end
   end
 
-  describe '#find_by_user_id' do
+  describe '#find' do #_by_user_id' do
     it 'finds a token if there is one' do
       token = AuthenticationToken.new(user_id: 1)
       token.save
 
-      found_token = AuthenticationToken.find_by_user_id(1)
+      found_token = AuthenticationToken.find(token.raw)
       expect(found_token).to be_a(AuthenticationToken)
       expect(found_token.user_id).to eq(1)
     end
     it 'returns an empty token if none exists' do
-      expect(AuthenticationToken.find_by_user_id(11)).to be_a(AuthenticationToken)
+      expect(AuthenticationToken.find('foobar')).to be_a(AuthenticationToken)
     end
     it 'returns an empty token if nothing is passed' do
-      expect(AuthenticationToken.find_by_user_id(nil)).to be_a(AuthenticationToken)
+      expect(AuthenticationToken.find(nil)).to be_a(AuthenticationToken)
     end
   end
 
@@ -50,7 +49,7 @@ describe AuthenticationToken, type: :model do
     it 'destoys the cached token' do
       token = AuthenticationToken.generate(user_id: 1)
       token.delete
-      expect(Rails.cache.fetch(token.send(:cache_key))).to be_nil
+      expect(Rails.cache.fetch(AuthenticationToken.send(:cache_key, token.raw))).to be_nil
     end
   end
 

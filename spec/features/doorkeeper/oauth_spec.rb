@@ -23,19 +23,6 @@ describe 'OAuth' do
     end
   end
 
-  # Create app without address2 in scopes
-  let(:client_app2) do
-    Doorkeeper::Application.create do |a|
-      a.name = 'Client App'
-      # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
-      a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
-      # Remove address2 from application scopes
-      a.scopes = client_application_scopes.sub(/profile.address2/, '')
-      a.owner = owner
-      a.public = true
-    end
-  end
-
   let(:oauth_client) do
     # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
     # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
@@ -45,26 +32,9 @@ describe 'OAuth' do
     end
   end
 
-  let(:oauth_client2) do
-    # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
-    # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
-    OAuth2::Client.new(client_app2.uid, client_app.secret, site: 'http://www.example.com') do |b|
-      b.request :url_encoded
-      b.adapter :rack, Rails.application
-    end
-  end
-
   def visit_oauth_authorize_url
     visit(oauth_client.auth_code.authorize_url(
       redirect_uri: client_app.redirect_uri,
-      scope: requested_scope,
-      state: 'state'
-    ))
-  end
-
-  def visit_oauth_authorize_url2
-    visit(oauth_client2.auth_code.authorize_url(
-      redirect_uri: client_app2.redirect_uri,
       scope: requested_scope,
       state: 'state'
     ))
@@ -95,7 +65,6 @@ describe 'OAuth' do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to be_displayed
       end
-
     end
 
     context 'when logged in' do
@@ -105,10 +74,25 @@ describe 'OAuth' do
       end
 
       context 'with valid url params' do
-        scenario 'Address 2 should not be displayed' do
-          visit_oauth_authorize_url2
-          # address2 not in allowed scopes, therefore not added to form
-          expect(@auth_page).to_not have_content('Address (2)')
+
+        context 'when address2 is not in allowed scopes list' do
+
+          let(:client_application_scopes) do
+            'profile.email profile.title profile.first_name profile.middle_name ' \
+            'profile.last_name profile.phone_number profile.suffix profile.address ' \
+            'profile.zip profile.gender profile.marital_status ' \
+            'profile.is_parent profile.is_student profile.is_veteran profile.is_retired'
+          end
+
+          scenario 'Address 2 should not be displayed' do
+            visit_oauth_authorize_url
+            # address2 not in allowed scopes, therefore not added to form
+            @auth_page.allow_button.click
+            code = @token_page.code.text
+            token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+            # address2 has been added though not originally in requested scopes list
+            expect(token['scope']).to eq('profile.email profile.last_name profile.address')
+          end
         end
 
         scenario 'user can select scopes' do
@@ -120,7 +104,7 @@ describe 'OAuth' do
           code = @token_page.code.text
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
           # address2 has been added though not originally in requested scopes list
-          expect(token["scope"]).to eq("profile.last_name profile.address profile.address2")
+          expect(token['scope']).to eq('profile.last_name profile.address profile.address2')
         end
 
         scenario 'user can authorize' do

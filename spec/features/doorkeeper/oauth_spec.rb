@@ -151,7 +151,7 @@ describe 'OAuth' do
       end
 
       it 'displays the authorizations' do
-        save_and_open_page
+        #save_and_open_page
         expect(@auths_page).to be_displayed
         expect(@auths_page.first_app_title).to have_content 'Client App'
         

@@ -10,6 +10,9 @@ set :ip, 'localhost'
 set :port, 2222
 set :ssh_options, {port: 2222, keys: ['~/.vagrant.d/insecure_private_key'] }
 
+set :repository, '/vagrant'
+set :local_repository, '.'
+
 #
 # Server Role Definitions
 #

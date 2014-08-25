@@ -4,24 +4,35 @@ app_id = 'myusa'
 
 deploy_to_dir = "/var/www/#{app_id}"
 
+
+# set up user and group
+group node[:myusa][:user][:group]
+include_recipe 'user'
+user_account node[:myusa][:user][:username] do #'myusa' do #node[:myusa][:user][:username] do
+  gid node[:myusa][:user][:group]
+  # puts node[:myusa][:user][:username]
+  ssh_keys node[:myusa][:user][:deploy_keys]
+  action :create
+end
+
 # set up directory structure ...
 directory deploy_to_dir do
   recursive true
-  owner node[:myusa][:user]
-  group node[:myusa][:group]
+  owner node[:myusa][:user][:username]
+  group node[:myusa][:user][:group]
 end
 
 %w[ shared releases ].each do |subdir|
   directory "#{deploy_to_dir}/#{subdir}" do
-    owner node[:myusa][:user]
-    group node[:myusa][:group]
+    owner node[:myusa][:user][:username]
+    group node[:myusa][:user][:group]
   end
 end
 
 %w[ config config/initializers log ].each do |subdir|
   directory "#{deploy_to_dir}/shared/#{subdir}" do
-    owner node[:myusa][:user]
-    group node[:myusa][:group]
+    owner node[:myusa][:user][:username]
+    group node[:myusa][:user][:group]
   end
 end
 
@@ -40,14 +51,6 @@ end
 #set up templates for application secrets
 template  "#{deploy_to_dir}/shared/config/secrets.yml" do
   source "secrets.yml.erb"
-end
-
-# TODO: this file should reference secrets.yml
-template  "#{deploy_to_dir}/shared/config/initializers/devise.rb" do
-  source "devise.rb.erb"
-  variables(
-    :devise_secret_key => node[:myusa][:secrets][:devise_secret_key]
-  )
 end
 
 # set up the database

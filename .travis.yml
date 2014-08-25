@@ -13,4 +13,4 @@ before_script:
   - RAILS_ENV=test bundle exec rake db:setup
 addons:
   code_climate:
-    repo_token: 14c7fdac115a182c6738d336fd55fb6ceb90b3d5af0d0659d8671dff2b3e7f16 
+    repo_token: fdd28d1ecb46873b6c3969fa679e808a3dfc241f10ee7154884930240d54a4d0  

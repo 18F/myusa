@@ -11,8 +11,7 @@ describe Api::V1 do
     ).token
   end
 
-
-  let(:client_app) { Doorkeeper::Application.create(name: 'App1', redirect_uri: 'http://localhost/') }
+  let(:client_app) { FactoryGirl.create(:application) }
   let(:user) { create_confirmed_user_with_profile(is_student: nil, is_retired: false) }
 
   describe 'Token validity check' do
@@ -91,13 +90,12 @@ describe Api::V1 do
   end
 
   describe 'POST /api/v1/notifications' do
-    let(:client_app_2) { Doorkeeper::Application.create(name: 'App2', redirect_uri: 'http://localhost/') }
+    let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
     let(:other_user) { create_confirmed_user_with_profile(email: 'jane@citizen.org', first_name: 'Jane') }
 
     let(:token) { build_access_token(client_app_2, ['notifications']) }
 
     before do
-      # app2.oauth_scopes << OauthScope.top_level_scopes
       1.upto(14) do |index|
         @notification = Notification.create!({subject: "Notification ##{index}", received_at: Time.now - 1.hour, body: "This is notification ##{index}.", user_id: user.id, app_id: client_app_2.id})
       end

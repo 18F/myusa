@@ -24,6 +24,12 @@ h3, .h3 {
 ul.dropdown-menu {
   font-size: 14px;
 }
+/**
+  * Forms
+ */
+form label{
+  color: $gray;
+}
 
 /**
  * for some reason, the pills variables are not being

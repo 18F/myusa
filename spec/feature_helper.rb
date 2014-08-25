@@ -15,6 +15,8 @@ Capybara.register_driver :poltergeist do |app|
   phantomjs_options: ['--load-images=no', '--disk-cache=false'] )
 end
 
+foobar =  'asdfdsfklsadfdsa;lkfsadf;adjsfklsd;fjsdl;fadjksl;fdjsf;asldfjsa;dlfjds;fjasdfkls;dafjasd;lfjsdl;afjsdfjsd;alfjsdaf;lsdkaf;sdlkfjsdafdas;fkjadls;fjkas;ldf'
+
 Capybara.javascript_driver = :poltergeist
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }

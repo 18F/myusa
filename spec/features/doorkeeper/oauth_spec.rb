@@ -2,40 +2,24 @@ require 'feature_helper'
 
 describe 'OAuth' do
 
-  let(:user) { User.create!(email: 'testy.mctesterson@gsa.gov') }
-  let(:owner) { User.create!(email: 'owner.mctesterson@gsa.gov') }
+  let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
+  let(:client_app) { FactoryGirl.create(:application) }
+  let(:requested_scopes) { 'profile.email profile.last_name' }
 
-  let(:client_application_scopes) do
-    'profile.email profile.title profile.first_name profile.middle_name ' \
-    'profile.last_name profile.phone_number profile.suffix profile.address ' \
-    'profile.address2 profile.zip profile.gender profile.marital_status ' \
-    'profile.is_parent profile.is_student profile.is_veteran profile.is_retired'
-  end
-
-  let(:client_app) do
-    Doorkeeper::Application.create do |a|
-      a.name = 'Client App'
-      # Redirect to the 'native_uri' so that Doorkeeper redirects us back to a token page in our app.
-      a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
-      a.scopes = client_application_scopes
-      a.owner = owner
-      a.public = true
-    end
-  end
-
+  # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
+  # Capybara context. More detail here:
+  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
-    # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
     OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application
     end
   end
 
-  def visit_oauth_authorize_url
-    visit(oauth_client.auth_code.authorize_url(
-      redirect_uri: client_app.redirect_uri,
-      scope: requested_scope,
+  def visit_oauth_authorize_url(client, app, scopes)
+    visit(client.auth_code.authorize_url(
+      redirect_uri: app.redirect_uri,
+      scope: scopes,
       state: 'state'
     ))
   end
@@ -49,8 +33,6 @@ describe 'OAuth' do
   end
 
   describe 'Authorization' do
-    let(:requested_scope) { 'profile.email profile.last_name' }
-
     before :each do
       @auth_page = OAuth2::AuthorizationPage.new
       @token_page = OAuth2::TokenPage.new
@@ -58,7 +40,7 @@ describe 'OAuth' do
 
     context 'when not logged in' do
       before :each do
-        visit_oauth_authorize_url
+        visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
       end
 
       scenario 'redirects to login page' do
@@ -71,7 +53,7 @@ describe 'OAuth' do
     context 'when logged in' do
       before :each do
         login user
-        visit_oauth_authorize_url
+        visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
       end
 
       context 'with valid url params' do
@@ -102,7 +84,6 @@ describe 'OAuth' do
         end
 
         scenario 'user can select scopes' do
-          # Authorize the client app
           expect(@auth_page).to be_displayed
           @auth_page.scopes.uncheck('Email')
           @auth_page.allow_button.click
@@ -126,7 +107,8 @@ describe 'OAuth' do
         end
 
         context 'profile data is invalid' do
-          let(:requested_scope) { 'profile.phone_number' }
+          let(:client_app) { FactoryGirl.create(:application, scopes: 'profile.phone_number') }
+          let(:requested_scopes) { 'profile.phone_number' }
           scenario 'user cannot save or authorize' do
             expect(@auth_page).to be_displayed
             @auth_page.profile_phone_number.set 'foobar'
@@ -138,16 +120,32 @@ describe 'OAuth' do
         end
       end
 
-      context 'with non-public (sandboxed) app' do
-        let(:client_app) do
-          Doorkeeper::Application.create do |a|
-            a.name = 'Client App'
-            a.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
-            a.scopes = client_application_scopes
-            a.owner = owner
-            a.public = false
-          end
+      context "with lots of scopes" do
+        let(:scopes) do
+          'profile.email profile.title profile.first_name profile.middle_name ' \
+          'profile.last_name profile.phone_number profile.suffix profile.address ' \
+          'profile.address2 profile.zip profile.gender profile.marital_status ' \
+          'profile.is_parent profile.is_student profile.is_veteran ' \
+          'profile.is_retired'
         end
+        let(:client_app) { FactoryGirl.create(:application, scopes: scopes) }
+        let(:requested_scope) { scopes }
+
+        it "user can authorize" do
+          expect(@auth_page).to be_displayed
+          @auth_page.allow_button.click
+
+          expect(@token_page).to be_displayed
+          code = @token_page.code.text
+
+          token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+          expect(token).to_not be_expired
+        end
+      end
+
+      context 'with non-public (sandboxed) app' do
+        let(:owner) { FactoryGirl.create(:user, email: 'owner@gsa.gov' )}
+        let(:client_app) { FactoryGirl.create(:application, public: false, owner: owner) }
 
         context 'current user is client application owner' do
           let(:owner) { user }
@@ -174,13 +172,13 @@ describe 'OAuth' do
       end
 
       context 'with bad scope value' do
-        let(:requested_scope) { 'foo bar baz' }
+        let(:requested_scopes) { 'foo bar baz' }
 
         it_behaves_like 'scope error'
       end
 
       context 'with scope not in client application scopes' do
-        let(:requested_scope) { 'profile.city' }
+        let(:requested_scopes) { 'profile.city' }
 
         it_behaves_like 'scope error'
       end
@@ -188,33 +186,9 @@ describe 'OAuth' do
     end
   end
 
-  describe "additional scopes" do
-    let(:requested_scope) do
-      'profile.email profile.title profile.first_name profile.middle_name ' \
-      'profile.last_name profile.phone_number profile.suffix profile.address ' \
-      'profile.address2 profile.zip profile.gender profile.marital_status ' \
-      'profile.is_parent profile.is_student profile.is_veteran ' \
-      'profile.is_retired'
-    end
-
-    it "should allow for scopes with more than 255 characrers" do
-      login user
-        @auth_page = OAuth2::AuthorizationPage.new
-        @token_page = OAuth2::TokenPage.new
-        visit_oauth_authorize_url
-        expect(@auth_page).to be_displayed
-        @auth_page.allow_button.click
-        expect(@token_page).to be_displayed
-        code = @token_page.code.text
-        # Turn the code into a token
-        token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
-        expect(token).to_not be_expired
-    end
-  end
-
   # TODO move these specs to home page spec upon creation
   describe 'header and footer content' do
-    let(:requested_scope) { 'profile.email profile.last_name' }
+    let(:requested_scopes) { 'profile.email profile.last_name' }
 
     before :each do
       @auth_page = OAuth2::AuthorizationPage.new
@@ -224,21 +198,25 @@ describe 'OAuth' do
     context 'user is logged in' do
       before :each do
         login user
-        visit_oauth_authorize_url
+        visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
       end
 
-      it 'has settings menu' do
-        expect(@auth_page).to have_settings
-      end
-      it 'does not have sign in button' do
-        expect(@auth_page).to_not have_sign_in_button
-      end
+      describe 'header and footer content' do
+        it 'has settings menu' do
+          expect(@auth_page).to have_settings
+        end
 
-      it 'has footer content' do
-        expect(@auth_page).to have_footer
-      end
-      it 'has ownership statement' do
-        expect(@auth_page).to have_ownership
+        it 'does not have sign in button' do
+          expect(@auth_page).to_not have_sign_in_button
+        end
+
+        it 'has footer content' do
+          expect(@auth_page).to have_footer
+        end
+
+        it 'has ownership statement' do
+          expect(@auth_page).to have_ownership
+        end
       end
     end
   end

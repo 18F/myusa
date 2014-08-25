@@ -18,11 +18,8 @@
     <![endif]-->
   </head>
   <body>
-    <%= yield :header %>
-    <div class="container">
-      <%= render 'layouts/messages' %>
-      <%= yield %>
-    </div>
+    <%= content_for :header %>
+    <%= content_for :container %>
 
     <%= render 'layouts/footer' %>
 

@@ -38,12 +38,18 @@
   margin: 15px 0;
   color: $gray;
 }
-
 .subhead {
   font-size: 1em;
   line-height: 1em;
   color: $gray;
 }
+.subhead-blue {
+  font-size: 1em;
+  line-height: 1em;
+  color: $blue-lightest;
+  padding: 10px;
+}
+.blank-row { margin-top:1em; }
 
 /*******************
   Body
@@ -56,6 +62,19 @@ html {
 
 body {
   margin-bottom: 5em;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
 }
 
 /*******************
@@ -151,6 +170,20 @@ footer {
       font-weight: normal;
       text-decoration: underline;
     }
+  }
+}
+
+/*******************
+  Marketing
+********************/
+
+.top-border{
+  border-top: 1px solid silver;
+}
+
+.marketing{
+  h2{
+    font-weight: 300;
   }
 }
 

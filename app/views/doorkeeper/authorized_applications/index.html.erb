@@ -31,7 +31,7 @@
           <div class="panel-body">
             <h4>Permissions</h4>
               <ul class="list-unstyled scope-list">
-                <% pre_auth_groups(authorization.scopes).each do |set| %>
+                <% pre_auth_groups(authorization.scopes, application.scopes).each do |set| %>
                   <li>
                     <h2 class="open group">
                       <%= t("scope_groups.#{set[:name]}.header") %>

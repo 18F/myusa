@@ -15,7 +15,7 @@ DEPENDENCIES
   openssl
   ssl_certificate
   sudo
-  users_solo
+  user
 
 GRAPH
   apt (2.4.0)
@@ -62,6 +62,7 @@ GRAPH
     nodejs (>= 0.0.0)
     rbenv (>= 0.0.0)
     unicorn (>= 0.0.0)
+    user (>= 0.0.0)
   nginx (2.7.4)
     apt (~> 2.2)
     bluepill (~> 2.3)
@@ -95,7 +96,7 @@ GRAPH
   ssl_certificate (0.1.0)
   sudo (2.6.0)
   unicorn (2.0.0)
-  users_solo (1.0.2)
+  user (0.3.0)
   windows (1.33.1)
     chef_handler (>= 0.0.0)
   xfs (1.1.0)

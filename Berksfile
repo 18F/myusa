@@ -14,6 +14,6 @@ cookbook 'ntp'
 cookbook 'openssl'
 cookbook 'ssl_certificate'
 cookbook 'sudo'
-cookbook 'users_solo'
+cookbook 'user'
 
 cookbook 'myusa', :path => './kitchen/site-cookbooks/myusa'

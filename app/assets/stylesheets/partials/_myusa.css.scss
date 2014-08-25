@@ -12,7 +12,7 @@
 
 .scope-list {
   h2 {
-    cursor: pointer;    
+    cursor: pointer;
   }
   h2:before {
     font-family: FontAwesome;
@@ -172,11 +172,11 @@ footer {
 /** MyUSA Icon Font **/
 @font-face {
   font-family: 'MyUSA';
-  src:url('./MyUSA.eot?m9u969');
-  src:url('./MyUSA.eot?#iefixm9u969') format('embedded-opentype'),
-    url('./MyUSA.woff?m9u969') format('woff'),
-    url('./MyUSA.ttf?m9u969') format('truetype'),
-    url('./MyUSA.svg?m9u969#icomoon') format('svg');
+  src: font-url('MyUSA.eot?m9u969');
+  src: font-url('MyUSA.eot?#iefixm9u969') format('embedded-opentype'),
+    font-url('MyUSA.woff?m9u969') format('woff'),
+    font-url('MyUSA.ttf?m9u969') format('truetype'),
+    font-url('MyUSA.svg?m9u969#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }

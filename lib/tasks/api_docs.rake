@@ -2,6 +2,7 @@
 
 SOURCE_FILES = Rake::FileList[
   "public/developer/api_doc.md",
+  "api_docs/tokeninfo.md",
   "api_docs/profile.md",
   "api_docs/task.md",
   "api_docs/notification.md"

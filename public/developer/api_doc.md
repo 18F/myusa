@@ -2,7 +2,8 @@ FORMAT: 1A
 
 # MyUSA API Documentation
 
-# Group Getting Started
+# Group Authentication
+
 # Getting started with MyUSA Authentication
 
 MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the [developers](https://my.usa.gov/developer) section of MyUSA.
@@ -15,15 +16,35 @@ MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create
 4. Your application validates the access token.
 5. The access token allows your application to access scope information from MyUSA.gov.
 
-### Scopes
+## Scopes
 
 The scopes you define when you setup your app on MyUSA.gov define what information your app will require from the user. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.
 
-# Group Before You Begin
-## Before You Begin
+## API Versions
 
-1. Sign in to [MyUSA](https://my.usa.gov/developer) to register an application. 
-2. Provide a redirect URI which is `YOUR_SITE/auth/myusa/callback` by default. 
+To access the MyUSA API, your app should use URLs which include the API version number.
+API URLs are constructed using this template:
+```
+https://my.usa.gov/api/[VERSION]/[ENDPOINT]
+```
+
+The MyUSA API is currently at **version 1**. So, to access the Profile API, request this URL:
+```
+https://my.usa.gov/api/v1/profile
+```
+
+The MyUSA team frequently makes minor changes to the API, but the vast majority of these changes are backwards-compatible and will not break existing integration code.
+
+If an API change is backwards-incompatible, we increment the version number while keeping the previous version available.
+By using API URLs with specified versions, your application can continue operating without code changes.
+
+**Note that only two versions of the API are officially supported at any time: the current version, and the version preceding it.**
+If your app uses the MyUSA API, you'll need to keep track of new versions to ensure that the app stays functional.
+
+## Connecting with OAuth
+
+1. Sign in to [MyUSA](https://my.usa.gov/developer) to register an application.
+2. Provide a redirect URI which is `YOUR_SITE/auth/myusa/callback` by default.
 3. Select the scopes you wish to recieve about user data. Sample scopes are email first_name and phone_number.
 4. Take note of your Consumer Key and Consumer Secret.
 
@@ -32,12 +53,12 @@ The scopes you define when you setup your app on MyUSA.gov define what informati
 First, direct your user to https://my.usa.gov/auth/myusa with the following parameters:
 
 ```
- MYGOV_CLIENT_ID 
- REDIRECT_URI 
+ MYUSA_CLIENT_ID
+ REDIRECT_URI
  TYPE : CODE
 ```
 
-At this point, the user will be presented with the myusa login page. When they login, they will be redirected back to your application via the redriect URI that you specified when you setup the application. If your redirect uri was www.ryan.com/test, MyUSA would redirect to:
+At this point, the user will be presented with the myusa login page. When they login, they will be redirected back to your application via the redriect URI that you specified when you setup the application. If your redirect uri was `https://www.ryan.com/test`, MyUSA would redirect to:
 
 ```
 https://www.ryan.com/test?code=12345abcde
@@ -45,11 +66,11 @@ https://www.ryan.com/test?code=12345abcde
 
 ### Handling the response
 
-Your application should have an end point to recieve the redirect at this url. 
+Your application should have an end point to recieve the redirect at this url.
 
-### Long Live Token
+### Long-lived Token
 
-Now that you have a valid code, you can make a server to server request to `api.my.usa.gov` to get a long live token to keep users logged in. 
+Now that you have a valid code, you can make a server to server request to `api.my.usa.gov` to get a long-lived token to keep users logged in.
 
 
 ## Example Rails configuration
@@ -101,5 +122,3 @@ View the OmniAuth 1.0 docs for more information about strategy implementation: h
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-

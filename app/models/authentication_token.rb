@@ -11,10 +11,12 @@ class AuthenticationToken # < Hashie::Dash
     token.save && token
   end
 
-  def self.find_by_user_id(user_id)
-    from_cache = Rails::cache.fetch(cache_key(user_id)) || {}
-    # return nil unless from_cache.present?
-    new(from_cache)
+  def self.find(raw)
+    if from_cache = Rails::cache.fetch(cache_key(raw))
+      new(from_cache.merge(raw: raw))
+    else
+      new
+    end
   end
 
   def initialize(attrs={})
@@ -26,11 +28,11 @@ class AuthenticationToken # < Hashie::Dash
   end
 
   def save
-    Rails::cache.write(cache_key, serialized, expires_in: 30.minutes)
+    Rails::cache.write(self.class.cache_key(self.raw), serialized, expires_in: 30.minutes)
   end
 
   def delete
-    Rails::cache.delete(cache_key)
+    Rails::cache.delete(self.class.cache_key(self.raw))
   end
 
   def self.generate(attrs={})
@@ -60,12 +62,7 @@ class AuthenticationToken # < Hashie::Dash
     }
   end
 
-  def self.cache_key(user_id)
-    "authentication_token_#{user_id}"
+  def self.cache_key(token)
+    "authentication_token_#{token}"
   end
-
-  def cache_key
-    self.class.cache_key(@user_id)
-  end
-
 end

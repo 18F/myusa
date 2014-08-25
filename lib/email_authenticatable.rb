@@ -21,11 +21,10 @@ module Devise
 
       def authenticate!
         user = params[:email].present? && User.find_by_email(params[:email])
-        
-        @token = AuthenticationToken.find_by_user_id(user && user.id)
-        @token.raw = params[:token]
 
-        if validate(user) { @token.valid? }
+        @token = AuthenticationToken.find(params[:token])
+
+        if validate(user) { @token.valid? && @token.user_id == user.id }
           @token.delete
 
           session['user_return_to'] = @token.return_to if @token.return_to.present?
@@ -36,7 +35,7 @@ module Devise
       end
 
       def remember_me?
-        @token.remember_me
+        !!@token.remember_me
       end
     end
   end

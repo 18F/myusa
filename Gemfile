@@ -69,7 +69,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'capybara-email'
-  gem "codeclimate-test-reporter", require: false
+  gem 'codeclimate-test-reporter', require: false
+  gem 'rspec_junit_formatter', require: false # used by Shippable
 end
 
 group :staging, :production do

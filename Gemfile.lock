@@ -371,6 +371,10 @@ GEM
       retryable
       semverse (~> 1.1)
       varia_model (~> 0.4)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
     rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.4)
@@ -390,6 +394,10 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
     rubocop (0.25.0)
       parser (>= 2.2.0.pre.4, < 3.0)
       powerpack (~> 0.0.6)
@@ -536,6 +544,7 @@ DEPENDENCIES
   rails (~> 4.1.0)
   rspec-its
   rspec-rails
+  rspec_junit_formatter
   rubocop
   ruby_parser
   sass-rails (~> 4.0.3)

@@ -69,8 +69,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'capybara-email'
-  # gem 'simplecov', require: false
-  # gem 'simplecov-csv', require: false
   gem "codeclimate-test-reporter", require: false
 end
 

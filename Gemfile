@@ -50,7 +50,7 @@ group :deploy do
   gem 'knife-solo_data_bag'
   gem 'unf'
   gem 'capistrano', '~> 2.15'
-  gem 'capistrano-unicorn', :require => false
+  gem 'capistrano-unicorn', require: false
 end
 
 group :development, :test do
@@ -71,6 +71,7 @@ group :test do
   gem 'capybara-email'
   # gem 'simplecov', require: false
   # gem 'simplecov-csv', require: false
+  gem "codeclimate-test-reporter", require: false
 end
 
 group :staging, :production do

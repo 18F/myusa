@@ -6,35 +6,39 @@ module Devise
       extend ActiveSupport::Concern
 
       def set_authentication_token(opts={})
-        raw, enc = Devise.token_generator.generate(self.class, :authentication_token)
+        token = AuthenticationToken.generate(opts.merge(user_id: self.id))
+        self.send_devise_notification(:authentication_instructions, token)
 
-        self.authentication_token   = enc
-        self.authentication_sent_at = Time.now.utc
-        self.save!(validate: false)
+        token
+      end
+    end
+  end
+  module Strategies
+    class EmailAuthenticatable < Authenticatable
+      def valid?
+        params.has_key?(:email) && params.has_key?(:token)
+      end
 
-        if opts[:remember_me] && respond_to?(:remember_me!)
-          self.remember_me!
+      def authenticate!
+        user = params[:email].present? && User.find_by_email(params[:email])
+
+        @token = AuthenticationToken.find(params[:token])
+
+        if validate(user) { @token.valid? && @token.user_id == user.id }
+          @token.delete
+
+          session['user_return_to'] = @token.return_to if @token.return_to.present?
+          success!(user)
+        else
+          fail!(:invalid_token)
         end
-
-        self.send_devise_notification(:authentication_instructions, raw, opts)
-
-        raw
       end
 
-      def verify_authentication_token(raw_token)
-        authentication_token = Devise.token_generator.digest(self, :authentication_token, raw_token)
-        Devise.secure_compare(self.authentication_token, authentication_token)
+      def remember_me?
+        !!@token.remember_me
       end
-
-      def expire_authentication_token
-        self.authentication_token = nil
-        self.save!(validate: false)
-      end
-
-      def authentication_token_expired?
-        self.authentication_sent_at && self.authentication_sent_at < 30.minutes.ago
-      end
-
     end
   end
 end
+
+Warden::Strategies.add(:email_authenticatable, Devise::Strategies::EmailAuthenticatable)

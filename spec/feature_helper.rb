@@ -1,7 +1,5 @@
 ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
-require 'simplecov'
-SimpleCov.start 'rails'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
@@ -21,5 +19,5 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 def login(user)
   token = user.set_authentication_token
-  visit new_user_session_path(email: user.email, token: token)
+  visit new_user_session_path(email: user.email, token: token.raw)
 end

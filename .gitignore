@@ -33,8 +33,9 @@ kitchen/nodes/localhost.json
 # folders
 coverage
 log/*
-/public/system
-/spec/tmp
-/tmp
-/vendor/bundle
+public/system
+spec/tmp
+tmp
+vendor/bundle
 lib/load-scripts/
+public/assets/

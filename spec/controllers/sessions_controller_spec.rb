@@ -21,25 +21,40 @@ describe SessionsController do
 
     context 'email and token are present' do
       let(:user) { User.create(email: email) }
-      let(:remember_me) { nil }
 
       context 'and are valid' do
         before :each do
-          raw = user.set_authentication_token
+          @token = AuthenticationToken.generate(
+            user_id: user.id,
+            remember_me: self.respond_to?(:remember_me) ? remember_me : nil,
+            return_to: self.respond_to?(:return_to) ? return_to : nil
+          )
+
           get :new,
             :email => user.email,
-            :token => raw,
-            :remember_me => remember_me
+            :token => @token.raw
         end
 
-        it 'logs in and redirects the user' do
+        it 'logs in the user' do
           expect(controller.current_user).to be
           expect(controller.current_user.email).to eq(user.email)
-          expect(response).to redirect_to(root_path)
         end
 
         it 'expires the token' do
-          expect(controller.current_user.authentication_token).to be_nil
+          expect(AuthenticationToken.find(@token.raw)).to_not be_valid
+        end
+
+        context 'return to path is not set' do
+          it 'redirects to the root path' do
+            expect(response).to redirect_to(root_path)
+          end
+        end
+        context 'return to path is set' do
+          let(:return_to) { secret_path }
+
+          it 'redirects to the return path' do
+            expect(response).to redirect_to(return_to)
+          end
         end
 
         context 'remember_me is set' do
@@ -57,45 +72,18 @@ describe SessionsController do
         end
 
       end
-
-      context 'token is bad' do
-        it 'does not log user in' do
-          get :new, :email => user.email, :token => 'foobar'
-
-          expect(controller.current_user).to be_nil
-        end
-      end
-
-      context 'token is old' do
-        before :each do
-          Timecop.travel(date - 1.day)
-          raw = user.set_authentication_token
-          Timecop.travel(date)
-          get :new, :email => user.email, :token => raw
-        end
-
-        it 'displays a flash alert' do
-          expect(flash[:alert]).to eq('token expired')
-        end
-
-        it 'does not log user in' do
-          expect(controller.current_user).to be_nil
-        end
-      end
     end
   end
 
   describe '#create' do
     shared_examples "token creation" do
-
-      it 'sets a token on the user' do
-        expect(@user.authentication_token).to be
+      it 'creates a token' do
+        expect(AuthenticationToken).to have_received(:generate)
       end
+    end
 
-      it 'records the time when the token was created' do
-        expect(@user.authentication_sent_at).to eq(date)
-      end
-
+    before :each do
+      allow(AuthenticationToken).to receive(:generate).and_call_original
     end
 
     context 'when user does not exist' do

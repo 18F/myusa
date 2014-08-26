@@ -62,15 +62,20 @@ template  "#{deploy_to_dir}/shared/config/database.yml" do
     :rails_env => node[:myusa][:rails_env],
     :database => node[:myusa][:database][:name],
     :host => node[:myusa][:database][:host],
+    :port => node[:myusa][:database][:port],
     :username => node[:myusa][:database][:username],
     :password => node[:myusa][:database][:password]
   )
 end
 
-include_recipe "nginx"
+service 'nginx' do
+  supports :status => true, :restart => true, :reload => true
+  action   :restart
+end
 
 template "/etc/nginx/conf.d/#{app_id}.conf" do
   source "nginx.conf.erb"
+  notifies :restart, "service[nginx]"
   variables(
     :working_dir => "#{deploy_to_dir}/current",
     :app_id => app_id

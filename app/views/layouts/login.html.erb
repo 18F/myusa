@@ -1,3 +1,17 @@
+<% content_for :welcome do %>
+  <% if @client %>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h1>Welcome to MyUSA from <%= @client.name %></h1>
+      <p>
+        Connect <%= @client.name %> to your MyUSA account and we'll have you back to <%= @client.name %> in no time.
+      </p>
+      <p>
+        <%= link_to "&laquo; return to #{@client.name}".html_safe, @client.url, :class => 'alert-link' %>
+      </p>
+    </div>
+  <% end %>
+<% end %>
 <% content_for :header do %>
   <%= render 'layouts/header_auth', :shield => false %>
 <% end %>

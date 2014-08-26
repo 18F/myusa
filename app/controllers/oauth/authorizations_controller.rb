@@ -4,7 +4,21 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   prepend_before_action :redirect_to_tokens, only: [:create]
   before_filter :pre_auth, only: [:new]
   include ScopeGroups
-  before_filter :pre_auth_groups, only: [:new]
+
+  def new
+    scopes = @pre_auth.scopes
+
+    authorization = Doorkeeper::AccessToken.where(
+      resource_owner_id: current_user.id, application_id: @pre_auth.client.try(:id), revoked_at: nil
+    ).first
+
+    if authorization
+      scopes = Doorkeeper::OAuth::Scopes.from_array(scopes.to_a - authorization.scopes.to_a)
+    end
+
+    pre_auth_groups scopes, @pre_auth.client.try(:application).try(:scopes)
+    super
+  end
 
   def create
     if params.key?(:profile)

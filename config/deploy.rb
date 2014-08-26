@@ -14,7 +14,7 @@ set :web_group, "web"
 set :default_stage, 'vagrant'
 set :stages, %w(vagrant development staging ec2 production)
 
-set :repository, "https://github.com/18F/myusa.git"
+set :repository, 'https://github.com/18F/myusa.git'
 set :branch, ENV['BRANCH'] || 'devel'
 set :deploy_to, "/var/www/#{application}"
 set :deploy_via, :remote_cache

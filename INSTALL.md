@@ -94,22 +94,40 @@ Set up your `knife` configuration:
 cp .chef/knife.rb.example .chef/knife.rb
 ```
 
-... and a node configuration:
+Each ec2 node you're planning to deploy needs its own JSON file in the `nodes/`
+folder. Each node can take one of three available roles:
+* Database server
+* App server
+* "All-in-one" (app and database on the same node)
 
+The "All-in-one" role is the simplest, as you can get MyUSA running on a single
+machine. (This is the same role used for Vagrant.)
+
+For separate app & database hosts, you need to deploy the database first,
+then configure the app node file(s) to point to the database's address before
+deployment.
+
+For each host, create a JSON node file:
 ```sh
-cp kitchen/nodes/ec2.json.example kitchen/nodes/YOUR-LOVELY-HOST.example
+cp kitchen/nodes/ec2.json.example kitchen/nodes/<host name>.json
 ```
 
-Then use `knife` to create an EC2 host and build the environment:
+Edit the file and uncomment lines accordingly.
+
+Then use `knife` to create each EC2 host and build the environment:
 
 ```sh
 bundle exec knife ec2 server create \
-    --groups YOUR-SECURITY-GROUP \
-    --identity-file YOUR-KEY-PAIR.pem \
-    --ssh-key YOUR-KEY-PAIR-NAME \
+    --groups <your security group> \
+    --identity-file <path to your key pair file> \
+    --ssh-key <your key pair name> \
     --ssh-user ubuntu \
-    --node-name YOUR-LOVELY-HOST
+    --node-name <host name>
 ```
+
+**Regarding security groups:** If you're deploying separate app and database
+nodes, bear in mind that your database needs its MySQL port to be accessible.
+You may want to create separate security groups for the app and the database.
 
 ## Deploying to Amazon Web Services with Capistrano
 
@@ -122,7 +140,7 @@ from the EC2 example and name it after the environment type; for example, `stagi
 cp config/deploy/ec2.rb.example config/deploy/staging.rb
 ```
 
-The EC2 example gets the target server address from the `MYUSA_STAGING`
+The EC2 example gets the target app server address from the `MYUSA_STAGING`
 environment variable. (Alternatively, you can edit the new configuration file directly.)
 
 ```sh
@@ -132,6 +150,10 @@ export MYUSA_STAGING=<staging_server_address>
 For your first deploy, run `deploy:setup`. This creates the necessary databases
 and configuration files, then deploys the `devel` branch and restarts the
 Rails server and web server processes.
+
+**NOTE: `deploy:setup` will delete any existing databases. Don't run it against
+an existing database that you want to keep.**
+
 ```sh
 bundle exec cap staging deploy:setup
 ```

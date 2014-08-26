@@ -106,7 +106,16 @@ end
 # validate_client to check that method to ensure that the current user is
 # allowed to use the current client application.
 
-Doorkeeper::Application.send :include, Doorkeeper::Models::Scopes
+Doorkeeper::Application.class_eval do
+  include Doorkeeper::Models::Scopes
+
+  validate do |a|
+    return if a.scopes.nil?
+    unless Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)
+      errors.add(:scopes, 'Invalid scope')
+    end
+  end
+end
 
 module OAuthValidations
   def initialize(server, client, resource_owner, attrs = {})

@@ -53,7 +53,6 @@ describe "Sign In" do
         visit new_user_session_path(email: user.email, token: 'foobar')
 
         @target_page.load
-        puts page.current_url
         expect(@sign_in_page).to be_displayed
       end
     end

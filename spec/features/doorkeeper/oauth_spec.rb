@@ -124,6 +124,15 @@ describe 'OAuth' do
            'Parent status', 'Student status', 'Veteran status', 'Is Retired',
            'Email', '', 'Phone', 'Gender'])
       end
+
+      it 'revokes authorization to an application' do
+        expect(@auths_page).to be_displayed
+        expect(@auths_page.second_app_title).to have_content 'Client App 2'
+        @auths_page.second_revoke_button.click
+        expect(@auths_page).to be_displayed
+        expect(@auths_page.first_app_title).to have_content 'Client App'
+        expect(@auths_page).to_not have_content 'Client App 2'
+      end
     end
   end
 

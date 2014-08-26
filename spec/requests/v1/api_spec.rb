@@ -80,7 +80,6 @@ describe Api::V1 do
             response = get '/api/v1/profile', {'schema' => 'true'}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
             expect(response.status).to eq 200
             parsed_json = JSON.parse(response.body)
-            puts response.body
             expect(parsed_json).to_not be_nil
             expect(parsed_json['email']).to eq 'joe@citizen.org'
           end

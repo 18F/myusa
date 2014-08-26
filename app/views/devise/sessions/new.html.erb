@@ -1,3 +1,18 @@
+<% if client_app %>
+  <% content_for :welcome do %>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span><span class="sr-only">Close</span></button>
+      <div class="container">
+        <strong>Welcome to MyUSA from <%= client_app.name %></strong>
+        <p>
+          Create a MyUSA account or log in to MyUSA acto continue using <%= client_app.name %>.
+          <%= link_to "Learn more about MyUSA.", "/", :class => "alert-link", :target => "_blank" %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 

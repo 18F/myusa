@@ -8,6 +8,7 @@ module OAuth2
     set_url_matcher(%r{/oauth/authorized_applications})
 
     elements :app_titles, '.panel-title'
+    elements :app_scopes, '.col-md-3 label'
 
     def first_app_title
       app_titles[0]

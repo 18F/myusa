@@ -115,11 +115,14 @@ describe 'OAuth' do
       end
 
       it 'displays the authorizations' do
-        #save_and_open_page
         expect(@auths_page).to be_displayed
         expect(@auths_page.first_app_title).to have_content 'Client App'
-        
         expect(@auths_page.second_app_title).to have_content 'Client App 2'
+        expect(@auths_page.app_scopes.map(&:text)).to eq(
+          ['Email', 'Title', 'First Name', 'Middle Name', 'Last Name',
+           'Suffix', 'Address', '', '', 'Phone', 'Gender', 'Marital Status',
+           'Parent status', 'Student status', 'Veteran status', 'Is Retired',
+           'Email', '', 'Phone', 'Gender'])
       end
     end
   end

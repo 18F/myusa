@@ -4,7 +4,7 @@ describe 'OAuth' do
 
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
   let(:client_app) { FactoryGirl.create(:application) }
-  let(:requested_scopes) { 'profile.email profile.last_name' }
+  let(:requested_scopes) { 'profile.email profile.last_name profile.address' }
 
   # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
   # Capybara context. More detail here:
@@ -33,6 +33,8 @@ describe 'OAuth' do
   end
 
   describe 'Authorization' do
+    let(:requested_scopes) { 'profile.email profile.last_name profile.address' }
+
     before :each do
       @auth_page = OAuth2::AuthorizationPage.new
       @token_page = OAuth2::TokenPage.new
@@ -47,7 +49,6 @@ describe 'OAuth' do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to be_displayed
       end
-
     end
 
     context 'when logged in' do
@@ -57,6 +58,24 @@ describe 'OAuth' do
       end
 
       context 'with valid url params' do
+        context 'when address2 is not in allowed scopes list' do
+          let(:client_app) { 
+            FactoryGirl.create(
+              :application,
+              scopes: 'profile.email profile.last_name profile.address'
+            )
+          }
+
+          scenario 'Address 2 should not be displayed' do
+            visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
+            @auth_page.allow_button.click
+            code = @token_page.code.text
+            token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+            # address2 not included in allowed scopes, therefore not added to form
+            expect(token['scope']).to eq('profile.email profile.last_name profile.address')
+          end
+        end
+
         scenario 'user can authorize' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
@@ -87,10 +106,10 @@ describe 'OAuth' do
           expect(@auth_page).to be_displayed
           @auth_page.scopes.uncheck('Email')
           @auth_page.allow_button.click
-
           code = @token_page.code.text
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
-          expect(token["scope"]).to eq("profile.last_name")
+          # address2 added though not in original requested scopes list
+          expect(token['scope']).to eq('profile.last_name profile.address profile.address2')
         end
 
         scenario 'user can update profile' do
@@ -98,7 +117,6 @@ describe 'OAuth' do
           expect(@auth_page).to have_no_profile_email
           @auth_page.profile_last_name.set 'McTesterson'
           @auth_page.allow_button.click
-
           code = @token_page.code.text
           token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
           profile = JSON.parse token.get('/api/profile').body

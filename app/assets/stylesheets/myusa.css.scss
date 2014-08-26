@@ -2,273 +2,64 @@
   Color Variables
 ********************/
 
-@import "colors";
-@import "fonts";
-
 $grey: #666;
-$placeholder_color: #767676;
+$blue: #00495C;
+$blue_header: #004976;
 $sub_heading_text: 'source sans pro';
-$placeholder_text: 'Open Sans';
+$heading_text: 'raleway';
+$button_text: 'Open Sans';
+$grey_accent: #F9F9F9;
 
 /*******************
-  Authorization Page
-  for OAuth and Scope Selection
+  Base Classes
 ********************/
 
-.form-control::-moz-placeholder {
-  color: $placeholder_color;
-  font-size: 0.875em;
-  font-family: $placeholder_text;
-}
-.form-control:-ms-input-placeholder {
-  color: $placeholder_color;
-  font-size: 0.875em;
-  font-family: $placeholder_text;
-}
-.form-control::-webkit-input-placeholder {
-  color: $placeholder_color;
-  font-size: 0.875em;
-  font-family: $placeholder_text;
+.header-large{
+  font-size: 1.25em;
+  color:$blue_header;
 }
 
-.scope-list {
-  h2 {
-    cursor: pointer;
-  }
-  h2:before {
-    font-family: FontAwesome;
-    content: "\f054";
-    padding-right: 10px;
-  }
-
-  .group{
-    font-size: 1.25em;
-
-  }  
-  .label-pad{
-    padding-left:25px;
-  }
-
-  h2.open:before {
-    font-family: FontAwesome;
-    content: "\f078";
-    padding-right: 4px;
-  }
-  .form-group {
-    margin-left: 25px;
-    label {
-      color: $gray;
-    }
-  }
-  margin-bottom: 25px;
+.scope_description{
+  color:$blue_header;
+  cursor:pointer;
 }
 
-.disclaimer-info {
-  line-height: .8em;
-  margin: 15px 0;
-  color: $gray;
-  padding-left:15px;
+.allow_button{
+  width:200px;
 }
 
-.subhead {
-  font-size:1.125em;
-  color: #666;
+.action-blue-user{
+    font-family: $heading_text;
+  color:$blue_header;
+  font-weight:bold;
+  font-size:1.25em;
+}
+
+.action-blue{
+  font-family:$heading_text;
+  color:$blue;
+  font-weight:bold;
+  font-size:1.5em;
+}
+
+.muted-major{
   font-family: $sub_heading_text;
+  color: $grey;
+  font-size:1.25em;
 }
 
-/*******************
-  Body
-********************/
-
-html {
-  position: relative;
-  min-height: 100%;
+.muted-minor{
+  font-family: $sub_heading_text;
+  color: $grey;
+  font-size:0.85em;
 }
 
-body {
-  margin-bottom: 5em;
+.scope-warning{
+  background-color:#FCF8E3;
+  color:#8A6D3B;
+  padding:10px;
 }
 
-/*******************
-  Header
-********************/
-header {
-  margin-top: 20px;
-  border-bottom: 1px solid $gray-lighter;
-  .header-nav {
-    text-align: center;
-  }
-  .settings-menu li {
-    a.large {
-      color: $blue-lightest;
-      font-size:1.25em;
-    }
-  }
-  .header-hr {
-    width: 100%;
-    position: relative;
-  }
-  .header-hr.shield {
-    div {
-      width: 100%;
-      text-align: center;
-      z-index: 5;
-      position: absolute;
-      top: -25px;
-    }
-  }
-  .header-signedin {
-    z-index: 15;
-    color: $blue-lighter;
-    font-family: $font-headings;
-    font-weight: 600;
-    padding-top: 8px;
-    a, a:hover, a:active {
-      text-decoration: none;
-    }
-  }
-  .nav > li {
-    text-align: center;
-  }
-  .nav > li > a {
-    border-bottom: 2px solid transparent;
-  }
-  .nav > li > a:hover, .nav > li > a:focus {
-    border-bottom: 2px solid $blue-lighter;
-  }
-  .nav.nav-3 > li {
-    width: 33%;
-    @media (max-width: $screen-xs-max) {
-      width: 100%;
-    }
-  }
-  .nav.nav-4 > li {
-    width: 25%;
-    @media (max-width: $screen-xs-max) {
-      width: 100%;
-    }
-  }
-
-}
-header.auth {
-  margin-bottom: 40px;
-  .header-hr {
-    margin-top: 10px;
-  }
-  .header-signedin {
-    padding-top: 15px;
-  }
-}
-
-/*******************
-  Footer
-********************/
-footer {
-  position: absolute;
-  bottom: 0;
-  height: 5em;
-  width: 100%;
-  font-size: 12px;
-  border-top: 1px solid $gray-lighter;
-  margin-top: 20px;
-  padding: 10px;
-  .muted {
-    font-size: 10px;
-    width: 3%;
-  }
-  .nav > li, .nav-justified > li {
-    white-space: nowrap;
-    a:hover, a:focus {
-      font-weight: normal;
-      text-decoration: underline;
-    }
-  }
-}
-
-/*******************
-  MyUSA Button
-********************/
-/** SOCIAL BUTTONS **/
-.btn-social {
-  padding: 0;
-  margin-bottom: 15px;
-  line-height: 2.2em;
-}
-/** MyUSA Icon Font **/
-@font-face {
-  font-family: 'MyUSA';
-  src: font-url('MyUSA.eot?m9u969');
-  src: font-url('MyUSA.eot?#iefixm9u969') format('embedded-opentype'),
-    font-url('MyUSA.woff?m9u969') format('woff'),
-    font-url('MyUSA.ttf?m9u969') format('truetype'),
-    font-url('MyUSA.svg?m9u969#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-/** MyUSA Button **/
-.btn-myusa:before {
-  font-family: 'MyUSA';
-  content: "\e600";
-  border-right: 0.075em solid rgba(0,0,0,0.15);
-  float: left;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  font-size: 120%;
-  margin: 0 0.5em 0 0;
-  padding: 0 0.5em;
-}
-.btn-myusa {
-  background-color: $blue-lightest;
-  border-color: $blue;
-  color: $gray-lightest;
-  padding-right: 10px;
-}
-.btn-myusa:hover,
-.btn-myusa:focus {
-  background-color: $blue;
-  color: #ffffff;
-}
-.btn-myusa:active,
-.btn-myusa.active {
-  color: #ffffff;
-}
-.btn-myusa-white:before {
-  font-family: 'MyUSA';
-  color: #32689a;
-  content: "\e600";
-  border-right: 0.075em solid rgba(0,0,0,0.1);
-  float: left;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  font-size: 120%;
-  margin: 0 0.5em 0 0;
-  padding: 0 0.5em;
-}
-.btn-myusa-white {
-  background-color: #f5f5f5;
-  border-color: #d0d0d0;
-  color: $blue;
-}
-.btn-myusa-white:hover:before,
-.btn-myusa-white:focus:before {
-  color: #ffffff;
-}
-.btn-myusa-white:hover,
-.btn-myusa-white:focus {
-  background-color: $blue;
-  border-color: $blue-lightest;
-  color: #ffffff;
-}
-.btn-myusa-white:active:before,
-.btn-myusa-white:active,
-.btn-myusa-white.active {
-  color: #ffffff;
-}
-
-/***
- ** TODO:
- ** EVERYTHING BELOW IS OLD PROTOTYPING CSS AND SHOULD BE REMOVED
- **/
 
 /*******************
   Zocial
@@ -300,8 +91,52 @@ footer {
   font-style: normal;
 }
 
+body {
+  font-family: 'Open Sans', 'sans-serif';  
+}
+
+.main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -410px;
+  margin-top: -200px;
+  padding-left: 150px;
+  padding-right: 150px;
+  height: auto;
+  width: 820px;
+  z-index: 10;
+  /*box-shadow: 1px 1px 1px #888888;*/
+}
+
 .callout-box{
-  background-color: $gray-lightest;
+  background-color: $grey_accent;
+}
+
+.footer {
+  margin-top: -30px;
+  padding: 10px;
+  color: #808080;
+  font-size: 10px;
+}
+
+.attribution {
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  background-color: rgba(0,0,0, 0.7);
+  font-size: 10px;
+  padding: 5px;
+  color: #c0c0c0;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-right-radius: 5px;
+  border-top-color: #606060;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: #606060;
 }
 
 .content-signin,
@@ -321,7 +156,7 @@ div.moresignin {
   font-size: 12px
 }
 .moresignin > span {
-  display: inline-block;
+  display: inline-block;    
 }
 .moresignin > span:before,
 .moresignin > span:after {
@@ -398,6 +233,13 @@ div.moresignin {
   background-color: #112136;
   border-color: #28a4c9;
   color: #f0f0f0;
+}
+
+/** SOCIAL BUTTONS **/
+.btn.btn-social {
+  padding: 0;
+  margin-bottom: 15px;
+  line-height: 2.2em;
 }
 
 .btn-google:before {
@@ -583,9 +425,6 @@ div.moresignin {
 .hidden-buttons {
   display: none;
 }
-.hidden-label {
-  display: none;
-}
 .moresignin > span.less-options {
   display: none;
 }
@@ -642,6 +481,9 @@ div.moresignin {
   padding: 10px;
 }
 
+.pad-top{
+	top: 20px;
+}
 .my{
 	color: blue;
 }
@@ -678,4 +520,24 @@ div.moresignin {
     /*  pointer-events: none; */
     cursor: pointer;
     color:white;
+}
+
+
+
+
+
+.search-field::-webkit-input-placeholder {
+    color: green;
+}
+
+.search-field:-moz-placeholder {
+    color: white;
+}
+
+.search-field::-moz-placeholder {
+    color: white;
+}
+
+.search-field:-ms-input-placeholder {
+    color: white;
 }

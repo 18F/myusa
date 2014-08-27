@@ -12,5 +12,11 @@ module DeviseHelper
 
     html.html_safe
   end
-end
 
+  def client_app
+    @client_app ||= params[:client_id].presence &&
+                    Doorkeeper::Application.find_by_uid(params[:client_id])
+  end
+
+
+end

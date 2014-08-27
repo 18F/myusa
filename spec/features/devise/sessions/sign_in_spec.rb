@@ -166,7 +166,6 @@ describe "Sign In" do
       end
 
       shared_examples "omniauth" do
-
         it "redirects the user to the next point" do
           expect(@target_page).to be_displayed
           expect(@target_page.source).to match secret
@@ -177,7 +176,6 @@ describe "Sign In" do
           expect(@target_page).to be_displayed
           expect(@target_page.source).to match secret
         end
-
       end
 
       context "user has already signed in with google" do

@@ -159,6 +159,8 @@ en:
     about_you_heading: 'About You'
     update: 'Update Profile'
 
+  not_specified: Not Specified
+
   activerecord:
     models:
       profile: 'Profile'

@@ -70,7 +70,7 @@ module ScopesHelper
       current_user.profile.send(field)
     else
       if profile_options = profile_options_for_select(scope, value)
-        opts.merge!(include_blank: true)
+        opts.merge!(prompt: t(:not_specified))
         select_tag "profile[#{field}]", profile_options, opts
       else
         opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))

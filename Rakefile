@@ -3,7 +3,7 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-unless Rails.env.production || Rails.env.staging
+unless Rails.env.production? || Rails.env.staging?
   require 'rspec/core/rake_task'
 
   desc 'Default: run specs.'

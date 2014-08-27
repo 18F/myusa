@@ -10,7 +10,10 @@ module ProfilesHelper
       ['IV', 'IV']
     ]
   end
-
+  def suffix_options_for_select(value)
+    options_for_select(suffix_options, value)
+  end
+  
   def title_options
     [
       ['Mr.', 'Mr.'],
@@ -18,6 +21,9 @@ module ProfilesHelper
       ['Miss', 'Miss'],
       ['Ms.', 'Ms.']
     ]
+  end
+  def title_options_for_select(value)
+    options_for_select(title_options, value)
   end
 
   def us_state_options
@@ -76,12 +82,18 @@ module ProfilesHelper
       ['Wyoming', 'WY']
     ]
   end
+  def us_state_options_for_select(value)
+    options_for_select(us_state_options, value)
+  end
 
   def gender_options
     [
       ['Male', 'male'],
       ['Female', 'female']
     ]
+  end
+  def gender_options_for_select(value)
+    options_for_select(gender_options, value)
   end
 
   def marital_status_options
@@ -93,4 +105,8 @@ module ProfilesHelper
       ['Widowed', 'widowed']
     ]
   end
+  def maritial_status_options_for_select(value)
+    options_for_select(marital_status_options, value)
+  end
+
 end

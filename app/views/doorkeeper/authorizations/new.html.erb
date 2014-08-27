@@ -24,25 +24,8 @@
           <%= hidden_field_tag :response_type, @pre_auth.response_type %>
           <%= hidden_field_tag :original_scope, @pre_auth.scope %>
 
+          <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
-          <ul class="list-unstyled scope-list">
-            <% @pre_auth.scopes.each do |scope| %>
-              <li>
-                <h2 class="open"><%= t("doorkeeper.scopes.#{scope}") %></h2>
-                <div class="form-group">
-                  <label for="scope_<%= scope.gsub(/\./, '_') %>">
-                    <%= t("scopes.#{scope}.label") %>
-                  </label>
-                  <div>
-                    <% if scope.downcase.starts_with?("profile.") %>
-                      <%= scope_check_box_tag scope %>
-                      <%= profile_text_field scope, class:'form-control' %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            <% end %>
-          </ul>
           <div class="row">
             <div class="col-md-7 col-sm-8 col-xs-8">
               <%= submit_tag 'Allow Access', :class => 'btn btn-primary width-100'%>

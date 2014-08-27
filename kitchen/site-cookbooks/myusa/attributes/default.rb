@@ -14,3 +14,5 @@ default[:myusa][:database][:host] = 'localhost'
 default[:myusa][:database][:port] = '3306'
 default[:myusa][:database][:username] = 'myusa'
 default[:myusa][:database][:password] = 'secret!'
+
+default[:mysql][:database][:root_password] = ""

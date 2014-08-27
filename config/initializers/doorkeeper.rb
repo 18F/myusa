@@ -2,7 +2,7 @@ Doorkeeper.configure do
   orm :active_record
 
   resource_owner_authenticator do
-    current_user || warden.authenticate!(:scope => :user)
+    current_user || warden.authenticate!(scope: :user, client_id: params[:client_id])
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.

@@ -3,7 +3,7 @@ require 'feature_helper'
 describe 'OAuth' do
 
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
-  let(:client_app) { FactoryGirl.create(:application) }
+  let(:client_app) { FactoryGirl.create(:application, name: 'Test App') }
   let(:requested_scopes) { 'profile.email profile.last_name' }
 
   # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
@@ -48,6 +48,11 @@ describe 'OAuth' do
         expect(@sign_in_page).to be_displayed
       end
 
+      scenario 'it tells you why you\'re here' do
+        @sign_in_page = SignInPage.new
+        expect(@sign_in_page).to have_welcome
+        expect(@sign_in_page.welcome).to have_content('Welcome to MyUSA from Test App')
+      end
     end
 
     context 'when logged in' do

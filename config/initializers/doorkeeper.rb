@@ -1,3 +1,5 @@
+require 'audit_wrapper'
+
 Doorkeeper.configure do
   orm :active_record
 
@@ -115,6 +117,11 @@ Doorkeeper::Application.class_eval do
       errors.add(:scopes, 'Invalid scope')
     end
   end
+end
+
+Doorkeeper::AccessToken.class_eval do
+  belongs_to :resource_owner, class_name: User
+  AuditWrapper.audit_create(self, user_method: :resource_owner)
 end
 
 module Doorkeeper::OAuth::Helpers::ScopeChecker

@@ -1,0 +1,21 @@
+<ul class="list-unstyled scope-list">
+  <% scopes_by_group(scopes) do |group, scopes| %>
+    <li>
+      <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
+      <div class="form-group">
+        <h3><%= t("scope_groups.#{group}.subheading") %></h3>
+        <% scopes.each do |scope| %>
+          <div class="row top-buffer">
+            <div class="col-md-3">
+              <%= scope_label(scope) %>
+            </div>
+            <div class="col-md-9">
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+

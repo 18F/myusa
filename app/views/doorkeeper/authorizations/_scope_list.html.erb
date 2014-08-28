@@ -1,0 +1,19 @@
+<ul class="list-unstyled scope-list">
+  <% scopes_by_group(scopes) do |group, group_scopes| %>
+    <li>
+      <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
+      <div class="form-group">
+        <h3><%= t("scope_groups.#{group}.subheading") %></h3>
+        <% group_scopes.each do |scope| %>
+          <%= scope_field_label(scope) %>
+          <div>
+            <%= scope_check_box_tag scope %>
+            <span class="scope-value">
+              <%= scope_field_tag(scope, class: 'form-control') %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>

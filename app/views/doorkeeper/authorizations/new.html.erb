@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row scope-page">
   <div class="col-md-8 col-md-offset-2">
     <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
     <p class="subhead">Your MyUSA data is yours to grant or deny access at will.</p>
@@ -22,50 +22,10 @@
           <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
           <%= hidden_field_tag :state, @pre_auth.state %>
           <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+          <%= hidden_field_tag :original_scope, @pre_auth.scope %>
 
-          <ul class="list-unstyled scope-list">
-            <% @pre_auth_groups.each do |set| %>
-              <li>
-                <h2 class='open group'>
-                  <%= t("scope_groups.#{set[:name]}.header") %>
-                </h2>
-                <div class="label-pad">
-                  <span class="muted-minor">
-                    <%= t("scope_groups.#{set[:name]}.sub") %>
-                  </span>
-                  </br>
-                  <% set[:groups].each do |group| %>
-                    <div class='row top-buffer'>
-                      <div class = 'col-md-3'>
-                        <label>
-                        <%=t("group_labels.#{group[:label]}")%>
-                        </label>
-                      </div>
-                      <div class = 'col-md-9'>
-                      <% group[:group].each do |scope| %>
-                        <span class='label-pad'>
-                          <% if scope.downcase.starts_with?("profile.")  %>
-                            <% id = scope.downcase %>
-                            <%= label_tag id, t("scopes.#{id}.label"), class: 'hidden-label' %>
-                            <%= check_box_tag 'scope[]', scope, true, id: id, multiple: true%>
-                            <% if SELECT_MENU_SCOPES.include? scope %>
-                              <%= profile_select_menu scope, class:'form-control'%>
-                            <% else %>
-                              <%= profile_text_field scope, class:'form-control'%>
-                            <% end %>
-                          <% else %>
-                            <%= current_user.scope_field_value(scope)%></label>
-                          <% end %>
-                        </span>
-                      <% end %>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              </li>
-            <% end %>
-          </ul>
-          </br>
+          <%= render 'scope_list', scopes: @pre_auth.scopes %>
+
           <div class="row">
             <div class="col-md-3">
               <%= hidden_field_tag :user_id, current_user.id %>

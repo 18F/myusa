@@ -69,7 +69,7 @@ describe Devise::Strategies::EmailAuthenticatable do
       end
 
       it 'invalidates the token' do
-        expect(AuthenticationToken.find(@raw)).to_not be_valid
+        expect(AuthenticationToken.authenticate(@user, @raw)).to be_nil
       end
     end
 
@@ -93,20 +93,6 @@ describe Devise::Strategies::EmailAuthenticatable do
       let(:params) { { email: email, token: @raw } }
 
       include_examples 'good token'
-    end
-
-    context 'user requests many good tokens' do
-      let(:params) { { email: email, token: @raw } }
-
-      before :each do
-        @other_tokens = 5.times.map { AuthenticationToken.generate(user_id: @user.id, return_to: '/foobar') }
-      end
-
-      include_examples 'good token'
-
-      pending 'expires all tokens' do
-        expect(@other_tokens).to_not be_any(&:valid?)
-      end
     end
   end
 end

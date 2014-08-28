@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821154328) do
+ActiveRecord::Schema.define(version: 20140828201013) do
 
   create_table "app_oauth_scopes", force: true do |t|
     t.integer  "app_id"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20140821154328) do
 
   add_index "app_oauth_scopes", ["app_id"], name: "index_app_oauth_scopes_on_app_id", using: :btree
   add_index "app_oauth_scopes", ["oauth_scope_id"], name: "index_app_oauth_scopes_on_oauth_scope_id", using: :btree
+
+  create_table "authentication_tokens", force: true do |t|
+    t.integer  "user_id"
+    t.string   "token"
+    t.datetime "sent_at"
+    t.boolean  "remember_me"
+    t.string   "return_to"
+  end
+
+  add_index "authentication_tokens", ["token"], name: "index_authentication_tokens_on_token", unique: true, using: :btree
+  add_index "authentication_tokens", ["user_id"], name: "index_authentication_tokens_on_user_id", using: :btree
 
   create_table "authentications", force: true do |t|
     t.string   "provider"

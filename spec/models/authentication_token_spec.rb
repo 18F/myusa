@@ -1,81 +1,53 @@
 require 'rails_helper'
 
 describe AuthenticationToken, type: :model do
+  let(:user) { FactoryGirl.create(:user) }
 
   describe '#generate' do
     it 'generates a token' do
-      token = AuthenticationToken.generate(user_id: 1)
+      token = AuthenticationToken.generate(user: user)
       expect(token.token).to be
     end
 
-    it 'does not invalidate old tokens' do
-      token1 = AuthenticationToken.generate(user_id: 1)
-      token2 = AuthenticationToken.generate(user_id: 1)
-      expect(token1).to be_valid
-      expect(token2).to be_valid
+    context 'multiple tokens' do
+      before :each do
+        @tokens = 3.times.map { AuthenticationToken.generate(user: user) }
+      end
+
+      it 'old token is still valid' do
+        expect(AuthenticationToken.where(user, @tokens.first.raw)).to be
+      end
+
+      it 'new token is valid' do
+        expect(AuthenticationToken.where(user, @tokens.last.raw)).to be
+      end
     end
   end
 
-  describe '#save' do
-    let(:token) { AuthenticationToken.create(user_id: 1) }
-
-    it 'writes token to cache' do
-      expect(Rails.cache.fetch(AuthenticationToken.send(:cache_key, token.raw))).to be
-    end
-
-    it 'omits raw token' do
-      expect(Rails.cache.fetch(AuthenticationToken.send(:cache_key, token.raw))[:raw]).to be_nil
-    end
-  end
-
-  describe '#find' do #_by_user_id' do
+  describe '#authenticate' do
     it 'finds a token if there is one' do
-      token = AuthenticationToken.new(user_id: 1)
-      token.save
+      token = AuthenticationToken.generate(user: user)
 
-      found_token = AuthenticationToken.find(token.raw)
+      found_token = AuthenticationToken.authenticate(user, token.raw)
       expect(found_token).to be_a(AuthenticationToken)
-      expect(found_token.user_id).to eq(1)
-    end
-    it 'returns an empty token if none exists' do
-      expect(AuthenticationToken.find('foobar')).to be_a(AuthenticationToken)
-    end
-    it 'returns an empty token if nothing is passed' do
-      expect(AuthenticationToken.find(nil)).to be_a(AuthenticationToken)
-    end
-  end
-
-  describe '#delete' do
-    it 'destoys the cached token' do
-      token = AuthenticationToken.generate(user_id: 1)
-      token.delete
-      expect(Rails.cache.fetch(AuthenticationToken.send(:cache_key, token.raw))).to be_nil
-    end
-  end
-
-  describe '#valid?' do
-    context 'raw token is nil' do
-      it 'should be false' do
-        token = AuthenticationToken.new(user_id: 1)
-        token.raw = nil
-        expect(token).to_not be_valid
-      end
+      expect(found_token.user).to eq(user)
     end
 
-    context 'raw token is invalid' do
-      it 'should be false' do
-        token = AuthenticationToken.new(user_id: 1)
-        token.raw = 'foobar'
-        expect(token).to_not be_valid
-      end
+    it 'invalidates itself' do
+      token = AuthenticationToken.generate(user: user)
+
+      found_token = AuthenticationToken.authenticate(user, token.raw)
+
+      expect(AuthenticationToken.authenticate(user, token.raw)).to be_nil
     end
 
-    context 'raw token matches token' do
-      it 'should be true' do
-        token = AuthenticationToken.new(user_id: 1)
-        token.generate_token
-        expect(token).to be_valid
-      end
+    it 'invalidates other tokens' do
+      tokens = 3.times.map { AuthenticationToken.generate(user: user) }
+
+      AuthenticationToken.authenticate(user, tokens.first.raw)
+
+      expect(AuthenticationToken.authenticate(user, tokens.second.raw)).to be_nil
+      expect(AuthenticationToken.authenticate(user, tokens.third.raw)).to be_nil
     end
   end
 

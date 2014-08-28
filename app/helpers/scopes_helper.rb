@@ -33,8 +33,20 @@ module ScopesHelper
     end
   end
 
+  def scope_tag(scope)
+    yield(scope.gsub(/\./, '_'), t("scopes.#{scope}.label"))
+  end
+
   def scope_field_label(scope)
-    label :scope, scope.gsub(/\./, '_'), t("scopes.#{scope}.label")
+    scope_tag(scope) do |id, display|
+      label :scope, id, display
+    end
+  end
+
+  def scope_label(scope)
+    scope_tag(scope) do |id, display|
+      label_tag nil, display, id: id
+    end
   end
 
   def profile_options_for_select(scope, value)
@@ -78,5 +90,4 @@ module ScopesHelper
       end
     end
   end
-
 end

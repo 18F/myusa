@@ -90,7 +90,7 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
-          @auth_page.profile_email_checkbox.set(false)
+          @auth_page.uncheck('Email')
           @auth_page.allow_button.click
 
           code = @token_page.code.text

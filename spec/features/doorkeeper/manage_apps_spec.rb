@@ -3,7 +3,16 @@ require 'feature_helper'
 
 describe 'OAuth' do
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
-  let(:client_app) { FactoryGirl.create(:application, name: 'Client App 1') }
+
+  scopes = 'profile.email profile.title profile.first_name ' \
+  'profile.middle_name profile.last_name profile.phone_number profile.suffix ' \
+  'profile.address profile.address2 profile.zip profile.gender ' \
+  'profile.marital_status profile.is_parent profile.is_student ' \
+  'profile.is_veteran profile.is_retired'
+
+  let(:client_app) do
+    FactoryGirl.create(:application, name: 'Client App 1', scopes: scopes)
+  end
   let(:client_app2) { FactoryGirl.create(:application, name: 'Client App 2') }
   let(:requested_scopes) { 'profile.email profile.last_name' }
 
@@ -11,16 +20,21 @@ describe 'OAuth' do
   # Capybara context. More detail here:
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
+    OAuth2::Client.new(client_app.uid,
+                       client_app.secret,
+                       site: 'http://www.example.com') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application
     end
   end
 
   let(:oauth_client2) do
-    # Set up an OAuth2::Client instance for HTTP calls that happen outside of the Capybara context.
+    # Set up an OAuth2::Client instance for HTTP calls that happen outside of
+    # the Capybara context.
     # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
-    OAuth2::Client.new(client_app2.uid, client_app2.secret, site: 'http://www.example.com/2') do |b|
+    OAuth2::Client.new(client_app2.uid,
+                       client_app2.secret,
+                       site: 'http://www.example.com/2') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application
     end
@@ -86,7 +100,9 @@ describe 'OAuth' do
         code = @token_page.code.text
 
         # Turn the code into a token
-        token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+        token = oauth_client.auth_code.get_token(
+          code, redirect_uri: client_app.redirect_uri
+        )
         expect(token).to_not be_expired
         client_app.redirect_uri = 'http://localhost:3000'
         client_app.save!
@@ -100,7 +116,9 @@ describe 'OAuth' do
         code = @token_page.code.text
 
         # Turn the code into a token
-        token = oauth_client2.auth_code.get_token(code, redirect_uri: client_app2.redirect_uri)
+        token = oauth_client2.auth_code.get_token(
+          code, redirect_uri: client_app2.redirect_uri
+        )
         expect(token).to_not be_expired
 
         @auths_page.load

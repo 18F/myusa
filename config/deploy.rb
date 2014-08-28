@@ -24,6 +24,7 @@ set :default_shell, '/bin/bash -l'
 set :use_sudo, false
 set :keep_releases, 6
 set :scm, :git
+set :port, 22
 
 set :bundle_without, [ :development, :test, :deploy ]
 

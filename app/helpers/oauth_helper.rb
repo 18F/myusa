@@ -6,41 +6,6 @@ module OauthHelper
     )
   end
 
-  def profile_field(field_type, scope, options={})
-    field = Profile.attribute_from_scope(scope)
-    value = current_user.profile.send(field)
-    menu_options = select_options(scope)
-    if value.present? || value == false
-      value = menu_options.find { |o| o[1].to_s == value.to_s }.try(:first) if field_type.to_s == 'select'
-      return value
-    else
-      options.merge!(placeholder: t("scopes.#{scope}.placeholder"))
-      if field_type.to_s == 'select'
-        options.merge!(include_blank: true, placeholder: t("scopes.#{scope}.placeholder"))
-        select_tag "profile[#{field}]", options_for_select(menu_options, value), options
-      else
-        text_field_tag "profile[#{field}]", value, options
-      end
-    end
-  end
-
-  def profile_text_field(scope, options={})
-    profile_field('text', scope, options)
-  end
-
-  def profile_select_menu(scope, options={})
-    profile_field('select', scope, options)
-  end
-
-  def select_options(scope)
-    return gender_options         if scope.match(/gender/)
-    return marital_status_options if scope.match(/marital/)
-    return title_options          if scope.match(/title/)
-    return suffix_options         if scope.match(/suffix/)
-    return us_state_options       if scope.match(/state/)
-    return yes_no_options         if scope.match(/(is_parent|is_retired|is_student|is_veteran)/)
-  end
-
   def oauth_deny_link(pre_auth, text, options={})
     error = Doorkeeper::OAuth::ErrorResponse.new(
       state: pre_auth.state,
@@ -63,4 +28,5 @@ module OauthHelper
       scope: pre_auth.scope
     )
   end
+
 end

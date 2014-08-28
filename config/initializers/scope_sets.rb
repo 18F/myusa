@@ -7,18 +7,17 @@ SCOPE_SETS = {
                       label: 'title', group: ['profile.title']
                     },
                     {
-                      label: 'First name', group: %w(profile.first_name)
+                      label: 'first_name', group: ['profile.first_name']
                     },
                     {
-                      label: 'Middle name', group: %w(profile.middle_name)
+                      label: 'middle_name', group: ['profile.middle_name']
                     },
                     {
-                      label: 'Last name', group: %w(profile.last_name)
+                      label: 'last_name', group: ['profile.last_name']
                     },
-
                     {
                       label: 'suffix', group: ['profile.suffix']
-                    },
+                    }
                   ],
     address:      [
                     {
@@ -39,14 +38,12 @@ SCOPE_SETS = {
     identifiers:  [
                     {
                       label: 'gender', group: ['profile.gender']
-
                     },
                     {
                       label: 'marital_status', group: ['profile.marital_status']
                     },
                     {
                       label: 'is_parent', group: ['profile.is_parent']
-
                     },
                     {
                       label: 'is_student', group: ['profile.is_student']
@@ -57,8 +54,7 @@ SCOPE_SETS = {
                     {
                       label: 'is_retired', group: ['profile.is_retired']
                     }
-
                   ]
 }
 
-SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran is_retired)
+SELECT_MENU_SCOPES = %w(profile.gender profile.marital_status profile.state profile.suffix profile.title profile.is_parent profile.is_student profile.is_veteran profile.is_retired)

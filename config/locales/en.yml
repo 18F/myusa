@@ -21,20 +21,22 @@
 
 en:
   group_labels:
-    email:    'Email'
-    title:    'Title'
-    name:     'Name'
-    suffix:   'Suffix'
-    address:  'Address'
-    address2: ''
-    address3: ''
-    phone:    'Phone'
-    gender:   'Gender'
-    marital_status: 'Marital Status'
+    email:          'Email'
+    title:          'Title'
+    first_name:     'First name'
+    middle_name:    'Middle name'
+    last_name:      'Last name'
+    suffix:         'Suffix'
+    address:        'Address'
+    address2:       ''
+    address3:       ''
+    phone:          'Phone'
+    gender:         'Gender'
+    marital_status: 'Marital status'
     is_parent:      'Parent status'
     is_student:     'Student status'
     is_veteran:     'Veteran status'
-
+    is_retired:     'Retired status'
 
   scope_groups:
     email:
@@ -114,14 +116,14 @@ en:
         label: 'Parent status'
         placeholder: 'Enter your parent status'       
       is_student: 
-        label: 'student status'
+        label: 'Student status'
         placeholder: 'Enter your student status'       
       is_veteran: 
-        label: 'veteran status'
+        label: 'Veteran status'
         placeholder: 'Enter your veteran status'       
       is_retired: 
-        label: 'Retiree status'
-        placeholder: 'Enter your retiree status'
+        label: 'Retired status'
+        placeholder: 'Enter your retired status'
 
   cancel: 'Cancel'
   profile:

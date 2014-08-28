@@ -40,22 +40,36 @@ describe Devise::Strategies::EmailAuthenticatable do
       @raw = @token.raw
 
       allow(subject).to receive(:session).and_return(session)
+
+      subject.authenticate!
     end
 
     shared_context 'bad token' do
       it 'does not set the user' do
-        subject.authenticate!
         expect(subject.user).to be_nil
       end
 
       it 'fails' do
-        subject.authenticate!
         expect(subject.result).to eq(:failure)
       end
 
       it 'sets messgae' do
-        subject.authenticate!
         expect(subject.message).to eq(:invalid_token)
+      end
+    end
+
+    shared_context 'good token' do
+
+      it 'sets the user' do
+        expect(subject.user).to be
+      end
+
+      it 'halts warden' do
+        expect(subject).to be_halted
+      end
+
+      it 'invalidates the token' do
+        expect(AuthenticationToken.find(@raw)).to_not be_valid
       end
     end
 
@@ -78,19 +92,20 @@ describe Devise::Strategies::EmailAuthenticatable do
     context 'valid email and token combination' do
       let(:params) { { email: email, token: @raw } }
 
-      it 'sets the user' do
-        subject.authenticate!
-        expect(subject.user).to be
+      include_examples 'good token'
+    end
+
+    context 'user requests many good tokens' do
+      let(:params) { { email: email, token: @raw } }
+
+      before :each do
+        @other_tokens = 5.times.map { AuthenticationToken.generate(user_id: @user.id, return_to: '/foobar') }
       end
 
-      it 'halts warden' do
-        subject.authenticate!
-        expect(subject).to be_halted
-      end
+      include_examples 'good token'
 
-      it 'invalidates the token' do
-        subject.authenticate!
-        expect(AuthenticationToken.find(@raw)).to_not be_valid
+      pending 'expires all tokens' do
+        expect(@other_tokens).to_not be_any(&:valid?)
       end
     end
   end

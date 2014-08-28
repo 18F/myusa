@@ -1,12 +1,5 @@
 {
-	"run_list":[ "role[bare_bones]", "myusa::database", "myusa::app"],
-	"authorization": {
-			"sudo": {
-				"groups": ["adm", "wheel"],
-				"users": ["vagrant"],
-				"passwordless": true
-			}
-	},
+	"run_list":[ "role[vagrant]"],
 	"ntp": {
 		"apparmor_enabled": false
 	},

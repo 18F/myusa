@@ -8,7 +8,7 @@ describe "Sign In" do
     end
 
     it "has an app slogan" do
-      expect(@page.slogan.text).to match("Your one account for all government")
+      expect(@page.slogan.text).to match("one account for government")
     end
 
     describe '"More Options" button,', js: true do
@@ -53,7 +53,6 @@ describe "Sign In" do
         visit new_user_session_path(email: user.email, token: 'foobar')
 
         @target_page.load
-        puts page.current_url
         expect(@sign_in_page).to be_displayed
       end
     end

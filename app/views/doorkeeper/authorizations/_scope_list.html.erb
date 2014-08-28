@@ -8,7 +8,9 @@
           <%= scope_field_label(scope) %>
           <div>
             <%= scope_check_box_tag scope %>
-            <%= scope_field_tag(scope, class:'form-control') %>
+            <span class="scope-value">
+              <%= scope_field_tag(scope, class:'form-control') %>
+            </span>
           </div>
         <% end %>
       </div>

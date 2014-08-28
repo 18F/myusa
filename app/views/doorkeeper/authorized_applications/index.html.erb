@@ -44,7 +44,7 @@
                       <% set[:groups].each do |group| %>
                         <div class="row top-buffer">
                           <div class="col-md-3">
-                            <%= label_tag nil, t("group_labels.#{group[:label]}") %>
+                            <%= label_tag nil, t("group_labels.#{group[:label]}"), id: group[:label] %>
                           </div>
                           <div class="col-md-9">
                           </div>

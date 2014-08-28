@@ -6,8 +6,8 @@ ssh_options[:keys] = [ENV['AWS_KEY_PAIR_PATH']]
 set :rails_env, :staging
 set :ip, ENV['MYUSA_STAGING']
 set :port, 22
-set :deployer, 'ubuntu'
-set :user, 'ubuntu'
+set :deployer, 'myusa'
+set :user, 'myusa'
 
 #
 # Server Role Definitions

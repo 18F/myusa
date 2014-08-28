@@ -94,6 +94,26 @@ Set up your `knife` configuration:
 cp .chef/knife.rb.example .chef/knife.rb
 ```
 
+Create a data bag key. You'll use this key to encrypt secrets that are
+decrypted on the deployment hosts, so keep it somewhere safe:
+```sh
+openssl rand -base64 512 | tr -d '\r\n' > .databag_secret
+```
+
+Create an initial data bag based on our example:
+
+```sh
+knife solo data bag create secrets myusa --json-file secrets.json.example
+```
+
+Our defaults for encryption and passwords should work fine for testing. However,
+you may want to change them, or add credentials for Amazon SES (mail service)
+or Google (authentication). To edit the file:
+
+```sh
+knife solo data bag create secrets myusa
+```
+
 Each ec2 node you're planning to deploy needs its own JSON file in the `nodes/`
 folder. Each node can take one of three available roles:
 * Database server
@@ -109,10 +129,15 @@ deployment.
 
 For each host, create a JSON node file:
 ```sh
-cp kitchen/nodes/ec2.json.example kitchen/nodes/<host name>.json
+cp kitchen/nodes/<host type>.json.example kitchen/nodes/<host name>.json
 ```
 
-Edit the file and uncomment lines accordingly.
+Note that `app` and `all-in-one` node files have placeholders that need to be
+filled out before they can be used:
+ * `SSH PUBLIC KEY GOES HERE`: So they deployment script can log in as
+   the `myusa` user.
+ * `DATABASE ADDRESS GOES HERE`: So the app server can connect to the database.
+   (This is only needed in the `app` node file.)
 
 Then use `knife` to create each EC2 host and build the environment:
 

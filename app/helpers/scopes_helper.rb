@@ -66,8 +66,8 @@ module ScopesHelper
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
 
-    if value.present?
-      current_user.profile.send(field)
+    if !value.nil? && value != '' 
+      profile_display_value(field, current_user.profile.send(field))
     else
       if profile_options = profile_options_for_select(scope, value)
         opts.merge!(prompt: t(:not_specified))

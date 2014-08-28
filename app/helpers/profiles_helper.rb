@@ -13,7 +13,7 @@ module ProfilesHelper
   def suffix_options_for_select(value)
     options_for_select(suffix_options, value)
   end
-  
+
   def title_options
     [
       ['Mr.', 'Mr.'],
@@ -107,6 +107,27 @@ module ProfilesHelper
   end
   def maritial_status_options_for_select(value)
     options_for_select(marital_status_options, value)
+  end
+
+  def profile_display_value(field, value)
+    case field
+    when :state
+      us_state_options.map(&:reverse).to_h[value]
+    when :gender
+      gender_options.map(&:reverse).to_h[value]
+    when :marital_status
+      marital_status_options.map(&:reverse).to_h[value]
+    when :is_parent
+      value ? 'Yes' : 'No'
+    when :is_student
+      value ? 'Yes' : 'No'
+    when :is_veteran
+      value ? 'Yes' : 'No'
+    when :is_retired
+      value ? 'Yes' : 'No'
+    else
+      value
+    end
   end
 
 end

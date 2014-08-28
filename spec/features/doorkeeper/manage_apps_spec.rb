@@ -129,12 +129,12 @@ describe 'OAuth' do
         expect(@auths_page.first_app.app_name).to have_content 'Client App 1'
         expect(@auths_page.second_app.app_name).to have_content 'Client App 2'
         expect(@auths_page.first_app.app_scopes.map(&:text)).to eq(
-          ['Email', 'Title', 'First name', 'Middle name', 'Last name',
-           'Suffix', 'Address', '', '', 'Phone', 'Gender', 'Marital status',
-           'Parent status', 'Student status', 'Veteran status',
-           'Retired status'])
+          ['Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
+           'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
+           'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
+           'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'])
         expect(@auths_page.second_app.app_scopes.map(&:text)).to eq(
-          ['Email', '', 'Phone', 'Gender'])
+          ['Email Address', 'Zip Code', 'Phone Number', 'Gender'])
       end
     end
   end

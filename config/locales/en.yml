@@ -20,40 +20,22 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  group_labels:
-    email:          'Email'
-    title:          'Title'
-    first_name:     'First name'
-    middle_name:    'Middle name'
-    last_name:      'Last name'
-    suffix:         'Suffix'
-    address:        'Address'
-    address2:       ''
-    address3:       ''
-    phone:          'Phone'
-    gender:         'Gender'
-    marital_status: 'Marital status'
-    is_parent:      'Parent status'
-    is_student:     'Student status'
-    is_veteran:     'Veteran status'
-    is_retired:     'Retired status'
-
   scope_groups:
     email:
-      header: 'Identify you by your email address'
-      sub:    'Providing your email address will let the application contact you directly'
+      description: Identify you by your email address
+      subheading: Providing your email address will let the application contact you directly
     name:
-      header: 'Address you by name'
-      sub:    'Your name is used to greet you or identify you for government services'
+      description: Address you by name
+      subheading: Your name is used to greet you or identify you for government services
     address:
-      header: 'Know where you live'
-      sub:    'Information can be tailored for you based on your location'
+      description: Know where you live
+      subheading: Information can be tailored for you based on your location
     phone:
-      header: 'Know how to contact you by phone or text message'
-      sub:    'Phone numbers can be used to contact you'
+      description: Know how to contact you by phone or text message
+      subheading: Phone numbers can be used to contact you
     identifiers:
-      header: 'Find out more about you'
-      sub:    'Self identifiers aid in customizing your experience'
+      description: Find out more about you
+      subheading: Self identifiers aid in customizing your experience
 
   scopes:
     verify_credentials:
@@ -62,68 +44,108 @@ en:
       desc: Verify Credentials
     profile:
       label: 'Profile'
+      hint: ""
+      desc: 'Read your profile information'
       placeholder: 'Enter your profile information'
       default:
         label: Credentials
         hint: This allows the app to verify your credentials
         desc: Verify Credentials
-      email: 
-        label: 'Email'
+      email:
+        label: 'Email Address'
+        hint: ""
+        desc: 'Read your email address'
         placeholder: 'Enter your email address'
-      title: 
+      title:
         label: 'Title'
+        hint: ""
+        desc: 'Read your title (Mr./Mrs./Miss, etc.)'
         placeholder: 'Enter your title (Mr./Mrs./Miss, etc.)'
-      first_name: 
-        label: 'First name'
+      first_name:
+        label: 'First Name'
+        hint: ""
+        desc: 'Read your first name'
         placeholder: 'Enter your first name'
-      middle_name: 
-        label: 'Middle name'
+      middle_name:
+        label: 'Middle Name'
+        hint: ""
+        desc: 'Read your middle name'
         placeholder: 'Enter your middle name'
-      last_name: 
-        label: 'Last name'
+      last_name:
+        label: 'Last Name'
+        hint: ""
+        desc: 'Read your last name'
         placeholder: 'Enter your last name'
-      suffix: 
+      suffix:
         label: 'Suffix'
+        hint: ""
+        desc: 'Read your suffix (Sr./Jr./III, etc.)'
         placeholder: 'Enter your suffix (Sr./Jr./III, etc.)'
-      address: 
-        label: 'Address'
+      address:
+        label: 'Home Address'
+        hint: ""
+        desc: 'Read your address'
         placeholder: 'Enter your address'
-      address2: 
-        label: 'Address (2)'
+      address2:
+        label: 'Home Address (Line 2)'
+        hint: ""
+        desc: 'Read your address (2)'
         placeholder: 'Enter your address (2)'
-      city: 
+      city:
         label: 'City'
+        hint: ""
+        desc: 'Read your city'
         placeholder: 'Enter your city'
-      state: 
+      state:
         label: 'State'
+        hint: ""
+        desc: 'Read your State'
         placeholder: 'Enter your state'
-      zip: 
-        label: 'Zip code'
+      zip:
+        label: 'Zip Code'
+        hint: ""
+        desc: 'Read your zip code'
         placeholder: 'Enter your zip code'
-      phone_number: 
-        label: 'Phone number'
+      phone_number:
+        label: 'Phone Number'
+        hint: ""
+        desc: 'Read your phone number'
         placeholder: 'Enter your phone number'
-      mobile_number: 
-        label: 'Mobile number'
-        placeholder: 'Enter your mobile number'      
-      gender: 
+      mobile_number:
+        label: 'Mobile Number'
+        hint: ""
+        desc: 'Read your mobile number'
+        placeholder: 'Enter your mobile number'
+      gender:
         label: 'Gender'
+        hint: ""
+        desc: 'Read your gender'
         placeholder: 'Enter your gender'
-      marital_status: 
-        label: 'Marital status'
+      marital_status:
+        label: 'Marital Status'
+        hint: ""
+        desc: 'Read your marital status'
         placeholder: 'Enter your marital status'
-      is_parent: 
-        label: 'Parent status'
-        placeholder: 'Enter your parent status'       
-      is_student: 
-        label: 'Student status'
-        placeholder: 'Enter your student status'       
-      is_veteran: 
-        label: 'Veteran status'
-        placeholder: 'Enter your veteran status'       
-      is_retired: 
-        label: 'Retired status'
-        placeholder: 'Enter your retired status'
+      is_parent:
+        label: 'Are you a Parent?'
+        hint: ""
+        desc: 'Read your parent status'
+        placeholder: 'Enter your parent status'
+      is_student:
+        label: 'Are you a Student?'
+        hint: ""
+        desc: 'Read your student status'
+        placeholder: 'Enter your student status'
+      is_veteran:
+        label: 'Are you a Veteran?'
+        hint: ""
+        desc: 'Read your veteran status'
+        placeholder: 'Enter your veteran status'
+      is_retired:
+        label: 'Are you Retired?'
+        hint: ""
+        desc: 'Read your retiree status'
+        placeholder: 'Enter your retiree status'
 
   cancel: 'Cancel'
   profile:
@@ -136,6 +158,8 @@ en:
     marital_status_heading: 'Marital Status'
     about_you_heading: 'About You'
     update: 'Update Profile'
+
+  not_specified: Not Specified
 
   activerecord:
     models:

@@ -124,7 +124,9 @@ module OAuthValidations
   end
 
   def validate_scopes
-    super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
+    return true unless scope.present?
+    Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, server.scopes) &&
+      Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
   end
 
   def validate_client

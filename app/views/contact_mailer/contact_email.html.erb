@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>New message from <%= @message['from'] %></h1>
+    <p>
+      <%= @message['message'] %>
+    </p>
+    <p>
+      Return address: <%= @message['return_field'] %>.
+    </p>
+  </body>
+</html>

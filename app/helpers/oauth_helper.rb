@@ -6,17 +6,6 @@ module OauthHelper
     )
   end
 
-  def profile_text_field(scope, options={})
-    field = Profile.attribute_from_scope(scope)
-    value = current_user.profile.send(field)
-    if value.present?
-      return current_user.profile.send(field)
-    else
-      options.merge!(placeholder: t("scopes.#{scope}.placeholder"), disabled: value.present?)
-      text_field_tag "profile[#{field}]", current_user.profile.send(field), options
-    end
-  end
-
   def oauth_deny_link(pre_auth, text, options={})
     error = Doorkeeper::OAuth::ErrorResponse.new(
       state: pre_auth.state,
@@ -39,4 +28,5 @@ module OauthHelper
       scope: pre_auth.scope
     )
   end
+
 end

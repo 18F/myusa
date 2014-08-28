@@ -1,3 +1,4 @@
+<%= yield :welcome %>
 <header class="auth">
   <div class="container">
     <div class="row">
@@ -10,10 +11,15 @@
         <% end %>
       </div>
     </div>
+    <% if shield %>
     <div class="header-hr shield">
       <div>
         <%= image_tag "myusa-shield.png", :alt => 'MyUSA Shield Logo' %>
       </div>
     </div>
+    <% else %>
+    <div class="header-hr">
+    </div>
+    <% end %>
   </div>
 </header>

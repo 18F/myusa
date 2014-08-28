@@ -1,6 +1,4 @@
 # HomeController
 class HomeController < ApplicationController
-	
-	layout "marketing", only: [:index]
-	
+  layout 'marketing', only: [:index]
 end

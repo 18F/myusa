@@ -3,9 +3,17 @@ class AuthenticationToken < ActiveRecord::Base
 
   attr_accessor :raw
 
+  before_create {|t| t.sent_at = Time.now }
+
+  default_scope -> { where(['sent_at > ?', Time.now - 2.hours]) }
+
+  scope :expired, -> { unscoped.where(['sent_at < ?', Time.now - 2.hours]) }
+
   def self.authenticate(user, raw)
     digested = Devise.token_generator.digest(self, :token, raw)
-    if token = AuthenticationToken.where(user: user, token: digested).first
+    token = user.authentication_tokens.find_by_token(digested)
+
+    if token
       user.authentication_tokens.delete_all
       token
     else

@@ -2,6 +2,31 @@ require 'rails_helper'
 
 describe AuthenticationToken, type: :model do
   let(:user) { FactoryGirl.create(:user) }
+  let(:date) { Date.new(1999, 12, 31) }
+
+  before(:each) { Timecop.freeze(date) }
+  after(:each) { Timecop.return }
+
+  describe 'default scope' do
+    it 'does not find expired tokens' do
+      AuthenticationToken.create(user: user)
+      Timecop.travel(date + 6.hours)
+      expect(AuthenticationToken.all).to be_empty
+    end
+  end
+
+  describe '#expired' do
+    it 'finds only expired tokens' do
+      old_token = AuthenticationToken.create(user: user)
+      Timecop.travel(date + 6.hours)
+      new_token = AuthenticationToken.create(user: user)
+
+      expired_tokens = AuthenticationToken.expired.all
+
+      expect(expired_tokens).to include(old_token)
+      expect(expired_tokens).to_not include(new_token)
+    end
+  end
 
   describe '#generate' do
     it 'generates a token' do
@@ -31,6 +56,13 @@ describe AuthenticationToken, type: :model do
       found_token = AuthenticationToken.authenticate(user, token.raw)
       expect(found_token).to be_a(AuthenticationToken)
       expect(found_token.user).to eq(user)
+    end
+
+    it 'fails for expired token' do
+      token = AuthenticationToken.generate(user: user)
+
+      Timecop.travel(date + 6.hours)
+      expect(AuthenticationToken.authenticate(user, token.raw)).to be_nil
     end
 
     it 'invalidates itself' do

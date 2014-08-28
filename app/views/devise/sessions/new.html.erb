@@ -1,42 +1,73 @@
+<% if client_app %>
+  <% content_for :welcome do %>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span><span class="sr-only">Close</span></button>
+      <div class="container">
+        <strong>Welcome to MyUSA from <%= client_app.name %></strong>
+        <p>
+          Create a MyUSA account or log in to MyUSA to continue using <%= client_app.name %>.
+          <%= link_to "Learn more about MyUSA.", "/", :class => "alert-link", :target => "_blank" %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
 <div class="row">
-	<div class="main callout-box">
-		<div class="row">
-			<h2 class="col-md-12 text-center">Login to MyUSA</h2>
-		</div>
-		<div class="row">
-			<h5 class="col-md-12 text-center slogan">Your one account for all government</h5>
-		</div>
-		<div class="row">
-			<p class="col-md-12 text-center text-muted"><small>By signing in with MyUSA, you accept our <a><s>terms and conditions</s></a></small></p>
-		</div>
-		<div class="row">
-			<div class="row">
-	        	<div class="col-md-12">
-	        		<%= bs_button_to "Sign In with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-google fullwidth" %>
-	          	</div>
-	        </div>
-	        <div class="hidden-buttons">
-	        	<%= render 'devise/sessions/more_options'%>
-	        </div>
-	        <noscript>
-	        	<%= render 'devise/sessions/more_options'%>
-	        </noscript>
+<div class="col-md-10 col-md-offset-1">
 
+<div class="login callout-box">
+  <div class="shield">
+    <i class="fa icon-myusa"></i>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">
+        Connect to MyUSA
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center">
+        Your one account for government
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 omniauth-buttons text-center">
+      <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-lg btn-google" %>
+    </div>
+    <div class="col-md-12 hidden-buttons">
+      <%= render 'devise/sessions/email_option'%>
+    </div>
+  </div>
+  <noscript>
+    <h2> or sign up with your email address </h2>
+    <%= render 'devise/sessions/email_option'%>
+  </noscript>
+  <div class="row text-center">
+    <div class="col-md-12 text-muted">
+      <p>
+      By using MyUSA you accept the <%= link_to "Terms and Conditions", "#" %>.
+      <br/>
+      This is an official website of the US Government.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 more-signin">
+      <span class="more-options">
+        <a href="#email" class="btn btn-primary btn-sm connect-option"> or Connect with your Email Address</a>
+      </span>
+      <span class="less-options">
+        <a href="#" class="btn btn-social btn-sm btn-google connect-option">or Connect with Google</a>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="row login-buffer">
+</div>
 
-	        <div class="row">
-	          <div class="col-md-12 moresignin">
-	            <span class="more-options">
-	              <a href="#">
-	              	<button class="btn btn-primary btn-sm"><i class="fa fa-chevron-circle-down"></i> More Options</button>
-	              </a>
-	            </span>
-	            <span class="less-options">
-	              <a href="#">
-	              <button class="btn btn-primary btn-sm"><i class="fa fa-chevron-circle-up"></i> Less Options</button>
-	              </a>
-	            </span>
-	          </div>
-	        </div>
-		</div>
-	</div>
+</div>
 </div>

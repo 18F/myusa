@@ -1,3 +1,5 @@
+require 'failure_app'
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -236,6 +238,7 @@ Devise.setup do |config|
   # change the failure app, you can configure them inside the config.warden block.
   #
   config.warden do |manager|
+    manager.failure_app = FailureApp
     manager.default_strategies(scope: :user).unshift :email_authenticatable
   end
 

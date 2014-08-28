@@ -9,6 +9,10 @@ class ProfilePage < SitePrism::Page
   elements :profile_properties, '.list-group-item'
 
   def first_name
-    profile_properties[1]
+    profile_properties[1].text.sub(/^First name\W*/, '')
+  end
+
+  def is_student
+    profile_properties[17].text.sub(/^Student\W*/, '')
   end
 end

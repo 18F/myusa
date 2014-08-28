@@ -8,4 +8,5 @@ class EditProfilePage < SitePrism::Page
 
   element :first_name, '#profile_first_name'
   element :submit, 		 'input[type="submit"][value="Update Profile"]'
+  element :is_student, '#profile_is_student'
 end

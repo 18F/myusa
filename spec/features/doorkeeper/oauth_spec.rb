@@ -3,7 +3,7 @@ require 'feature_helper'
 describe 'OAuth' do
 
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
-  let(:client_app) { FactoryGirl.create(:application) }
+  let(:client_app) { FactoryGirl.create(:application, name: 'Test App') }
   let(:requested_scopes) { 'profile.email profile.last_name' }
 
   # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
@@ -32,6 +32,27 @@ describe 'OAuth' do
     end
   end
 
+  shared_examples 'uses existing authorization' do
+    it 'skips authorization' do
+      token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+      expect(token).to_not be_expired
+    end
+  end
+
+  before :each, authorized: true do
+    FactoryGirl.create(:access_token,
+                        application: client_app,
+                        resource_owner_id: user.id)
+  end
+
+  before :each, logged_in: true do
+    login user
+  end
+
+  before :each do
+    visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
+  end
+
   describe 'Authorization' do
     before :each do
       @auth_page = OAuth2::AuthorizationPage.new
@@ -39,35 +60,26 @@ describe 'OAuth' do
     end
 
     context 'when not logged in' do
-      before :each do
-        visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
-      end
-
       scenario 'redirects to login page' do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to be_displayed
       end
 
+      scenario 'it tells you why you\'re here' do
+        @sign_in_page = SignInPage.new
+        expect(@sign_in_page).to have_welcome
+        expect(@sign_in_page.welcome).to have_content('Welcome to MyUSA from Test App')
+      end
     end
 
-    context 'when logged in' do
-      before :each do
-        login user
-        visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
-      end
-
+    context 'when logged in', logged_in: true do
       context 'with valid url params' do
         scenario 'user can authorize' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
           @auth_page.allow_button.click
 
-          # Retrieve the code
-          expect(@token_page).to be_displayed
-          code = @token_page.code.text
-
-          # Turn the code into a token
-          token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
           expect(token).to_not be_expired
         end
 
@@ -118,9 +130,40 @@ describe 'OAuth' do
             expect(@auth_page.flash_error_message).to have_content("Phone number")
           end
         end
+
+        context 'when no scopes are requested' do
+          let(:requested_scopes) { '' }
+          it_behaves_like 'uses existing authorization'
+        end
       end
 
-      context "with lots of scopes" do
+      context 'when user is already authorized', authorized: true do
+
+        context 'with the same set of scopes requested' do
+          let(:authorized_scopes) { requested_scopes }
+          it_behaves_like 'uses existing authorization'
+        end
+
+        context 'with additional scopes authorized' do
+          let(:authorized_scopes) { "#{requested_scopes} profile.address" }
+          it_behaves_like 'uses existing authorization'
+        end
+
+        context 'when no scopes are requested' do
+          let(:authorized_scopes) { 'profile.email' }
+          let(:requested_scopes) { '' }
+          it_behaves_like 'uses existing authorization'
+        end
+
+        context 'when requested scopes are not part of authorization' do
+          let(:authorized_scopes) { 'profile.email' }
+          it 'prompts user for new authorization' do
+            expect(@auth_page).to be_displayed
+          end
+        end
+      end
+
+      context 'with lots of scopes' do
         let(:scopes) do
           'profile.email profile.title profile.first_name profile.middle_name ' \
           'profile.last_name profile.phone_number profile.suffix profile.address ' \
@@ -135,10 +178,7 @@ describe 'OAuth' do
           expect(@auth_page).to be_displayed
           @auth_page.allow_button.click
 
-          expect(@token_page).to be_displayed
-          code = @token_page.code.text
-
-          token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
           expect(token).to_not be_expired
         end
       end
@@ -154,10 +194,7 @@ describe 'OAuth' do
             expect(@auth_page).to be_displayed
             @auth_page.allow_button.click
 
-            expect(@token_page).to be_displayed
-            code = @token_page.code.text
-
-            token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+            token = @token_page.get_token(oauth_client, client_app.redirect_uri)
             expect(token).to_not be_expired
           end
         end

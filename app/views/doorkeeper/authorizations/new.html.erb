@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row scope-page">
   <div class="col-md-8 col-md-offset-2">
 
     <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
@@ -24,25 +24,8 @@
           <%= hidden_field_tag :response_type, @pre_auth.response_type %>
           <%= hidden_field_tag :original_scope, @pre_auth.scope %>
 
+          <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
-          <ul class="list-unstyled scope-list">
-            <% @pre_auth.scopes.each do |scope| %>
-              <li>
-                <h2 class="open"><%= t("doorkeeper.scopes.#{scope}") %></h2>
-                <div class="form-group">
-                  <label for="scope_<%= scope.gsub(/\./, '_') %>">
-                    <%= t("scopes.#{scope}.label") %>
-                  </label>
-                  <div>
-                    <% if scope.downcase.starts_with?("profile.") %>
-                      <%= scope_check_box_tag scope %>
-                      <%= profile_text_field scope, class:'form-control' %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            <% end %>
-          </ul>
           <div class="row">
             <div class="col-md-7 col-sm-8 col-xs-8">
               <%= submit_tag 'Allow Access', :class => 'btn btn-primary width-100'%>
@@ -59,10 +42,10 @@
         Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
       </small>
     </p>
-    <div class='alert alert-warning'>
+    <div class="alert alert-warning hidden" id="scopes-alert-none2">
       <h1>Still not convinced?</h1>
       <p>
-        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <%= link_to 'MyUSA Profile', '#', :title => 'MyUSA Profile' %>.
+        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <%= link_to 'MyUSA Profile', profile_path, :title => 'MyUSA Profile' %>.
       </p>
     </div>
 

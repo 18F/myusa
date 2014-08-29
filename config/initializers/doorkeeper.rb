@@ -2,7 +2,7 @@ Doorkeeper.configure do
   orm :active_record
 
   resource_owner_authenticator do
-    current_user || warden.authenticate!(:scope => :user)
+    current_user || warden.authenticate!(scope: :user, client_id: params[:client_id])
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
@@ -21,7 +21,7 @@ Doorkeeper.configure do
 
   # Reuse access token for the same resource owner within an application (disabled by default)
   # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
-  # reuse_access_token
+  reuse_access_token
 
   # Issue access tokens with refresh token (disabled by default)
   # use_refresh_token
@@ -71,12 +71,10 @@ Doorkeeper.configure do
   #
   grant_flows %w(authorization_code)
 
-  # Under some circumstances you might want to have applications auto-approved,
-  # so that the user skips the authorization step.
-  # For example if dealing with trusted a application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  # Skip authorization when no scopes are requested ...
+  skip_authorization do |resource_owner, client|
+    pre_auth.scopes.to_a.empty?
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   realm "MyUSA"
@@ -117,6 +115,12 @@ Doorkeeper::Application.class_eval do
   end
 end
 
+module Doorkeeper::OAuth::Helpers::ScopeChecker
+  def self.matches?(current_scopes, scopes)
+    scopes.all? {|s| current_scopes.include?(s) }
+  end
+end
+
 module OAuthValidations
   def initialize(server, client, resource_owner, attrs = {})
     super(server, client, attrs)
@@ -124,7 +128,9 @@ module OAuthValidations
   end
 
   def validate_scopes
-    super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
+    return true unless scope.present?
+    Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, server.scopes) &&
+      Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
   end
 
   def validate_client

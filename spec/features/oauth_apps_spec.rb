@@ -91,7 +91,7 @@ describe 'OAuth' do
       it 'redirects to a login page to authorize a new app' do
         auth_for_user
         expect(current_path).to eql new_user_session_path
-        expect(page).to have_content('Sign In with Google')
+        expect(page).to have_content('Connect with Google')
       end
     end
   end

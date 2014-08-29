@@ -5,7 +5,13 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
     @applications = current_user.oauth_applications
   end
 
+  def new
+
+    super
+  end
+
   def create
+
     @application = Doorkeeper::Application.new(application_params)
     @application.owner = current_user
     if @application.save
@@ -19,7 +25,10 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   private
 
   def application_params
-    params.require(:application).permit(:name, :description, :image, :scopes, :redirect_uri)
+    app_params = params.require(:application).permit(:name, :description, :image, :scopes, :redirect_uri, :scopes => [])
+    puts app_params.inspect
+    app_params[:scopes] = app_params[:scopes].join(' ')
+    app_params
   end
 
 end

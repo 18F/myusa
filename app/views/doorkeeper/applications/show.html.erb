@@ -12,6 +12,15 @@
 
     <p><code id="secret"><%= @application.secret %></code></p>
 
+
+    <h4>Description</h4>
+      <p><code><%= @application.description %></code></p>
+
+    <h4>Image</h4>
+    <p>
+      <%= image_tag @application.image.url(:medium) %>
+    </p>
+
     <h4>Scopes:</h4>
 
     <% @application.scopes.each do |scope| %>

@@ -93,7 +93,6 @@ ActiveRecord::Schema.define(version: 20140828195027) do
     t.string   "scopes",             limit: 2000
     t.boolean  "public",                          default: false
     t.string   "description"
-    t.string   "short_decription"
     t.string   "short_description"
     t.string   "custom_text"
     t.string   "image_file_name"

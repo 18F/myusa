@@ -81,7 +81,13 @@ That's it!  Use the app just as you would any other web application.
 
 ## Creating an Amazon Web Services EC2 host
 
-First, set up environment variables containing your AWS keys:
+**NOTE:** For this example setup, we're going to assume that you're creating
+a staging environment (i.e. `RAILS_ENV` will be set to `staging`). Wherever
+we use `<env>` in the directions below, substitute either `staging` or whatever
+other environment you're using (alternatives being `development` or
+`production`.)
+
+Set up environment variables containing your AWS keys:
 
 ```sh
 export AWS_ACCESS_KEY=<key>
@@ -100,10 +106,10 @@ decrypted on the deployment hosts, so keep it somewhere safe:
 openssl rand -base64 512 | tr -d '\r\n' > .databag_secret
 ```
 
-Create an initial data bag based on our example:
+Create an initial data bag for the environment, based on our example:
 
 ```sh
-knife solo data bag create secrets myusa --json-file secrets.json.example
+knife solo data bag create <env> myusa --json-file secrets.json.example
 ```
 
 Our defaults for encryption and passwords should work fine for testing. However,
@@ -111,7 +117,7 @@ you may want to change them, or add credentials for Amazon SES (mail service)
 or Google (authentication). To edit the file:
 
 ```sh
-knife solo data bag create secrets myusa
+knife solo data bag edit secrets myusa
 ```
 
 Each ec2 node you're planning to deploy needs its own JSON file in the `nodes/`
@@ -134,8 +140,8 @@ cp kitchen/nodes/<host type>.json.example kitchen/nodes/<host name>.json
 
 Note that `app` and `all-in-one` node files have placeholders that need to be
 filled out before they can be used:
- * `SSH PUBLIC KEY GOES HERE`: So they deployment script can log in as
-   the `myusa` user.
+ * `SSH PUBLIC KEY GOES HERE`: So the deployment script can log in as the
+   `myusa` user.
  * `DATABASE ADDRESS GOES HERE`: So the app server can connect to the database.
    (This is only needed in the `app` node file.)
 
@@ -145,7 +151,7 @@ Then use `knife` to create each EC2 host and build the environment:
 bundle exec knife ec2 server create \
     --groups <your security group> \
     --identity-file <path to your key pair file> \
-    --ssh-key <your key pair name> \
+    --ssh-key <your AWS key pair name> \
     --ssh-user ubuntu \
     --node-name <host name>
 ```
@@ -159,34 +165,38 @@ You may want to create separate security groups for the app and the database.
 A few simple commands can deploy to a running AWS instance.
 
 To set up a configuration for a particular environment, create the config file
-from the EC2 example and name it after the environment type; for example, `staging`:
+from the EC2 example and name it after the environment...
 
 ```sh
-cp config/deploy/ec2.rb.example config/deploy/staging.rb
+cp config/deploy/ec2.rb.example config/deploy/<env>.rb
 ```
 
-The EC2 example gets the target app server address from the `MYUSA_STAGING`
+**NOTE:** If you've chosen an environment other than `staging`, edit the file
+you just created above and change this line:
+```ruby
+set :rails_env, :staging
+```
+
+The EC2 example gets the target app server address from the `MYUSA_APP_HOST`
 environment variable. (Alternatively, you can edit the new configuration file directly.)
 
 ```sh
-export MYUSA_STAGING=<staging_server_address>
+export MYUSA_APP_HOST=<app_server_address>
 ```
 
-For your first deploy, run `deploy:setup`. This creates the necessary databases
-and configuration files, then deploys the `devel` branch and restarts the
-Rails server and web server processes.
-
-**NOTE: `deploy:setup` will delete any existing databases. Don't run it against
-an existing database that you want to keep.**
+Here's the basic `cap deploy` command. Use this to deploy the `devel` branch
+and restart the web & app server processes.
 
 ```sh
-bundle exec cap staging deploy:setup
+bundle exec cap <env> deploy
 ```
 
-Once `deploy:setup` has been run on a given host, all future deploys can
-just use the `deploy` command:
+If this is your first time deploying to this database, *or* if you've made
+code changes that include database schema migrations, you need to run a
+migration:
+
 ```sh
-bundle exec cap staging deploy
+bundle exec cap <env> deploy:migrate
 ```
 
 To deploy a branch other than `devel`, use the `BRANCH` environment variable:

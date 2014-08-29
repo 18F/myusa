@@ -1,6 +1,6 @@
 # Set up mysql with root password
 
-secrets = Chef::EncryptedDataBagItem.load("secrets", "myusa")
+secrets = Chef::EncryptedDataBagItem.load(node[:myusa][:rails_env], "myusa")
 node.set['mysql']['server_root_password'] = secrets['mysql_root_password']
 include_recipe 'mysql::server'
 

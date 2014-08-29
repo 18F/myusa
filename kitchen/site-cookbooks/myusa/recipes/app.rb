@@ -4,7 +4,7 @@ app_id = 'myusa'
 
 deploy_to_dir = "/var/www/#{app_id}"
 
-secrets = Chef::EncryptedDataBagItem.load("secrets", "myusa")
+secrets = Chef::EncryptedDataBagItem.load(node[:myusa][:rails_env], "myusa")
 
 # set up user and group
 group node[:myusa][:user][:group]

@@ -2,7 +2,7 @@ ssh_options[:auth_methods] = ['publickey']
 ssh_options[:keys] = [ENV['AWS_KEY_PAIR_PATH']]
 
 set :rails_env, :staging
-set :ip, ENV['MYUSA_STAGING']
+set :ip, ENV['MYUSA_APP_HOST']
 
 #
 # Server Role Definitions

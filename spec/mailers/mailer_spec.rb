@@ -9,7 +9,7 @@ describe ContactMailer do
     let(:mail) { ContactMailer.contact_email(message) }
 
     it 'renders the subject' do
-      expect(mail.subject).to eql('New Message From MyUSA')
+      expect(mail.subject).to eql('Contact - MyUSA marketing page')
     end
 
     it 'renders the receiver email' do
@@ -17,7 +17,7 @@ describe ContactMailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eql(['contact@gsa.gov'])
+      expect(mail.from).to eql(['no-reply@test.my.usa.gov.'])
     end
 
     it 'includes message' do

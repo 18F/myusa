@@ -4,8 +4,13 @@
 		<div class="col-md-11 col-md-offset-1"><h1>Contact MyUSA</h1></div>
 	</div>
 	<div class="row">
+		<div class="col-md-12 text-center">
+			<div class="alert alert-success contact-flash hidden" role="alert"></div>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-6 col-md-offset-1">
-			<%= form_tag contact_myusa_path, role: "form" do |f| %>
+			<%= form_tag contact_myusa_path, id: 'contact-form', role: "form" do |f| %>
 			  <div class="form-group">
 			    <%= label_tag 'Message:' %>
 			    <%= text_area_tag 'message', nil, class: 'form-control', rows: 8 %>

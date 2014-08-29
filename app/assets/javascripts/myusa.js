@@ -116,4 +116,16 @@ $(document).ready(function () {
       }
     }
   });
+/**
+ * Marketing page
+ */
+ $("#contact-form").submit(function(e){
+  e.preventDefault();
+  var formData = $(this).serialize();
+  $.post('contact_myusa', formData, function(response){
+    $(".contact-flash").text(response.message).removeClass('hidden');
+  });
+  $(this)[0].reset();
+ });
+
 });

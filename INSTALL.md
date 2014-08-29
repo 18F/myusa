@@ -109,7 +109,7 @@ openssl rand -base64 512 | tr -d '\r\n' > .databag_secret
 Create an initial data bag for the environment, based on our example:
 
 ```sh
-knife solo data bag create <env> myusa --json-file secrets.json.example
+knife solo data bag create <env> myusa --json-file kitchen/secrets.json.example
 ```
 
 Our defaults for encryption and passwords should work fine for testing. However,

@@ -71,12 +71,10 @@ Doorkeeper.configure do
   #
   grant_flows %w(authorization_code)
 
-  # Under some circumstances you might want to have applications auto-approved,
-  # so that the user skips the authorization step.
-  # For example if dealing with trusted a application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  # Skip authorization when no scopes are requested ...
+  skip_authorization do |resource_owner, client|
+    pre_auth.scopes.to_a.empty?
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   realm "MyUSA"

@@ -32,6 +32,13 @@ describe 'OAuth' do
     end
   end
 
+  shared_examples 'uses existing authorization' do
+    it 'skips authorization' do
+      token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+      expect(token).to_not be_expired
+    end
+  end
+
   before :each, authorized: true do
     FactoryGirl.create(:access_token,
                         application: client_app,
@@ -123,15 +130,14 @@ describe 'OAuth' do
             expect(@auth_page.flash_error_message).to have_content("Phone number")
           end
         end
+
+        context 'when no scopes are requested' do
+          let(:requested_scopes) { '' }
+          it_behaves_like 'uses existing authorization'
+        end
       end
 
       context 'when user is already authorized', authorized: true do
-        shared_examples 'uses existing authorization' do
-          it 'uses existing authorization' do
-            token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-            expect(token).to_not be_expired
-          end
-        end
 
         context 'with the same set of scopes requested' do
           let(:authorized_scopes) { requested_scopes }

@@ -81,6 +81,8 @@ service 'nginx' do
   action   :restart
 end
 
+directory "/etc/nginx/conf.d", {}
+
 template "/etc/nginx/conf.d/#{app_id}.conf" do
   source "nginx.conf.erb"
   notifies :restart, "service[nginx]"

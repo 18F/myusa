@@ -1,3 +1,5 @@
+
+# ScopesHelper
 module ScopesHelper
 
   SCOPE_GROUPS = [
@@ -13,7 +15,7 @@ module ScopesHelper
     {
       name: :address,
       scopes: %w(profile.address profile.address2 profile.city profile.state
-                profile.zip)
+                 profile.zip)
     },
     {
       name: :phone,
@@ -28,7 +30,7 @@ module ScopesHelper
 
   def scopes_by_group(scopes)
     SCOPE_GROUPS.each do |scope_group|
-      filtered_scopes =  scopes.select {|s| scope_group[:scopes].include?(s) }
+      filtered_scopes =  scopes.select { |s| scope_group[:scopes].include?(s) }
       yield(scope_group[:name], filtered_scopes)
     end
   end
@@ -72,21 +74,22 @@ module ScopesHelper
     end
   end
 
-  def scope_field_tag(scope, opts={})
+  def scope_field_tag(scope, opts = {})
     return unless scope.starts_with?('profile.')
 
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
 
-    if !value.nil? && value != '' 
+    if !value.nil? && value != ''
       profile_display_value(field, current_user.profile.send(field))
     else
-      if profile_options = profile_options_for_select(scope, value)
+      if (profile_options = profile_options_for_select(scope, value))
         opts.merge!(prompt: t(:not_specified))
         select_tag "profile[#{field}]", profile_options, opts
       else
         opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
-        text_field_tag "profile[#{field}]", current_user.profile.send(field), opts
+        text_field_tag("profile[#{field}]", current_user.profile.send(field),
+                       opts)
       end
     end
   end

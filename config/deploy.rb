@@ -7,7 +7,6 @@ require 'capistrano-unicorn'
 
 set :application, 'myusa'
 set :user, 'myusa'
-set :deployer, 'myusa'
 set :web_user, "nobody"
 set :web_group, "web"
 

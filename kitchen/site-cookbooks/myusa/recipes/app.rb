@@ -29,7 +29,7 @@ end
   end
 end
 
-%w[ config config/initializers log ].each do |subdir|
+%w[ config config/initializers log system ].each do |subdir|
   directory "#{deploy_to_dir}/shared/#{subdir}" do
     owner node[:myusa][:user][:username]
     group node[:myusa][:user][:group]

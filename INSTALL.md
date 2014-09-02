@@ -203,3 +203,33 @@ To deploy a branch other than `devel`, use the `BRANCH` environment variable:
 ```sh
 BRANCH=feature/my-lovely-branch cap staging deploy
 ```
+
+## Deploying through a Gateway
+
+If your target deployment hosts are not directly reachable from your source
+host (e.g. they're on a private subnet inside an Amazon VPC), you'll need
+to use a gateway host as a midpoint. For the techniques described here to
+work, **all** of the points below must be true:
+
+* The gateway is reachable by SSH from your source host
+* The target hosts are reachable by SSH from the gateway
+* There are user accounts on the gateway with the same names as the accounts
+  used by Chef and Capistrano on the target hosts *(this shouldn't normally
+  be necessary, but we found that Chef had problems otherwise)*
+* The required SSH public key is installed in all user accounts used for
+  deployment, included the aforementioned accounts on the gateway
+* The public key has been added to the shell session on the source host (using,
+  for example, `ssh-add -K <key path>`
+* Your local `.chef/knife.rb` file is based on `.chef/knife.rb.example`
+* Your local `config/deploy/<environment>.rb` file is based on
+  `config/deploy/ec2.rb.example`
+
+The example config files we've provided for Chef and Capistrano check the
+`MYUSA_GATEWAY` environment variable for the user and host details. So:
+
+```sh
+export MYUSA_GATEWAY=<user>@<host>
+```
+
+Once this is set, all the above deployment commands should use the gateway
+automatically.

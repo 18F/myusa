@@ -165,7 +165,6 @@ describe "Sign In" do
       end
 
       shared_examples "omniauth" do
-
         it "redirects the user to the next point" do
           expect(@target_page).to be_displayed
         end
@@ -174,7 +173,6 @@ describe "Sign In" do
           @target_page.load
           expect(@target_page).to be_displayed
         end
-
       end
 
       context "user has already signed in with google" do

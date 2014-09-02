@@ -4,12 +4,11 @@
     <i class="fa fa-caret-down"></i>
   </a>
   <ul class="dropdown-menu settings-menu" role="menu" aria-labelledby="user-settings">
-    <li role="presentation"><%= link_to 'Account', profile_path, role: 'menuitem', tabindex: -1 %></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Privacy</a></li>
+    <li role="presentation"><%= link_to 'Your Profile', profile_path, role: 'menuitem', tabindex: -1 %></li>
     <% if @display_not_me %>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">This is not me</a></li>
+      <li role="presentation"><%= link_to 'This is not me', destroy_user_session_path, role: 'menuitem', tabindex: -1 %></li>
     <% end %>
     <li role="presentation" class="divider"></li>
-    <li role="presentation" class="text-center"><%= link_to 'Log Out', destroy_user_session_path, class: "large" %></li>
+    <li role="presentation" class="text-center"><%= link_to 'Log Out', destroy_user_session_path, class: "large", role: 'menuitem', tabindex: -1 %></li>
   </ul>
 </div>

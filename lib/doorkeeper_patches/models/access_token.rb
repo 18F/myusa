@@ -1,6 +1,4 @@
-require 'audit_wrapper'
-
 class Doorkeeper::AccessToken
   belongs_to :resource_owner, class_name: User
-  AuditWrapper.audit_create(self, user_method: :resource_owner)
+  audit_on :create, user: :resource_owner
 end

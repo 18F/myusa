@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828214314) do
+ActiveRecord::Schema.define(version: 20140902195137) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
     t.string   "token"
     t.datetime "sent_at"
     t.boolean  "remember_me"
-    t.string   "return_to"
+    t.string   "return_to",   limit: 2000
   end
 
   add_index "authentication_tokens", ["token"], name: "index_authentication_tokens_on_token", unique: true, using: :btree
@@ -159,6 +159,16 @@ ActiveRecord::Schema.define(version: 20140828214314) do
 
   add_index "tasks", ["app_id"], name: "index_tasks_on_app_id", using: :btree
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
+
+  create_table "user_actions", force: true do |t|
+    t.integer "user_id"
+    t.integer "record_id"
+    t.string  "record_type"
+    t.string  "action"
+  end
+
+  add_index "user_actions", ["record_id", "record_type"], name: "index_user_actions_on_record_id_and_record_type", using: :btree
+  add_index "user_actions", ["user_id"], name: "index_user_actions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",               default: "", null: false

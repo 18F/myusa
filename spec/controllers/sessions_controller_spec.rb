@@ -41,7 +41,7 @@ describe SessionsController do
         end
 
         it 'expires the token' do
-          expect(AuthenticationToken.find(@token.raw)).to_not be_valid
+          expect(AuthenticationToken.authenticate(controller.current_user, @token.raw)).to be_nil
         end
 
         context 'return to path is not set' do
@@ -50,7 +50,7 @@ describe SessionsController do
           end
         end
         context 'return to path is set' do
-          let(:return_to) { secret_path }
+          let(:return_to) { profile_path }
 
           it 'redirects to the return path' do
             expect(response).to redirect_to(return_to)

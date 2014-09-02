@@ -7,7 +7,6 @@ require 'capistrano-unicorn'
 
 set :application, 'myusa'
 set :user, 'myusa'
-set :deployer, 'myusa'
 set :web_user, "nobody"
 set :web_group, "web"
 
@@ -24,6 +23,7 @@ set :default_shell, '/bin/bash -l'
 set :use_sudo, false
 set :keep_releases, 6
 set :scm, :git
+set :port, 22
 
 set :bundle_without, [ :development, :test, :deploy ]
 

@@ -1,6 +1,6 @@
 module OauthHelper
-  def scope_check_box_tag(scope)
-    check_box_tag('application[scopes][]', scope, true,
+  def scope_check_box_tag(scope, selected=true)
+    check_box_tag('scope[]', scope, selected,
       id: ('scope_' + scope.gsub(/\./, '_')),
       multiple: true
     )
@@ -28,5 +28,4 @@ module OauthHelper
       scope: pre_auth.scope
     )
   end
-
 end

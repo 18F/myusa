@@ -50,7 +50,7 @@ describe SessionsController do
           end
         end
         context 'return to path is set' do
-          let(:return_to) { secret_path }
+          let(:return_to) { profile_path }
 
           it 'redirects to the return path' do
             expect(response).to redirect_to(return_to)

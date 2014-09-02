@@ -9,8 +9,10 @@ default[:myusa][:secrets][:devise_secret_key] = '322a03b72aac1e453a21cec4120d585
 default[:myusa][:secrets][:aws_ses_username] = ''
 default[:myusa][:secrets][:aws_ses_password] = ''
 
-default[:myusa][:database][:name] = 'myusa_staging' #default[:myusa][:rails_env]
+default[:myusa][:database][:name] = 'myusa_' + default[:myusa][:rails_env]
 default[:myusa][:database][:host] = 'localhost'
 default[:myusa][:database][:port] = '3306'
 default[:myusa][:database][:username] = 'myusa'
 default[:myusa][:database][:password] = 'secret!'
+
+default[:mysql][:database][:root_password] = ""

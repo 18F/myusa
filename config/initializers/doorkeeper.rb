@@ -21,7 +21,7 @@ Doorkeeper.configure do
 
   # Reuse access token for the same resource owner within an application (disabled by default)
   # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
-  # reuse_access_token
+  reuse_access_token
 
   # Issue access tokens with refresh token (disabled by default)
   # use_refresh_token
@@ -71,12 +71,10 @@ Doorkeeper.configure do
   #
   grant_flows %w(authorization_code)
 
-  # Under some circumstances you might want to have applications auto-approved,
-  # so that the user skips the authorization step.
-  # For example if dealing with trusted a application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  # Skip authorization when no scopes are requested ...
+  skip_authorization do |resource_owner, client|
+    pre_auth.scopes.to_a.empty?
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   realm "MyUSA"
@@ -106,39 +104,5 @@ end
 # validate_client to check that method to ensure that the current user is
 # allowed to use the current client application.
 
-Doorkeeper::Application.class_eval do
-  include Doorkeeper::Models::Scopes
-
-  validate do |a|
-    return if a.scopes.nil?
-    unless Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)
-      errors.add(:scopes, 'Invalid scope')
-    end
-  end
-end
-
-module OAuthValidations
-  def initialize(server, client, resource_owner, attrs = {})
-    super(server, client, attrs)
-    @resource_owner = resource_owner
-  end
-
-  def validate_scopes
-    super && Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
-  end
-
-  def validate_client
-    client.present? && client.valid_for?(@resource_owner)
-  end
-end
-
-Doorkeeper::OAuth::PreAuthorization.prepend OAuthValidations
-
-module OAuthClientEnhancements
-  def valid_for?(user)
-    return true if application.public
-    return user == application.owner
-  end
-end
-
-Doorkeeper::OAuth::Client.send :include, OAuthClientEnhancements
+# TODO: figure out why i have to require this at the bottom ... 
+require 'doorkeeper_patches'

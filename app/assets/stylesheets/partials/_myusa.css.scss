@@ -9,25 +9,60 @@
   Authorization Page
   for OAuth and Scope Selection
 ********************/
-
-.scope-list {
+.scope-page {
+  h1 {
+    font-size: 1.55em;
+    margin-bottom: 6px;
+  }
   h2 {
     cursor: pointer;
+    font-weight: 600;
+    font-size: 1.35em;
+    margin-bottom: 6px;
   }
   h2:before {
     font-family: FontAwesome;
-    content: "\f054";
-    padding-right: 10px;
+    content: "\f105";
+    padding-left: 5px;
+    padding-right: 5px;
   }
   h2.open:before {
     font-family: FontAwesome;
-    content: "\f078";
+    content: "\f107";
+    padding-left: 0;
     padding-right: 4px;
   }
+  h3 {
+    font-weight: 400;
+    font-size: 1em;
+    margin: 0;
+  }
+}
+.scope-list {
+  .form-control {
+    display: inline-block;
+    padding: 3px 8px;
+    height: 28px;
+  }
   .form-group {
-    margin-left: 25px;
+    width: 100%;
+    margin-left: 20px;
     label {
-      color: $gray;
+      font-weight: 400;
+      font-size: 1.0em;
+      margin-top: 15px;
+      color: $gray-light;
+    }
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    input[type="text"], select.form-control {
+      margin-left: -6px;
+      width: 80%;
+    }
+    .scope-value {
+      margin-left: 6px;
+      font-weight: 700;
     }
   }
   margin-bottom: 25px;
@@ -43,14 +78,6 @@
   line-height: 1em;
   color: $gray;
 }
-
-.subhead-blue {
-  font-size: 1em;
-  line-height: 1em;
-  color: $blue-lightest;
-  padding: 10px;
-}
-.blank-row { margin-top:1em; }
 
 .connect_button{
   width:100px;
@@ -198,29 +225,84 @@ footer {
   Marketing
 ********************/
 
-.top-border{
-  border-top: 1px solid silver;
-}
 
-.marketing{
-  &.login > .row{
-    margin-top: -16px;
-    background: url('http://placehold.it/950x650');
+.marketing {
+  .top-border {
+    border-top: 1px solid $gray-highlight;
   }
-  .callout-box{
-    margin-top: 50px;
-    margin-bottom: 50px;
+  .bottom-border {
+    border-bottom: 1px solid $gray-highlight;
   }
-  margin-top: 1em;
-  h2{
+  .bg-gray {
+    background-color: $gray-lightest;
+  }
+  h2 {
     font-weight: 300;
   }
+  margin-top: 16px;
+  .container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
+
+.marketing.login-section {
+  position: relative;
+  margin-top: 0;
+  @media (min-width: $screen-md-min) {
+    min-height: 395px;
+  }
+  @media (max-width: $screen-sm-max) {
+    min-height: 405px;
+  }
+  .callout-box{
+    margin-top: 20px;
+    opacity: 0.8;
+  }
+  .login {
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    .form-group {
+      padding: 0;
+    }
+    .shield {
+      .icon-myusa {
+        color: $blue-lightest;
+      }
+    }
+    .omniauth-buttons {
+      .btn-lg {
+        width: 60%;
+        @media (max-width: $screen-sm-max) {
+          width: 80%;
+        }
+        @media (max-width: $screen-xs-max) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+.marketing.login-section:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('/assets/home-background.jpg');
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity : 0.3;
+    z-index: -1;
+}
+
 /*******************
  Login
 ********************/
 .callout-box{
-  opacity: .8;
   background-color: $gray-lightest;
   border-bottom: 1px $gray-highlight solid;
 }
@@ -241,6 +323,9 @@ footer {
   .connect-option{
     position:relative;
     top:25px;
+  }
+  .hidden-buttons {
+    margin-top: -25px;
   }
   .hidden-buttons > .row {
     margin-top: 10px;

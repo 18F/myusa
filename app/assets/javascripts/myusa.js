@@ -5,7 +5,7 @@ $(document).ready(function () {
    * Authorization page
    */
   $(".scope-list li").each(function(){
-    if($(this).children().find('input[type=text]').length < 1){
+    if($(this).children().find('input[type=text],select.form-control').length < 1){
       $(this).children().eq(1).hide();
       $(this).children().eq(0).toggleClass("open");
     }
@@ -73,7 +73,7 @@ $(document).ready(function () {
     showOption('#email');
   });
   $(".less-options").click(function (e) {
-    showOption('#');
+    showOption('#oauth');
   });
 
   // toggle sign in and sign up forms

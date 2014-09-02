@@ -1,0 +1,12 @@
+{
+  "run_list": [
+    "role[all-in-one]"
+  ],
+  "myusa": {
+    "user": {
+      "deploy_keys": [
+        "SSH PUBLIC KEY GOES HERE"
+      ]
+    }
+  }
+}

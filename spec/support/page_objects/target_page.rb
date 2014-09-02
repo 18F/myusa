@@ -1,6 +1,6 @@
 require 'site_prism'
 
 class TargetPage < SitePrism::Page
-  set_url '/secret'
-  set_url_matcher /\/secret/
+  set_url '/profile'
+  set_url_matcher /\/profile/
 end

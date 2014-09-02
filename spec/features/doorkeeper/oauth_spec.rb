@@ -1,7 +1,7 @@
+
 require 'feature_helper'
 
 describe 'OAuth' do
-
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
   let(:client_app) { FactoryGirl.create(:application, name: 'Test App') }
   let(:requested_scopes) { 'profile.email profile.last_name' }
@@ -10,7 +10,8 @@ describe 'OAuth' do
   # Capybara context. More detail here:
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
+    OAuth2::Client.new(client_app.uid, client_app.secret,
+                       site: 'http://www.example.com') do |b|
       b.request :url_encoded
       b.adapter :rack, Rails.application
     end
@@ -28,7 +29,8 @@ describe 'OAuth' do
     scenario 'displays scope error message' do
       expect(@auth_page).to be_displayed
       expect(@auth_page).to have_oauth_error_message
-      expect(@auth_page.oauth_error_message.text).to include('The requested scope is invalid, unknown, or malformed.')
+      expect(@auth_page.oauth_error_message.text).to(
+        include('The requested scope is invalid, unknown, or malformed.'))
     end
   end
 
@@ -41,8 +43,8 @@ describe 'OAuth' do
 
   before :each, authorized: true do
     FactoryGirl.create(:access_token,
-                        application: client_app,
-                        resource_owner_id: user.id)
+                       application: client_app,
+                       resource_owner_id: user.id)
   end
 
   before :each, logged_in: true do
@@ -68,7 +70,8 @@ describe 'OAuth' do
       scenario 'it tells you why you\'re here' do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to have_welcome
-        expect(@sign_in_page.welcome).to have_content('Welcome to MyUSA from Test App')
+        expect(@sign_in_page.welcome).to(
+          have_content('Welcome to MyUSA from Test App'))
       end
     end
 
@@ -86,13 +89,14 @@ describe 'OAuth' do
         scenario 'user can deny by clicking "No Thanks"' do
           expect(@auth_page).to be_displayed
           @auth_page.cancel_button.click
-          expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
+          expect(JSON.parse(@auth_page.body)['error']).to(
+            eq('access_denied'))
         end
 
         scenario 'user can deny by clicking "head back to" link' do
           expect(@auth_page).to be_displayed
           @auth_page.head_back_link.click
-          expect(JSON.parse(@auth_page.body)["error"]).to eq("access_denied")
+          expect(JSON.parse(@auth_page.body)['error']).to eq('access_denied')
         end
 
         scenario 'user can select scopes' do
@@ -101,8 +105,9 @@ describe 'OAuth' do
           @auth_page.allow_button.click
 
           code = @token_page.code.text
-          token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
-          expect(token["scope"]).to eq("profile.last_name")
+          token = oauth_client.auth_code.get_token(
+            code, redirect_uri: client_app.redirect_uri)
+          expect(token['scope']).to eq('profile.last_name')
         end
 
         scenario 'user can update profile' do
@@ -112,14 +117,17 @@ describe 'OAuth' do
           @auth_page.allow_button.click
 
           code = @token_page.code.text
-          token = oauth_client.auth_code.get_token(code, redirect_uri: client_app.redirect_uri)
+          token = oauth_client.auth_code.get_token(
+            code, redirect_uri: client_app.redirect_uri)
           profile = JSON.parse token.get('/api/profile').body
           expect(profile['last_name']).to eq('McTesterson')
           expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
         end
 
         context 'profile data is invalid' do
-          let(:client_app) { FactoryGirl.create(:application, scopes: 'profile.phone_number') }
+          let(:client_app) do
+            FactoryGirl.create(:application, scopes: 'profile.phone_number')
+          end
           let(:requested_scopes) { 'profile.phone_number' }
           scenario 'user cannot save or authorize' do
             expect(@auth_page).to be_displayed
@@ -127,7 +135,8 @@ describe 'OAuth' do
             @auth_page.allow_button.click
 
             expect(@auth_page).to be_displayed
-            expect(@auth_page.flash_error_message).to have_content("Phone number")
+            expect(@auth_page.flash_error_message).to(
+              have_content('Phone number'))
           end
         end
 
@@ -165,16 +174,16 @@ describe 'OAuth' do
 
       context 'with lots of scopes' do
         let(:scopes) do
-          'profile.email profile.title profile.first_name profile.middle_name ' \
-          'profile.last_name profile.phone_number profile.suffix profile.address ' \
-          'profile.address2 profile.zip profile.gender profile.marital_status ' \
-          'profile.is_parent profile.is_student profile.is_veteran ' \
-          'profile.is_retired'
+          'profile.email profile.title profile.first_name ' \
+          'profile.middle_name profile.last_name profile.phone_number ' \
+          'profile.suffix profile.address profile.address2 profile.zip ' \
+          'profile.gender profile.marital_status profile.is_parent ' \
+          'profile.is_student profile.is_veteran profile.is_retired'
         end
         let(:client_app) { FactoryGirl.create(:application, scopes: scopes) }
         let(:requested_scope) { scopes }
 
-        it "user can authorize" do
+        it 'user can authorize' do
           expect(@auth_page).to be_displayed
           @auth_page.allow_button.click
 
@@ -184,8 +193,10 @@ describe 'OAuth' do
       end
 
       context 'with non-public (sandboxed) app' do
-        let(:owner) { FactoryGirl.create(:user, email: 'owner@gsa.gov' )}
-        let(:client_app) { FactoryGirl.create(:application, public: false, owner: owner) }
+        let(:owner) { FactoryGirl.create(:user, email: 'owner@gsa.gov') }
+        let(:client_app) do
+          FactoryGirl.create(:application, public: false, owner: owner)
+        end
 
         context 'current user is client application owner' do
           let(:owner) { user }
@@ -203,7 +214,10 @@ describe 'OAuth' do
           scenario 'displays unknown application error' do
             expect(@auth_page).to be_displayed
             expect(@auth_page).to have_error_message
-            expect(@auth_page.error_message.text).to include('Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.')
+            expect(@auth_page.error_message.text).to(
+              include('Client authentication failed due to unknown client, ' \
+                      'no client authentication included, or unsupported ' \
+                      'authentication method.'))
           end
         end
       end

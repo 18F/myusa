@@ -1,5 +1,6 @@
 class SessionsController < Devise::SessionsController
   include Devise::Controllers::Rememberable
+  before_filter :set_logout_user, only: [:destroy]
 
   layout "login", only: [:new]
   before_action :authenticate_user_from_token!, only: [:new]
@@ -22,4 +23,7 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  def set_logout_user
+    @logged_out_user = current_user
+  end
 end

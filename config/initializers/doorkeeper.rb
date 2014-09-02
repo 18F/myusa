@@ -104,8 +104,5 @@ end
 # validate_client to check that method to ensure that the current user is
 # allowed to use the current client application.
 
-# TODO: figure out why i have to require these at the bottom ... 
-require 'doorkeeper_patches/models/application'
-require 'doorkeeper_patches/oauth/helpers/scope_checker'
-require 'doorkeeper_patches/oauth/pre_authorization'
-require 'doorkeeper_patches/oauth/client'
+# TODO: figure out why i have to require this at the bottom ... 
+require 'doorkeeper_patches'

@@ -5,7 +5,7 @@
   </a>
   <ul class="dropdown-menu settings-menu" role="menu" aria-labelledby="user-settings">
     <li role="presentation"><%= link_to 'Account', profile_path, role: 'menuitem', tabindex: -1 %></li>
-    <li role="presentation"><%= link_to 'Privacy', oauth_authorized_applications_path, role: 'menuitem', tabindex: -1 %></li>
+    <li role="presentation"><%= link_to 'Privacy', oauth_applications_path, role: 'menuitem', tabindex: -1 %></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">This is not me</a></li>
     <li role="presentation" class="divider"></li>
     <li role="presentation" class="text-center"><%= link_to 'Log Out', destroy_user_session_path, class: "large" %></li>

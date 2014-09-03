@@ -1,8 +1,13 @@
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
+  layout "application"
+
+  include ScopeGroups
 
   def index
-    @applications = current_user.oauth_applications
+    @authorizations = Doorkeeper::AccessToken.where(
+      resource_owner_id: current_user.id, revoked_at: nil)
+    super
   end
 
   def create

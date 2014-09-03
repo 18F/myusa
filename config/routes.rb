@@ -1,8 +1,8 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
-  root to: "application#index"
-  get "secret" => "application#secret"
+  root to: "home#index"
+  post "contact" => "temp#contact"
 
   use_doorkeeper do
     controllers :applications => 'oauth/applications',

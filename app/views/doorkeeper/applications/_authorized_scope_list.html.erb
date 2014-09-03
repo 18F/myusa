@@ -5,11 +5,12 @@
       <div class="form-group">
         <h3><%= t("scope_groups.#{group}.subheading") %></h3>
         <% scopes.each do |scope| %>
-          <div class="row top-buffer">
+          <div class="row">
             <div class="col-md-3">
               <%= scope_label(scope) %>
             </div>
             <div class="col-md-9">
+              <label><%= scope_field_tag(scope, read_only: true) %></label>
             </div>
           </div>
         <% end %>

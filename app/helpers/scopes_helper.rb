@@ -76,21 +76,20 @@ module ScopesHelper
 
   def scope_field_tag(scope, opts = {})
     return unless scope.starts_with?('profile.')
+    read_only = opts.delete :read_only
 
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
 
-    if !value.nil? && value != ''
-      profile_display_value(field, current_user.profile.send(field))
+    if read_only || value.blank?
+      profile_display_value(field, value)
+    elsif (profile_options = profile_options_for_select(scope, value))
+      opts.merge!(prompt: t(:not_specified))
+      select_tag "profile[#{field}]", profile_options, opts
     else
-      if (profile_options = profile_options_for_select(scope, value))
-        opts.merge!(prompt: t(:not_specified))
-        select_tag "profile[#{field}]", profile_options, opts
-      else
-        opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
-        text_field_tag("profile[#{field}]", current_user.profile.send(field),
-                       opts)
-      end
+      opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
+      text_field_tag("profile[#{field}]", current_user.profile.send(field),
+                     opts)
     end
   end
 end

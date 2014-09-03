@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828231518) do
+ActiveRecord::Schema.define(version: 20140902195137) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
     t.string   "token"
     t.datetime "sent_at"
     t.boolean  "remember_me"
-    t.string   "return_to"
+    t.string   "return_to",   limit: 2000
   end
 
   add_index "authentication_tokens", ["token"], name: "index_authentication_tokens_on_token", unique: true, using: :btree

@@ -1,5 +1,6 @@
 <ul class="list-unstyled scope-list">
   <% scopes_by_group(@pre_auth.scopes) do |group, scopes| %>
+    <% if scopes.length > 0 %>
     <li>
       <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
       <div class="form-group">
@@ -15,5 +16,6 @@
         <% end %>
       </div>
     </li>
+    <% end %>
   <% end %>
 </ul>

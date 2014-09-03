@@ -30,7 +30,7 @@ module ScopesHelper
 
   def scopes_by_group(scopes)
     SCOPE_GROUPS.each do |scope_group|
-      filtered_scopes =  scopes.select { |s| scope_group[:scopes].include?(s) }
+      filtered_scopes = scopes.select { |s| scope_group[:scopes].include?(s) }
       yield(scope_group[:name], filtered_scopes)
     end
   end
@@ -81,7 +81,7 @@ module ScopesHelper
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
 
-    if read_only || value.blank?
+    if read_only || value.present?
       profile_display_value(field, value)
     elsif (profile_options = profile_options_for_select(scope, value))
       opts.merge!(prompt: t(:not_specified))

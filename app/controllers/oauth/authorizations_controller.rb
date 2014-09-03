@@ -5,6 +5,7 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   before_filter :pre_auth, only: [:new]
   include ScopeGroups
   before_filter :pre_auth_groups, only: [:new]
+  before_filter :display_not_me, only: [:new]
 
   def create
     if params.key?(:profile)
@@ -21,6 +22,10 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   end
 
   private
+
+  def display_not_me
+    @display_not_me = true
+  end
 
   def redirect_to_tokens
     # legacy implementation used POST /oauth/authorize for both the user facing

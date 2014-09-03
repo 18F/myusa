@@ -144,7 +144,6 @@ describe "Sign In" do
 
     let(:email) { 'testo@example.com' }
     let(:uid) { '12345' }
-    let(:secret) { "You got me #{email}" }
 
     before :each do
       @target_page = TargetPage.new
@@ -166,18 +165,14 @@ describe "Sign In" do
       end
 
       shared_examples "omniauth" do
-
         it "redirects the user to the next point" do
           expect(@target_page).to be_displayed
-          expect(@target_page.source).to match secret
         end
 
         it "allows user to navigate directly to protected pages" do
           @target_page.load
           expect(@target_page).to be_displayed
-          expect(@target_page.source).to match secret
         end
-
       end
 
       context "user has already signed in with google" do

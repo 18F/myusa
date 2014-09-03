@@ -1,0 +1,53 @@
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+<div class="login callout-box">
+  <div class="shield">
+    <i class="fa icon-myusa"></i>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">
+        Connect to MyUSA
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center">
+        Your one account for government
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 omniauth-buttons text-center">
+      <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-lg btn-google" %>
+    </div>
+    <div class="col-md-12 hidden-buttons">
+      <%= render partial: 'devise/sessions/email_option', locals: { resource: User.new, resource_name: :user } %>
+    </div>
+  </div>
+  <noscript>
+    <h2> or sign up with your email address </h2>
+    <%= render partial: 'devise/sessions/email_option', locals: { resource: User.new, resource_name: :user } %>
+  </noscript>
+  <div class="row text-center">
+    <div class="col-md-12 text-muted">
+      <p>
+      By using MyUSA you accept the <%= link_to "Terms and Conditions", "#" %>.
+      <br/>
+      This is an official website of the US Government.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 more-signin">
+      <span class="more-options">
+        <a href="#email" class="btn btn-primary btn-sm connect-option"> or Connect with your Email Address</a>
+      </span>
+      <span class="less-options">
+        <a href="#oauth" class="btn btn-social btn-sm btn-google connect-option">or Connect with Google</a>
+      </span>
+    </div>
+  </div>
+</div>
+</div></div>

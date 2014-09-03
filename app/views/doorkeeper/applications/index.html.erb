@@ -33,7 +33,7 @@
 </header>
 
 <div class="main">
-  <div class="row">
+  <div class="row scope-page">
     <div class="col-md-12">
       <% @authorizations.each do |authorization| %>
         <% application = authorization.application %>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="panel-body">
-            <h4>Permissions</h4>
+            <h1>Permissions</h1>
             <%= render 'authorized_scope_list', scopes: authorization.scopes %>
           </div>
         </div>

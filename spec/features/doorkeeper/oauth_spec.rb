@@ -135,6 +135,22 @@ describe 'OAuth' do
           let(:requested_scopes) { '' }
           it_behaves_like 'uses existing authorization'
         end
+
+        it 'creates a user action (audit) record for grant and token' do
+          allow(UserAction).to receive(:create).and_call_original
+          expect(@auth_page).to be_displayed
+          @auth_page.allow_button.click
+
+          expect(UserAction).to have_received(:create).with(
+            hash_including(record: instance_of(Doorkeeper::AccessGrant), action: 'create')
+          )
+
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+
+          expect(UserAction).to have_received(:create).with(
+            hash_including(record: instance_of(Doorkeeper::AccessToken), action: 'create')
+          )
+        end
       end
 
       context 'when user is already authorized', authorized: true do
@@ -219,7 +235,6 @@ describe 'OAuth' do
 
         it_behaves_like 'scope error'
       end
-
     end
   end
 

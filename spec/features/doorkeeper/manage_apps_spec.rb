@@ -136,6 +136,15 @@ describe 'OAuth' do
         expect(@auths_page.second_app.app_scopes.map(&:text)).to eq(
           ['Email Address', 'Zip Code', 'Phone Number', 'Gender'])
       end
+
+      it 'revokes authorization to an application' do
+        expect(@auths_page).to be_displayed
+        expect(@auths_page.second_app.app_name).to have_content 'Client App 2'
+        @auths_page.second_revoke_button.click
+        expect(@auths_page).to be_displayed
+        expect(@auths_page.first_app.app_name).to have_content 'Client App 1'
+        expect(@auths_page).to_not have_content 'Client App 2'
+      end
     end
   end
 end

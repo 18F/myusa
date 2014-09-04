@@ -16,6 +16,8 @@ module OAuth2
     set_url '/oauth/applications'
     set_url_matcher(%r{/oauth/applications})
 
+    element :secret_key,      '#secret-key'
+
     sections :apps, AuthorizedApp, '.panel'
 
     def first_app

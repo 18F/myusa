@@ -26,7 +26,7 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
       "<div class='col-md-3'> Consumer Public Key  </div><div class='col-md-3'> #{@application.uid} </div>"\
       "</div>"\
       "<div class='row'>"\
-      "<div class='col-md-3'> Consumer Secret Key  </div><div class='col-md-3'> #{@application.secret} </div>"\
+      "<div class='col-md-3'> Consumer Secret Key  </div><div class='col-md-3' id='secret-key'> #{@application.secret} </div>"\
       "</div>".html_safe
 
       redirect_to oauth_applications_path

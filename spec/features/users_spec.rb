@@ -33,19 +33,6 @@ describe 'Users' do
         expect(@results_page).to be_displayed
         expect(@results_page.is_student.text).to be_blank
       end
-
-      it "should allow user to create app with image and get secret" do
-        # visit new_oauth_application_path
-        # submit_new_application_form
-        # app = Doorkeeper::Application.last
-        # expect(@page).to have_content(app.secret)
-
-
-        # @page.first_name.set 'Jane'
-        # @page.submit.click
-        # expect(@results_page).to be_displayed
-        # expect(@results_page.first_name).to have_content('Jane')
-      end
     end
   end
 end

@@ -1,8 +1,14 @@
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
-  layout "application"
-  
+
+  layout 'application'
+
+  include ScopeGroups
+
   def index
+    super
+    @authorizations = Doorkeeper::AccessToken.where(
+      resource_owner_id: current_user.id, revoked_at: nil)
     @applications = current_user.oauth_applications
   end
 
@@ -24,8 +30,21 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
       "</div>".html_safe
 
       redirect_to oauth_applications_path
+
+      # flash[:notice] = I18n.t(
+      #   :notice, scope: [:doorkeeper, :flash, :applications, :create])
+
     else
       render :new
+    end
+  end
+
+  def update
+    if @application.update_attributes(application_params)
+      flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
+      redirect_to oauth_applications_path
+    else
+      render :edit
     end
   end
 

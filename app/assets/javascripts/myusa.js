@@ -79,7 +79,7 @@ $(document).ready(function () {
     showOption('#email');
   });
   $(".less-options").click(function (e) {
-    showOption('#');
+    showOption('#oauth');
   });
 
   // toggle sign in and sign up forms

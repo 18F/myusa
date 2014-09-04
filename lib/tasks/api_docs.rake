@@ -5,7 +5,8 @@ SOURCE_FILES = Rake::FileList[
   "api_docs/tokeninfo.md",
   "api_docs/profile.md",
   "api_docs/task.md",
-  "api_docs/notification.md"
+  "api_docs/notification.md",
+  "api_docs/logout.md"
 ]
 
 file "public/developer/api.md" => SOURCE_FILES do |t|

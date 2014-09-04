@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  no_authorizations: You have not authorized any applications.
   scope_groups:
     email:
       description: Identify you by your email address

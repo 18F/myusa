@@ -20,7 +20,7 @@
     <div class="col-sm-10">
       <%= f.label :description, class: 'control-label', for: 'application_description' %>
       <%= f.text_area(:description, size:'50x10', class: 'form-control')%>
-      <%= doorkeeper_errors_for application, :image %>
+      <%= doorkeeper_errors_for application, :description %>
     </div>
   <% end %>
 

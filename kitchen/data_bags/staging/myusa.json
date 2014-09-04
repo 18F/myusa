@@ -1,0 +1,57 @@
+{
+  "id": "myusa",
+  "mysql_root_password": {
+    "encrypted_data": "wyHZ6ptGGOYsqqnLCXqoXlFgUlscFvl4VMhgYTKVy8+Kl0I9MWA4Z+eP+Bot\nSCV78sp6SFLbs5AQNIY2XTSbug==\n",
+    "iv": "hUM2qjjKQCStOYCBMVUFlQ==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "mysql_password": {
+    "encrypted_data": "shrN8TxjcJ73JACCRw6shEc76c8GhB54VhK61go0BJYBiTw5ve4oj4jNcuFf\ntFelOkRhchUhItxmu/5fEQ4+oQ==\n",
+    "iv": "hH2UACD+4AL9WaNKmbSZUA==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "mysql_encryption_key": {
+    "encrypted_data": "QpxhVFcR6NEpqFJc6hid+bjCrH8J6zd8qwjoXgZuk1oCNdwh5e8AvHUHikyd\nBec9+zUsaAe1biXkZm5mKl3r/ba/Kej2o3+TBhvIenai585t2AEM08V3f/mC\n8saNbVstXxR9INgnRi4pQ4bv4ObQyLPzusDcWhbe27jmbO14RlCCXHA48ApM\n+TX332u0zxcwZVWSO4MpIlga8G+Qw5uqmg==\n",
+    "iv": "haINM2phqXQ9G43IAn3b4A==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "secret_key_base": {
+    "encrypted_data": "3nhSjDMshLpW9ZFKIasvV128PPALHR1t/rXZetV35h9XQmgnk7oFO5KtUWSC\nhe17IzJ8xaP7E8aDIA90kyKAt86LJPLTdykXxXb0v/RxYlIrfkwVnZJvgW6l\nPczyzrarFPnZWIC/NE7ItXZzyidry/Wtl9p2xruaJxHkuOBwBNz8aifzAy3d\naZ5WKyfHD1FjThXlhaKJBPr7Vii7+Hntnw==\n",
+    "iv": "VCBoLu3oguwB+sdlFXtMWw==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "devise_secret_key": {
+    "encrypted_data": "z3r2+GQ6pZwVptBNnJA+T/Ta+r4qjB737hcAy0QmKvoa0RfhnOdj6212nY+e\nRHAb49480w2adrGHjgnWXoZqXY6T8iqwJbIKqPuHx5VKYLMHvD0ZceemuAy5\nPdbQ5yiMJy1XHeD1gHVadbVj3a50T/42u38w/bkhCvrpIdb6NyaNMUExoxCd\nWpFeG6/ldj6wKtcRqvSrbyvJ1Nb0ImF6HA==\n",
+    "iv": "FgQvkfVqa40ZGBKQzO5eNw==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "aws_ses_username": {
+    "encrypted_data": "NhoOGsCsLoCGnj/FdsKZSs6U+RbXH/v5YGc+7HOvzPQ=\n",
+    "iv": "sH3rCFcdsDgttGByyrnPZg==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "aws_ses_password": {
+    "encrypted_data": "6Z6Nov3VtSisGQaiJdAqL5zDtHNW8uFP2Pk5Wfh6kB8=\n",
+    "iv": "k64/b05dBa962A2BCnx0Qg==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "omniauth_google_app_id": {
+    "encrypted_data": "bHWcPjICgCIksFbFaU0pz8AWi46EyVu6Xm/IkxdmKOo=\n",
+    "iv": "lYkslF1wDpWV9/VclVDNww==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "omniauth_google_secret": {
+    "encrypted_data": "yFPTN+ckyxUqsZrKGiRJXeuJ8tMrQ6ebWZAxSKS/F+E=\n",
+    "iv": "xW7tNYHSIfho5tUULGcGJQ==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}

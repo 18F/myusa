@@ -71,12 +71,10 @@ Doorkeeper.configure do
   #
   grant_flows %w(authorization_code)
 
-  # Under some circumstances you might want to have applications auto-approved,
-  # so that the user skips the authorization step.
-  # For example if dealing with trusted a application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  # Skip authorization when no scopes are requested ...
+  skip_authorization do |resource_owner, client|
+    pre_auth.scopes.to_a.empty?
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   realm "MyUSA"
@@ -106,59 +104,5 @@ end
 # validate_client to check that method to ensure that the current user is
 # allowed to use the current client application.
 
-Doorkeeper::Application.class_eval do
-  include Doorkeeper::Models::Scopes
-
-  validate do |a|
-    return if a.scopes.nil?
-    unless Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)
-      errors.add(:scopes, 'Invalid scope')
-    end
-  end
-end
-
-module Doorkeeper::OAuth::Helpers::ScopeChecker
-  def self.matches?(current_scopes, scopes)
-    scopes.all? {|s| current_scopes.include?(s) }
-  end
-end
-
-module OAuthValidations
-  def initialize(server, client, resource_owner, attrs = {})
-    super(server, client, attrs)
-    @resource_owner = resource_owner
-  end
-
-  def validate_scopes
-    return true unless scope.present?
-    Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, server.scopes) &&
-      Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(scope, client.application.scopes)
-  end
-
-  def validate_client
-    client.present? && client.valid_for?(@resource_owner)
-  end
-end
-
-Doorkeeper::OAuth::PreAuthorization.prepend OAuthValidations
-
-module OAuthClientEnhancements
-  def valid_for?(user)
-    return true if application.public
-    return user == application.owner
-  end
-end
-
-Doorkeeper::OAuth::Client.send :include, OAuthClientEnhancements
-
-module ApplicationExtension
-  extend ActiveSupport::Concern
-
-  included do
-    has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-    validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-  end
-end
-
-Doorkeeper::Application.send :include, ApplicationExtension
-
+# TODO: figure out why i have to require this at the bottom ... 
+require 'doorkeeper_patches'

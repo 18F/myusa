@@ -8,5 +8,5 @@ class Doorkeeper::Application
     end
   end
 
-  audit_on :create
+  audit_on :create, user: :owner
 end

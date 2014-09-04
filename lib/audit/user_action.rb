@@ -2,7 +2,9 @@ module Audit
   module UserAction
     module Model
       def audit_on(*events)
-        audit_wrapper = Wrapper.new
+        opts = events.last.is_a?(Hash) ? events.pop : {}
+
+        audit_wrapper = Wrapper.new(opts)
         hooks = events.map {|e| "after_#{e}".to_sym }
 
         hooks.each {|h| send h, audit_wrapper }
@@ -16,39 +18,36 @@ module Audit
 
       def before(controller)
         self.controller = controller
-        true
       end
 
-      def after(controller)
-        self.controller = nil
-      end
+      def after(controller); end
+      #   self.controller = controller
+      # end
 
       def before_create(record)
-        if self.controller.present?
-          record.user = self.controller.send(:current_user)
-          record.remote_ip = self.controller.request.remote_ip
-        end
+        record.remote_ip = controller.presence && controller.request.remote_ip
       end
     end
 
     class Wrapper
+      def initialize(opts)
+        @action = opts[:action] if opts.has_key?(:action)
+        @user_method = opts[:user].presence || :user
+      end
+
       def after_create(record)
-        audit('create', record)
+        audit(@action || 'create', record)
       end
 
       private
 
+      def get_user(record)
+        record.send(@user_method) if record.respond_to?(@user_method)
+      end
+
       def audit(action, record)
-        ::UserAction.create(record: record, action: action)
+        ::UserAction.create(user: get_user(record), record: record, action: action)
       end
     end
   end
-end
-
-Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
-  ::UserAction.create(action: 'sign_in')
-end
-
-Warden::Manager.before_logout do |user, auth, opts|
-  ::UserAction.create(action: 'sign_out')
 end

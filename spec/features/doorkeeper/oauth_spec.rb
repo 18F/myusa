@@ -148,17 +148,14 @@ describe 'OAuth' do
         it 'creates a user action (audit) record for grant and token' do
           allow(UserAction).to receive(:create).and_call_original
           expect(@auth_page).to be_displayed
+
           @auth_page.allow_button.click
 
-          expect(UserAction).to have_received(:create).with(
-            hash_including(record: instance_of(Doorkeeper::AccessGrant), action: 'create')
-          )
+          expect(user.user_actions.where(record_type: Doorkeeper::AccessGrant, action: 'grant')).to exist
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
 
-          expect(UserAction).to have_received(:create).with(
-            hash_including(record: instance_of(Doorkeeper::AccessToken), action: 'create')
-          )
+          expect(user.user_actions.where(record_type: Doorkeeper::AccessToken, action: 'issue')).to exist
         end
       end
 

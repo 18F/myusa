@@ -74,6 +74,7 @@ end
 
 group :staging, :production do
   gem 'unicorn', :require => false
+  gem 'dalli'
 end
 
 group :production do

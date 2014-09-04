@@ -109,6 +109,11 @@ module ProfilesHelper
     options_for_select(marital_status_options, value)
   end
 
+  def yes_or_no(value)
+    return '' if value.nil?
+    value ? 'Yes' : 'No'
+  end
+
   def profile_display_value(field, value)
     case field
     when :state
@@ -118,13 +123,13 @@ module ProfilesHelper
     when :marital_status
       marital_status_options.map(&:reverse).to_h[value]
     when :is_parent
-      value ? 'Yes' : 'No'
+      yes_or_no(value)
     when :is_student
-      value ? 'Yes' : 'No'
+      yes_or_no(value)
     when :is_veteran
-      value ? 'Yes' : 'No'
+      yes_or_no(value)
     when :is_retired
-      value ? 'Yes' : 'No'
+      yes_or_no(value)
     else
       value
     end

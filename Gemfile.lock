@@ -127,6 +127,7 @@ GEM
       execjs
     coffee-script-source (1.7.1)
     daemons (1.1.9)
+    dalli (2.7.2)
     database_cleaner (1.3.0)
     dep-selector-libgecode (1.0.2)
     dep_selector (1.0.3)
@@ -521,6 +522,7 @@ DEPENDENCIES
   capybara-email
   chef
   codeclimate-test-reporter
+  dalli
   database_cleaner
   devise
   doorkeeper

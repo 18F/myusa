@@ -51,8 +51,12 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  # Set up caching with memcached if we have a configuration for it
+  memcached_config = YAML.load_file(Rails.root.join('config/memcached.yml'))
+  memcached_hosts = memcached_config['servers']
+  if memcached_hosts && !memcached_hosts[0].blank?
+    config.cache_store = :dalli_store, *memcached_hosts
+  end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"

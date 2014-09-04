@@ -46,7 +46,7 @@ rbenv_gem "bundler" do
   ruby_version node[:myusa][:ruby_version]
 end
 
-#set up templates for application secrets
+# set up templates for application secrets
 template  "#{deploy_to_dir}/shared/config/secrets.yml" do
   source "secrets.yml.erb"
   variables(
@@ -60,10 +60,18 @@ template  "#{deploy_to_dir}/shared/config/secrets.yml" do
   )
 end
 
+# Memcache configuration
+template "#{deploy_to_dir}/shared/config/memcached.yml" do
+  source 'memcached.yml.erb'
+  variables(
+    memcached_host: node[:myusa][:memcached][:host]
+  )
+end
+
 # set up the database
 include_recipe "mysql::client"
 
-template  "#{deploy_to_dir}/shared/config/database.yml" do
+template "#{deploy_to_dir}/shared/config/database.yml" do
   source "database.yml.erb"
   variables(
     rails_env: node[:myusa][:rails_env],

@@ -21,23 +21,23 @@
       <ul class="list-group">
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:title) %></h4>
-          <%= @profile.title %>
+          <span id="title"><%= @profile.title %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:first_name) %></h4>
-          <%= @profile.first_name %>
+          <span id="first_name"><%= @profile.first_name %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:middle_name) %></h4>
-          <%= @profile.middle_name %>
+          <span id="middle_name"><%= @profile.middle_name %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:last_name) %></h4>
-          <%= @profile.last_name %>
+          <span id="last_name"><%= @profile.last_name %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:suffix) %></h4>
-          <%= @profile.suffix %>
+          <span id="suffix"><%= @profile.suffix %></span>
         </li>
       </ul>
     </div>
@@ -48,23 +48,23 @@
       <ul class="list-group">
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:address) %></h4>
-          <%= @profile.address %>
+          <span id="address"><%= @profile.address %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:address2) %></h4>
-          <%= @profile.address2 %>
+          <span id="address2"><%= @profile.address2 %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:city) %></h4>
-          <%= @profile.city %>
+          <span id="city"><%= @profile.city %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:state) %></h4>
-          <%= @profile.state %>
+          <span id="state"><%= @profile.state %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:zip) %></h4>
-          <%= @profile.zip %>
+          <span id="zip"><%= @profile.zip %></span>
         </li>
       </ul>
     </div>
@@ -77,11 +77,11 @@
       <ul class="list-group">
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:phone_number) %></h4>
-          <%= @profile.phone_number %>
+          <span id="phone_number"><%= @profile.phone_number %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:mobile_number) %></h4>
-          <%= @profile.mobile_number %>
+          <span id="mobile_number"><%= @profile.mobile_number %></span>
         </li>
       </ul>
     </div>
@@ -92,31 +92,31 @@
       <ul class="list-group">
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:email) %></h4>
-          <%= current_user.email %>
+          <span id="email"><%= current_user.email %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:gender) %></h4>
-          <%= @profile.print_gender %>
+          <span id="gender"><%= @profile.print_gender %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:marital_status) %></h4>
-          <%= @profile.print_marital_status %>
+          <span id="marital_status"><%= @profile.print_marital_status %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:is_parent) %></h4>
-          <%= yes_or_no(@profile.is_parent) %>
+          <span id="is_parent"><%= yes_or_no(@profile.is_parent) %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:is_veteran) %></h4>
-          <%= yes_or_no(@profile.is_veteran) %>
+          <span id="is_veteran"><%= yes_or_no(@profile.is_veteran) %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:is_student) %></h4>
-          <%= yes_or_no(@profile.is_student) %>
+          <span id="is_student"><%= yes_or_no(@profile.is_student) %></span>
         </li>
         <li class="list-group-item">
           <h4 class="list-group-item-heading"><%= Profile.human_attribute_name(:is_retired) %></h4>
-          <%= yes_or_no(@profile.is_retired) %>
+          <span id="is_retired"><%= yes_or_no(@profile.is_retired) %></span>
         </li>
       </ul>
     </div>

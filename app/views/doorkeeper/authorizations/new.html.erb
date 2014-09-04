@@ -1,6 +1,5 @@
 <div class="row scope-page">
   <div class="col-md-8 col-md-offset-2">
-
     <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
     <p class="subhead">Your MyUSA data is yours to grant or deny access at will.</p>
 
@@ -17,7 +16,8 @@
 
     <div class="row">
       <div class="col-md-12">
-        <%= form_tag oauth_authorization_path, role:'form', class:'form-inline', method: :post do %>
+        <%= form_tag oauth_authorization_path,  class: 'form-inline', method: :post do %>
+          <div class='form-group'>
           <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
           <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
           <%= hidden_field_tag :state, @pre_auth.state %>
@@ -27,17 +27,21 @@
           <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
           <div class="row">
-            <div class="col-md-7 col-sm-8 col-xs-8">
-              <%= submit_tag 'Allow Access', :class => 'btn btn-primary width-100'%>
+            <div class="col-md-3">
+              <%= hidden_field_tag :user_id, current_user.id %>
+              <%= hidden_field_tag :allow, "1", :id => "allow" %>
+              <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-             <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
+            <div class="col-md-3">
+              <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
             </div>
-          </div>
+            <br/>
+            <br/>
+            </div>
         <% end %>
       </div>
     </div>
-    <p class="disclaimer-info">
+    <p class="disclaimer-info label-pad">
       <small>
         Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
       </small>
@@ -48,6 +52,5 @@
         Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <%= link_to 'MyUSA Profile', profile_path, :title => 'MyUSA Profile' %>.
       </p>
     </div>
-
   </div>
 </div>

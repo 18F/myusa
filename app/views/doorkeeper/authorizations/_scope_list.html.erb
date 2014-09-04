@@ -1,6 +1,6 @@
 <ul class="list-unstyled scope-list">
   <% scopes_by_group(scopes) do |group, group_scopes| %>
-    <% if scopes.present? %>
+    <%- if group_scopes.present? -%>
     <li>
       <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
       <div class="form-group">
@@ -16,6 +16,6 @@
         <% end %>
       </div>
     </li>
-    <% end %>
+    <%- end -%>
   <% end %>
 </ul>

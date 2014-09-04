@@ -1,5 +1,6 @@
 ssh_options[:auth_methods] = ['publickey']
-ssh_options[:keys] = [ENV['AWS_KEY_PAIR_PATH']]
+ssh_options[:keys] = [ENV['AWS_KEY_PAIR_PATH']] if ENV['AWS_KEY_PAIR_PATH']
+set(:gateway, ENV['MYUSA_GATEWAY']) if ENV['MYUSA_GATEWAY']
 
 set :rails_env, :staging
 set :ip, ENV['MYUSA_APP_HOST']

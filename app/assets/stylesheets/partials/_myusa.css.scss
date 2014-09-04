@@ -90,13 +90,6 @@
   width:200px;
 }
 
-input.btn.btn-link-like {
-  @extend .btn-link;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  &:hover { color: $blue-lightest; }
-}
-
 /*******************
   Body
 ********************/
@@ -522,10 +515,6 @@ footer {
 }
 .btn-google:active,
 .btn-google.active {
-  color: #ffffff;
-}
-.main .btn:hover,
-.btn:focus {
   color: #ffffff;
 }
 

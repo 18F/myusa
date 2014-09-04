@@ -16,8 +16,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <%= form_tag oauth_authorization_path,  class: 'form-inline', method: :post do %>
-          <div class='form-group'>
+        <%= form_tag oauth_authorization_path, role:'form', class:'form-inline', method: :post do %>
           <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
           <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
           <%= hidden_field_tag :state, @pre_auth.state %>
@@ -27,17 +26,15 @@
           <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-7 col-sm-8 col-xs-8">
               <%= hidden_field_tag :user_id, current_user.id %>
               <%= hidden_field_tag :allow, "1", :id => "allow" %>
-              <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>
+              <%= submit_tag 'Allow Access', :class => 'btn btn-primary width-100'%>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4 col-sm-4 col-xs-4">
               <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
             </div>
-            <br/>
-            <br/>
-            </div>
+          </div>
         <% end %>
       </div>
     </div>

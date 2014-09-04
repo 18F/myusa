@@ -1,16 +1,15 @@
-class Api::ApiController < ApplicationController
+class Api::ApiController < ActionController::Base
   protect_from_forgery with: :null_session
-
   skip_before_filter :verify_authenticity_token
-  after_filter {|controller| log_activity(controller)}
 
   doorkeeper_for :all
 
-  protected
+  # protected
 
   def current_resource_owner
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
+  alias_method :current_user, :current_resource_owner
 
   def current_scopes
     doorkeeper_token.scopes.to_a
@@ -24,7 +23,4 @@ class Api::ApiController < ApplicationController
     {json: {message: 'Forbidden'}}
   end
 
-  def log_activity(controller)
-#    AppActivityLog.create!(:app => @app, :controller => controller.controller_name, :action => controller.action_name, :user => current_user)
-  end
 end

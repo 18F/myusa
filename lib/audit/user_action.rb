@@ -14,25 +14,25 @@ module Audit
     class Sweeper < ActionController::Caching::Sweeper
       observe ::UserAction
 
-      attr_accessor :controller
-
       def before(controller)
         self.controller = controller
       end
 
-      def after(controller); end
-      #   self.controller = controller
-      # end
+      def after(controller);
+        self.controller = nil
+      end
 
       def before_create(record)
-        record.remote_ip = controller.presence && controller.request.remote_ip
+        if controller.present?
+          record.user = controller.send(:current_user)
+          record.remote_ip = controller.request.remote_ip
+        end
       end
     end
 
     class Wrapper
       def initialize(opts)
         @action = opts[:action] if opts.has_key?(:action)
-        @user_method = opts[:user].presence || :user
       end
 
       def after_create(record)
@@ -41,12 +41,8 @@ module Audit
 
       private
 
-      def get_user(record)
-        record.send(@user_method) if record.respond_to?(@user_method)
-      end
-
       def audit(action, record)
-        ::UserAction.create(user: get_user(record), record: record, action: action)
+        ::UserAction.create(record: record, action: action)
       end
     end
   end

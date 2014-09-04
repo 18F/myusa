@@ -10,10 +10,9 @@ describe 'OAuth' do
   # Capybara context. More detail here:
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid, client_app.secret,
-                       site: 'http://www.example.com') do |b|
+    OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
       b.request :url_encoded
-      b.adapter :rack, Rails.application
+      b.adapter :rack, Capybara.app
     end
   end
 
@@ -104,9 +103,7 @@ describe 'OAuth' do
           @auth_page.scopes.uncheck('Email')
           @auth_page.allow_button.click
 
-          code = @token_page.code.text
-          token = oauth_client.auth_code.get_token(
-            code, redirect_uri: client_app.redirect_uri)
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
           expect(token['scope']).to eq('profile.last_name')
         end
 
@@ -116,9 +113,8 @@ describe 'OAuth' do
           @auth_page.profile_last_name.set 'McTesterson'
           @auth_page.allow_button.click
 
-          code = @token_page.code.text
-          token = oauth_client.auth_code.get_token(
-            code, redirect_uri: client_app.redirect_uri)
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+
           profile = JSON.parse token.get('/api/profile').body
           expect(profile['last_name']).to eq('McTesterson')
           expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
@@ -151,11 +147,14 @@ describe 'OAuth' do
 
           @auth_page.allow_button.click
 
-          expect(user.user_actions.where(record_type: Doorkeeper::AccessGrant, action: 'grant')).to exist
+          expect(user.user_actions.where(record_type: Doorkeeper::AccessGrant,
+                                         action: 'grant')).to exist
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
 
-          expect(user.user_actions.where(record_type: Doorkeeper::AccessToken, action: 'issue')).to exist
+          expect(UserAction.where(user_id: nil,
+                                  record_type: Doorkeeper::AccessToken,
+                                  action: 'issue')).to exist
         end
       end
 

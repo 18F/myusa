@@ -17,21 +17,21 @@ describe 'Users' do
         @profile_edit_page.first_name.set 'Jane'
         @profile_edit_page.submit.click
         expect(@results_page).to be_displayed
-        expect(@results_page.first_name).to eq 'Jane'
+        expect(@results_page.first_name.text).to eq 'Jane'
       end
 
       it "should allow setting a 'Yes/No' field to blank" do
         @profile_edit_page.is_student.select 'Yes'
         @profile_edit_page.submit.click
         expect(@results_page).to be_displayed
-        expect(@results_page.is_student).to eq 'Yes'
+        expect(@results_page.is_student.text).to eq 'Yes'
 
         @profile_edit_page.load
         @profile_edit_page.is_student.select ''
         @profile_edit_page.submit.click
 
         expect(@results_page).to be_displayed
-        expect(@results_page.is_student).to be_blank
+        expect(@results_page.is_student.text).to be_blank
       end
     end
   end

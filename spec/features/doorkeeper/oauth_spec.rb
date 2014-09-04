@@ -101,7 +101,7 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
-          @auth_page.scopes.uncheck('Email')
+          @auth_page.uncheck('Email')
           @auth_page.allow_button.click
 
           code = @token_page.code.text
@@ -271,5 +271,4 @@ describe 'OAuth' do
       end
     end
   end
-
 end

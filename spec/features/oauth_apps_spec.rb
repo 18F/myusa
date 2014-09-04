@@ -12,7 +12,9 @@ end
 
 describe 'OAuth' do
   let(:user) { create_confirmed_user_with_profile(email: 'first@user.org') }
-  let(:owner_user) { create_confirmed_user_with_profile(email: 'owner@user.org') }
+  let(:owner_user) do
+    create_confirmed_user_with_profile(email: 'owner@user.org')
+  end
   let(:redirect_uri) { 'http://example.gov/' }
   let(:app1_scopes) do
     ['profile',
@@ -43,8 +45,8 @@ describe 'OAuth' do
           auth_for_user
           click_button('Allow')
 
-          # NOTE: if we use a browser here, current_url resolves before the redirect
-          # fires, so none of this url string parsing works.
+          # NOTE: if we use a browser here, current_url resolves before the
+          # redirect fires, so none of this url string parsing works.
           uri = URI.parse(current_url)
           params = CGI.parse(uri.query)
           code = (params['code'] || []).first
@@ -52,7 +54,8 @@ describe 'OAuth' do
           expect(code).to_not be_empty
         end
 
-        it 'should log the sandbox application authorization activity, associated with the user' do
+        it 'should log the sandbox application authorization activity, ' \
+           'associated with the user' do
           pending 'app activity logs not added'
           auth_for_user
           expect(page).to have_content('The App1 application wants to:')
@@ -71,16 +74,20 @@ describe 'OAuth' do
       describe 'Does not allow sandbox application installation by non owner' do
         it 'code in params should not have a value' do
           auth_for_user
-          expect(page).to have_content("You are accessing an application that doesn't exist or hasn't given you sufficient access.")
+          expect(page).to have_content(
+            "You are accessing an application that doesn't exist or hasn't " \
+            'given you sufficient access.')
         end
       end
     end
 
-    context 'when NON logged in with a user who does not own the sandboxed app' do
+    context 'when NON logged in with a user who does not own the sandboxed ' \
+            'app' do
       describe 'Does not allow sandbox application installation by non owner' do
         it 'presents the login page' do
           auth_for_user
-          expect(page).to have_content('You need to sign in or sign up before continuing.')
+          expect(page).to have_content(
+            'You need to sign in or sign up before continuing.')
         end
       end
     end
@@ -113,8 +120,9 @@ describe 'OAuth' do
       context 'when the app is not known' do
         it 'redirects to a friendly error page if the app is unknown' do
           auth_for_user client_id: 'xyz'
-          expect(page).to have_content("An error has occurred")
-          expect(page).to have_content("Client authentication failed due to unknown client")
+          expect(page).to have_content('An error has occurred')
+          expect(page).to have_content(
+            'Client authentication failed due to unknown client')
         end
       end
     end

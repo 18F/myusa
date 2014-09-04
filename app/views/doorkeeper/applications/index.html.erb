@@ -35,6 +35,9 @@
 <div class="main">
   <div class="row scope-page">
     <div class="col-md-12">
+      <%- if @authorizations.blank? -%>
+      <p><%= t('no_authorizations') %></p>
+      <%- end -%>
       <% @authorizations.each do |authorization| %>
         <% application = authorization.application %>
         <div class="panel panel-default">

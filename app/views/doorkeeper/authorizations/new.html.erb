@@ -27,7 +27,7 @@
           <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-5">
               <%= hidden_field_tag :user_id, current_user.id %>
               <%= hidden_field_tag :allow, "1", :id => "allow" %>
               <%= submit_tag 'Allow Access', :class => 'btn btn-primary allow_button'%>

@@ -3,8 +3,6 @@
 class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   prepend_before_action :redirect_to_tokens, only: [:create]
   before_filter :pre_auth, only: [:new]
-  include ScopeGroups
-  before_filter :pre_auth_groups, only: [:new]
   before_filter :display_not_me, only: [:new]
 
   def create

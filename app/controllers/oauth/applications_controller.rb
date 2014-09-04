@@ -2,8 +2,6 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
   layout 'application'
 
-  include ScopeGroups
-
   def index
     super
     @authorizations = Doorkeeper::AccessToken.where(

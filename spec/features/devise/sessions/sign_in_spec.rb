@@ -50,7 +50,6 @@ describe 'Sign In' do
     end
     context 'with an email address and bad token' do
       it 'does not log them in' do
-        token = AuthenticationToken.generate(user_id: user.id)
         visit new_user_session_path(email: user.email, token: 'foobar')
 
         @target_page.load
@@ -78,8 +77,6 @@ describe 'Sign In' do
         let(:remember_me) { false  }
 
         before :each do
-          allow(UserAction).to receive(:create)
-
           @token_instructions_page = TokenInstructionsPage.new
           clear_emails
           expect(User.find_by_email(email)).to be_nil

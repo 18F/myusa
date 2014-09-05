@@ -31,10 +31,6 @@ module MyUSA
     config.to_prepare do
       # Only Authorization endpoint
       Doorkeeper::ApplicationController.layout "application"
-      ActionMailer::Base.default_options = {
-        reply_to: 'myusa@gsa.gov',
-        from: 'no-reply@' + ActionMailer::Base.default_url_options[:host]
-      }
     end
   end
 end

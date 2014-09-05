@@ -101,6 +101,28 @@ body {
   margin-bottom: 5em;
 }
 
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+.divider{
+  width: 100%;
+  height: 2em;
+  background-color: $blue;
+}
+
+.hidden{
+  display: none;
+}
+
 /*******************
   Header
 ********************/

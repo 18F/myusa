@@ -27,8 +27,14 @@ config/initializers/recaptcha.rb
 config/deploy.rb
 config/deploy/ec2.rb
 config/deploy/development.rb
+config/deploy/staging.rb
+config/deploy/production.rb
 config/deploy/vagrant.rb
 kitchen/nodes/localhost.json
+kitchen/nodes/staging.json
+kitchen/nodes/production.json
+kitchen/data_bags/staging/*
+kitchen/data_bags/production/*
 
 # folders
 coverage

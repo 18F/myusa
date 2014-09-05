@@ -1,6 +1,6 @@
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
-  layout 'application'
+  layout 'dashboard'
 
   def index
     super

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-5 col-sm-5">
-        <%= image_tag "header-logo.png", :alt => 'MyUSA Logo' %>
+        <%= link_to (image_tag "header-logo.png", :alt => 'MyUSA Logo'), root_path, :title => 'MyUSA' %>
       </div>
       <div class="col-md-7 col-sm-7">
         <% if user_signed_in? %>
@@ -15,15 +15,18 @@
       </div>
     </div>
     <div class="row">
-      <ul class="nav nav-pills nav-3">
+      <ul class="nav nav-pills nav-4">
         <li>
-          <a href="#">For the People</a>
+          <%= link_to 'Home', root_path %>
         </li>
         <li>
-          <a href="#">For Government Agencies</a>
+          <%= link_to 'For Agencies', '#agencies' %>
         </li>
         <li>
-          <a href="#">For Developers</a>
+          <%= link_to 'For Developers', '/developer' %>
+        </li>
+        <li>
+          <%= link_to 'Help', '/faq' %>
         </li>
       </ul>
     </div>

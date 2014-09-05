@@ -30,7 +30,7 @@ $font-family-base: $font_base;
 $font-size-base: 16px;
 $headings-font-family: $font_headings;
 $headings-font-weight: 700;
-$headings-color: $blue;
+$headings-color: $blue-light;
 $font-size-h1: 1.5em;
 $font-size-h2: 1.25em;
 $font-size-h3: 0.875em;
@@ -46,7 +46,7 @@ $dropdown-link-active-color: $blue-light;
 /**
  * Pills for header navigation
  */
-$nav-pills-active-link-hover-color: $blue-lighter;
+$nav-pills-active-link-hover-color: $blue-dark;
 $nav-pills-border-radius: 0;
 
 @import "bootstrap-sprockets";

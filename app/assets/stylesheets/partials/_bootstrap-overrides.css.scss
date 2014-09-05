@@ -1,7 +1,7 @@
 @import "colors";
 
-h2, .h2 {
-  color: $blue-lighter;
+h1, .h1 {
+  color: $blue-dark;
 }
 h3, .h3 {
   color: $gray;
@@ -21,8 +21,15 @@ h3, .h3 {
   margin-bottom: 0;
 }
 
+.width-80 {
+  width: 80%;
+}
 .width-100 {
   width: 100%;
+}
+
+.vertical-bottom {
+  vertical-align: bottom;
 }
 
 .no-padding {
@@ -41,8 +48,11 @@ ul.dropdown-menu {
  * for some reason, the pills variables are not being
  * overridden in sass, so directly overwrite the classes here
  */
+.nav > li > a {
+  color: $gray;
+}
 .nav > li > a:hover, .nav > li > a:focus {
-  color: $blue-lighter;
+  color: $blue-dark;
   background-color: transparent;
   font-weight: 700;
 }

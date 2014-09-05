@@ -21,6 +21,8 @@
 
 en:
   no_authorizations: You have not authorized any applications.
+  new_api_key: Your API Key has been updated.
+  new_application: Your application has been created.
   scope_groups:
     email:
       description: Identify you by your email address

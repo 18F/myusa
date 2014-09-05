@@ -1,5 +1,7 @@
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
+  # before_filter :application_params, only: [:create, :update]
+
   layout 'application'
 
   def index
@@ -13,12 +15,32 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
     @application = Doorkeeper::Application.new(application_params)
     @application.owner = current_user
     if @application.save
-      flash[:notice] = I18n.t(
-        :notice, scope: [:doorkeeper, :flash, :applications, :create])
-      respond_with [:oauth, @application]
+      message = I18n.t('new_application')
+      flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash', 
+                                        locals: { application: @application, message: message }
+      redirect_to oauth_applications_path
     else
       render :new
     end
+  end
+
+  def update
+    if @application.update_attributes(application_params)
+      flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
+      redirect_to oauth_applications_path
+    else
+      render :edit
+    end
+  end
+
+  def new_api_key
+    @application = Doorkeeper::Application.find(params[:id])
+    @application.secret = Doorkeeper::OAuth::Helpers::UniqueToken.generate
+    @application.save
+    message = I18n.t('new_api_key')
+    flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
+                                      locals: { message: message }
+    redirect_to oauth_applications_path
   end
 
   private

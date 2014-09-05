@@ -9,6 +9,7 @@ Rails.application.routes.draw do
                 :authorizations => 'oauth/authorizations',
                 :authorized_applications => 'oauth/authorized_applications'
   end
+  post 'new_api_key' => 'oauth/applications#new_api_key'
 
   devise_for :users,
     controllers: {

@@ -96,9 +96,12 @@ describe 'Sign In' do
           expect(@token_instructions_page.source).to match body
         end
 
-        it 'sends the user an email with the token' do
-          open_email(email)
-          expect(current_email).to have_link(link_text)
+        describe 'sends the user an email' do
+          subject { open_email(email); current_email }
+          it { should have_link(link_text) }
+          its(:from) { should eql ['no-reply@' +
+                        ActionMailer::Base.default_url_options[:host]] }
+          its(:reply_to) { should eql ['myusa@gsa.gov'] }
         end
 
         it 'allows user to authenticate with token' do

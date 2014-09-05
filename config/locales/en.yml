@@ -162,6 +162,10 @@ en:
 
   not_specified: Not Specified
 
+  email:
+    contact_us:
+      subject: 'Contact - MyUSA marketing page'
+      
   activerecord:
     models:
       profile: 'Profile'

@@ -4,6 +4,14 @@ module ScopesHelper
 
   SCOPE_GROUPS = [
     {
+      name: :tasks,
+      scopes: %w(tasks)
+    },
+    {
+      name: :notifications,
+      scopes: %w(notifications)
+    },
+    {
       name: :email,
       scopes: %w(profile.email)
     },
@@ -74,8 +82,12 @@ module ScopesHelper
     end
   end
 
+  def profile_scope?(scope)
+    scope.starts_with?('profile.')
+  end
+
   def scope_field_tag(scope, opts = {})
-    return unless scope.starts_with?('profile.')
+    return unless profile_scope?(scope)
     read_only = opts.delete :read_only
 
     field = Profile.attribute_from_scope(scope)

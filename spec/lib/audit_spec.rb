@@ -33,6 +33,14 @@ module Audit
       get :index, u: user
     end
 
+    it 'associates audit record with logged in user' do
+      expect(user.user_actions).to exist
+    end
+
+    it 'sets the remote ip' do
+      expect(user.user_actions.first.remote_ip).to be_present
+    end
+
     it 'audits model creation' do
       expect(user.user_actions.where(record_type: Dummy, action: 'create')).to exist
     end

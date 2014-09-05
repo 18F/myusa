@@ -100,7 +100,7 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
-          @auth_page.uncheck('Email')
+          @auth_page.scopes.uncheck('Email')
           @auth_page.allow_button.click
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
@@ -139,22 +139,6 @@ describe 'OAuth' do
         context 'when no scopes are requested' do
           let(:requested_scopes) { '' }
           it_behaves_like 'uses existing authorization'
-        end
-
-        it 'creates a user action (audit) record for grant and token' do
-          allow(UserAction).to receive(:create).and_call_original
-          expect(@auth_page).to be_displayed
-
-          @auth_page.allow_button.click
-
-          expect(user.user_actions.where(record_type: Doorkeeper::AccessGrant,
-                                         action: 'grant')).to exist
-
-          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-
-          expect(UserAction.where(user_id: nil,
-                                  record_type: Doorkeeper::AccessToken,
-                                  action: 'issue')).to exist
         end
       end
 
@@ -282,4 +266,5 @@ describe 'OAuth' do
       end
     end
   end
+
 end

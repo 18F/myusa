@@ -47,11 +47,6 @@ describe 'Sign In' do
         @target_page.load
         expect(@target_page).to be_displayed
       end
-      it 'creates a user action (audit) record for ''sign_in''' do
-        allow(UserAction).to receive(:create)
-        visit new_user_session_path(email: user.email, token: token.raw)
-        expect(UserAction).to have_received(:create).with(hash_including(action: 'sign_in'))
-      end
     end
     context 'with an email address and bad token' do
       it 'does not log them in' do
@@ -107,12 +102,6 @@ describe 'Sign In' do
         it 'sends the user an email with the token' do
           open_email(email)
           expect(current_email).to have_link(link_text)
-        end
-
-        it 'creates a user action (audit) record for token creation' do
-          expect(UserAction).to have_received(:create).with(
-            hash_including(record: instance_of(AuthenticationToken), action: 'create')
-          )
         end
 
         it 'allows user to authenticate with token' do

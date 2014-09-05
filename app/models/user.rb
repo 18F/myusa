@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   validates_email_format_of :email, {:allow_blank => false}
   validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
 
+  has_many :user_actions
+
   before_validation :generate_uid
   after_create :create_profile
 
@@ -101,29 +103,6 @@ class User < ActiveRecord::Base
   def last_name=(last_name)
     @last_name = last_name
   end
-
-  def installed_apps
-    self.oauth2_authorizations.map(&:client).map(&:oauth2_client_owner)
-  end
-
-  # def grouped_activity_logs
-  #   logs = self.app_activity_logs
-  #
-  #   # create container for grouped logs that will be returned
-  #   grouped_logs = {}
-  #
-  #   # iterate over current logs
-  #   logs.each do |log|
-  #     key = log.created_at.strftime('%B %e')
-  #     if grouped_logs[key]
-  #       grouped_logs[key] << log
-  #     else
-  #       grouped_logs[key] = [log]
-  #     end
-  #   end
-  #
-  #   grouped_logs
-  # end
 
   private
 

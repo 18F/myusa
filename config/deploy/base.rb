@@ -8,6 +8,7 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/shared/config/.env #{release_path}/"
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/"
     run "ln -nfs #{deploy_to}/shared/config/secrets.yml #{release_path}/config/"
+    run "ln -nfs #{deploy_to}/shared/config/memcached.yml #{release_path}/config/"
   end
 
 # Created to help with first time database creation

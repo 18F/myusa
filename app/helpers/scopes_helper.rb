@@ -1,3 +1,5 @@
+
+# ScopesHelper
 module ScopesHelper
 
   SCOPE_GROUPS = [
@@ -13,7 +15,7 @@ module ScopesHelper
     {
       name: :address,
       scopes: %w(profile.address profile.address2 profile.city profile.state
-                profile.zip)
+                 profile.zip)
     },
     {
       name: :phone,
@@ -28,13 +30,25 @@ module ScopesHelper
 
   def scopes_by_group(scopes)
     SCOPE_GROUPS.each do |scope_group|
-      filtered_scopes =  scopes.select {|s| scope_group[:scopes].include?(s) }
+      filtered_scopes = scopes.select { |s| scope_group[:scopes].include?(s) }
       yield(scope_group[:name], filtered_scopes)
     end
   end
 
+  def scope_tag(scope)
+    yield(scope.gsub(/\./, '_'), t("scopes.#{scope}.label"))
+  end
+
   def scope_field_label(scope)
-    label :scope, scope.gsub(/\./, '_'), t("scopes.#{scope}.label")
+    scope_tag(scope) do |id, display|
+      label :scope, id, display
+    end
+  end
+
+  def scope_label(scope)
+    scope_tag(scope) do |id, display|
+      label_tag nil, display, id: id
+    end
   end
 
   def profile_options_for_select(scope, value)
@@ -60,23 +74,22 @@ module ScopesHelper
     end
   end
 
-  def scope_field_tag(scope, opts={})
+  def scope_field_tag(scope, opts = {})
     return unless scope.starts_with?('profile.')
+    read_only = opts.delete :read_only
 
     field = Profile.attribute_from_scope(scope)
     value = current_user.profile.send(field)
 
-    if !value.nil? && value != '' 
-      profile_display_value(field, current_user.profile.send(field))
+    if read_only || value.present?
+      profile_display_value(field, value)
+    elsif (profile_options = profile_options_for_select(scope, value))
+      opts.merge!(prompt: t(:not_specified))
+      select_tag "profile[#{field}]", profile_options, opts
     else
-      if profile_options = profile_options_for_select(scope, value)
-        opts.merge!(prompt: t(:not_specified))
-        select_tag "profile[#{field}]", profile_options, opts
-      else
-        opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
-        text_field_tag "profile[#{field}]", current_user.profile.send(field), opts
-      end
+      opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
+      text_field_tag("profile[#{field}]", current_user.profile.send(field),
+                     opts)
     end
   end
-
 end

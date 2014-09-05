@@ -47,6 +47,14 @@ describe AuthenticationToken, type: :model do
         expect(AuthenticationToken.where(user, @tokens.last.raw)).to be
       end
     end
+
+    context 'return_to url is present (and very long)' do
+      it 'generates a token' do
+        url = "/?foo=bar&baz=#{SecureRandom.base64(500)}"
+        token = AuthenticationToken.generate(user: user, return_to: url)
+        expect(token.token).to be
+      end
+    end
   end
 
   describe '#authenticate' do

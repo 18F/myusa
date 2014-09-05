@@ -19,6 +19,7 @@ gem 'permanent_records', '~> 2.3.0'
 gem 'font-awesome-sass'
 gem 'attr_encrypted'
 gem 'doorkeeper'
+gem 'rails-observers'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'
@@ -36,9 +37,6 @@ group :development do
   gem 'letter_opener'
   gem 'rubocop', require: false
   gem 'better_errors'
-  gem 'pry-rails'
-  # this fork of pry-plus is 2.1.x-compatible
-  # gem 'pry-plus', git: 'https://github.com/avantcredit/pry-plus.git'
 end
 
 ## deploy dependencies
@@ -55,6 +53,7 @@ end
 
 group :development, :test do
   gem 'oauth2'
+  gem 'pry-rails'
 end
 
 group :test do
@@ -75,6 +74,7 @@ end
 
 group :staging, :production do
   gem 'unicorn', :require => false
+  gem 'dalli'
 end
 
 group :production do

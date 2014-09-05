@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   post 'contact_myusa' => 'home#contact_myusa'
 
   use_doorkeeper do
-    controllers :applications => 'oauth/applications'
-    controllers :authorizations => 'oauth/authorizations'
+    controllers :applications => 'oauth/applications',
+                :authorizations => 'oauth/authorizations',
+                :authorized_applications => 'oauth/authorized_applications'
   end
 
   devise_for :users,

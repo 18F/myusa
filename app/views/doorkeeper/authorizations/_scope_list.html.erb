@@ -1,10 +1,11 @@
 <ul class="list-unstyled scope-list">
-  <% scopes_by_group(@pre_auth.scopes) do |group, scopes| %>
+  <% scopes_by_group(scopes) do |group, group_scopes| %>
+    <%- if group_scopes.present? -%>
     <li>
       <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
       <div class="form-group">
         <h3><%= t("scope_groups.#{group}.subheading") %></h3>
-        <% scopes.each do |scope| %>
+        <% group_scopes.each do |scope| %>
           <%= scope_field_label(scope) %>
           <div>
             <%= scope_check_box_tag scope %>
@@ -15,5 +16,6 @@
         <% end %>
       </div>
     </li>
+    <%- end -%>
   <% end %>
 </ul>

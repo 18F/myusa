@@ -104,5 +104,5 @@ end
 # validate_client to check that method to ensure that the current user is
 # allowed to use the current client application.
 
-# TODO: figure out why i have to require this at the bottom ... 
+# TODO: figure out why i have to require this at the bottom ...
 require 'doorkeeper_patches'

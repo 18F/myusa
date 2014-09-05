@@ -82,19 +82,24 @@ ActiveRecord::Schema.define(version: 20140902195137) do
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: true do |t|
-    t.string   "name",                                      null: false
-    t.string   "uid",                                       null: false
-    t.string   "secret",                                    null: false
-    t.text     "redirect_uri",                              null: false
+    t.string   "name",                                            null: false
+    t.string   "uid",                                             null: false
+    t.string   "secret",                                          null: false
+    t.text     "redirect_uri",                                    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "owner_type"
     t.string   "url"
-    t.string   "scopes",       limit: 2000
-    t.boolean  "public",                    default: false
+    t.string   "scopes",             limit: 2000
+    t.boolean  "public",                          default: false
     t.string   "description"
-    t.string   "image"
+    t.string   "short_description"
+    t.string   "custom_text"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree

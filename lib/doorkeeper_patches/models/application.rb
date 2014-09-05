@@ -1,5 +1,6 @@
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
+  include ApplicationExtension
 
   validate do |a|
     return if a.scopes.nil?

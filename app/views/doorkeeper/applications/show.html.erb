@@ -12,11 +12,29 @@
 
     <p><code id="secret"><%= @application.secret %></code></p>
 
+
+    <h4>Description</h4>
+      <p><code><%= @application.description %></code></p>
+
+    <h4>Short Description</h4>
+      <p><code><%= @application.short_description %></code></p>
+
+    <h4>Image</h4>
+    <p>
+      <%= image_tag @application.image.url(:medium) %>
+    </p>
+
+    <h4>Custom Text</h4>
+      <p><code><%= @application.custom_text %></code></p>
+
     <h4>Scopes:</h4>
 
     <% @application.scopes.each do |scope| %>
       <p><code><%= scope %></code></p>
     <% end %>
+
+    <h4>URL</h4>
+      <p><code><%= @application.url %></code></p>
 
     <h4>Callback urls:</h4>
 
@@ -27,7 +45,6 @@
             <code><%= uri %></code>
           </td>
           <td>
-            <%= link_to 'Authorize', oauth_authorization_path(client_id: @application.uid, redirect_uri: uri, response_type: 'code'), class: 'btn btn-success', target: '_blank' %>
           </td>
         </tr>
       <% end %>

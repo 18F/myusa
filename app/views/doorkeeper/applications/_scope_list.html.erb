@@ -1,0 +1,19 @@
+<% scopes_by_group do |group, group_scopes| %>
+  <%- if group_scopes.present? -%>
+    <%= content_tag :div, class: "form-group" do %>
+      <div class="col-md-10 col-md-offset-2">
+    		<div class="form-group">
+    		  <strong>
+    		    <%= t("scope_groups.#{group}.description") %>
+    		  </strong>
+      		<% group_scopes.each do |scope| %>
+  		      <div>
+  		      	<%= scope_check_box_tag scope, selected_scopes.member?(scope) %>
+  		      	<%= scope_field_label(scope) %>
+  		    	</div>
+    			<% end %>
+  		 	</div>
+  		</div>
+  	<% end %>
+  <% end %>
+<% end %>

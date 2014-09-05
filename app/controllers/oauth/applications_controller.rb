@@ -13,18 +13,29 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
     @application = Doorkeeper::Application.new(application_params)
     @application.owner = current_user
     if @application.save
-      flash[:notice] = I18n.t(
-        :notice, scope: [:doorkeeper, :flash, :applications, :create])
-      respond_with [:oauth, @application]
+      message = I18n.t('new_application')
+      flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
+                                        locals: { application: @application, message: message }
+      redirect_to oauth_applications_path
     else
       render :new
+    end
+  end
+
+  def update
+    if @application.update_attributes(application_params)
+      flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
+      redirect_to oauth_applications_path
+    else
+      render :edit
     end
   end
 
   private
 
   def application_params
-    params.require(:application).permit(
-      :name, :description, :image, :scopes, :redirect_uri)
+    app_params = params.require(:application).permit(:name, :description, :short_description, :custom_text, :url, :image, :scopes, :redirect_uri)
+    app_params[:scopes] = params[:scope] ? params[:scope].join(' ') : []
+    app_params
   end
 end

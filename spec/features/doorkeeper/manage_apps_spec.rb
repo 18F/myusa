@@ -135,20 +135,20 @@ describe 'OAuth' do
            'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
            'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'])
         expect(@auths_page.first_app.app_scope_sections.map(&:text)).to eq(
-          ['Send you notifications via MyUSA',
-           'Identify you by your email address',
+          ['Identify you by your email address',
            'Address you by name',
            'Know where you live',
            'Know how to contact you by phone or text message',
-           'Find out more about you'])
+           'Find out more about you',
+           'Send you notifications via MyUSA'])
         expect(@auths_page.second_app.app_scopes.map(&:text)).to eq(
           ['Email Address', 'Zip Code', 'Phone Number', 'Gender'])
         expect(@auths_page.second_app.app_scope_sections.map(&:text)).to eq(
-          ['Send you notifications via MyUSA',
-           'Identify you by your email address',
+          ['Identify you by your email address',
            'Know where you live',
            'Know how to contact you by phone or text message',
-           'Find out more about you'])
+           'Find out more about you',
+           'Send you notifications via MyUSA'])
       end
 
       it 'revokes authorization to an application' do

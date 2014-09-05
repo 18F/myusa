@@ -4,14 +4,6 @@ module ScopesHelper
 
   SCOPE_GROUPS = [
     {
-      name: :tasks,
-      scopes: %w(tasks)
-    },
-    {
-      name: :notifications,
-      scopes: %w(notifications)
-    },
-    {
       name: :email,
       scopes: %w(profile.email)
     },
@@ -33,6 +25,14 @@ module ScopesHelper
       name: :identifiers,
       scopes: %w(profile.gender profile.marital_status profile.is_parent
                  profile.is_student profile.is_veteran profile.is_retired)
+    },
+    {
+      name: :tasks,
+      scopes: %w(tasks)
+    },
+    {
+      name: :notifications,
+      scopes: %w(notifications)
     }
   ]
 

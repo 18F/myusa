@@ -185,11 +185,11 @@ describe 'OAuth' do
 
         it 'displays the proper scopes' do
           expect(@auth_page.scopes.map(&:text)).to eq(
-            ['Allow the application send you notifications via MyUSA',
-             'Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
+            ['Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
              'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
              'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
-             'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'])
+             'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?',
+             'Allow the application send you notifications via MyUSA'])
         end
 
         it 'user can authorize' do

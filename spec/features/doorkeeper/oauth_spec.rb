@@ -100,7 +100,7 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
-          @auth_page.uncheck('Email')
+          @auth_page.scope_list.uncheck('Email')
           @auth_page.allow_button.click
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)

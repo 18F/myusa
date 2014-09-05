@@ -14,3 +14,8 @@ knife[:image] =                   'ami-ff92ebcf' # Find the latest ATO image
 knife[:region] =                  'us-west-2'
 knife[:availability_zone] =       'us-west-2b'
 knife[:solo] =                    true
+
+if ENV['MYUSA_GATEWAY']
+  knife[:forward_agent] = true
+  knife[:ssh_gateway] = ENV['MYUSA_GATEWAY']
+end

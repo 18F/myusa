@@ -5,6 +5,7 @@ module OAuth2
   class AuthorizedApp < SitePrism::Section
     elements :app_titles, '.panel-title'
     elements :app_scopes, '.col-md-3 label'
+    element  :revoke_access_button, "input[value='Revoke Access']"
 
     def app_name
       app_titles[0]
@@ -24,8 +25,16 @@ module OAuth2
       apps[0]
     end
 
+    def first_revoke_button
+      first_app.revoke_access_button
+    end
+
     def second_app
       apps[1]
+    end
+
+    def second_revoke_button
+      second_app.revoke_access_button
     end
   end
 end

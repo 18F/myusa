@@ -21,6 +21,7 @@
 
 en:
   no_authorizations: You have not authorized any applications.
+  new_application: Your application has been created.
   scope_groups:
     email:
       description: Identify you by your email address

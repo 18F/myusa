@@ -1,39 +1,119 @@
-<%= form_for [:oauth, application], html: {class: 'form-horizontal', role: 'form'} do |f| %>
+<%= form_for [:oauth, application], id: 'new_application', html: {multipart: true, class: 'form-horizontal', role: 'form'} do |f| %>
   <% if application.errors.any? %>
     <div class="alert alert-danger" data-alert><p>Whoops! Check your form for possible errors</p></div>
   <% end %>
 
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:name].present?}" do %>
-    <%= f.label :name, class: 'col-sm-2 control-label', for: 'application_name' %>
+    <div class='col-sm-2'>
+    </div>
     <div class="col-sm-10">
+      <%= f.label :name, class: ' control-label', for: 'application_name' %>
+      <br>
       <%= f.text_field :name, class: 'form-control' %>
       <%= doorkeeper_errors_for application, :name %>
     </div>
   <% end %>
 
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:scopes].present?}" do %>
-    <%= f.label :scopes, class: 'col-sm-2 control-label', for: 'application_scopes' %>
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:description].present?}" do %>
+    <div class='col-sm-2'>
+    </div>
     <div class="col-sm-10">
-      <%= f.text_field :scopes, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :scopes %>
+      <%= f.label :description, class: 'control-label', for: 'application_description' %>
+      <%= f.text_area(:description, size:'50x10', class: 'form-control')%>
+      <%= doorkeeper_errors_for application, :description %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:short_description].present?}" do %>
+    <div class='col-sm-2'>
+    </div>
+    <div class="col-sm-10">
+      <%= f.label :short_description, class: 'control-label', for: 'application_short_description' %>
+      <br>
+      <%= f.text_field :short_description, class: 'form-control' %>
+      <%= doorkeeper_errors_for application, :short_description %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:url].present?}" do %>
+    <div class='col-sm-2'>
+    </div>
+    <div class="col-sm-10">
+      <%= f.label :url, class: 'control-label', for: 'application_url' %>
+      <br>
+      <%= f.text_field :url, class: 'form-control' %>
+      <%= doorkeeper_errors_for application, :url %>
     </div>
   <% end %>
 
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:redirect_uri].present?}" do %>
-    <%= f.label :redirect_uri, class: 'col-sm-2 control-label', for: 'application_redirect_uri' %>
+    <div class='col-sm-2'>
+    </div>
     <div class="col-sm-10">
-      <%= f.text_area :redirect_uri, class: 'form-control' %>
+      <%= f.label :redirect_uri, class: 'control-label', for: 'application_redirect_uri' %>
+      <br>
+      <%= f.text_field :redirect_uri, class: 'form-control' %>
       <%= doorkeeper_errors_for application, :redirect_uri %>
-      <span class="help-block">
-         Use one line per URI
-        </span>
-      <% if Doorkeeper.configuration.native_redirect_uri %>
-          <span class="help-block">
-            Use <code><%= Doorkeeper.configuration.native_redirect_uri %></code> for local tests
-          </span>
+      <% if Rails.env.development? %>
+        <% if Doorkeeper.configuration.native_redirect_uri %>
+            <span class="help-block">
+              Use <code><%= Doorkeeper.configuration.native_redirect_uri %></code> for local tests
+            </span>
+        <% end %>
       <% end %>
     </div>
   <% end %>
+
+
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:image].present?}" do %>
+    <div class='col-sm-2'>
+    </div>
+    <div class="col-sm-10">
+      <%= f.label :image, class: 'control-label', for: 'application_image' %>
+      <br>
+      <%= f.file_field :image, class: 'form-control' %>
+      <%= doorkeeper_errors_for application, :image %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:custom_text].present?}" do %>
+    <div class='col-sm-2'>
+    </div>
+    <div class="col-sm-10">
+      <%= f.label :custom_text, class: 'control-label', for: 'application_url' %>    
+      <br>
+      <%= f.text_field :custom_text, class: 'form-control' %>
+      <%= doorkeeper_errors_for application, :custom_text %>
+    </div>
+  <% end %>
+
+  <% if application.errors[:scopes].present? %>
+    <%= content_tag :div, class: "form-group" do %>
+      <div class="col-sm-2">
+      </div>
+
+      <div class="col-sm-10 alert alert-danger">
+        You must select at least one scope.
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group" do %>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10 #{' has-error' if application.errors[:scopes].present?}">
+      Select which parts of the MyUSA API your application will use
+   </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group" do %>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+       <%= render 'scope_list', application: application, selected_scopes: application.scopes.to_s.split %>
+    </div>
+   <%end%>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
@@ -41,4 +121,25 @@
       <%= link_to "Cancel", oauth_applications_path, :class => "btn btn-default" %>
     </div>
   </div>
+<% end %>
+
+<% if @app_secret %>
+  <div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Your application has been created. Please save the below information in safe place.</h4>
+      </div>
+      <div class="modal-body">
+      <div id='secret'>Consumer Public Key: <%=@app_secret%></div>
+      <div id='app_id'>Consumer Secret Key: <%=@app_id%></div>       
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-primary">Save changes</button>
+     </div>
+   </div><!-- /.modal-content -->
+ </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <% end %>

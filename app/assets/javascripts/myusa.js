@@ -1,4 +1,10 @@
 $(document).ready(function () {
+
+  // Oauth/applications/new
+  if ($('.modal')){
+    $('.modal').modal()
+  }
+
   var background = false;
 
   /**

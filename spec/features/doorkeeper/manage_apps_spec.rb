@@ -147,4 +147,22 @@ describe 'OAuth' do
       end
     end
   end
+
+  describe 'applications' do 
+    before :each do 
+      login user
+      @new_application_page = OAuth2::NewApplicationPage.new
+      @auths_page = OAuth2::AuthorizationsPage.new
+    end
+
+    it "should allow user to create app with image and get secret" do
+      @new_application_page.load
+      @new_application_page.name.set 'myApp'
+      @new_application_page.redirect_uri.set 'urn:ietf:wg:oauth:2.0:oob'
+      check 'First Name'
+      @new_application_page.submit.click
+      expect(@auths_page).to be_displayed
+      expect(@auths_page.secret_key).to be_present
+    end
+  end
 end

@@ -75,7 +75,7 @@ We hold your privacy in the highest regard. MyUSA collects some anonymous inform
 1. We never store personal information on our servers unless required for the on-going operation of one of our services.
 
 ## Generally
-We are committed to protecting the privacy of our users. We collect no personal information unless you choose to provide that information to us.
+We are committed to protecting the privacy of our users. We collect no personal information unless you choose to provide that information to us.  An assessment of the privacy impact of MyUSA is in our [Privacy Impact Assessment](http://www.gsa.gov/portal/getMediaData?mediaId=180583).
 
 ## Information collected automatically
 Like most website operators, as you use our service, either directly or indirectly, we may collect and store the following non-personally-identifiable (a.k.a. anonymous) information about your visit:

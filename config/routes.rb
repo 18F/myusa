@@ -10,6 +10,7 @@ Rails.application.routes.draw do
                 :authorized_applications => 'oauth/authorized_applications'
   end
   post 'new_api_key' => 'oauth/applications#new_api_key'
+  post 'make_public' => 'oauth/applications#make_public'
 
   devise_for :users,
     controllers: {

@@ -28,4 +28,12 @@ module OauthHelper
       scope: pre_auth.scope
     )
   end
+
+  def app_status(app)
+    if app.public
+      return t('app_status.public')
+    end
+
+    app.requested_public_at.nil? ? t('app_status.private') : t('app_status.pending')
+  end
 end

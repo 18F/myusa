@@ -7,4 +7,6 @@ class Doorkeeper::Application
       errors.add(:scopes, 'Invalid scope')
     end
   end
+
+  audit_on :create
 end

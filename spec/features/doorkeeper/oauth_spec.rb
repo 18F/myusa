@@ -10,10 +10,9 @@ describe 'OAuth' do
   # Capybara context. More detail here:
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid, client_app.secret,
-                       site: 'http://www.example.com') do |b|
+    OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
       b.request :url_encoded
-      b.adapter :rack, Rails.application
+      b.adapter :rack, Capybara.app
     end
   end
 
@@ -101,12 +100,10 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
-          @auth_page.uncheck('Email')
+          @auth_page.scopes.uncheck('Email')
           @auth_page.allow_button.click
 
-          code = @token_page.code.text
-          token = oauth_client.auth_code.get_token(
-            code, redirect_uri: client_app.redirect_uri)
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
           expect(token['scope']).to eq('profile.last_name')
         end
 
@@ -116,9 +113,8 @@ describe 'OAuth' do
           @auth_page.profile_last_name.set 'McTesterson'
           @auth_page.allow_button.click
 
-          code = @token_page.code.text
-          token = oauth_client.auth_code.get_token(
-            code, redirect_uri: client_app.redirect_uri)
+          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+
           profile = JSON.parse token.get('/api/profile').body
           expect(profile['last_name']).to eq('McTesterson')
           expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
@@ -242,7 +238,6 @@ describe 'OAuth' do
 
         it_behaves_like 'scope error'
       end
-
     end
   end
 
@@ -280,4 +275,5 @@ describe 'OAuth' do
       end
     end
   end
+
 end

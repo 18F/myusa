@@ -101,13 +101,4 @@ describe User, type: :model do
     end
   end
 
-  describe 'send email' do
-    message = { message: 'test body',
-                from: 'example@example.com',
-                return_field: 'example@example.com' }
-    it 'sends an email' do
-      expect { User.send_email(message) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
-  end
-
 end

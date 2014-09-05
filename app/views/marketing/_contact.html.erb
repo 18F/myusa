@@ -9,20 +9,20 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-1">
-			<%= form_tag contact_myusa_path, id: 'contact-form', role: "form" do |f| %>
+			<%= form_for :contact_us, url: contact_us_path, html: { id: 'contact-form', role: "form" } do |f| %>
 			  <div class="form-group">
-			    <%= label_tag 'Message:' %>
-			    <%= text_area_tag 'message', nil, class: 'form-control', rows: 8 %>
+			    <%= f.label 'Message:' %>
+			    <%= f.text_area :message, class: 'form-control', rows: 8 %>
 			  </div>
 			  <div class="form-group">
-			    <%= label_tag 'From:' %>
-			    <%= text_field_tag 'from', nil, class: 'form-control', placeholder: 'What should we call you?' %>
+			    <%= f.label 'From:' %>
+			    <%= f.text_field :from, class: 'form-control', placeholder: 'What should we call you?' %>
 			  </div>
 			  <div class="form-group">
-			    <%= label_tag 'Return Field:' %>
-			    <%= text_field_tag 'return_field', nil, class: 'form-control', placeholder: 'How should we get back to you?' %>
+			    <%= f.label 'Return Email:' %>
+			    <%= f.text_field :return_email, class: 'form-control', placeholder: 'How should we get back to you?' %>
 			  </div>
-			  <%= submit_tag 'Submit', class: 'btn btn-primary' %>
+			  <%= f.submit 'Submit', class: 'btn btn-primary' %>
 			<% end %>
 		</div>
 		<div class="col-md-5">

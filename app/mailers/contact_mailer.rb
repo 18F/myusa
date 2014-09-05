@@ -1,9 +1,10 @@
-# contact us mailer
 class ContactMailer < ActionMailer::Base
-  default from: "no-reply@#{Rails.env}.my.usa.gov."
-
-  def contact_email(message)
+  def contact_us(from, return_email, message)
+    @from = from
     @message = message
-    mail(to: 'myusa@gsa.gov', subject: 'Contact - MyUSA marketing page')
+    mail(
+      reply_to: return_email,
+      subject: t('email.contact_us.subject')
+    )
   end
 end

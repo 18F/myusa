@@ -22,6 +22,12 @@
 en:
   no_authorizations: You have not authorized any applications.
   scope_groups:
+    tasks:
+      description: Add and remove tasks from your MyUSA account
+      subheading: Tasks let you track your progress working with government services
+    notifications:
+      description: Send you notifications via MyUSA
+      subheading: Notifications allow applications to contact you through MyUSA without sharing your email address or contact information
     email:
       description: Identify you by your email address
       subheading: Providing your email address will let the application contact you directly
@@ -43,6 +49,14 @@ en:
       label: Credentials
       hint: This allows the app to verify your credentials
       desc: Verify Credentials
+    tasks:
+      label: Allow the application to add task lists and manage its tasks
+      hint: ""
+      desc: Manage your tasks
+    notifications:
+      label: Allow the application send you notifications via MyUSA
+      hint: ""
+      desc: Send you notifications
     profile:
       label: 'Profile'
       hint: ""

@@ -100,7 +100,7 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
-          @auth_page.scopes.uncheck('Email')
+          @auth_page.scope_list.uncheck('Email')
           @auth_page.allow_button.click
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
@@ -143,7 +143,6 @@ describe 'OAuth' do
       end
 
       context 'when user is already authorized', authorized: true do
-
         context 'with the same set of scopes requested' do
           let(:authorized_scopes) { requested_scopes }
           it_behaves_like 'uses existing authorization'
@@ -174,10 +173,20 @@ describe 'OAuth' do
           'profile.middle_name profile.last_name profile.phone_number ' \
           'profile.suffix profile.address profile.address2 profile.zip ' \
           'profile.gender profile.marital_status profile.is_parent ' \
-          'profile.is_student profile.is_veteran profile.is_retired'
+          'profile.is_student profile.is_veteran profile.is_retired ' \
+          'notifications'
         end
         let(:client_app) { FactoryGirl.create(:application, scopes: scopes) }
-        let(:requested_scope) { scopes }
+        let(:requested_scopes) { scopes }
+
+        it 'displays the proper scopes' do
+          expect(@auth_page.scopes.map(&:text)).to eq(
+            ['Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
+             'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
+             'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
+             'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?',
+             'Allow the application send you notifications via MyUSA'])
+        end
 
         it 'user can authorize' do
           expect(@auth_page).to be_displayed

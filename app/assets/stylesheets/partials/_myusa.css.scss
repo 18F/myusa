@@ -153,7 +153,7 @@ header {
   }
   .header-signedin {
     z-index: 15;
-    color: $blue-lighter;
+    color: $blue-dark;
     font-family: $font-headings;
     font-weight: 600;
     padding-top: 8px;
@@ -168,7 +168,7 @@ header {
     border-bottom: 2px solid transparent;
   }
   .nav > li > a:hover, .nav > li > a:focus {
-    border-bottom: 2px solid $blue-lighter;
+    border-bottom: 2px solid $blue-dark;
   }
   .nav.nav-3 > li {
     width: 33%;
@@ -177,7 +177,7 @@ header {
     }
   }
   .nav.nav-4 > li {
-    width: 24%;
+    width: 24.5%;
     @media (max-width: $screen-xs-max) {
       width: 100%;
     }
@@ -228,25 +228,28 @@ footer {
   .top-border {
     border-top: 1px solid $gray-highlight;
   }
+  .top-border-blue {
+    border-top: 5px solid $blue-dark;
+  }
   .bottom-border {
     border-bottom: 1px solid $gray-highlight;
   }
   .bg-gray {
-    background-color: $gray-lightest;
+    background-color: $gray-background;
   }
   h2 {
-    font-weight: 300;
+    font-weight: 600;
   }
-  margin-top: 16px;
   .container {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 20px 10px;
+  }
+  p {
+    font-size: 0.9em;
   }
 }
 
 .marketing.login-section {
   position: relative;
-  margin-top: 0;
   @media (min-width: $screen-md-min) {
     min-height: 395px;
   }
@@ -284,17 +287,104 @@ footer {
   }
 }
 .marketing.login-section:after {
-    content : "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: asset-url('home-background.jpg');
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    opacity : 0.3;
-    z-index: -1;
+  content : "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: asset-url('home-background.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  opacity : 0.3;
+  z-index: -1;
+}
+.marketing#for-the-people {
+  background-color: $blue-dark;
+  h1, h2 {
+    color: white;
+    font-weight: 400;
+    font-family: $font_headings_sub; 
+    margin: 25px 0;
+  }
+  h1 {
+    font-size: 1.7em;
+  }
+  h2 {
+    font-size: 1.1em;
+  }
+}
+.marketing#for-agencies {
+  .container {
+    margin-bottom: 20px;  
+  }
+  .for-agencies {
+    font-size: 1.35em;
+    color: $blue-lightest;
+  }
+  .logo {
+    margin: 20px 0 45px 0;
+  }
+  p {
+    padding-top: 10px;
+    padding-bottom: 25px;
+  }
+}
+.marketing#for-developers {
+  h1 {
+    color: $blue-light;
+    font-family: $font_headings_sub;
+    font-weight: 400;
+    font-size: 1.7em;
+  }
+  .fa-stack {
+    color: $blue;
+    .fa-stack-1x {
+      font-family: $font_headings;
+      font-size: 60px;
+      font-weight: 600;
+      top: -5px;
+      &.three {
+        font-size: 50px;
+        font-weight: 700;
+      }
+    }
+  }
+  .numbered-step {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    &:not(:last-child):after {
+      @media (min-width: $screen-md-min) {
+        font-family: 'FontAwesome';
+        content: "\f105";
+        font-size: 300px;
+        color: #666;
+        opacity: 0.10;
+        position: absolute;
+        top: -100px;
+        right: -100px;
+      }
+    }
+  }
+  .bg-gray {
+    h1 {
+      @media (min-width: $screen-sm-min) {
+        padding-left: 15px;
+      }
+      margin-top: 10px;
+    }
+  }
+}
+.marketing#contact {
+  h1 {
+    color: $blue-light;
+    font-family: $font_headings_sub;
+    font-weight: 400;
+    font-size: 1.7em;
+  }
+  label {
+    color: $gray;
+  }
 }
 
 /*******************
@@ -416,12 +506,12 @@ footer {
 }
 .btn-myusa {
   background-color: $blue-lightest;
-  border-color: $blue;
+  border-color: $blue-dark;
   color: $gray-lightest;
 }
 .btn-myusa:hover,
 .btn-myusa:focus {
-  background-color: $blue;
+  background-color: $blue-dark;
   color: #ffffff;
 }
 .btn-myusa:active,
@@ -443,7 +533,7 @@ footer {
 .btn-myusa-white {
   background-color: #f5f5f5;
   border-color: #d0d0d0;
-  color: $blue;
+  color: $blue-dark;
 }
 .btn-myusa-white:hover:before,
 .btn-myusa-white:focus:before {
@@ -451,7 +541,7 @@ footer {
 }
 .btn-myusa-white:hover,
 .btn-myusa-white:focus {
-  background-color: $blue;
+  background-color: $blue-dark;
   border-color: $blue-lightest;
   color: #ffffff;
 }

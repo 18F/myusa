@@ -99,9 +99,6 @@ describe 'Sign In' do
         describe 'sends the user an email' do
           subject { open_email(email); current_email }
           it { should have_link(link_text) }
-          its(:from) { should eql ['no-reply@' +
-                        ActionMailer::Base.default_url_options[:host]] }
-          its(:reply_to) { should eql ['myusa@gsa.gov'] }
         end
 
         it 'allows user to authenticate with token' do

@@ -19,10 +19,10 @@
           Sign Up for MyUSA
         </h2>
         <p>
-          Have a representative from your agency create a MyUSA account.
+          Create your MyUSA account or ask a representative from your agency to create an account.
         </p>
         <p>
-          <button class="btn btn-primary width-80">Get Started</button>
+          <%= link_to "Get Started", new_user_session_path, :class => "btn btn-primary width-80" %>
         </p>
       </div>
       <div class="col-md-1"></div>
@@ -40,7 +40,7 @@
           Registering your application with MyUSA is simple.
         </p>
         <p>
-          <button class="btn btn-primary width-80">Learn How</button>
+          <%= link_to "Learn How", '/faq', :class => "btn btn-primary width-80" %>
         </p>
       </div>
       <div class="col-md-1"></div>
@@ -58,7 +58,7 @@
           Make your application publicly available to anyone with a MyUSA account.
         </p>
         <p>
-          <button class="btn btn-primary width-80">Learn More</button>
+          <%= link_to "Learn More", '/faq', :class => "btn btn-primary width-80" %>
         </p>
       </div>
     </div>
@@ -66,14 +66,14 @@
   <div class="bg-gray top-border">
     <div class="container">
       <div class="row">
-        <div class="col-sm-1 col-xs-offset-1 col-md-offset-2 col-lg-offset-3">
-          <%= image_tag "myusa-shield.png", :alt => 'MyUSA Shield' %>
+        <div class="col-sm-1 col-xs-offset-1 col-md-offset-1 col-lg-offset-2">
+          <%= image_tag "myusa-shield@2x.png", :alt => 'MyUSA Shield Logo', :width => 58, :height => 70 %>
         </div>
-        <div class="col-sm-8 col-xs-offset-1 col-md-6 col-md-offset-0">
+        <div class="col-xs-offset-1 col-sm-9 col-sm-offset-0 col-md-8">
           <h1>
             A simple solution for agencies.
             <br/>
-            A better experience for the people.
+            A better experience for the American people.
           </h1>
         </div>
       </div>

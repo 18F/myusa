@@ -9,17 +9,17 @@
           <%= form_for :contact_us, url: contact_us_path, html: { id: 'contact-form', role: "form" } do |f| %>
             <div class="form-group">
               <%= f.label 'Message:' %>
-              <%= f.text_area :message, class: 'form-control', rows: 8 %>
+              <%= f.text_area :message, class: 'form-control', rows: 8, placeholder: 'How can we help you?' %>
             </div>
             <div class="form-group">
               <%= f.label 'From:' %>
-              <%= f.text_field :from, class: 'form-control', placeholder: 'What should we call you?' %>
+              <%= f.text_field :from, class: 'form-control', placeholder: 'What is your name?' %>
             </div>
             <div class="form-group">
               <%= f.label 'Return Email:' %>
-              <%= f.text_field :return_email, class: 'form-control', placeholder: 'How should we get back to you?' %>
+              <%= f.text_field :return_email, class: 'form-control', placeholder: 'What is your email address?' %>
             </div>
-            <%= f.submit 'Submit', class: 'btn btn-primary width-100' %>
+            <%= f.submit 'Send Us Your Message', class: 'btn btn-primary width-100' %>
           <% end %>
         </div>
       </div>

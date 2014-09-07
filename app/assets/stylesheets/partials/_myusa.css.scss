@@ -208,7 +208,7 @@ footer {
   padding: 10px;
   .muted {
     font-size: 10px;
-    width: 3%;
+    width: 7%;
   }
   .nav > li, .nav-justified > li {
     white-space: nowrap;
@@ -229,7 +229,7 @@ footer {
     border-top: 1px solid $gray-highlight;
   }
   .top-border-blue {
-    border-top: 5px solid $blue-dark;
+    border-top: 10px solid $blue-dark;
   }
   .bottom-border {
     border-bottom: 1px solid $gray-highlight;
@@ -313,13 +313,23 @@ footer {
   h2 {
     font-size: 1.1em;
   }
+  .partner {
+    margin: 10px 0;
+    img {
+      opacity: 0.7;
+      vertical-align: bottom;
+    }
+  }
 }
 .marketing#for-agencies {
   .container {
     margin-bottom: 20px;  
   }
   .for-agencies {
-    font-size: 1.35em;
+    @media (max-width: $screen-xs-max) {
+      display: block;
+    }
+    font-size: 1.5em;
     color: $blue-lightest;
   }
   .logo {
@@ -359,7 +369,7 @@ footer {
         content: "\f105";
         font-size: 300px;
         color: #666;
-        opacity: 0.10;
+        opacity: 0.075;
         position: absolute;
         top: -100px;
         right: -100px;

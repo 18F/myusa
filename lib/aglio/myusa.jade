@@ -1,0 +1,13 @@
+include _bootstrap-mixins.jade
+
+a.text-muted.back-to-top(href='#top')
+  i.fa.fa-toggle-up
+  | &nbsp;Back to top
+div(class=fullWidth ? 'container-fluid' : 'container')
+  .row.aglio
+    block nav
+      +Nav(false)
+
+    .col-md-8
+      block content
+        +Content('primary', false)

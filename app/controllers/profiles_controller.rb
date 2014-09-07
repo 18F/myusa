@@ -4,6 +4,8 @@ class ProfilesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :assign_profile
 
+  layout "dashboard"
+
   def show
   end
 

@@ -166,10 +166,12 @@ ActiveRecord::Schema.define(version: 20140902195137) do
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "user_actions", force: true do |t|
-    t.integer "user_id"
-    t.integer "record_id"
-    t.string  "record_type"
-    t.string  "action"
+    t.integer  "user_id"
+    t.integer  "record_id"
+    t.string   "record_type"
+    t.string   "action"
+    t.string   "remote_ip"
+    t.datetime "created_at"
   end
 
   add_index "user_actions", ["record_id", "record_type"], name: "index_user_actions_on_record_id_and_record_type", using: :btree

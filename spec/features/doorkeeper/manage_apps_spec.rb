@@ -8,13 +8,13 @@ describe 'OAuth' do
   'profile.middle_name profile.last_name profile.phone_number profile.suffix ' \
   'profile.address profile.address2 profile.zip profile.gender ' \
   'profile.marital_status profile.is_parent profile.is_student ' \
-  'profile.is_veteran profile.is_retired'
+  'profile.is_veteran profile.is_retired notifications'
 
   let(:client_app) do
     FactoryGirl.create(:application, name: 'Client App 1', scopes: scopes)
   end
   let(:client_app2) { FactoryGirl.create(:application, name: 'Client App 2') }
-  let(:requested_scopes) { 'profile.email profile.last_name' }
+  let(:requested_scopes) { 'profile.email profile.last_name notifications' }
 
   # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
   # Capybara context. More detail here:
@@ -54,16 +54,17 @@ describe 'OAuth' do
       'profile.last_name profile.phone_number profile.suffix profile.address ' \
       'profile.address2 profile.zip profile.gender profile.marital_status ' \
       'profile.is_parent profile.is_student profile.is_veteran ' \
-      'profile.is_retired'
+      'profile.is_retired notifications'
     end
 
     let(:client_application_scopes2) do
       'profile.email profile.phone_number profile.zip profile.gender ' \
-      'profile.is_parent profile.is_student profile.is_veteran'
+      'profile.is_parent profile.is_student profile.is_veteran notifications'
     end
 
     let(:requested_scopes2) do
-      'profile.email profile.phone_number profile.zip profile.gender'
+      'profile.email profile.phone_number profile.zip profile.gender ' \
+      'notifications'
     end
 
     let(:client_app2) do
@@ -133,8 +134,21 @@ describe 'OAuth' do
            'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
            'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
            'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'])
+        expect(@auths_page.first_app.app_scope_sections.map(&:text)).to eq(
+          ['Identify you by your email address',
+           'Address you by name',
+           'Know where you live',
+           'Know how to contact you by phone or text message',
+           'Find out more about you',
+           'Send you notifications via MyUSA'])
         expect(@auths_page.second_app.app_scopes.map(&:text)).to eq(
           ['Email Address', 'Zip Code', 'Phone Number', 'Gender'])
+        expect(@auths_page.second_app.app_scope_sections.map(&:text)).to eq(
+          ['Identify you by your email address',
+           'Know where you live',
+           'Know how to contact you by phone or text message',
+           'Find out more about you',
+           'Send you notifications via MyUSA'])
       end
 
       it 'revokes authorization to an application' do

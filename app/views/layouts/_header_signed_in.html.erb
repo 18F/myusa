@@ -5,6 +5,7 @@
   </a>
   <ul class="dropdown-menu settings-menu" role="menu" aria-labelledby="user-settings">
     <li role="presentation"><%= link_to 'Your Profile', profile_path, role: 'menuitem', tabindex: -1 %></li>
+    <li role="presentation"><%= link_to 'Your Applications', oauth_applications_path, role: 'menuitem', tabindex: -1 %></li>
     <% if @display_not_me %>
       <li role="presentation"><%= link_to 'This is not me', destroy_user_session_path, role: 'menuitem', tabindex: -1 %></li>
     <% end %>

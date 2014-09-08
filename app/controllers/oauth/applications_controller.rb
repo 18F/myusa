@@ -41,6 +41,13 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
     redirect_to oauth_applications_path
   end
 
+  def make_public
+    @application = Doorkeeper::Application.find(params[:id])
+    @application.requested_public_at = DateTime.now
+    @application.save
+    redirect_to oauth_applications_path, notice: I18n.t('app_status.requested_public') 
+  end
+
   private
 
   def application_params

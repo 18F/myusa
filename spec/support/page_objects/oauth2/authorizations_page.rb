@@ -13,6 +13,15 @@ module OAuth2
     end
   end
 
+  class DeveloperApp < SitePrism::Section
+    elements :app_properties, 'td'
+    element :request_public, 'input[type="submit"][value="Request Public Access"]'
+
+    def status
+      app_properties[3].text
+    end
+  end
+
   # OAuth2::AuthorizationsPage
   class AuthorizationsPage < SitePrism::Page
     set_url '/oauth/applications'
@@ -20,6 +29,7 @@ module OAuth2
 
     element :secret_key,      '#secret-key'
     element :new_api_key,     'input[type="submit"][value="New API Key"]'
+    sections :developer_apps, DeveloperApp, 'tbody tr'
 
     sections :apps, AuthorizedApp, '.panel'
 
@@ -37,6 +47,10 @@ module OAuth2
 
     def second_revoke_button
       second_app.revoke_access_button
+    end
+
+    def first_developer_app
+      developer_apps[0]
     end
   end
 end

@@ -185,5 +185,22 @@ describe 'OAuth' do
       @auths_page.new_api_key.click
       expect(@auths_page.secret_key).to_not match(old_secret)
     end
+
+    it 'displays private status' do
+      expect(@auths_page.first_developer_app.status).to eq('Private')
+    end
+
+    it 'allows a user to request public access' do
+      @auths_page.first_developer_app.request_public.click
+      expect(@auths_page.first_developer_app.status).to eq('Pending Approval')
+    end
+
+    it 'displays public status' do
+      app = Doorkeeper::Application.find_by_name('testApp')
+      app.public = true
+      app.save
+      @auths_page.load
+      expect(@auths_page.first_developer_app.status).to eq('Public')
+    end
   end
 end

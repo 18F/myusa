@@ -10,6 +10,6 @@ class HomePage < SitePrism::Page
     element :message, '#contact_us_message'
     element :from, '#contact_us_from'
     element :return_email, '#contact_us_email'
-    element :submit, "input[value='Submit']"
+    element :submit, "input[value='Send Us Your Message']"
   end
 end

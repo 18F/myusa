@@ -1,0 +1,82 @@
+<section class="marketing" id="for-developers">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center">
+          Simplified registration and account management starts here
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-md-3 text-center numbered-step">
+        <div>
+          <span class="fa-stack fa-3x">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-stack-1x fa-inverse">1</i>
+          </span>
+        </div>
+        <h2>
+          Sign Up for MyUSA
+        </h2>
+        <p>
+          Create your MyUSA account or ask a representative from your agency to create an account.
+        </p>
+        <p>
+          <%= link_to "Get Started", new_user_session_path, :target => "_new", :class => "btn btn-primary width-80" %>
+        </p>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-sm-4 col-md-3 text-center numbered-step">
+        <div>
+          <span class="fa-stack fa-3x">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-stack-1x fa-inverse">2</i>
+          </span>
+        </div>
+        <h2>
+          Register your application
+        </h2>
+        <p>
+          Registering your application with MyUSA is simple.
+        </p>
+        <p>
+          <%= link_to "Learn How", '/faq', :target => "_new", :class => "btn btn-primary width-80" %>
+        </p>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-sm-4 col-md-3 text-center numbered-step">
+        <div>
+          <span class="fa-stack fa-3x">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-stack-1x fa-inverse three">3</i>
+          </span>
+        </div>
+        <h2>
+          Publish your application
+        </h2>
+        <p>
+          Make your application publicly available to anyone with a MyUSA account.
+        </p>
+        <p>
+          <%= link_to "Learn More", '/faq', :target => "_new", :class => "btn btn-primary width-80" %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="bg-gray top-border">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-1 col-xs-offset-1 col-md-offset-1 col-lg-offset-2">
+          <%= image_tag "myusa-shield@2x.png", :alt => 'MyUSA Shield Logo', :width => 58, :height => 70 %>
+        </div>
+        <div class="col-xs-offset-1 col-sm-9 col-sm-offset-0 col-md-8">
+          <h1>
+            A simple solution for agencies.
+            <br/>
+            A better experience for the American people.
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

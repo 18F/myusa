@@ -1,0 +1,34 @@
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-5">
+        <%= link_to (image_tag "myusa-logo.png", :alt => 'MyUSA Logo', :width => 134, :height => 38), root_path, :title => 'MyUSA' %>
+      </div>
+      <div class="col-md-7 col-sm-7">
+        <% if user_signed_in? %>
+          <%= render 'layouts/header_signed_in'%>
+        <% else %>
+          <div class="pull-right">
+            <%= link_to 'Connect with MyUSA', new_user_session_path, id: 'myusa-connect', :class => 'btn btn-social btn-myusa' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <ul class="nav nav-pills nav-4">
+        <li>
+          <%= link_to 'Home', root_path %>
+        </li>
+        <li>
+          <%= link_to 'Your Profile', profile_path %>
+        </li>
+        <li>
+          <%= link_to 'Your Applications', oauth_applications_path %>
+        </li>
+        <li>
+          <%= link_to 'Help', '/faq' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,58 @@
+@import "colors";
+
+h1, .h1 {
+  color: $blue-dark;
+}
+h3, .h3 {
+  color: $gray;
+}
+
+.alert {
+  font-size: 0.875em;
+  margin-bottom: 5px;
+}
+
+.alert.alert-warning > h1 {
+  color: $state-warning-text;
+  margin-top: 0;
+}
+
+.alert > .container > p {
+  margin-bottom: 0;
+}
+
+.width-80 {
+  width: 80%;
+}
+.width-100 {
+  width: 100%;
+}
+
+.vertical-bottom {
+  vertical-align: bottom;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-border {
+  border: none;
+}
+
+ul.dropdown-menu {
+  font-size: 14px;
+}
+
+/**
+ * for some reason, the pills variables are not being
+ * overridden in sass, so directly overwrite the classes here
+ */
+.nav > li > a {
+  color: $gray;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+  color: $blue-dark;
+  background-color: transparent;
+  font-weight: 700;
+}

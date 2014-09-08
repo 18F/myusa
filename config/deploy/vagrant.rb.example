@@ -1,0 +1,21 @@
+# New Relic Variables
+#
+# newrelic_appname does not need to be set since it is inherited from config/newrelic.yml
+# set :newrelic_appname, 'bronto'
+# set :newrelic_desc, 'Bronto, Thesaurus as a Service'
+#
+# for more info on rails_env see: https://docs.newrelic.com/docs/ruby/recording-deployments-with-the-ruby-agent#Staging
+set :rails_env, :staging
+set :ip, 'localhost'
+set :port, 2222
+set :ssh_options, {port: 2222, keys: ['~/.vagrant.d/insecure_private_key'] }
+
+set :repository, '/vagrant'
+set :local_repository, '.'
+
+#
+# Server Role Definitions
+#
+role :app, ip
+role :web, ip
+role :db, ip, :primary => true

@@ -1,0 +1,25 @@
+<%= yield :welcome %>
+<header class="auth">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-5">
+        <%= link_to (image_tag "myusa-logo.png", :alt => 'MyUSA Logo', :width => 134, :height => 38), root_path, :title => 'MyUSA' %>
+      </div>
+      <div class="col-md-7 col-sm-7">
+        <% if user_signed_in? %>
+          <%= render 'layouts/header_signed_in'%>
+        <% end %>
+      </div>
+    </div>
+    <% if shield %>
+    <div class="header-hr shield">
+      <div>
+        <%= image_tag "myusa-shield@2x.png", :alt => 'MyUSA Shield Logo', :width => 58, :height => 70 %>
+      </div>
+    </div>
+    <% else %>
+    <div class="header-hr">
+    </div>
+    <% end %>
+  </div>
+</header>

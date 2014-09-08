@@ -1,0 +1,11 @@
+{
+	"run_list":[ "role[vagrant]"],
+	"ntp": {
+		"apparmor_enabled": false
+	},
+	"myusa": {
+		"user": "vagrant",
+		"group": "vagrant"
+	},
+	"set_fqdn": "hostname.fqdn.tld"
+}

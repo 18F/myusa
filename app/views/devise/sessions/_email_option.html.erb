@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
+      <div class="form-group">
+        <%= label_tag 'inputEmail', "Enter your Email Address", class: 'blue_header' %>
+        <div class="input-group">
+          <%= f.email_field :email, class: "form-control", id: "inputEmail", autofocus: true, placeholder: 'Email Address' %>
+          <span class="input-group-btn">
+            <%= submit_tag 'Connect', :class => 'btn btn-primary connect_button', :type => 'submit' %>
+          </span>
+        </div>
+      </div>
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :remember_me %>
+          Remember me on this computer for 2 weeks
+        </label>
+      </div>
+    <% end %>
+  </div>
+</div>

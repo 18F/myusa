@@ -1,0 +1,21 @@
+berkshelf_path										'kitchen'
+cookbook_path    									['~/.berkshelf/cookbooks', 'kitchen/site-cookbooks']
+data_bag_path    									'kitchen/data_bags'
+encrypted_data_bag_secret 				'.databag_secret'
+environment_path 									'kitchen/environments'
+node_path        									'kitchen/nodes'
+role_path       									'kitchen/roles'
+ssl_verify_mode 									:verify_peer
+
+knife[:aws_access_key_id]	=				ENV['AWS_ACCESS_KEY']
+knife[:aws_secret_access_key] =		ENV['AWS_SECRET_KEY']
+knife[:flavor] =                  'm3.medium'
+knife[:image] =                   'ami-ff92ebcf' # Find the latest ATO image
+knife[:region] =                  'us-west-2'
+knife[:availability_zone] =       'us-west-2b'
+knife[:solo] =                    true
+
+if ENV['MYUSA_GATEWAY']
+  knife[:forward_agent] = true
+  knife[:ssh_gateway] = ENV['MYUSA_GATEWAY']
+end

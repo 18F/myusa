@@ -1,0 +1,212 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  no_authorizations: You have not authorized any applications.
+  new_api_key: Your API Key has been updated.
+  new_application: Your application has been created.
+  app_status:
+    public: Public
+    private: Private
+    pending: Pending Approval
+    requested_public: "Your application's public status is pending approval."
+  scope_groups:
+    tasks:
+      description: Add and remove tasks from your MyUSA account
+      subheading: Tasks let you track your progress working with government services
+    notifications:
+      description: Send you notifications via MyUSA
+      subheading: Notifications allow applications to contact you through MyUSA without sharing your email address or contact information
+    email:
+      description: Identify you by your email address
+      subheading: Providing your email address will let the application contact you directly
+    name:
+      description: Address you by name
+      subheading: Your name is used to greet you or identify you for government services
+    address:
+      description: Know where you live
+      subheading: Information can be tailored for you based on your location
+    phone:
+      description: Know how to contact you by phone or text message
+      subheading: Phone numbers can be used to contact you
+    identifiers:
+      description: Find out more about you
+      subheading: Self identifiers aid in customizing your experience
+
+  scopes:
+    verify_credentials:
+      label: Credentials
+      hint: This allows the app to verify your credentials
+      desc: Verify Credentials
+    tasks:
+      label: Allow the application to add task lists and manage its tasks
+      hint: ""
+      desc: Manage your tasks
+    notifications:
+      label: Allow the application send you notifications via MyUSA
+      hint: ""
+      desc: Send you notifications
+    profile:
+      label: 'Profile'
+      hint: ""
+      desc: 'Read your profile information'
+      placeholder: 'Enter your profile information'
+      default:
+        label: Credentials
+        hint: This allows the app to verify your credentials
+        desc: Verify Credentials
+      email:
+        label: 'Email Address'
+        hint: ""
+        desc: 'Read your email address'
+        placeholder: 'Enter your email address'
+      title:
+        label: 'Title'
+        hint: ""
+        desc: 'Read your title (Mr./Mrs./Miss, etc.)'
+        placeholder: 'Enter your title (Mr./Mrs./Miss, etc.)'
+      first_name:
+        label: 'First Name'
+        hint: ""
+        desc: 'Read your first name'
+        placeholder: 'Enter your first name'
+      middle_name:
+        label: 'Middle Name'
+        hint: ""
+        desc: 'Read your middle name'
+        placeholder: 'Enter your middle name'
+      last_name:
+        label: 'Last Name'
+        hint: ""
+        desc: 'Read your last name'
+        placeholder: 'Enter your last name'
+      suffix:
+        label: 'Suffix'
+        hint: ""
+        desc: 'Read your suffix (Sr./Jr./III, etc.)'
+        placeholder: 'Enter your suffix (Sr./Jr./III, etc.)'
+      address:
+        label: 'Home Address'
+        hint: ""
+        desc: 'Read your address'
+        placeholder: 'Enter your address'
+      address2:
+        label: 'Home Address (Line 2)'
+        hint: ""
+        desc: 'Read your address (2)'
+        placeholder: 'Enter your address (2)'
+      city:
+        label: 'City'
+        hint: ""
+        desc: 'Read your city'
+        placeholder: 'Enter your city'
+      state:
+        label: 'State'
+        hint: ""
+        desc: 'Read your State'
+        placeholder: 'Enter your state'
+      zip:
+        label: 'Zip Code'
+        hint: ""
+        desc: 'Read your zip code'
+        placeholder: 'Enter your zip code'
+      phone_number:
+        label: 'Phone Number'
+        hint: ""
+        desc: 'Read your phone number'
+        placeholder: 'Enter your phone number'
+      mobile_number:
+        label: 'Mobile Number'
+        hint: ""
+        desc: 'Read your mobile number'
+        placeholder: 'Enter your mobile number'
+      gender:
+        label: 'Gender'
+        hint: ""
+        desc: 'Read your gender'
+        placeholder: 'Enter your gender'
+      marital_status:
+        label: 'Marital Status'
+        hint: ""
+        desc: 'Read your marital status'
+        placeholder: 'Enter your marital status'
+      is_parent:
+        label: 'Are you a Parent?'
+        hint: ""
+        desc: 'Read your parent status'
+        placeholder: 'Enter your parent status'
+      is_student:
+        label: 'Are you a Student?'
+        hint: ""
+        desc: 'Read your student status'
+        placeholder: 'Enter your student status'
+      is_veteran:
+        label: 'Are you a Veteran?'
+        hint: ""
+        desc: 'Read your veteran status'
+        placeholder: 'Enter your veteran status'
+      is_retired:
+        label: 'Are you Retired?'
+        hint: ""
+        desc: 'Read your retiree status'
+        placeholder: 'Enter your retiree status'
+
+  cancel: 'Cancel'
+  profile:
+    settings_title: 'Settings'
+    heading: 'Your Profile'
+    name_heading: 'Name'
+    address_heading: 'Address'
+    phone_heading: 'Phone'
+    gender_heading: 'Gender'
+    marital_status_heading: 'Marital Status'
+    about_you_heading: 'About You'
+    update: 'Update Profile'
+
+  not_specified: Not Specified
+
+  email:
+    contact_us:
+      subject: 'Contact - MyUSA marketing page'
+      
+  activerecord:
+    models:
+      profile: 'Profile'
+    attributes:
+      profile:
+        title: 'Title'
+        first_name: 'First name'
+        middle_name: 'Middle name'
+        last_name: 'Last name'
+        suffix: 'Suffix'
+        address: 'Address'
+        address2: 'Address Line 2'
+        city: 'City'
+        state: 'State'
+        zip: 'Zip'
+        phone_number: 'Phone number'
+        mobile_number: 'Mobile number'
+        gender: 'Gender'
+        is_parent: 'Parent'
+        is_veteran: 'Veteran'
+        is_student: 'Student'
+        is_retired: 'Retired'
+        marital_status: 'Marital status'

@@ -6,9 +6,12 @@ Rails.application.routes.draw do
   post 'contact_us' => 'home#contact_us'
 
   use_doorkeeper do
-    controllers :applications => 'oauth/applications',
-                :authorizations => 'oauth/authorizations',
-                :authorized_applications => 'oauth/authorized_applications'
+    skip_controllers :applications
+    controllers authorizations: 'oauth/authorizations',
+                authorized_applications: 'oauth/authorized_applications'
+  end
+  scope module: 'oauth' do
+    resources :applications, as: 'oauth_applications'
   end
   post 'new_api_key' => 'oauth/applications#new_api_key'
   post 'make_public' => 'oauth/applications#make_public'
@@ -28,7 +31,7 @@ Rails.application.routes.draw do
       resources :notifications, only: [:create]
       resources :tasks, only: [:index, :create, :show, :update]
       get 'tokeninfo', to: '/doorkeeper/token_info#show'
-  end
+    end
 
     # For legacy reasons, we translate any API request without a version
     # in the path as a version 1 request.

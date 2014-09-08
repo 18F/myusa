@@ -21,3 +21,12 @@ def login(user)
   token = user.set_authentication_token
   visit new_user_session_path(email: user.email, token: token.raw)
 end
+
+def submit_new_application_form(options = {})
+  options = options.reverse_merge({email:'joe@citizen.org', password:'Password1'})
+  fill_in 'Name', 		 with:  'Acme'
+  fill_in 'Description', with: 'This is some description filler.'
+  #fill_in 'Scopes', 	 with: 'profile.email'
+  fill_in 'Redirect uri', with: 'urn:ietf:wg:oauth:2.0:oob'
+  click_button 'Submit'
+end

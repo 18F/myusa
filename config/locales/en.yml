@@ -21,6 +21,8 @@
 
 en:
   no_authorizations: You have not authorized any applications.
+  new_api_key: Your API Key has been updated.
+  new_application: Your application has been created.
   scope_groups:
     tasks:
       description: Add and remove tasks from your MyUSA account

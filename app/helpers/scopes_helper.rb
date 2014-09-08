@@ -36,7 +36,11 @@ module ScopesHelper
     }
   ]
 
-  def scopes_by_group(scopes)
+  def all_scopes
+    SCOPE_GROUPS.map { |group| group[:scopes] }.flatten
+  end
+
+  def scopes_by_group(scopes=all_scopes)
     SCOPE_GROUPS.each do |scope_group|
       filtered_scopes = scopes.select { |s| scope_group[:scopes].include?(s) }
       yield(scope_group[:name], filtered_scopes)

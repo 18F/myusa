@@ -161,4 +161,29 @@ describe 'OAuth' do
       end
     end
   end
+
+  describe 'applications' do 
+    before :each do 
+      login user
+      @new_application_page = OAuth2::NewApplicationPage.new
+      @auths_page = OAuth2::AuthorizationsPage.new
+      @new_application_page.load
+      @new_application_page.name.set 'testApp'
+      @new_application_page.redirect_uri.set 'urn:ietf:wg:oauth:2.0:oob'
+      @new_application_page.check('First Name')
+      @new_application_page.submit.click
+    end
+
+    it "allows user to create app with image and get secret" do
+      expect(@auths_page).to be_displayed
+      expect(@auths_page.secret_key).to be_present
+    end
+
+    it "allows user to generate new api key" do
+      app = Doorkeeper::Application.find_by_name('testApp')
+      old_secret = app.secret
+      @auths_page.new_api_key.click
+      expect(@auths_page.secret_key).to_not match(old_secret)
+    end
+  end
 end

@@ -9,5 +9,5 @@ class MobileConfirmationPage < SitePrism::Page
   element :mobile_number, '#profile_mobile_number'
   element :submit, "input[value='Add a number']"
 
-  element :mobile_number_confirmation_token, '#profile_confirmation_raw_token'
+  element :mobile_number_confirmation_token, '#mobile_confirmation_raw_token'
 end

@@ -3,12 +3,13 @@ class Profile < ActiveRecord::Base
   include ::Encryption
 
   belongs_to :user
-  has_many :profile_confirmations, :dependent => :destroy
   validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
   validates_format_of :phone, :with => /\A\d+\z/, :allow_blank => true
   validates_length_of :phone, :maximum => 10
   validates_format_of :mobile, :with => /\A\d+\z/, :allow_blank => true
   validates_length_of :mobile, :maximum => 10
+
+  has_one :mobile_confirmation #, :dependent => :destroy
 
   after_validation :set_errors
 

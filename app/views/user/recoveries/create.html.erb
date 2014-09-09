@@ -3,7 +3,7 @@
   <p>A code has been sent to your mobile phone. Once you receive it please enter
   it here.</p>
 
-  <%= form_for :profile_confirmation, url: user_recovery_path, method: :patch do |f| %>
+  <%= form_for :mobile_confirmation, url: user_recovery_path, method: :patch do |f| %>
     <div class='row'>
       <%= f.label :raw_token %>
       <%= f.text_field :raw_token, class: 'form-control' %>

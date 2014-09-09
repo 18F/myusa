@@ -1,5 +1,4 @@
-class ProfileConfirmation < ActiveRecord::Base
-  belongs_to :user
+class MobileConfirmation < ActiveRecord::Base
   belongs_to :profile
 
   attr_accessor :raw_token

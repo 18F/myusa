@@ -17,8 +17,8 @@ describe User::RecoveriesController do
     it 'sets the profile mobile number' do
       expect(user.profile.mobile_number).to match(phone_number)
     end
-    it 'creates a profile confirmation object' do
-      confirmation = user.profile.profile_confirmations.find_by_profile_field(:mobile_number)
+    it 'creates a mobile confirmation object' do
+      confirmation = user.profile.mobile_confirmation
       expect(confirmation).to be
     end
     context 'mobile number is invalid' do
@@ -32,10 +32,10 @@ describe User::RecoveriesController do
   end
 
   describe "#update" do
-    let(:confirmation) { user.profile.profile_confirmations.create(profile_field: 'mobile_number') }
+    let(:confirmation) { user.profile.create_mobile_confirmation }
 
     before :each do
-      patch :update, profile_confirmation: { raw_token: confirmation.raw_token }
+      patch :update, mobile_confirmation: { raw_token: confirmation.raw_token }
       confirmation.reload
     end
 

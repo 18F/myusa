@@ -5,6 +5,13 @@ upstream app {
 
 server {
   listen 80;
+  rewrite ^ https://$server_name$request_uri? permanent;
+}
+
+server {
+  # HTTPS port, but plaintext (SSL terminates at ELB)
+  listen 443;
+
   root <%= @working_dir %>/public;
 
   try_files $uri/index.html $uri @app;
@@ -19,5 +26,4 @@ server {
   error_page 500 502 503 504 /500.html;
   client_max_body_size 4G;
   keepalive_timeout 10;
-
 }

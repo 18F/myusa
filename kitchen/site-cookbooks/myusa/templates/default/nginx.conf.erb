@@ -4,15 +4,17 @@ upstream app {
 }
 
 server {
+  # ELB forwards HTTP traffic to this port; we redirect to HTTPS
   listen 80;
-  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
   rewrite ^ https://$http_host$request_uri? permanent;
 }
 
 server {
-  # HTTPS port, but plaintext (SSL terminates at ELB)
+  # ELB forwards HTTPS traffic to this port - currently plain HTTP
+  # Will use SSL between ELB and server once we have the cert
   listen 443;
-  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
 
   root <%= @working_dir %>/public;
 

@@ -66,6 +66,7 @@ group :test do
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'shoulda-matchers'
+  gem 'selenium-webdriver'
   gem 'timecop'
   gem 'capybara-email'
   gem 'codeclimate-test-reporter', require: false

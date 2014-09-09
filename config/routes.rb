@@ -19,8 +19,16 @@ Rails.application.routes.draw do
       sessions: "sessions"
     }
 
-  resource :profile, only: [:show, :edit, :update]
+  # namespace :users do
 
+    # resource :recovery, only: [:new, :create]
+  # end
+
+  namespace :user do
+    resource :recovery, path: '/recovery'
+  end
+
+  resource :profile, only: [:show, :edit, :update]
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do

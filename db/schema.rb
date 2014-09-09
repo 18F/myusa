@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905214804) do
+ActiveRecord::Schema.define(version: 20140909015306) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -116,6 +116,19 @@ ActiveRecord::Schema.define(version: 20140905214804) do
   end
 
   add_index "oauth_scopes", ["scope_name"], name: "index_oauth_scopes_on_scope_name", using: :btree
+
+  create_table "profile_confirmations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "profile_id"
+    t.string   "profile_field"
+    t.string   "token"
+    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at"
+    t.datetime "invalidated_at"
+  end
+
+  add_index "profile_confirmations", ["profile_id", "profile_field"], name: "index_profile_confirmations_on_profile_id_and_profile_field", using: :btree
+  add_index "profile_confirmations", ["user_id"], name: "index_profile_confirmations_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"

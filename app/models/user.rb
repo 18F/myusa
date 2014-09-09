@@ -2,9 +2,12 @@ require 'email_authenticatable'
 
 class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
-
   has_many :authentications, :dependent => :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
+  has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
+  has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
+  has_many :public_applications, -> { where(:public => true) }, class_name: 'Doorkeeper::Application', as: :owner, dependent: :nullify
+  has_many :private_applications, -> { where(:public => false) }, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
 
   has_one :profile, :dependent => :destroy
   has_many :notifications, :dependent => :destroy

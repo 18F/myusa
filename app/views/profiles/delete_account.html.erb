@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-warning">
+      <p><%= t('delete_account.alert') %></p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag @profile, method: :delete, class: 'form-horizontal' do %>
+      <fieldset>
+        <legend><%= t('delete_account.form_legend') %></legend>
+        <div class="control-group">
+          <%= label_tag :email, 'Enter your email', class: 'control-label' %>
+          <div class="controls">
+            <%= text_field_tag :email, nil, class: 'input-xlarge' %>
+            <p class="help-block"><span class="text-danger"><%= t('delete_account.warning_message') %></span></p>
+          </div>
+          <%= submit_tag t('delete_account.final_button'), class: 'btn btn-danger', data: { confirm: t('delete_account.confirmation') } %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

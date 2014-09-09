@@ -20,6 +20,15 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  delete_account:
+    button: 'Delete Account'
+    final_button: 'Confirm Deletion of My Account'
+    confirmation: 'Are you sure?'
+    form_legend: 'Account Removal'
+    deleted_message: 'Your account has been deleted.'
+    warning_message: 'Deletion of your account is permanent and cannot be undone.'
+    invalid_email: You must enter the email that matches this account.
+    alert: 'This will delete all of your account data and history.  Proceed with caution!'
   no_authorizations: You have not authorized any applications.
   new_api_key: Your API Key has been updated.
   new_application: Your application has been created.

@@ -21,6 +21,22 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def delete_account
+    @profile = current_user.profile
+  end
+
+  def destroy
+    unless params[:email] == current_user.email
+      redirect_to delete_account_profile_url, alert: I18n.t('delete_account.invalid_email')
+      return
+    end
+
+    user = current_user
+    sign_out(user)
+    user.destroy
+    redirect_to root_url, notice: I18n.t('delete_account.deleted_message')
+  end
+
   private
 
   def assign_profile

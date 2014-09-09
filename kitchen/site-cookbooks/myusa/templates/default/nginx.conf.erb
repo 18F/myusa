@@ -5,12 +5,14 @@ upstream app {
 
 server {
   listen 80;
-  rewrite ^ https://$server_name$request_uri? permanent;
+  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+  rewrite ^ https://$http_host$request_uri? permanent;
 }
 
 server {
   # HTTPS port, but plaintext (SSL terminates at ELB)
   listen 443;
+  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 
   root <%= @working_dir %>/public;
 

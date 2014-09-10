@@ -35,7 +35,7 @@ describe Profile do
       expect(Profile.attribute_from_scope('notifications')).to be_nil
     end
   end
-  
+
   it "strips dashes out of phone numbers" do
     profile_with_phone = create(:full_profile, phone_number: '123-456-7890')
     expect(profile_with_phone.phone).to eq '1234567890'

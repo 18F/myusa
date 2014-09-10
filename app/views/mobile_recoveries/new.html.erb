@@ -2,11 +2,11 @@
   <h2>Account Recovery Option</h2>
   <h3>Add a mobile number to your account</h3>
   <p>Adding a mobile phone number to your account is a reliable and simple way to
-  help keep your account save, ensuring that you can get back into your account
-  without hassle.</p>
+    help keep your account save, ensuring that you can get back into your account
+    without hassle.</p>
   <p><a>Ways we will never use your number.</a>
 
-  <%= form_for :profile, url: user_recovery_path do |f| %>
+  <%= form_for :profile, url: mobile_recovery_path do |f| %>
     <div class='row'>
       <%= f.label :mobile_number %>
       <%= f.text_field :mobile_number, class: 'form-control' %>
@@ -14,7 +14,7 @@
     <br>
     <div class='row'>
       <%= f.submit value='Add a number', class: 'btn btn-primary' %>
-      <%= link_to 'Skip this Step', root_path, class: 'btn btn-default' %>
+      <%= link_to 'Skip this Step', mobile_recovery_cancel_path, class: 'btn btn-default' %>
       <%= link_to 'I don''t have a mobile', root_path %>
     </div>
   <% end %>

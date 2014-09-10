@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20140909015306) do
     t.datetime "confirmation_sent_at"
     t.datetime "confirmed_at"
     t.datetime "invalidated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "mobile_confirmations", ["profile_id"], name: "index_mobile_confirmations_on_profile_id", using: :btree

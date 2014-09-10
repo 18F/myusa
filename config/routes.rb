@@ -24,9 +24,10 @@ Rails.application.routes.draw do
     # resource :recovery, only: [:new, :create]
   # end
 
-  namespace :user do
-    resource :recovery, path: '/recovery'
-  end
+  # namespace :user do
+  resource :mobile_recovery
+  get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
+  # end
 
   resource :profile, only: [:show, :edit, :update]
 

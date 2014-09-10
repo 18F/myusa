@@ -103,7 +103,7 @@ $(document).ready(function () {
       for (var i = 0; i < buttons.length; i++) {
         var b = $($("." + buttons[i])[0]);
         b.removeClass(buttons[i]);
-        b.addClass(buttons[i]+"-white");        
+        b.addClass(buttons[i]+"-white");
       }
     }
     // white buttons showing
@@ -112,7 +112,7 @@ $(document).ready(function () {
       for (var i = 0; i < buttons.length; i++) {
         var b = $($("." + buttons[i] + "-white")[0]);
         b.removeClass(buttons[i] + "-white");
-        b.addClass(buttons[i]);        
+        b.addClass(buttons[i]);
       }
     }
   });
@@ -122,7 +122,7 @@ $(document).ready(function () {
  $("#contact-form").submit(function(e){
   e.preventDefault();
   var formData = $(this).serialize();
-  $.post('contact_myusa', formData, function(response){
+  $.post('contact_us', formData, function(response){
     $(".contact-flash").text(response.message).removeClass('hidden');
   });
   $(this)[0].reset();

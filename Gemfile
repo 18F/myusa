@@ -54,6 +54,7 @@ end
 group :development, :test do
   gem 'oauth2'
   gem 'pry-rails'
+  gem 'pry-nav'
 end
 
 group :test do

@@ -10,28 +10,29 @@ describe 'Users' do
         login(user)
         @profile_edit_page = EditProfilePage.new
         @profile_edit_page.load
-        @results_page = ProfilePage.new
+        @profile_page = ProfilePage.new
       end
 
       it "should change the user's name when first or last name changes" do
         @profile_edit_page.first_name.set 'Jane'
         @profile_edit_page.submit.click
-        expect(@results_page).to be_displayed
-        expect(@results_page.first_name.text).to eq 'Jane'
+        expect(@profile_page).to be_displayed
+        expect(@profile_page.first_name.text).to eq 'Jane'
       end
 
       it "should allow setting a 'Yes/No' field to blank" do
+
         @profile_edit_page.is_student.select 'Yes'
         @profile_edit_page.submit.click
-        expect(@results_page).to be_displayed
-        expect(@results_page.is_student.text).to eq 'Yes'
+        expect(@profile_page).to be_displayed
+        expect(@profile_page.is_student.text).to eq 'Yes'
 
         @profile_edit_page.load
         @profile_edit_page.is_student.select ''
         @profile_edit_page.submit.click
 
-        expect(@results_page).to be_displayed
-        expect(@results_page.is_student.text).to be_blank
+        @profile_page.should be_displayed
+        @profile_page.find("span[id=is_student]", :visible=>false).text.should be_blank
       end
     end
   end

@@ -1,5 +1,5 @@
-@import "colors";
-@import "fonts";
+@import "partials/colors";
+@import "partials/fonts";
 
 /* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
 #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
@@ -68,7 +68,7 @@ body, #bodyTable{
 	/*@editable*/ padding-left:0;
 	/*@editable*/ text-align:left;
 	/*@editable*/ vertical-align:middle;
-	background-color: $gray-highlight;
+	background-color: #F4F4F4;
 }
 .headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */{
 	/*@editable*/ color:#EB4102;
@@ -96,7 +96,7 @@ body, #bodyTable{
 .bodyContent{
 	/*@editable*/ color:#505050;
 	/*@editable*/ font-family:Helvetica;
-	/*@editable*/ font-size:14px;
+	/*@editable*/ font-size:0.9em;
 	/*@editable*/ line-height:150%;
 	padding-top:20px;
 	padding-right:20px;

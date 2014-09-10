@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( partials/mailers.css )
+Rails.application.config.assets.precompile += %w( mailers.css )

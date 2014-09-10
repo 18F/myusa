@@ -19,7 +19,7 @@
           </ul>
         <% end %>
         <% if @private_apps.present? %>
-        <p><%= t('delete_account.public_apps_warning') %></p>
+        <p><%= t('delete_account.private_apps_warning') %></p>
           <ul>
             <% @private_apps.each do |app| %>
             <li><%= app.name %></li>

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       omniauth_callbacks: "omniauth_callbacks" ,
       sessions: "sessions"
     }
+  post 'resend_token' => 'profiles#resend_token'
 
   resource :profile, only: [:show, :edit, :update]
 

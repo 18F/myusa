@@ -21,6 +21,8 @@
 
 en:
   no_authorizations: You have not authorized any applications.
+  no_user_token: There was a problem resending your token. Please try creating your account again.
+  resent_token: A new token has been sent.
   new_api_key: Your API Key has been updated.
   new_application: Your application has been created.
   app_status:

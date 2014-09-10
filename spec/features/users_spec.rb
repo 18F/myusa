@@ -47,24 +47,31 @@ describe 'Users' do
         @profile_page.delete_account_button.click
       end
 
+      it 'displays the warning message' do
+        expect(@delete_account_page).to be_displayed
+        expect(@delete_account_page).to have_content 'This will delete all ' \
+          'of your account data, applications, and history. Proceed with ' \
+          'caution!'
+        expect(@delete_account_page).to have_content 'Deletion of your ' \
+          'account is permanent and cannot be undone.'
+      end
+
       context 'the incorrect email is entered' do
         before do
-          expect(@delete_account_page).to be_displayed
           @delete_account_page.enter_email.set 'wrong'
           @delete_account_page.delete_button.click
         end
 
         it 'displayes message when invalid email is entered' do
           expect(@profile_page).to be_displayed
-          expect(@profile_page).to have_content 'You must enter the email that ' \
-            'matches this account.'
+          expect(@profile_page).to have_content 'You must enter the email ' \
+            'that matches this account.'
         end
       end
 
       context 'the correct email is entered' do
         before do
           @home_page = HomePage.new
-          expect(@delete_account_page).to be_displayed
           @delete_account_page.enter_email.set email
         end
 

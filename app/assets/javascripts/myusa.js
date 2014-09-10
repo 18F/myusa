@@ -122,7 +122,7 @@ $(document).ready(function () {
  $("#contact-form").submit(function(e){
   e.preventDefault();
   var formData = $(this).serialize();
-  $.post('contact_myusa', formData, function(response){
+  $.post('contact_us', formData, function(response){
     $(".contact-flash").text(response.message).removeClass('hidden');
   });
   $(this)[0].reset();

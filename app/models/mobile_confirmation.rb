@@ -13,9 +13,13 @@ class MobileConfirmation < ActiveRecord::Base
     #TODO: validate expiration
     if Devise.secure_compare(digested, self.token)
       self.token = nil
-      self.confirmed_at = Time.now
-      save!
+      self.confirm!
     end
+  end
+
+  def confirm!
+    self.confirmed_at = Time.now
+    save!
   end
 
   def confirmed?
@@ -37,8 +41,11 @@ class MobileConfirmation < ActiveRecord::Base
   end
 
   def send_raw_token
-    sms_message = "Your MyUSA verification code is #{self.raw_token}"
-    SmsWrapper.instance.send_message(self.profile.mobile_number, sms_message)
+    if self.raw_token.present?
+      sms_message = "Your MyUSA verification code is #{self.raw_token}"
+      SmsWrapper.instance.send_message(self.profile.mobile_number, sms_message)
+      self.raw_token = nil
+    end
   end
 
 end

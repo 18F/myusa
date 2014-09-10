@@ -39,8 +39,12 @@ describe MobileRecoveriesController do
     context 'with the submit button' do
       context 'with a valid token' do
         it 'confirms the mobile number' do
-          confirmation = user.profile.create_mobile_confirmation!
-          patch :update, commit: 'Submit', mobile_confirmation: { raw_token: confirmation.raw_token }
+          confirmation = user.profile.create_mobile_confirmation
+          confirmation.send(:generate_token)
+          raw_token = confirmation.raw_token
+          confirmation.save!
+
+          patch :update, commit: 'Submit', mobile_confirmation: { raw_token: raw_token }
           confirmation.reload
 
           expect(confirmation).to be_confirmed

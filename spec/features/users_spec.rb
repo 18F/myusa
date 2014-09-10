@@ -65,7 +65,7 @@ describe 'Users' do
         it 'displayes message when invalid email is entered' do
           expect(@profile_page).to be_displayed
           expect(@profile_page).to have_content 'You must enter the email ' \
-            'that matches this account.'
+            'address that matches this account.'
         end
       end
 

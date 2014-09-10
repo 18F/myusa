@@ -1,15 +1,11 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="alert alert-warning">
-      <p><%= t('delete_account.alert') %></p>
-    </div>
-  </div>
-</div>
-<div class="row">
+<div class="row delete-account">
   <div class="col-md-12">
     <%= form_tag @profile, method: :delete, class: 'form-horizontal' do %>
       <fieldset>
         <legend><%= t('delete_account.form_legend') %></legend>
+        <div class="alert alert-warning">
+          <p><%= t('delete_account.alert') %></p>
+        </div>
         <% if @public_apps.present? %>
         <p><%= t('delete_account.public_apps_warning') %></p>
           <ul>

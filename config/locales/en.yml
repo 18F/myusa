@@ -21,6 +21,7 @@
 
 en:
   delete_account:
+    enter_email_prompt: 'Enter your email to confirm'
     button: 'Delete Account'
     final_button: 'Confirm Deletion of My Account'
     confirmation: 'Are you sure?'
@@ -29,6 +30,8 @@ en:
     warning_message: 'Deletion of your account is permanent and cannot be undone.'
     invalid_email: You must enter the email that matches this account.
     alert: 'This will delete all of your account data, applications, and history.  Proceed with caution!'
+    public_apps_warning: 'The following public apps will also be deleted:'
+    private_apps_warning: 'The following private apps will also be deleted:'
   no_authorizations: You have not authorized any applications.
   new_api_key: Your API Key has been updated.
   new_application: Your application has been created.

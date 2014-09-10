@@ -10,8 +10,24 @@
     <%= form_tag @profile, method: :delete, class: 'form-horizontal' do %>
       <fieldset>
         <legend><%= t('delete_account.form_legend') %></legend>
+        <% if @public_apps.present? %>
+        <p><%= t('delete_account.public_apps_warning') %></p>
+          <ul>
+            <% @public_apps.each do |app| %>
+            <li><%= app.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if @private_apps.present? %>
+        <p><%= t('delete_account.public_apps_warning') %></p>
+          <ul>
+            <% @private_apps.each do |app| %>
+            <li><%= app.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
         <div class="control-group">
-          <%= label_tag :email, 'Enter your email', class: 'control-label' %>
+          <%= label_tag :email, t('delete_account.enter_email_prompt'), class: 'control-label' %>
           <div class="controls">
             <%= text_field_tag :email, nil, class: 'input-xlarge' %>
             <p class="help-block"><span class="text-danger"><%= t('delete_account.warning_message') %></span></p>

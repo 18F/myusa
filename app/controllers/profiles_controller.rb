@@ -23,6 +23,8 @@ class ProfilesController < ApplicationController
 
   def delete_account
     @profile = current_user.profile
+    @private_apps = current_user.private_applications
+    @public_apps = current_user.public_applications
   end
 
   def destroy

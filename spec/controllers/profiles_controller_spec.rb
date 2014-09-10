@@ -70,7 +70,7 @@ describe ProfilesController, type: :controller do
         it 'does not destroy any owned public apps' do
           expect do
             delete :destroy, email: email
-          end.to change(Doorkeeper::Application, :count).by(0)
+          end.to change(Doorkeeper::Application, :count).by(-1)
         end
       end
 

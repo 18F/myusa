@@ -72,7 +72,7 @@ describe 'Sign In' do
     context 'Signing in for the first time' do
       describe 'with email address' do
         let(:email) { 'testy@example.gov' }
-        let(:link_text) { 'Clicky' }
+        let(:link_text) { 'Connect to MyUSA' }
         let(:instructions) { "CYM, #{email}" }
         let(:remember_me) { false  }
 

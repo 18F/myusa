@@ -37,6 +37,7 @@ group :development do
   gem 'letter_opener'
   gem 'rubocop', require: false
   gem 'better_errors'
+  gem 'newrelic_rpm'
 end
 
 ## deploy dependencies
@@ -75,8 +76,8 @@ end
 group :staging, :production do
   gem 'unicorn', :require => false
   gem 'dalli'
+  gem 'newrelic_rpm'
 end
 
 group :production do
-  gem 'newrelic_rpm'
 end

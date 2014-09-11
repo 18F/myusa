@@ -3,6 +3,7 @@ require 'api_constraints'
 Rails.application.routes.draw do
   root to: "home#index"
   get "legal" => "home#legal"
+  get 'developer' => 'home#developer'
   post 'contact_us' => 'home#contact_us'
 
   use_doorkeeper do

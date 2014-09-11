@@ -59,18 +59,21 @@ class User < ActiveRecord::Base
       end
     end
 
-    def find_or_create_from_omniauth(auth)
+    # def find_or_create_from_omniauth(auth)
+    def find_from_omniauth(auth)
       if (authentication = Authentication.find_by_uid(auth.uid))
         authentication.user
       elsif (user = User.find_by_email(auth.info.email))
         user.authentications.build(provider: auth.provider, uid: auth.uid)
         user.save!
         user
-      else
-        User.create do |user|
-          user.email = auth.info.email
-          user.authentications.build(provider: auth.provider, uid: auth.uid)
-        end
+      end
+    end
+
+    def create_from_omniauth(auth)
+      User.create do |user|
+        user.email = auth.info.email
+        user.authentications.build(provider: auth.provider, uid: auth.uid)
       end
     end
 

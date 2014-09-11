@@ -154,8 +154,6 @@ describe 'Sign In' do
       let(:provider) { :google_oauth2 }
 
       before :each do
-        allow(UserAction).to receive(:create)
-
         OmniAuth.config.test_mode = true
         OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new({
           provider: provider,
@@ -166,21 +164,6 @@ describe 'Sign In' do
         })
       end
 
-      shared_examples 'omniauth' do
-        it 'redirects the user to the next point' do
-          expect(@target_page).to be_displayed
-        end
-
-        it 'allows user to navigate directly to protected pages' do
-          @target_page.load
-          expect(@target_page).to be_displayed
-        end
-
-        it 'creates a user action (audit) record for ''sign_in''' do
-          expect(UserAction).to have_received(:create).with(hash_including(action: 'sign_in'))
-        end
-      end
-
       context 'user has already signed in with google' do
         before :each do
           User.create! do |user|
@@ -188,31 +171,32 @@ describe 'Sign In' do
             user.authentications.build(provider: provider, uid: uid)
           end
 
-          @target_page.load
-          @sign_in_page.google_button.click
         end
 
-        include_examples 'omniauth'
-      end
-
-      context 'user has signed in, but not with google' do
-        before :each do
-          User.create!(email: email)
-
+        it 'redirects the user to the next point' do
           @target_page.load
           @sign_in_page.google_button.click
+          expect(@target_page).to be_displayed
         end
 
-        include_examples 'omniauth'
+        it 'allows user to navigate directly to protected pages' do
+          @sign_in_page.load
+          @sign_in_page.google_button.click
+          @target_page.load
+          expect(@target_page).to be_displayed
+        end
       end
 
       context 'user has not signed in' do
         before :each do
-          @target_page.load
-          @sign_in_page.google_button.click
+          @mobile_confirmation_page = MobileConfirmationPage.new
         end
 
-        include_examples 'omniauth'
+        it 'redirects user to mobile confirmation page' do
+          @target_page.load
+          @sign_in_page.google_button.click
+          expect(@mobile_confirmation_page).to be_displayed
+        end
       end
 
     end

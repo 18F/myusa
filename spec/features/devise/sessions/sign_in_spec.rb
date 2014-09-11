@@ -109,6 +109,22 @@ describe 'Sign In' do
           expect(@target_page.source).to match body
         end
 
+        describe 'resending token via email' do
+          before :each do
+            @token_instructions_page.resend_link.click
+            open_email(email)
+          end
+
+          it 'allows the user to resend token via email' do
+            expect(@token_instructions_page).to have_content(
+              'A new token has been sent.')
+          end
+
+          it 'sends the user an email' do
+            expect(current_email).to have_link(link_text)
+          end
+        end
+
         describe 'remember me' do
           before :each do
             open_email(email)

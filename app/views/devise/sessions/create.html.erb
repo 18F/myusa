@@ -9,30 +9,30 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <h2>Your MyUSA access link has been sent to  <%= @email %>.</h2>
-          <p class="text-muted">Click on that link, or copy and paste it into this browser to complete your login.</p>
+          <p>Click on that link, or copy and paste it into this browser to complete your login.</p>
         </div>
       </div>
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <%= form_tag resend_token_path, method: :post do  %>
-            <p class="text-muted">
+            <p>
               If you do not receive an email from us within the next 5 minutes, you may want to check your spam folder. If you still do not see an email from us, you may 
               <%= hidden_field_tag(:email, @email ) %>
-              <%= submit_tag 'Request another link', :class => 'btn-link', :type => 'submit' %>
+              <%= submit_tag 'request another link', :class => 'btn-link-inline', :type => 'submit' %>.
             <% end %>
           </p>
         </div>
       </div>
-      <hr>
+
       <div class="row">
         <div class="col-md-4 col-md-offset-2">
-          <a>Go Back</a>
-        </div>
-        <div class="col-md-4">
           <%= form_tag resend_token_path, method: :post do  %>
             <%= hidden_field_tag(:email, @email ) %>
-            <%= submit_tag 'Resend Link', :class => 'btn btn-default btn-sm', :type => 'submit' %>
+            <%= submit_tag 'Resend Link', :class => 'btn btn-default width-80', :type => 'submit' %>
           <% end %>
+        </div>
+        <div class="col-md-4">
+          <%= link_to "Go Back", root_path, class: "btn btn-link" %>
         </div>
       </div>
     </div>

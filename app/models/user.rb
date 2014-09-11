@@ -2,9 +2,12 @@ require 'email_authenticatable'
 
 class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
-
   has_many :authentications, :dependent => :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
+  has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
+  has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
+  has_many :public_applications, -> { where(:public => true) }, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
+  has_many :private_applications, -> { where(:public => false) }, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
 
   has_one :profile, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
@@ -24,6 +27,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
   attr_accessor :just_created, :auto_approve
+  attr_writer :first_name, :last_name, :zip, :gender, :phone
 
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
   SCOPE_ATTRIBUTES = PROFILE_ATTRIBUTES + [:email]
@@ -59,6 +63,10 @@ class User < ActiveRecord::Base
       end
     end
 
+    def gender_from_auth(auth)
+      { 'male' => 'male', 'female' => 'female' }[auth.extra.raw_info.gender]
+    end
+
     def find_or_create_from_omniauth(auth)
       if (authentication = Authentication.find_by_uid(auth.uid))
         authentication.user
@@ -69,41 +77,44 @@ class User < ActiveRecord::Base
       else
         User.create do |user|
           user.email = auth.info.email
+          user.first_name = auth.info.first_name
+          user.last_name = auth.info.last_name
+          user.phone = auth.info.phone
+          user.gender = gender_from_auth(auth)
           user.authentications.build(provider: auth.provider, uid: auth.uid)
         end
       end
     end
-
   end
 
   def first_name
     self.profile ? self.profile.first_name : @first_name
   end
 
-  def first_name=(first_name)
-    @first_name = first_name
-  end
-
   def zip
     self.profile ? self.profile.zip : @zip
-  end
-
-  def zip=(zip)
-    @zip = zip
   end
 
   def last_name
     self.profile ? self.profile.last_name : @last_name
   end
 
-  def last_name=(last_name)
-    @last_name = last_name
+  def gender
+    self.profile ? self.profile.gender : @gender
+  end
+
+  def phone
+    self.profile ? self.profile.phone : @phone
   end
 
   private
 
   def create_profile
-    self.profile = Profile.new(:first_name => @first_name, :last_name => @last_name, :zip => @zip) unless self.profile
+    self.profile = Profile.new(first_name: @first_name,
+                               last_name: @last_name,
+                               phone_number: @phone,
+                               gender: @gender,
+                               zip: @zip) unless self.profile
   end
 
   def valid_email?

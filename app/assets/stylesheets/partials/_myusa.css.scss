@@ -901,3 +901,15 @@ footer {
 .search-field:-ms-input-placeholder {
     color: white;
 }
+
+/*******************
+  Delete Account
+********************/
+
+.delete-account {
+  fieldset {
+    .alert.alert-warning {
+        margin-bottom: 20px;
+    }
+  }
+}

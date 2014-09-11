@@ -1,10 +1,10 @@
 
 # ProfilesController
 class ProfilesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :assign_profile
+  before_filter :authenticate_user!, except: [:resend_token]
+  before_filter :assign_profile, except: [:resend_token]
 
-  layout "dashboard"
+  layout 'dashboard'
 
   def show
   end
@@ -19,6 +19,18 @@ class ProfilesController < ApplicationController
       flash.now[:error] = 'Something went wrong.'
       render :edit
     end
+  end
+
+  def resend_token
+    @email = params[:email]
+    user = User.where(email: @email).first
+    if user.blank?
+      redirect_to new_user_session_url, notice: I18n.t(:no_user_token)
+      return
+    end
+    user.set_authentication_token
+    flash.now[:notice] = I18n.t(:resent_token)
+    render 'devise/sessions/create'
   end
 
   def delete_account

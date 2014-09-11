@@ -33,6 +33,8 @@ en:
     public_apps_warning: 'The following public apps will also be deleted:'
     private_apps_warning: 'The following private apps will also be deleted:'
   no_authorizations: You have not authorized any applications.
+  no_user_token: There was a problem resending your token. Please try creating your account again.
+  resent_token: A new access link has been sent to your email address.
   new_api_key: Your API Key has been updated.
   new_application: Your application has been created.
   app_status:

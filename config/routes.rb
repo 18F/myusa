@@ -19,7 +19,9 @@ Rails.application.routes.draw do
       sessions: "sessions"
     }
 
-  resource :profile, only: [:show, :edit, :update]
+  resource :profile, only: [:show, :edit, :update, :destroy] do
+    get :delete_account
+  end
 
 
   namespace :api, defaults: {format: :json} do

@@ -39,17 +39,27 @@ describe User, type: :model do
 
   describe "#find_or_create_from_omniauth" do
     let(:email) { 'testy@example.gov' }
+    let(:first_name) { 'testy' }
+    let(:last_name) { 'tester' }
+    let(:gender) { 'female' }
+    let(:phone) { '987-654-3210' }
     let(:uid) { '12345' }
 
     context "with google auth hash" do
       let(:provider) { 'google_oauth2' }
       let(:auth_hash) do
-        OmniAuth::AuthHash.new(
+        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
           provider: provider,
           uid: uid,
-          info: {
-            email: email
-          }
+          info: OmniAuth::AuthHash.new(
+            email: email,
+            first_name: first_name,
+            last_name: last_name,
+            phone: phone
+          ),
+          extra: OmniAuth::AuthHash.new(
+            raw_info: OmniAuth::AuthHash.new(gender: gender)
+          )
         )
       end
 
@@ -91,7 +101,15 @@ describe User, type: :model do
         end
 
         it "creates user" do
-          expect(user).to be
+          expect(user.email).to eq 'testy@example.gov'
+        end
+
+        it 'creates a profile' do
+          profile = user.profile
+          expect(profile.first_name).to eq 'testy'
+          expect(profile.last_name).to eq 'tester'
+          expect(profile.gender).to eq 'female'
+          expect(profile.phone_number).to eq '987-654-3210'
         end
 
         it "creates an authentication record for the user" do

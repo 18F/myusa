@@ -117,7 +117,7 @@ describe 'Sign In' do
 
           it 'allows the user to resend token via email' do
             expect(@token_instructions_page).to have_content(
-              'A new access has link has been sent to your email address.')
+              'A new access link has been sent to your email address.')
           end
 
           it 'sends the user an email' do

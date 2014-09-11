@@ -6,12 +6,17 @@ Rails.application.routes.draw do
   post 'contact_us' => 'home#contact_us'
 
   use_doorkeeper do
-    controllers :applications => 'oauth/applications',
-                :authorizations => 'oauth/authorizations',
-                :authorized_applications => 'oauth/authorized_applications'
+    skip_controllers :applications
+    controllers authorizations: 'oauth/authorizations',
+                authorized_applications: 'oauth/authorized_applications'
   end
-  post 'new_api_key' => 'oauth/applications#new_api_key'
-  post 'make_public' => 'oauth/applications#make_public'
+
+  # Pull this out of the `use_doorkeeper` block so that we can put it at the
+  # root level.
+  resources :applications, as: 'oauth_applications'
+
+  post 'new_api_key' => 'applications#new_api_key'
+  post 'make_public' => 'applications#make_public'
 
   devise_for :users,
     controllers: {
@@ -23,14 +28,13 @@ Rails.application.routes.draw do
     get :delete_account
   end
 
-
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do
       resource :profile, only: [:show]
       resources :notifications, only: [:create]
       resources :tasks, only: [:index, :create, :show, :update]
       get 'tokeninfo', to: '/doorkeeper/token_info#show'
-  end
+    end
 
     # For legacy reasons, we translate any API request without a version
     # in the path as a version 1 request.

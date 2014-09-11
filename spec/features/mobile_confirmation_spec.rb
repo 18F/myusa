@@ -40,6 +40,7 @@ describe 'Mobile Confirmation', sms: true do
     expect(@mobile_confirmation_page).to be_displayed
     expect(@mobile_confirmation_page.heading).to have_content('Welcome to MyUSA')
     expect(@mobile_confirmation_page).to have_content('Your mobile number has been successfully added')
+    expect(@mobile_confirmation_page).to have_redirect_link
   end
 
   scenario 'user can resend code' do

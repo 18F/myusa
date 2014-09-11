@@ -20,7 +20,12 @@ class MobileRecoveriesController < ApplicationController
     if params[:commit] == 'Submit'
       raw_token = mobile_confirmation_params[:raw_token]
       if raw_token && mobile_confirmation && mobile_confirmation.authenticate(raw_token)
-        # redirect_to root_path #TODO: fixme
+        if @redirect_link = stored_location_for(:user)
+          @back_or_profile = 'back'
+        else
+          @redirect_link = profile_url
+          @back_or_profile = 'to your profile'
+        end
       else
         flash[:error] = 'Please check the number blah blah blah'
         render :create

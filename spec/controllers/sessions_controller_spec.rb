@@ -45,8 +45,8 @@ describe SessionsController do
         end
 
         context 'return to path is not set' do
-          it 'redirects to the root path' do
-            expect(response).to redirect_to(root_path)
+          it 'redirects to the profile path' do
+            expect(response).to redirect_to(profile_path)
           end
         end
         context 'return to path is set' do

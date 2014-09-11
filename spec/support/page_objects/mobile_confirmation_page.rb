@@ -12,4 +12,7 @@ class MobileConfirmationPage < SitePrism::Page
 
   element :mobile_number, '#profile_mobile_number'
   element :mobile_number_confirmation_token, '#mobile_confirmation_raw_token'
+
+  element :redirect_link, "a[text()='here']"
+  element :meta_refresh, :xpath, "/html/head/meta[@http-equiv='refresh']", visible: false
 end

@@ -187,15 +187,41 @@ describe 'Sign In' do
         end
       end
 
-      context 'user has not signed in' do
+      context 'user has not signed in', sms: true do
         before :each do
           @mobile_confirmation_page = MobileConfirmationPage.new
         end
+
+        let(:phone_number) { '415-555-3455' }
 
         it 'redirects user to mobile confirmation page' do
           @target_page.load
           @sign_in_page.google_button.click
           expect(@mobile_confirmation_page).to be_displayed
+        end
+
+        it 'welcome page has link to redirect back' do
+          @target_page.load
+          @sign_in_page.google_button.click
+
+          @mobile_confirmation_page.mobile_number.set phone_number
+          @mobile_confirmation_page.submit.click
+
+          open_last_text_message_for(phone_number)
+          expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
+          raw_token = current_text_message.body.match /\d{6}/
+
+          @mobile_confirmation_page.mobile_number_confirmation_token.set raw_token
+          @mobile_confirmation_page.submit.click
+
+          expect(@mobile_confirmation_page).to be_displayed
+          expect(@mobile_confirmation_page.heading).to have_content('Welcome to MyUSA')
+
+          expect(@mobile_confirmation_page).to have_redirect_link
+          expect(@mobile_confirmation_page).to have_meta_refresh
+
+          @mobile_confirmation_page.redirect_link.click
+          expect(@target_page).to be_displayed
         end
       end
 

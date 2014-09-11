@@ -7,12 +7,25 @@ deploy_to_dir = "/var/www/#{app_id}"
 secrets = Chef::EncryptedDataBagItem.load(node[:myusa][:rails_env], "myusa")
 
 # set up user and group
-group node[:myusa][:user][:group]
 include_recipe 'user'
-user_account node[:myusa][:user][:username] do #'myusa' do #node[:myusa][:user][:username] do
+
+group node[:myusa][:user][:group]
+user_account node[:myusa][:user][:username] do
   gid node[:myusa][:user][:group]
   ssh_keys node[:myusa][:user][:deploy_keys]
   action :create
+end
+
+# set the "ubuntu" user password to something random so that
+# myusa user can't su to it
+::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
+node.set[:myusa][:ubuntu][:password] = secure_password
+
+# not using user_account because https://github.com/fnichol/chef-user/issues/73
+user node['current_user'] do
+  password node[:myusa][:ubuntu][:password]
+  only_if { node['current_user'] == 'ubuntu' }
+  action :modify
 end
 
 # set up directory structure ...

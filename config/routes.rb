@@ -10,14 +10,13 @@ Rails.application.routes.draw do
     controllers authorizations: 'oauth/authorizations',
                 authorized_applications: 'oauth/authorized_applications'
   end
-  scope module: 'oauth' do
-    resources :applications, as: 'oauth_applications' do
-      collection do
-        post 'new_api_key' => 'applications#new_api_key'
-        post 'make_public' => 'applications#make_public'
-      end
-    end
-  end
+
+  # Pull this out of the `use_doorkeeper` block so that we can put it at the
+  # root level.
+  resources :applications, as: 'oauth_applications'
+
+  post 'new_api_key' => 'applications#new_api_key'
+  post 'make_public' => 'applications#make_public'
 
   devise_for :users,
     controllers: {
@@ -25,8 +24,9 @@ Rails.application.routes.draw do
       sessions: "sessions"
     }
 
-  resource :profile, only: [:show, :edit, :update]
-
+  resource :profile, only: [:show, :edit, :update, :destroy] do
+    get :delete_account
+  end
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do

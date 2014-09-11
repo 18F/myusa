@@ -143,6 +143,11 @@ describe 'Sign In' do
   describe 'Authenticate with an external identity provider' do
 
     let(:email) { 'testo@example.com' }
+    let(:first_name) { 'test' }
+    let(:last_name) { 'o' }
+    let(:gender) { 'female' }
+    let(:phone) { '987-654-3210' }
+
     let(:uid) { '12345' }
 
     before :each do
@@ -157,13 +162,19 @@ describe 'Sign In' do
         allow(UserAction).to receive(:create)
 
         OmniAuth.config.test_mode = true
-        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new({
+        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
           provider: provider,
           uid: uid,
-          info: {
-            email: email
-          }
-        })
+          info: OmniAuth::AuthHash.new(
+            email: email,
+            first_name: first_name,
+            last_name: last_name,
+            phone: phone
+          ),
+          extra: OmniAuth::AuthHash.new(
+            raw_info: OmniAuth::AuthHash.new(gender: gender)
+          )
+        )
       end
 
       shared_examples 'omniauth' do
@@ -214,7 +225,6 @@ describe 'Sign In' do
 
         include_examples 'omniauth'
       end
-
     end
   end
 end

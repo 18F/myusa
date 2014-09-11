@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-12">
-    <h2>
+    <h1>
       <%= t('profile.settings_title') %>
-    </h2>
-    <h3>
+    </h1>
+    <h2>
       <%= t('profile.heading') %>
-    </h3>
+    </h2>
+    <%= link_to edit_profile_path, :class => 'btn btn-default' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      <%= t(:edit_your_profile) %>
+    <% end %>
   </div>
-  <%= link_to edit_profile_path, :class => 'small button' do %>
-    <i class="foundicon-edit"></i>
-    <%= t(:edit_your_profile) %>
-  <% end %>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -122,4 +122,11 @@
     </div>
   </div>
 </div>
-<div class="row"></div>
+<div class="row">
+  <div class="col-md-12">
+    <%= link_to delete_account_profile_path, class: 'btn btn-danger' do %>
+      <span class="glyphicon glyphicon-remove"></span>
+      <%= t('delete_account.button') %>
+    <% end %>
+  </div>
+</div>

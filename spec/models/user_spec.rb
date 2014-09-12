@@ -38,27 +38,17 @@ describe User, type: :model do
   end
 
   describe "#find_from_omniauth" do
+    let(:provider) { 'google_oauth2' }
     let(:email) { 'testy@example.gov' }
-    let(:first_name) { 'testy' }
-    let(:last_name) { 'tester' }
-    let(:gender) { 'female' }
-    let(:phone) { '987-654-3210' }
     let(:uid) { '12345' }
 
-    let(:provider) { 'google_oauth2' }
     let(:auth_hash) do
       OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
         provider: provider,
         uid: uid,
-        info: OmniAuth::AuthHash.new(
+        info: {
           email: email,
-          first_name: first_name,
-          last_name: last_name,
-          phone: phone
-        ),
-        extra: OmniAuth::AuthHash.new(
-          raw_info: OmniAuth::AuthHash.new(gender: gender)
-        )
+        }
       )
     end
 
@@ -95,6 +85,7 @@ describe User, type: :model do
   end
 
   describe "#create_from_omniauth" do
+    let(:provider) { 'google_oauth2' }
     let(:email) { 'testy@example.gov' }
     let(:first_name) { 'testy' }
     let(:last_name) { 'tester' }
@@ -106,15 +97,15 @@ describe User, type: :model do
       OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
         provider: provider,
         uid: uid,
-        info: OmniAuth::AuthHash.new(
+        info: {
           email: email,
           first_name: first_name,
           last_name: last_name,
           phone: phone
-        ),
-        extra: OmniAuth::AuthHash.new(
-          raw_info: OmniAuth::AuthHash.new(gender: gender)
-        )
+        },
+        extra: {
+          raw_info: { gender: gender }
+        }
       )
     end
 
@@ -123,7 +114,11 @@ describe User, type: :model do
     end
 
     it 'creates a profile' do
-
+      user = User.create_from_omniauth(auth_hash)
+      expect(user.profile).to be_present
+      expect(user.profile.first_name).to eql(first_name)
+      expect(user.profile.gender).to eql(gender)
+      expect(user.profile.phone_number).to eql(phone)
     end
 
     it "creates an authentication record for the user" do

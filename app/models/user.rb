@@ -63,6 +63,13 @@ class User < ActiveRecord::Base
       end
     end
 
+    def gender_from_auth(auth)
+      case auth.provider
+      when 'google_oauth2'
+        auth.extra.raw_info.gender
+      end
+    end
+
     def find_from_omniauth(auth)
       if (authentication = Authentication.find_by_uid(auth.uid))
         authentication.user
@@ -74,13 +81,15 @@ class User < ActiveRecord::Base
     end
 
     def create_from_omniauth(auth)
-      User.create do |user|
-        user.email = auth.info.email
-        user.first_name = auth.info.first_name
-        user.last_name = auth.info.last_name
-        user.phone = auth.info.phone
-        user.gender = gender_from_auth(auth)
-        user.authentications.build(provider: auth.provider, uid: auth.uid)
+      User.create(email: auth.info.email) do |user|
+        user.build_profile(
+          email: auth.info.email,
+          first_name: auth.info.first_name,
+          last_name: auth.info.last_name,
+          phone_number: auth.info.phone,
+          gender: gender_from_auth(auth)
+        )
+        user.authentications.build(auth.slice(:provider, :uid))
       end
     end
 

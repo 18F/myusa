@@ -23,7 +23,6 @@ class MobileConfirmation < ActiveRecord::Base
   end
 
   def confirmed?
-    #TODO: figure out how invalidation works
     !!self.confirmed_at
   end
 

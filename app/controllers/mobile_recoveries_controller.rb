@@ -4,7 +4,10 @@ class MobileRecoveriesController < ApplicationController
   before_filter :authenticate_user!
 
   def new; end
-  def cancel; end
+  def cancel
+    render text: t(:skip_this_step, scope: [:mobile_confirmation], profile_link: profile_path).html_safe,
+           layout: 'welcome'
+  end
 
   def create
     if profile.update_attributes(profile_params)
@@ -16,24 +19,22 @@ class MobileRecoveriesController < ApplicationController
   end
 
   def update
-    # TODO: clean this up ... gating on the params[:commit] is super fragile.
-    if params[:commit] == 'Submit'
-      raw_token = mobile_confirmation_params[:raw_token]
-      if raw_token && mobile_confirmation && mobile_confirmation.authenticate(raw_token)
-        if @redirect_link = stored_location_for(:user)
-          @back_or_profile = 'back'
-        else
-          @redirect_link = profile_url
-          @back_or_profile = 'to your profile'
-        end
-      else
-        flash[:error] = 'Please check the number blah blah blah'
-        render :create
-      end
-    elsif params[:commit] == 'Resend Code'
-      mobile_confirmation.regenerate_token
-      render :update
+    raw_token = mobile_confirmation_params[:raw_token]
+    if raw_token && mobile_confirmation && mobile_confirmation.authenticate(raw_token)
+      render text: t(:successfully_added, scope: [:mobile_confirmation]),
+             layout: 'welcome'
+    else
+      flash[:error] = t(:bad_token, scope: [:mobile_confirmation],
+                                    resend_link: mobile_recovery_resend_path,
+                                    reenter_link: new_mobile_recovery_path).html_safe
+      render :create
     end
+
+  end
+
+  def resend
+    mobile_confirmation.regenerate_token
+    render :update
   end
 
   private

@@ -36,42 +36,45 @@ describe MobileRecoveriesController do
       allow(SmsWrapper.instance).to receive(:send_message)
     end
 
-    context 'with the submit button' do
-      context 'with a valid token' do
-        it 'confirms the mobile number' do
-          confirmation = user.profile.create_mobile_confirmation
-          confirmation.send(:generate_token)
-          raw_token = confirmation.raw_token
-          confirmation.save!
+    context 'with a valid token' do
+      it 'confirms the mobile number' do
+        confirmation = user.profile.create_mobile_confirmation
+        confirmation.send(:generate_token)
+        raw_token = confirmation.raw_token
+        confirmation.save!
 
-          patch :update, commit: 'Submit', mobile_confirmation: { raw_token: raw_token }
-          confirmation.reload
+        patch :update, mobile_confirmation: { raw_token: raw_token }
+        confirmation.reload
 
-          expect(confirmation).to be_confirmed
-        end
-      end
-
-      context 'with an invalid token' do
-        it 'does not confirm the mobile number' do
-          confirmation = user.profile.create_mobile_confirmation!
-          patch :update, commit: 'Submit', mobile_confirmation: { raw_token: 'foobar' }
-          confirmation.reload
-
-          expect(confirmation).to_not be_confirmed
-        end
+        expect(confirmation).to be_confirmed
       end
     end
 
-    context 'with the resend code button' do
-      it 'sets a new token' do
+    context 'with an invalid token' do
+      it 'does not confirm the mobile number' do
         confirmation = user.profile.create_mobile_confirmation!
-        old_token = confirmation.token
-
-        patch :update, commit: 'Resend Code'
+        patch :update, mobile_confirmation: { raw_token: 'foobar' }
         confirmation.reload
 
-        expect(confirmation.token).to_not match(old_token)
+        expect(flash[:error]).to match(/Please check the number sent to your mobile and re-enter that code/)
+        expect(confirmation).to_not be_confirmed
       end
+    end
+  end
+
+  describe "#resend" do
+    before :each do
+      allow(SmsWrapper.instance).to receive(:send_message)
+    end
+
+    it 'sets a new token' do
+      confirmation = user.profile.create_mobile_confirmation!
+      old_token = confirmation.token
+
+      get :resend
+      confirmation.reload
+
+      expect(confirmation.token).to_not match(old_token)
     end
   end
 

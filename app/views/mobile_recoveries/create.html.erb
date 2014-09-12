@@ -11,8 +11,8 @@
     <br>
     <div class='row'>
       <%= f.submit value='Submit', class: 'btn btn-primary' %>
-      <%= f.submit value='Resend Code', class: 'btn btn-default' %>
-      <%= link_to 'Re-enter Mobile Number', root_path %>
+      <%= link_to 'Resend Code', mobile_recovery_resend_path, class: 'btn btn-default' %>
+      <%= link_to 'Re-enter Mobile Number', new_mobile_recovery_path %>
     </div>
   <% end %>
 </div>

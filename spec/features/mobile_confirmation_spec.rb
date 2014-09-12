@@ -43,6 +43,21 @@ describe 'Mobile Confirmation', sms: true do
     expect(@mobile_confirmation_page).to have_redirect_link
   end
 
+  scenario 'user gets a helpful error message when the code does not match' do
+    @mobile_confirmation_page.mobile_number.set phone_number
+    @mobile_confirmation_page.submit.click
+
+    expect(@mobile_confirmation_page).to be_displayed
+
+    @mobile_confirmation_page.mobile_number_confirmation_token.set 'bad token'
+    @mobile_confirmation_page.submit.click
+
+    expect(@mobile_confirmation_page).to be_displayed
+    expect(@mobile_confirmation_page.flash_message).to have_content('Please check the number sent to your mobile and re-enter that code')
+    expect(@mobile_confirmation_page).to have_flash_resend_link
+    expect(@mobile_confirmation_page).to have_flash_reenter_link
+  end
+
   scenario 'user can resend code' do
     @mobile_confirmation_page.mobile_number.set phone_number
     @mobile_confirmation_page.submit.click

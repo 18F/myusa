@@ -20,5 +20,13 @@ module DeviseHelper
                     Doorkeeper::Application.find_by_uid(params[:client_id])
   end
 
+  def after_sign_in_path_for(resource_or_scope)
+    stored_location_for(resource_or_scope) || profile_path
+  end
+
+  def stored_location_for(resource_or_scope)
+    session_key = stored_location_key_for(resource_or_scope)
+    session[session_key]
+  end
 
 end

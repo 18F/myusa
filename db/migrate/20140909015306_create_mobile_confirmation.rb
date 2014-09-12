@@ -5,7 +5,6 @@ class CreateMobileConfirmation < ActiveRecord::Migration
       t.string      :token
       t.datetime    :confirmation_sent_at
       t.datetime    :confirmed_at
-      t.datetime    :invalidated_at
       t.timestamps
     end
 

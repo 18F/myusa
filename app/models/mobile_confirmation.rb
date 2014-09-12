@@ -41,7 +41,7 @@ class MobileConfirmation < ActiveRecord::Base
 
   def send_raw_token
     if self.raw_token.present?
-      sms_message = "Your MyUSA verification code is #{self.raw_token}"
+      sms_message = I18n.t(:token_message, scope: [:mobile_confirmation], raw_token: self.raw_token)
       SmsWrapper.instance.send_message(self.profile.mobile_number, sms_message)
       self.raw_token = nil
     end

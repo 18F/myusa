@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  return_to_previous: 'Return to the previous page?'
   delete_account:
     enter_email_prompt: 'Enter your email address to confirm'
     button: 'Delete Account'

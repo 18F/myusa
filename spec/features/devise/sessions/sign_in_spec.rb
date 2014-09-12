@@ -109,6 +109,22 @@ describe 'Sign In' do
           expect(@target_page.source).to match body
         end
 
+        describe 'resending token via email' do
+          before :each do
+            @token_instructions_page.resend_link.click
+            open_email(email)
+          end
+
+          it 'allows the user to resend token via email' do
+            expect(@token_instructions_page).to have_content(
+              'A new access link has been sent to your email address.')
+          end
+
+          it 'sends the user an email' do
+            expect(current_email).to have_link(link_text)
+          end
+        end
+
         describe 'remember me' do
           before :each do
             open_email(email)
@@ -143,6 +159,11 @@ describe 'Sign In' do
   describe 'Authenticate with an external identity provider' do
 
     let(:email) { 'testo@example.com' }
+    let(:first_name) { 'test' }
+    let(:last_name) { 'o' }
+    let(:gender) { 'female' }
+    let(:phone) { '987-654-3210' }
+
     let(:uid) { '12345' }
 
     before :each do
@@ -155,13 +176,19 @@ describe 'Sign In' do
 
       before :each do
         OmniAuth.config.test_mode = true
-        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new({
+        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
           provider: provider,
           uid: uid,
-          info: {
-            email: email
-          }
-        })
+          info: OmniAuth::AuthHash.new(
+            email: email,
+            first_name: first_name,
+            last_name: last_name,
+            phone: phone
+          ),
+          extra: OmniAuth::AuthHash.new(
+            raw_info: OmniAuth::AuthHash.new(gender: gender)
+          )
+        )
       end
 
       context 'user has already signed in with google' do
@@ -224,7 +251,6 @@ describe 'Sign In' do
           expect(@target_page).to be_displayed
         end
       end
-
     end
   end
 end

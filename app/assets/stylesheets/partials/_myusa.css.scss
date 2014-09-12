@@ -428,6 +428,10 @@ footer {
   .hidden-buttons > .row {
     margin-top: 10px;
   }
+  p {
+    font-size: .9em;
+    color: $gray;
+  }
 
   div.more-signin {
     text-align: center;
@@ -896,4 +900,16 @@ footer {
 
 .search-field:-ms-input-placeholder {
     color: white;
+}
+
+/*******************
+  Delete Account
+********************/
+
+.delete-account {
+  fieldset {
+    .alert.alert-warning {
+        margin-bottom: 20px;
+    }
+  }
 }

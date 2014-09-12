@@ -51,15 +51,15 @@ describe User, type: :model do
         OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
           provider: provider,
           uid: uid,
-          info: OmniAuth::AuthHash.new(
+          info: {
             email: email,
             first_name: first_name,
             last_name: last_name,
             phone: phone
-          ),
-          extra: OmniAuth::AuthHash.new(
-            raw_info: OmniAuth::AuthHash.new(gender: gender)
-          )
+          },
+          extra: {
+            raw_info: { gender: gender }
+          }
         )
       end
 

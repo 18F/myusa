@@ -13,8 +13,6 @@ class Profile < ActiveRecord::Base
 
   after_validation :set_errors
 
-  before_update :invalidate_mobile_confirmation
-
   FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address,
     :address2, :city, :state, :zip, :gender, :marital_status, :is_parent,
     :is_student, :is_veteran, :is_retired]
@@ -187,13 +185,4 @@ class Profile < ActiveRecord::Base
     self.errors.add(:mobile_number, self.errors.delete(:mobile)) unless self.errors[:mobile].blank?
   end
 
-  def invalidate_mobile_confirmation
-    # if encrypted_mobile_changed? && mobile_confirmation.present?
-    #   puts 'errp!'
-    #   # mobile_confirmation.destroy
-    #   # pp mobile_confirmation
-    #   self.mobile_confirmation.mark_for_destruction
-    # end
-    # pp self.changed
-  end
 end

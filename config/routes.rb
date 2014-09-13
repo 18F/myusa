@@ -25,6 +25,10 @@ Rails.application.routes.draw do
     }
   post 'resend_token' => 'profiles#resend_token'
 
+  resource :mobile_recovery
+  get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
+  get 'mobile_recovery/resend' => 'mobile_recoveries#resend'
+
   resource :profile, only: [:show, :edit, :update, :destroy] do
     get :delete_account
   end

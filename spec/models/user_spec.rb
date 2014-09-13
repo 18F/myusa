@@ -37,85 +37,93 @@ describe User, type: :model do
     end
   end
 
-  describe "#find_or_create_from_omniauth" do
+  describe "#find_from_omniauth" do
+    let(:provider) { 'google_oauth2' }
+    let(:email) { 'testy@example.gov' }
+    let(:uid) { '12345' }
+
+    let(:auth_hash) do
+      OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
+        provider: provider,
+        uid: uid,
+        info: {
+          email: email,
+        }
+      )
+    end
+
+    context "when user exists with authentication matching provider & UID" do
+      let(:user) { FactoryGirl.create(:user, :with_google, email: email) }
+
+      it "finds user with matching google uid" do
+        User.find_from_omniauth(auth_hash)
+        expect(user).to be
+      end
+    end
+
+    context "when user exists with matching email" do
+      before :each do
+        FactoryGirl.create(:user, email: email)
+      end
+
+      it "finds user with matching email" do
+        expect(User.find_from_omniauth(auth_hash)).to be
+      end
+
+      it "creates an authentication record for the user" do
+        user = User.find_from_omniauth(auth_hash)
+        expect(user.authentications.where(provider: provider, uid: uid)).to be
+      end
+    end
+
+    context 'when no user exists' do
+      it 'returns nil' do
+        expect(User.find_from_omniauth(auth_hash)).to be_nil
+      end
+    end
+
+  end
+
+  describe "#create_from_omniauth" do
+    let(:provider) { 'google_oauth2' }
     let(:email) { 'testy@example.gov' }
     let(:first_name) { 'testy' }
     let(:last_name) { 'tester' }
     let(:gender) { 'female' }
-    let(:phone) { '987-654-3210' }
     let(:uid) { '12345' }
+    let(:phone) { '987-654-3210' }
+    let(:provider) { 'google_oauth2' }
+    let(:auth_hash) do
+      OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
+        provider: provider,
+        uid: uid,
+        info: {
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+          phone: phone
+        },
+        extra: {
+          raw_info: { gender: gender }
+        }
+      )
+    end
 
-    context "with google auth hash" do
-      let(:provider) { 'google_oauth2' }
-      let(:auth_hash) do
-        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
-          provider: provider,
-          uid: uid,
-          info: {
-            email: email,
-            first_name: first_name,
-            last_name: last_name,
-            phone: phone
-          },
-          extra: {
-            raw_info: { gender: gender }
-          }
-        )
-      end
+    it 'creates user' do
+      expect(User.create_from_omniauth(auth_hash)).to be
+    end
 
-      context "when user exists with authentication matching provider & UID" do
-        let(:user) do
-          #TODO: factories!
-          described_class.create! do |user|
-            user.email = 'somebody_else@example.gov'
-            user.authentications.build(provider: provider, uid: uid)
-          end
+    it 'creates a profile' do
+      user = User.create_from_omniauth(auth_hash)
+      expect(user.profile).to be_present
+      expect(user.profile.first_name).to eql(first_name)
+      expect(user.profile.gender).to eql(gender)
+      expect(user.profile.phone_number).to eql(phone)
+    end
 
-          User.find_or_create_from_omniauth(auth_hash)
-        end
-
-        it "finds user with matching google uid" do
-          expect(user).to be
-        end
-      end
-
-      context "when user exists with matching email" do
-        let(:user) do
-          User.create!(email: email)
-
-          User.find_or_create_from_omniauth(auth_hash)
-        end
-
-        it "finds user with matching email" do
-          expect(user).to be
-        end
-
-        it "creates an authentication record for the user" do
-          expect(user.authentications.where(provider: provider, uid: uid)).to be
-        end
-      end
-
-      context "when no user exists" do
-        let(:user) do
-          User.find_or_create_from_omniauth(auth_hash)
-        end
-
-        it "creates user" do
-          expect(user.email).to eq 'testy@example.gov'
-        end
-
-        it 'creates a profile' do
-          profile = user.profile
-          expect(profile.first_name).to eq 'testy'
-          expect(profile.last_name).to eq 'tester'
-          expect(profile.gender).to eq 'female'
-          expect(profile.phone_number).to eq '987-654-3210'
-        end
-
-        it "creates an authentication record for the user" do
-          expect(user.authentications.where(provider: provider, uid: uid)).to be
-        end
-      end
+    it "creates an authentication record for the user" do
+      user = User.create_from_omniauth(auth_hash)
+      expect(user.authentications.where(provider: provider, uid: uid)).to be
     end
   end
 

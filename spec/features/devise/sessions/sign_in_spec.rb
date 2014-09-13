@@ -175,8 +175,6 @@ describe 'Sign In' do
       let(:provider) { :google_oauth2 }
 
       before :each do
-        allow(UserAction).to receive(:create)
-
         OmniAuth.config.test_mode = true
         OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
           provider: provider,
@@ -193,21 +191,6 @@ describe 'Sign In' do
         )
       end
 
-      shared_examples 'omniauth' do
-        it 'redirects the user to the next point' do
-          expect(@target_page).to be_displayed
-        end
-
-        it 'allows user to navigate directly to protected pages' do
-          @target_page.load
-          expect(@target_page).to be_displayed
-        end
-
-        it 'creates a user action (audit) record for ''sign_in''' do
-          expect(UserAction).to have_received(:create).with(hash_including(action: 'sign_in'))
-        end
-      end
-
       context 'user has already signed in with google' do
         before :each do
           User.create! do |user|
@@ -215,31 +198,58 @@ describe 'Sign In' do
             user.authentications.build(provider: provider, uid: uid)
           end
 
-          @target_page.load
-          @sign_in_page.google_button.click
         end
 
-        include_examples 'omniauth'
+        it 'redirects the user to the next point' do
+          @target_page.load
+          @sign_in_page.google_button.click
+          expect(@target_page).to be_displayed
+        end
+
+        it 'allows user to navigate directly to protected pages' do
+          @sign_in_page.load
+          @sign_in_page.google_button.click
+          @target_page.load
+          expect(@target_page).to be_displayed
+        end
       end
 
-      context 'user has signed in, but not with google' do
+      context 'user has not signed in', sms: true do
         before :each do
-          User.create!(email: email)
-
-          @target_page.load
-          @sign_in_page.google_button.click
+          @mobile_confirmation_page = MobileConfirmationPage.new
         end
 
-        include_examples 'omniauth'
-      end
+        let(:phone_number) { '415-555-3455' }
 
-      context 'user has not signed in' do
-        before :each do
+        it 'redirects user to mobile confirmation page' do
           @target_page.load
           @sign_in_page.google_button.click
+          expect(@mobile_confirmation_page).to be_displayed
         end
 
-        include_examples 'omniauth'
+        it 'welcome page has link to redirect back' do
+          @target_page.load
+          @sign_in_page.google_button.click
+
+          @mobile_confirmation_page.mobile_number.set phone_number
+          @mobile_confirmation_page.submit.click
+
+          open_last_text_message_for(phone_number)
+          expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
+          raw_token = current_text_message.body.match /\d{6}/
+
+          @mobile_confirmation_page.mobile_number_confirmation_token.set raw_token
+          @mobile_confirmation_page.submit.click
+
+          expect(@mobile_confirmation_page).to be_displayed
+          expect(@mobile_confirmation_page.heading).to have_content('Welcome to MyUSA')
+
+          expect(@mobile_confirmation_page).to have_redirect_link
+          expect(@mobile_confirmation_page).to have_meta_refresh
+
+          @mobile_confirmation_page.redirect_link.click
+          expect(@target_page).to be_displayed
+        end
       end
     end
   end

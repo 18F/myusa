@@ -70,25 +70,31 @@ class User < ActiveRecord::Base
       end
     end
 
-    def find_or_create_from_omniauth(auth)
+    def find_from_omniauth(auth)
       if (authentication = Authentication.find_by_uid(auth.uid))
         authentication.user
       elsif (user = User.find_by_email(auth.info.email))
         user.authentications.build(provider: auth.provider, uid: auth.uid)
         user.save!
         user
-      else
-        User.create(email: auth.info.email) do |user|
-          user.build_profile(
-            email: auth.info.email,
-            first_name: auth.info.first_name,
-            last_name: auth.info.last_name,
-            phone_number: auth.info.phone,
-            gender: gender_from_auth(auth)
-          )
-          user.authentications.build(auth.slice(:provider, :uid))
-        end
       end
+    end
+
+    def create_from_omniauth(auth)
+      User.create(email: auth.info.email) do |user|
+        user.build_profile(
+          email: auth.info.email,
+          first_name: auth.info.first_name,
+          last_name: auth.info.last_name,
+          phone_number: auth.info.phone,
+          gender: gender_from_auth(auth)
+        )
+        user.authentications.build(auth.slice(:provider, :uid))
+      end
+    end
+
+    def gender_from_auth(auth)
+      { 'male' => 'male', 'female' => 'female' }[auth.extra.raw_info.gender]
     end
   end
 

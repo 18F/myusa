@@ -10,8 +10,6 @@ require 'rspec/its'
 require 'capybara/rspec'
 
 SmsSpec.driver = :"twilio-ruby"
-# require 'sms_wrapper'
-# SmsWrapper::Twilio.from = '+18005553455'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

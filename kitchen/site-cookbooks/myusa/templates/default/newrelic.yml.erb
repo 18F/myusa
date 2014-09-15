@@ -200,6 +200,7 @@ development:
   # NOTE: There is substantial overhead when running in developer mode.
   # Do not use for production or load testing.
   developer_mode: true
+  capture_params: true
 
 test:
   <<: *default_settings
@@ -222,3 +223,4 @@ staging:
   <<: *default_settings
   monitor_mode: true
   app_name: MyUSA (Staging)
+  capture_params: true

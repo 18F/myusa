@@ -2,48 +2,40 @@ require 'rails_helper'
 
 describe MobileConfirmation do
   let(:phone_number) { '800-555-3455' }
-  let(:user) do
-    FactoryGirl.create(:user, mobile: phone_number) #, profile: FactoryGirl.create(mobile: phone_number) #.tap do |u|
-      #TODO: put this in the factory ...
-      # u.profile.update_attributes(mobile_number: phone_number)
-    # end
-  end
-  let(:profile) { user.profile }
+  let(:profile) { FactoryGirl.create(:profile, mobile_number: phone_number) }
 
   describe '#create', sms: true do
     it 'sends a 6-digit token' do
-      user.profile.create_mobile_confirmation
+      profile.create_mobile_confirmation
       open_last_text_message_for(phone_number)
       expect(current_text_message.body).to match(/\d{6}/)
     end
   end
 
   describe '#save', sms: true do
+    subject { -> { profile.mobile_confirmation.save! }}
+
     before :each do
-      user.profile.create_mobile_confirmation
-      SmsSpec::Data.clear_messages
+      profile.create_mobile_confirmation
     end
 
     context 'when a raw token is present' do
-      it 'sends a text message with the raw token' do
+      before :each do
         profile.mobile_confirmation.send(:generate_token)
-        profile.mobile_confirmation.save!
-        expect(messages_for(phone_number)).to_not be_empty
+      end
+
+      it 'sends a text message with the raw token' do
+        is_expected.to change { messages_for(phone_number).count }.by(1)
         open_last_text_message_for(phone_number)
         expect(current_text_message.body).to match(/\d{6}/)
       end
       it 'clears the raw token' do
-        profile.mobile_confirmation.send(:generate_token)
-        profile.mobile_confirmation.save!
-        expect(subject.raw_token).to be_nil
+        is_expected.to change { profile.mobile_confirmation.raw_token }.to(nil) 
       end
     end
     context 'when raw token is not present' do
       it 'does not send a text message' do
-        expect(messages_for(phone_number)).to be_empty
-
-        profile.mobile_confirmation.confirm!
-        expect(messages_for(phone_number)).to be_empty
+        is_expected.to_not change { messages_for(phone_number).count }
       end
     end
   end

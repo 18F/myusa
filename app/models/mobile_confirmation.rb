@@ -8,9 +8,11 @@ class MobileConfirmation < ActiveRecord::Base
   before_create :generate_token
   after_save :send_raw_token
 
+  TOKEN_EXPIRY = 30.minutes
+
   def authenticate(raw_token)
+    return false unless confirmation_sent_at > Time.now - TOKEN_EXPIRY
     digested = Devise.token_generator.digest(self.class, :token, raw_token)
-    #TODO: validate expiration
     if Devise.secure_compare(digested, self.token)
       self.token = nil
       self.confirm!
@@ -34,7 +36,7 @@ class MobileConfirmation < ActiveRecord::Base
   private
 
   def generate_token
-    self.raw_token = rand.to_s[2..7]
+    self.raw_token = self.class.new_token
     self.token = Devise.token_generator.digest(self.class, :token, self.raw_token)
     self.confirmation_sent_at = Time.now
   end
@@ -47,4 +49,7 @@ class MobileConfirmation < ActiveRecord::Base
     end
   end
 
+  def self.new_token
+    rand.to_s[2..7]
+  end
 end

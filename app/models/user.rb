@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
   attr_accessor :just_created, :auto_approve
-  attr_writer :first_name, :last_name, :zip, :gender, :phone
+  attr_writer :first_name, :last_name, :zip, :gender, :phone, :mobile
 
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
   SCOPE_ATTRIBUTES = PROFILE_ATTRIBUTES + [:email]
@@ -118,12 +118,17 @@ class User < ActiveRecord::Base
     self.profile ? self.profile.phone : @phone
   end
 
+  def mobile
+    self.profile ? self.profile.phone : @mobile
+  end
+
   private
 
   def create_profile
     self.profile = Profile.new(first_name: @first_name,
                                last_name: @last_name,
                                phone_number: @phone,
+                               mobile_number: @mobile,
                                gender: @gender,
                                zip: @zip) unless self.profile
   end

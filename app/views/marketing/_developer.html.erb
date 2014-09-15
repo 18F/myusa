@@ -1,101 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>MyUSA API Documentation</title><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200"><style>/* Highlight.js Theme Tomorrow */
-.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}</style><style>body,
-h4,
-h5 {
-  font-family: 'Roboto' sans-serif !important;
-}
-h1,
-h2,
-h3,
-.aglio {
-  font-family: 'Raleway' sans-serif !important;
-}
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a {
-  display: none;
-}
-h1:hover a,
-h2:hover a,
-h3:hover a,
-h4:hover a,
-h5:hover a {
-  display: inline;
-}
-code {
-  color: #444;
-  background-color: #ddd;
-  font-family: 'Inconsolata' monospace !important;
-}
-a[data-target] {
-  cursor: pointer;
-}
-h4 {
-  font-size: 100%;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.back-to-top {
-  position: fixed;
-  z-index: 1;
-  bottom: 0px;
-  right: 24px;
-  padding: 4px 8px;
-  background-color: #eee;
-  text-decoration: none !important;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  border-left: 1px solid rgba(0,0,0,0.1);
-  border-right: 1px solid rgba(0,0,0,0.1);
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.panel {
-  overflow: hidden;
-}
-.panel-heading code {
-  color: #c7254e;
-  background-color: transparent;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-}
-.panel-heading h3 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-a.list-group-item {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-a.list-group-item.heading {
-  background-color: #f5f5f5;
-}
-.list-group-item.collapse {
-  display: none;
-}
-.list-group-item.collapse.in {
-  display: block;
-}
-#nav {
-  margin-top: 38px;
-  min-width: 255px;
-  top: 0;
-  bottom: 0;
-  padding-right: 12px;
-  padding-bottom: 12px;
-  overflow-y: auto;
-}
-@media (max-width: 1199px) {
-  #nav {
-    min-width: 212px;
-  }
-}
-</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a href="#authentication" class="list-group-item heading">Authentication</a></div><div class="list-group"><a href="#oauth" class="list-group-item heading">OAuth</a><a href="#oauth-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/v1/tokeninfo</a></div><div class="list-group"><a href="#profile" class="list-group-item heading">Profile</a><a href="#profile-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/v1/profile?schema=</a><a href="#profile-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/v1/profile</a></div><div class="list-group"><a href="#task" class="list-group-item heading">Task</a><a href="#task-" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;PUT /api/v1/task/:id</a><a href="#task-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /api/v1/tasks</a><a href="#task-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/v1/tasks</a><a href="#task-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /api/v1/task/:id</a></div><div class="list-group"><a href="#notification" class="list-group-item heading">Notification</a><a href="#notification-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /api/v1/notifications</a></div><div class="list-group"><a href="#logout" class="list-group-item heading">Logout</a><a href="#logout-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /users/sign_out?continue=</a><a href="#logout-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /users/sign_out</a></div></nav></div><div class="col-md-9"><div><header><div class="page-header"><h1 id="top">MyUSA API Documentation</h1></div></header><div class="description"></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="authentication">Authentication&nbsp;<a href="#authentication"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h1 id="getting-started-with-myusa-authentication">Getting started with MyUSA Authentication</h1>
+<a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row aglio"><div class="col-md-3"><nav id="nav" data-spy="affix" data-offset-top="120" class="hidden-sm hidden-xs nav"><div class="list-group"><a data-toggle="" data-target="#authentication-menu" href="#authentication" class="list-group-item heading collapsed">Authentication</a><div id="authentication-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#oauth-menu" href="#oauth" class="list-group-item heading collapsed">OAuth</a><div id="oauth-menu"><a href="#oauth-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tokeninfo</a></div></div><div class="list-group"><a data-toggle="" data-target="#profile-menu" href="#profile" class="list-group-item heading collapsed">Profile</a><div id="profile-menu"><a href="#profile-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/profile?schema=</a><a href="#profile-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/profile</a></div></div><div class="list-group"><a data-toggle="" data-target="#task-menu" href="#task" class="list-group-item heading collapsed">Task</a><div id="task-menu"><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span>PUT /api/v1/task/:id</a><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/tasks</a><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tasks</a><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/task/:id</a></div></div><div class="list-group"><a data-toggle="" data-target="#notification-menu" href="#notification" class="list-group-item heading collapsed">Notification</a><div id="notification-menu"><a href="#notification-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/notifications</a></div></div><div class="list-group"><a data-toggle="" data-target="#logout-menu" href="#logout" class="list-group-item heading collapsed">Logout</a><div id="logout-menu"><a href="#logout-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /users/sign_out?continue=</a><a href="#logout-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /users/sign_out</a></div></div></nav></div><div class="col-md-8"><div><header><div class="page-header"><h1 id="top">MyUSA API Documentation</h1></div></header><div class="description"></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="authentication">Authentication&nbsp;<a href="#authentication"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h1 id="getting-started-with-myusa-authentication">Getting started with MyUSA Authentication</h1>
 <p>MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the <a href="https://my.usa.gov/developer">developers</a> section of MyUSA.</p>
 <h2 id="overview">Overview</h2>
 <ol>
@@ -112,7 +15,7 @@ a.list-group-item.heading {
 API URLs are constructed using this template:</p>
 <pre><code><span class="hljs-link_url">https://my.usa.gov/api/</span>[<span class="hljs-link_label">VERSION</span>]/[ENDPOINT]
 </code></pre><p>The MyUSA API is currently at <strong>version 1</strong>. So, to access the Profile API, request this URL:</p>
-<pre><code><span class="hljs-label">https:</span>//my<span class="hljs-preprocessor">.usa</span><span class="hljs-preprocessor">.gov</span>/api/v1/profile
+<pre><code><span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/my.usa.gov/api</span><span class="hljs-regexp">/v1/profile</span>
 </code></pre><p>The MyUSA team frequently makes minor changes to the API, but the vast majority of these changes are backwards-compatible and will not break existing integration code.</p>
 <p>If an API change is backwards-incompatible, we increment the version number while keeping the previous version available.
 By using API URLs with specified versions, your application can continue operating without code changes.</p>
@@ -131,7 +34,7 @@ If your app uses the MyUSA API, you’ll need to keep track of new versions to e
  REDIRECT_URI
 <span class="hljs-label"> TYPE :</span> CODE
 </code></pre><p>At this point, the user will be presented with the myusa login page. When they login, they will be redirected back to your application via the redriect URI that you specified when you setup the application. If your redirect uri was <code>https://www.ryan.com/test</code>, MyUSA would redirect to:</p>
-<pre><code><span class="hljs-label">https:</span>//www<span class="hljs-preprocessor">.ryan</span><span class="hljs-preprocessor">.com</span>/test?code=<span class="hljs-number">12345</span>abcde
+<pre><code>http<span class="hljs-variable">s:</span>//www.ryan.<span class="hljs-keyword">com</span>/test?code=<span class="hljs-number">12345</span>abcde
 </code></pre><h3 id="handling-the-response">Handling the response</h3>
 <p>Your application should have an end point to recieve the redirect at this url.</p>
 <h3 id="long-lived-token">Long-lived Token</h3>
@@ -169,7 +72,7 @@ Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtaine
 </ol>
 </div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="oauth">OAuth&nbsp;<a href="#oauth"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="oauth-">Resources&nbsp;<a href="#oauth-"><i class="fa fa-link"></i></a></h4><section id="oauth--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#oauth--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/tokeninfo</code></div></div><div class="panel-body"><p>Get metadata about the token used to make this request, including
 the list of scopes the user has authorized.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#00463891aebc3aa8a38f943040c56333" class="pull-right">Toggle</a></li><li id="00463891aebc3aa8a38f943040c56333" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#00463891aebc3aa8a38f943040c56333" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="00463891aebc3aa8a38f943040c56333" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
 "<span class="hljs-attribute">resource_owner_id</span>": <span class="hljs-value"><span class="hljs-number">3879</span></span>,
 "<span class="hljs-attribute">scopes</span>": <span class="hljs-value">[
   <span class="hljs-string">"profile.first_name"</span>,
@@ -181,7 +84,7 @@ the list of scopes the user has authorized.</p>
 </span>}
 </span>}
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="profile">Profile&nbsp;<a href="#profile"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/profile?schema=</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.</p>
-</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>schema</dt><dd><code>boolean</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>true</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d5d490c60e2a2cd77efb1767fb0c950b" class="pull-right">Toggle</a></li><li id="d5d490c60e2a2cd77efb1767fb0c950b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>schema</dt><dd><code>boolean</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>true</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d5d490c60e2a2cd77efb1767fb0c950b" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d5d490c60e2a2cd77efb1767fb0c950b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"joe@citizen.org"</span></span>,
   "<span class="hljs-attribute">givenName</span>": <span class="hljs-value"><span class="hljs-string">"Joe"</span></span>,
   "<span class="hljs-attribute">additionalName</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -196,7 +99,7 @@ the list of scopes the user has authorized.</p>
   "<span class="hljs-attribute">gender</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
 </span>}
 </code></pre></li></ul></section><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/profile</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#bb91f2bc3772e0f66e1927839b29b3c7" class="pull-right">Toggle</a></li><li id="bb91f2bc3772e0f66e1927839b29b3c7" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#bb91f2bc3772e0f66e1927839b29b3c7" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="bb91f2bc3772e0f66e1927839b29b3c7" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
   "<span class="hljs-attribute">first_name</span>": <span class="hljs-value"><span class="hljs-string">"Joe"</span></span>,
   "<span class="hljs-attribute">middle_name</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -221,8 +124,7 @@ the list of scopes the user has authorized.</p>
 </span>}
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="task">Task&nbsp;<a href="#task"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--put" class="panel panel-warning"><div class="panel-heading"><div style="float:left"><a href="#task--put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/api/v1/task/:id</code></div></div><div class="panel-body"><p>Update a task</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The updated name of the task.</p>
-</dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>The updated task items that are associated with the task.</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Update a task and task items</code></strong><a data-toggle="collapse" data-target="#735a7335615f4cab1eb738df005c26e2" class="pull-right">Toggle</a></li><li id="735a7335615f4cab1eb738df005c26e2" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Update a task and task items</code></strong><a data-toggle="collapse" data-target="#735a7335615f4cab1eb738df005c26e2" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="735a7335615f4cab1eb738df005c26e2" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">task</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
     "<span class="hljs-attribute">task_items_attributes</span>": <span class="hljs-value">[
@@ -233,7 +135,7 @@ the list of scopes the user has authorized.</p>
     ]
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#929ccd4748ad77810626b4cb4e9c2f00" class="pull-right">Toggle</a></li><li id="929ccd4748ad77810626b4cb4e9c2f00" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#929ccd4748ad77810626b4cb4e9c2f00" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="929ccd4748ad77810626b4cb4e9c2f00" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
   "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-07T17:59:21.000Z"</span></span>,
@@ -255,13 +157,12 @@ the list of scopes the user has authorized.</p>
 </span>}
 </code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#task--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/v1/tasks</code></div></div><div class="panel-body"><p>Create a new task for the user for this application.</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The name for the task that is being created.</p>
-</dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>A list of task items to be associated with the task.</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task</code></strong><a data-toggle="collapse" data-target="#7fa52df752b9382f276814a428f0a707" class="pull-right">Toggle</a></li><li id="7fa52df752b9382f276814a428f0a707" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task</code></strong><a data-toggle="collapse" data-target="#7fa52df752b9382f276814a428f0a707" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="7fa52df752b9382f276814a428f0a707" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">task</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span>
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8c6c6cbd62b75ce206e061ad919a3b0f" class="pull-right">Toggle</a></li><li id="8c6c6cbd62b75ce206e061ad919a3b0f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8c6c6cbd62b75ce206e061ad919a3b0f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8c6c6cbd62b75ce206e061ad919a3b0f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
   "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -274,7 +175,7 @@ the list of scopes the user has authorized.</p>
   ]
 </span>}
 </code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/tasks</code></div></div><div class="panel-body"><p>List all tasks, and associated attributes, created by the calling application</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#629f7622eff8b387c4368a97b4d2df2b" class="pull-right">Toggle</a></li><li id="629f7622eff8b387c4368a97b4d2df2b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>[
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#629f7622eff8b387c4368a97b4d2df2b" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="629f7622eff8b387c4368a97b4d2df2b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>[
   {
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task #1"</span></span>,
@@ -297,7 +198,7 @@ the list of scopes the user has authorized.</p>
   </span>}
 ]
 </code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/task/:id</code></div></div><div class="panel-body"><p>Get a single task.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#935a0ba6e1657147b17d69f9ec856928" class="pull-right">Toggle</a></li><li id="935a0ba6e1657147b17d69f9ec856928" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#935a0ba6e1657147b17d69f9ec856928" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="935a0ba6e1657147b17d69f9ec856928" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
   "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -327,13 +228,13 @@ the list of scopes the user has authorized.</p>
   ]
 </span>}
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="notification">Notification&nbsp;<a href="#notification"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="notification-">Resources&nbsp;<a href="#notification-"><i class="fa fa-link"></i></a></h4><section id="notification--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#notification--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/v1/notifications</code></div></div><div class="panel-body"><p>This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.</p>
-</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>subject</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test notification</span></span></dd><dt>body</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>This is a test</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new notification</code></strong><a data-toggle="collapse" data-target="#d29039edf1a7ff762dd9051b91f0191f" class="pull-right">Toggle</a></li><li id="d29039edf1a7ff762dd9051b91f0191f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>subject</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test notification</span></span></dd><dt>body</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>This is a test</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new notification</code></strong><a data-toggle="collapse" data-target="#d29039edf1a7ff762dd9051b91f0191f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d29039edf1a7ff762dd9051b91f0191f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">notification</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">subject</span>": <span class="hljs-value"><span class="hljs-string">"Project MyUSA"</span></span>,
     "<span class="hljs-attribute">body</span>": <span class="hljs-value"><span class="hljs-string">"This is a test."</span>
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#ee99efccad1576db2123caf446691480" class="pull-right">Toggle</a></li><li id="ee99efccad1576db2123caf446691480" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#ee99efccad1576db2123caf446691480" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="ee99efccad1576db2123caf446691480" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">17</span></span>,
   "<span class="hljs-attribute">subject</span>": <span class="hljs-value"><span class="hljs-string">"Project MyUSA"</span></span>,
   "<span class="hljs-attribute">body</span>": <span class="hljs-value"><span class="hljs-string">"This is a test."</span></span>,
@@ -350,18 +251,6 @@ parameter and a valid URL, the user is returned to the URL indicated.  To be
 valid, the hostname must be in the same domain (an extension of) the OAuth
 application’s registered URL.  The OAuth application must also be approved by
 the user.</p>
-</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>continue</dt><dd><code>url</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>http://example.com/page</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>302</code></strong><a data-toggle="collapse" data-target="#dbbd0b5d5e3b11e2ba36b80a86ab0f7b" class="pull-right">Toggle</a></li><li id="dbbd0b5d5e3b11e2ba36b80a86ab0f7b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Location</span>: <span class="hljs-string">http://example.com/page</span><br></code></pre></li></ul></section><h4 id="logout-">Resources&nbsp;<a href="#logout-"><i class="fa fa-link"></i></a></h4><section id="logout--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#logout--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/users/sign_out</code></div></div><div class="panel-body"><p>Log the current user out and end the user’s MyUSA session.  Without any
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>continue</dt><dd><code>url</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>http://example.com/page</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>302</code></strong><a data-toggle="collapse" data-target="#dbbd0b5d5e3b11e2ba36b80a86ab0f7b" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="dbbd0b5d5e3b11e2ba36b80a86ab0f7b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Location</span>: <span class="hljs-string">http://example.com/page</span><br/></code></pre></li></ul></section><h4 id="logout-">Resources&nbsp;<a href="#logout-"><i class="fa fa-link"></i></a></h4><section id="logout--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#logout--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/users/sign_out</code></div></div><div class="panel-body"><p>Log the current user out and end the user’s MyUSA session.  Without any
 parameters, this returns the user to the root page, e.g. <a href="http://my.usa.gov/">http://my.usa.gov/</a></p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>302</code></strong></li></ul></section></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 03 Sep 2014</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
-
-</div></body><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script>(function() {
-  if (location.protocol === 'file:') {
-    document.getElementById('localFile').style.display = 'block';
-  }
-
-}).call(this);
-</script><script>(function() {
-  $('table').addClass('table');
-
-}).call(this);
-</script></html>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>302</code></strong></li></ul></section></div></div></div></div></div></div>

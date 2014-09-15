@@ -23,7 +23,10 @@ Rails.application.routes.draw do
       omniauth_callbacks: "omniauth_callbacks" ,
       sessions: "sessions"
     }
-  post 'resend_token' => 'profiles#resend_token'
+
+  devise_scope :user do
+    get 'users/sign_in/:token_id' => 'sessions#show', as: 'user_session_token'
+  end
 
   resource :mobile_recovery
   get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'

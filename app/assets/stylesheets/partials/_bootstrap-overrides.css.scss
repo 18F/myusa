@@ -44,6 +44,11 @@ ul.dropdown-menu {
   font-size: 14px;
 }
 
+.btn-link-inline {
+  @extend .btn-link;
+  padding: 0;
+}
+
 /**
  * for some reason, the pills variables are not being
  * overridden in sass, so directly overwrite the classes here

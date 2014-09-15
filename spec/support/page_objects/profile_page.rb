@@ -8,4 +8,5 @@ class ProfilePage < SitePrism::Page
 
   element :first_name, '#first_name'
   element :is_student, '#is_student'
+  element :delete_account_button, 'a.btn.btn-danger'
 end

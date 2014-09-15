@@ -20,6 +20,7 @@ gem 'font-awesome-sass'
 gem 'attr_encrypted'
 gem 'doorkeeper'
 gem 'rails-observers'
+gem 'twilio-ruby'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'
@@ -38,6 +39,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'better_errors'
   gem 'newrelic_rpm'
+  gem 'binding_of_caller'
 end
 
 ## deploy dependencies
@@ -69,6 +71,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'capybara-email'
+  gem 'sms-spec'
   gem 'codeclimate-test-reporter', require: false
   gem 'rspec_junit_formatter', require: false # used by Shippable
 end

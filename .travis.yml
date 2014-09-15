@@ -1,4 +1,5 @@
 language: ruby
+cache: bundler
 rvm:
   - 2.1.2
 services:
@@ -13,4 +14,4 @@ before_script:
   - RAILS_ENV=test bundle exec rake db:setup
 addons:
   code_climate:
-    repo_token: fdd28d1ecb46873b6c3969fa679e808a3dfc241f10ee7154884930240d54a4d0  
+    repo_token: fdd28d1ecb46873b6c3969fa679e808a3dfc241f10ee7154884930240d54a4d0

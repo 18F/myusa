@@ -1,4 +1,4 @@
-class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
+class ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
   layout 'dashboard'
 
@@ -45,7 +45,7 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
     @application = Doorkeeper::Application.find(params[:id])
     @application.requested_public_at = DateTime.now
     @application.save
-    redirect_to oauth_applications_path, notice: I18n.t('app_status.requested_public') 
+    redirect_to oauth_applications_path, notice: I18n.t('app_status.requested_public')
   end
 
   private

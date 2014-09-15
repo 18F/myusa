@@ -2,9 +2,12 @@ require 'email_authenticatable'
 
 class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
-
   has_many :authentications, :dependent => :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
+  has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
+  has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
+  has_many :public_applications, -> { where(:public => true) }, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
+  has_many :private_applications, -> { where(:public => false) }, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
 
   has_one :profile, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
@@ -14,12 +17,11 @@ class User < ActiveRecord::Base
   validates_presence_of :uid
   validates_uniqueness_of :uid
   validates_email_format_of :email, {:allow_blank => false}
-  validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
 
   has_many :user_actions
 
   before_validation :generate_uid
-  after_create :create_profile
+  before_create :build_default_profile
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
@@ -59,51 +61,41 @@ class User < ActiveRecord::Base
       end
     end
 
-    def find_or_create_from_omniauth(auth)
+    def gender_from_auth(auth)
+      case auth.provider
+      when 'google_oauth2'
+        auth.extra.raw_info.gender
+      end
+    end
+
+    def find_from_omniauth(auth)
       if (authentication = Authentication.find_by_uid(auth.uid))
         authentication.user
       elsif (user = User.find_by_email(auth.info.email))
         user.authentications.build(provider: auth.provider, uid: auth.uid)
         user.save!
         user
-      else
-        User.create do |user|
-          user.email = auth.info.email
-          user.authentications.build(provider: auth.provider, uid: auth.uid)
-        end
       end
     end
 
-  end
-
-  def first_name
-    self.profile ? self.profile.first_name : @first_name
-  end
-
-  def first_name=(first_name)
-    @first_name = first_name
-  end
-
-  def zip
-    self.profile ? self.profile.zip : @zip
-  end
-
-  def zip=(zip)
-    @zip = zip
-  end
-
-  def last_name
-    self.profile ? self.profile.last_name : @last_name
-  end
-
-  def last_name=(last_name)
-    @last_name = last_name
+    def create_from_omniauth(auth)
+      User.create(email: auth.info.email) do |user|
+        user.build_profile(
+          email: auth.info.email,
+          first_name: auth.info.first_name,
+          last_name: auth.info.last_name,
+          phone_number: auth.info.phone,
+          gender: gender_from_auth(auth)
+        )
+        user.authentications.build(auth.slice(:provider, :uid))
+      end
+    end
   end
 
   private
 
-  def create_profile
-    self.profile = Profile.new(:first_name => @first_name, :last_name => @last_name, :zip => @zip) unless self.profile
+  def build_default_profile
+    build_profile unless profile
   end
 
   def valid_email?

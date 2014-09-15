@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  layout 'marketing', only: [:index, :legal]
+  layout 'marketing', only: [:index, :legal, :developer]
 
   def contact_us
     send_contact_us_email

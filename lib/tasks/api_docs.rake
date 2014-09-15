@@ -1,7 +1,5 @@
-
-
-SOURCE_FILES = Rake::FileList[
-  "public/developer/api_doc.md",
+API_SOURCE_FILES = Rake::FileList[
+  "api_docs/api_doc.md",
   "api_docs/tokeninfo.md",
   "api_docs/profile.md",
   "api_docs/task.md",
@@ -9,26 +7,22 @@ SOURCE_FILES = Rake::FileList[
   "api_docs/logout.md"
 ]
 
-file "public/developer/api.md" => SOURCE_FILES do |t|
-  puts "merging source markdown files"
-  File.open("public/developer/api.md", 'w') do |f|
-    f.puts t.sources.map {|md| IO.read(md) }
-  end
-end
-
-rule ".html" => ".md" do |t|
-  puts "generating #{t.name}"
-  system 'aglio', '-i', t.source, '-o', t.name
-end
-
 namespace :api_docs do
   desc 'generate API documentation'
-  task :generate => "public/developer/api.html"
-
+  task :generate do
+    File.open("public/api.md", 'w') do |f|
+      puts "merging source markdown files"
+      API_SOURCE_FILES.each do |t|
+        f.puts IO.read(t)
+      end
+    end
+    puts "generating app/views/marketing/_developer.html.erb"
+    system 'aglio', '-t', 'lib/aglio/myusa.jade', '-i', 'public/api.md', '-o', 'app/views/marketing/_developer.html.erb'
+  end
 
   desc 'remove generated HTML and markdown'
   task :clean do
-    files = Rake::FileList['public/developer/api.md', 'public/developer/api.html']
+    files = Rake::FileList['public/developer/api.md', 'apps/views/marketing/_developer.html.erb']
     files.each do |f|
       if File.exists?(f)
         puts "deleting #{f}"

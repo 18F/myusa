@@ -21,18 +21,6 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def resend_token
-    @email = params[:email]
-    user = User.where(email: @email).first
-    if user.blank?
-      redirect_to new_user_session_url, notice: I18n.t(:no_user_token)
-      return
-    end
-    user.set_authentication_token
-    flash.now[:notice] = I18n.t(:resent_token)
-    render 'devise/sessions/create'
-  end
-
   def delete_account
     @profile = current_user.profile
     @private_apps = current_user.private_applications

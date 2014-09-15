@@ -17,17 +17,15 @@ class User < ActiveRecord::Base
   validates_presence_of :uid
   validates_uniqueness_of :uid
   validates_email_format_of :email, {:allow_blank => false}
-  validates_format_of :zip, :with => /\A\d{5}?\z/, :allow_blank => true, :message => "should be in the form 12345"
 
   has_many :user_actions
 
   before_validation :generate_uid
-  after_create :create_profile
+  before_create :build_default_profile
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
   attr_accessor :just_created, :auto_approve
-  attr_writer :first_name, :last_name, :zip, :gender, :phone
 
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
   SCOPE_ATTRIBUTES = PROFILE_ATTRIBUTES + [:email]
@@ -92,40 +90,12 @@ class User < ActiveRecord::Base
         user.authentications.build(auth.slice(:provider, :uid))
       end
     end
-
-    def gender_from_auth(auth)
-      { 'male' => 'male', 'female' => 'female' }[auth.extra.raw_info.gender]
-    end
-  end
-
-  def first_name
-    self.profile ? self.profile.first_name : @first_name
-  end
-
-  def zip
-    self.profile ? self.profile.zip : @zip
-  end
-
-  def last_name
-    self.profile ? self.profile.last_name : @last_name
-  end
-
-  def gender
-    self.profile ? self.profile.gender : @gender
-  end
-
-  def phone
-    self.profile ? self.profile.phone : @phone
   end
 
   private
 
-  def create_profile
-    self.profile = Profile.new(first_name: @first_name,
-                               last_name: @last_name,
-                               phone_number: @phone,
-                               gender: @gender,
-                               zip: @zip) unless self.profile
+  def build_default_profile
+    build_profile unless profile
   end
 
   def valid_email?

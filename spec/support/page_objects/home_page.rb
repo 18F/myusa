@@ -5,6 +5,7 @@ class HomePage < SitePrism::Page
   set_url_matcher(/\/?$/)
 
   element :contact_flash, 'div.contact-flash'
+  element :contact_flash_no_js, '.alert.alert-info'
 
   section :contact_form, '#contact-form' do
     element :message, '#contact_us_message'

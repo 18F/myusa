@@ -26,10 +26,28 @@ describe 'Home Page' do
 
   context 'without javascript' do
     it_behaves_like 'user contact form'
+
+    it 'displays an alert message' do
+      @home_page.load
+      @home_page.contact_form.message.set(message)
+      @home_page.contact_form.from.set(email)
+      @home_page.contact_form.submit.click
+      @home_page.wait_for_contact_flash
+      expect(@home_page.contact_flash_no_js).to have_content('Thank you. Your message has been sent.')
+    end
   end
 
   context 'with javascript', js: true do
     it_behaves_like 'user contact form'
+
+    it 'displays an alert message' do
+      @home_page.load
+      @home_page.contact_form.message.set(message)
+      @home_page.contact_form.from.set(email)
+      @home_page.contact_form.submit.click
+      @home_page.wait_for_contact_flash
+      expect(@home_page.contact_flash).to have_content('Thank you. Your message has been sent.')
+    end
   end
 
 end

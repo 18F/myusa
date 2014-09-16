@@ -13,13 +13,8 @@ describe 'Home Page' do
     scenario 'user can contact us' do
       @home_page.load
       @home_page.contact_form.message.set(message)
-      @home_page.contact_form.from.set(email)
-      @home_page.contact_form.submit.click
-
-      @home_page.wait_for_contact_flash
-
+      @home_page.submit_contact_form
       open_email('myusa@gsa.gov')
-
       expect(current_email).to have_content(message)
     end
   end
@@ -30,10 +25,14 @@ describe 'Home Page' do
     it 'displays an alert message' do
       @home_page.load
       @home_page.contact_form.message.set(message)
-      @home_page.contact_form.from.set(email)
-      @home_page.contact_form.submit.click
-      @home_page.wait_for_contact_flash
+      @home_page.submit_contact_form
       expect(@home_page.contact_flash_no_js).to have_content('Thank you. Your message has been sent.')
+    end
+
+    it 'displays an alert message' do
+      @home_page.load
+      @home_page.submit_contact_form
+      expect(@home_page.contact_flash_no_js).to have_content('Could not send empty message.')
     end
   end
 
@@ -43,11 +42,14 @@ describe 'Home Page' do
     it 'displays an alert message' do
       @home_page.load
       @home_page.contact_form.message.set(message)
-      @home_page.contact_form.from.set(email)
-      @home_page.contact_form.submit.click
-      @home_page.wait_for_contact_flash
+      @home_page.submit_contact_form
       expect(@home_page.contact_flash).to have_content('Thank you. Your message has been sent.')
     end
-  end
 
+    it 'displays empty message alert' do
+      @home_page.load
+      @home_page.submit_contact_form
+      expect(@home_page.contact_flash).to have_content('Could not send empty message.')
+    end
+  end
 end

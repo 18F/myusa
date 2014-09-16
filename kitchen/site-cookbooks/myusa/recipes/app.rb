@@ -81,6 +81,14 @@ template "#{deploy_to_dir}/shared/config/memcached.yml" do
   )
 end
 
+# New Relic configuration
+template "#{deploy_to_dir}/shared/config/newrelic.yml" do
+  source 'newrelic.yml.erb'
+  variables(
+    newrelic_license_key: secrets['newrelic_license_key']
+  )
+end
+
 # set up the database
 include_recipe "mysql::client"
 

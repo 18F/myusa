@@ -1,3 +1,4 @@
+
 class HomeController < ApplicationController
   layout 'marketing', only: [:index, :legal, :developer]
 
@@ -10,12 +11,12 @@ class HomeController < ApplicationController
       respond_to do |format|
         format.json do
           render json: {
-            success: false, message: 'Could not send empty message.'
+            success: false, message: I18n.t('contact_form.failure')
           }
         end
 
         format.html do
-          flash.now[:notice] = 'Could not send empty message.'
+          flash.now[:notice] = I18n.t('contact_form.failure')
           render 'application/index'
         end
       end
@@ -25,8 +26,8 @@ class HomeController < ApplicationController
     send_contact_us_email
 
     respond_to do |format|
-      format.json { render json: {:success => true, :message => 'Thank you. Your message has been sent.' } }
-      format.html { redirect_to root_url, notice: 'Thank you. Your message has been sent.' }
+      format.json { render json: {:success => true, :message =>  I18n.t('contact_form.success') } }
+      format.html { redirect_to root_url, notice: I18n.t('contact_form.success') }
     end
   end
 

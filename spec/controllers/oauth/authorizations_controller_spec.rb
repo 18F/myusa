@@ -7,12 +7,9 @@ describe Oauth::AuthorizationsController do
   let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name' }
 
   let(:client_app) do
-    Doorkeeper::Application.create do |a|
-      a.name = 'Client App'
-      a.redirect_uri = 'http://www.example.com/auth/myusa/callback'
-      a.scopes = client_application_scopes
-      a.owner = user
-    end
+    FactoryGirl.create(:application,
+                        redirect_uri: 'http://www.example.com/auth/myusa/callback',
+                        scopes: client_application_scopes)
   end
 
   let(:oauth_client) do

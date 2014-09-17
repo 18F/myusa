@@ -200,7 +200,7 @@ describe 'OAuth' do
       context 'with non-public (sandboxed) app' do
         let(:owner) { FactoryGirl.create(:user, email: 'owner@gsa.gov') }
         let(:client_app) do
-          FactoryGirl.create(:application, public: false, owner: owner)
+          FactoryGirl.create(:application, public: false, owners: [owner])
         end
 
         context 'current user is client application owner' do

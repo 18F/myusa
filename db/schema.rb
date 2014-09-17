@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916230613) do
+ActiveRecord::Schema.define(version: 20140917175119) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20140916230613) do
 
   add_index "authentications", ["uid", "provider"], name: "index_authentications_on_uid_and_provider", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
+
+  create_table "memberships", force: true do |t|
+    t.integer  "oauth_application_id"
+    t.integer  "user_id"
+    t.string   "member_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "mobile_confirmations", force: true do |t|
     t.integer  "profile_id"
@@ -117,11 +125,6 @@ ActiveRecord::Schema.define(version: 20140916230613) do
 
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
-
-  create_table "oauth_applications_owners", force: true do |t|
-    t.integer "owner_id"
-    t.integer "oauth_application_id"
-  end
 
   create_table "oauth_scopes", force: true do |t|
     t.string   "name"

@@ -2,10 +2,11 @@ class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
   include ApplicationExtension
 
-  has_and_belongs_to_many :owners, class_name: '::User',
-                           join_table: 'oauth_applications_owners',
-                           foreign_key: 'oauth_application_id',
-                           association_foreign_key: 'owner_id'
+  has_many :memberships, foreign_key: 'oauth_application_id'
+  has_many :members, through: :memberships, source: :user
+
+  has_many :owners, -> { where 'memberships.member_type' => 'owner' }, through: :memberships, source: :user
+  has_many :developers, -> { where 'memberships.member_type' => 'developer' }, through: :memberships, source: :user
 
   validate do |a|
     return if a.scopes.nil?

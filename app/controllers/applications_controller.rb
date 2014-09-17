@@ -7,6 +7,8 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     @authorizations = Doorkeeper::AccessToken.where(
       resource_owner_id: current_user.id, revoked_at: nil)
     @applications = current_user.oauth_applications
+
+    pp Membership.all
   end
 
   def create

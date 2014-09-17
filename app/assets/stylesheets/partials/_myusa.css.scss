@@ -629,6 +629,10 @@ footer {
   padding: 0 0.5em;
 }
 .btn-google {
+  @media (max-width: $screen-xs-max) {
+    font-size:18px;
+  }
+
   background-color: #df4a32;
   border-color: #be3f2b;
   color: #ffffff;

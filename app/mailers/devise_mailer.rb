@@ -4,7 +4,7 @@ class DeviseMailer < Devise::Mailer
 
   def authentication_instructions(resource, token)
     @token = token
+    attachments.inline['logo.png'] = File.read('app/assets/images/myusa-logo.png')
     devise_mail(resource, :authentication_instructions)
   end
-
 end

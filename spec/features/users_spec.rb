@@ -3,7 +3,7 @@ require 'feature_helper'
 
 describe 'Users' do
   let(:email) { 'test-user@testy.com' }
-  let(:user) { create_confirmed_user_with_profile(email: email) }
+  let(:user) { FactoryGirl.create(:user, email: email) }
 
   describe 'change your name' do
     context 'user is signed in' do

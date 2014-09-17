@@ -12,7 +12,7 @@ describe Api::V1 do
   end
 
   let(:client_app) { FactoryGirl.create(:application) }
-  let(:user) { create_confirmed_user_with_profile(is_student: nil, is_retired: false) }
+  let(:user) { FactoryGirl.create(:user, :with_profile) }
 
   describe 'Token validity check' do
     subject { get '/api/v1/profile', nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
@@ -67,7 +67,7 @@ describe Api::V1 do
         expect(response.status).to eq 200
         parsed_json = JSON.parse(response.body)
         expect(parsed_json).to be
-        expect(parsed_json['first_name']).to eq 'Joe'
+        expect(parsed_json['first_name']).to eq 'Joan'
         expect(parsed_json).to_not include('email')
       end
     end
@@ -90,7 +90,7 @@ describe Api::V1 do
 
   describe 'POST /api/v1/notifications' do
     let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
-    let(:other_user) { create_confirmed_user_with_profile(email: 'jane@citizen.org', first_name: 'Jane') }
+    let(:other_user) { FactoryGirl.create(:user) }
 
     let(:token) { build_access_token(client_app_2, ['notifications']) }
 

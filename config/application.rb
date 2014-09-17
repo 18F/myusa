@@ -26,11 +26,14 @@ module MyUSA
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join('app', 'assets', 'html')
+    config.assets.precompile += %w(500.html)
+    config.exceptions_app = self.routes
 
     config.to_prepare do
       # Only Authorization endpoint
-      Doorkeeper::ApplicationController.layout "application"
+      Doorkeeper::ApplicationController.layout 'application'
     end
   end
 end

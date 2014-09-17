@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_in_path_for(resource_or_scope)
+    stored_location_for(resource_or_scope) || profile_path
+  end
+
   # Overriding Devise method to allow for redirect_url
   def after_sign_out_path_for(resource_or_scope)
     url = params[:continue]

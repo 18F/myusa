@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Profile do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:profile) { user.profile }
+
   it 'responds to encrypted & unencrypted versions of its methods' do
     p = Profile.new
 
@@ -35,7 +38,24 @@ describe Profile do
       expect(Profile.attribute_from_scope('notifications')).to be_nil
     end
   end
-  
+
+  describe '#mobile_number_confirmed?' do
+    before :each do
+      profile.update_attributes(mobile_number: '415-555-3455')
+      allow(SmsWrapper.instance).to receive(:send_message)
+      profile.create_mobile_confirmation.confirm!
+    end
+
+    it 'is true if profile has a confirmed mobile_confirmation object' do
+      expect(profile).to be_mobile_number_confirmed
+    end
+
+    it 'is false when mobile is updated' do
+      profile.update_attributes(mobile_number: '415-555-3456')
+      expect(profile.reload).to_not be_mobile_number_confirmed
+    end
+  end
+
   it "strips dashes out of phone numbers" do
     profile_with_phone = create(:full_profile, phone_number: '123-456-7890')
     expect(profile_with_phone.phone).to eq '1234567890'

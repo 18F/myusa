@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'rspec/its'
 require 'capybara/rspec'
 
+SmsSpec.driver = :"twilio-ruby"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -84,6 +85,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.before(:each, sms: true) do
+    SmsSpec::Data.clear_messages
+  end
+
   # config.before(:each) { GC.disable }
   # config.after(:each) { GC.enable }
 
@@ -95,7 +100,7 @@ RSpec.configure do |config|
   #   DeferredGarbageCollection.reconsider
   # end
 
-
   config.include Devise::TestHelpers, type: :controller
   config.include Rack::Test::Methods, type: :request
+  config.include SmsSpec::Helpers, sms: true
 end

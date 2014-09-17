@@ -1,32 +1,27 @@
 <div class="row">
-<div class="col-md-10 col-md-offset-1">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="login">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1>Next Step</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h2>Your MyUSA access link has been sent to  <%= @email %>.</h2>
+          <p>Click on that link, or copy and paste it into this browser to complete your login.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <p>If you do not receive an email from us within the next 5 minutes,
+            you may want to check your spam folder. If you still do not see an
+            email from us, you may <%= link_to 'request another link', user_session_token_path(token_id: @token.id) %>.
+          </p>
+          <%= link_to "Go Back", root_path, class: "btn btn-link" %>
 
-<div class="login callout-box">
-  <div class="shield">
-    <i class="fa icon-myusa"></i>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">
-        Next Steps
-      </h1>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>
-      An email with a link has been sent to <%= @email %>.
-      </p>
-      <p>
-      If you don't receive anything from MyUSA in the next 5 minutes, request a new link.
-      </p>
-
-      <p class="text-center">
-      <button class="btn btn-default btn-sm">Request another link</button>
-      </p>
-    </div>
-  </div>
-</div>
-
-</div>
 </div>

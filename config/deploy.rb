@@ -2,7 +2,7 @@ default_run_options[:pty] = true
 
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
-#require 'new_relic/recipes'
+require 'new_relic/recipes'
 require 'capistrano-unicorn'
 
 set :application, 'myusa'
@@ -30,3 +30,10 @@ set :bundle_without, [ :development, :test, :deploy ]
 load 'config/deploy/base'
 before 'deploy:assets:precompile','deploy:symlink_configs'
 after 'deploy:restart', 'unicorn:reload'
+
+# Notify New Relic of deployments.
+# This goes out even if the deploy fails, sadly.
+after "deploy",            "newrelic:notice_deployment"
+after "deploy:update",     "newrelic:notice_deployment"
+after "deploy:migrations", "newrelic:notice_deployment"
+after "deploy:cold",       "newrelic:notice_deployment"

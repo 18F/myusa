@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905214804) do
+ActiveRecord::Schema.define(version: 20140909015306) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -35,6 +35,18 @@ ActiveRecord::Schema.define(version: 20140905214804) do
 
   add_index "authentications", ["uid", "provider"], name: "index_authentications_on_uid_and_provider", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
+
+  create_table "mobile_confirmations", force: true do |t|
+    t.integer  "profile_id"
+    t.string   "token"
+    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at"
+    t.datetime "invalidated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mobile_confirmations", ["profile_id"], name: "index_mobile_confirmations_on_profile_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.string   "subject"

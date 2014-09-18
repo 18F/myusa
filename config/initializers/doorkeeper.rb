@@ -31,6 +31,7 @@ Doorkeeper.configure do
   # a registered application
   # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
   # enable_application_owner :confirmation => false
+  # CP: We rolled our own application owner logic in order to support multiple owners.
 
   # Define access token scopes for your provider
   # For more information go to

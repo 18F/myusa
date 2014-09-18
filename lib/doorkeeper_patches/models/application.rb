@@ -7,6 +7,9 @@ class Doorkeeper::Application
   has_many :owners, -> { where 'memberships.member_type' => 'owner' }, through: :memberships, source: :user
   has_many :developers, -> { where 'memberships.member_type' => 'developer' }, through: :memberships, source: :user
 
+  scope :public?, -> { where public: true }
+  scope :private?, -> { where public: false }
+
   scope :requested_public, -> { where.not(requested_public_at: nil) }
 
   validate do |a|

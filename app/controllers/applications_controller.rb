@@ -51,7 +51,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   private
 
   def application_params
-    app_params = params.require(:application).permit(:name, :description, :short_description, :custom_text, :url, :image, :scopes, :redirect_uri)
+    app_params = params.require(:application).permit(:name, :description, :short_description, :custom_text, :url, :image, :scopes, :redirect_uri, :logo_url)
     app_params[:scopes] = params[:scope] ? params[:scope].join(' ') : []
     app_params
   end

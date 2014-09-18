@@ -1,0 +1,198 @@
+@import "partials/colors";
+@import "partials/fonts";
+
+/* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
+#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
+.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
+body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
+table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
+img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
+
+/* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+body{margin:0; padding:0;}
+img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
+table{border-collapse:collapse !important;}
+body, #bodyTable, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;}
+
+/* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+
+/* ========== Page Styles ========== */
+
+.logo{
+	margin-left: 20px;
+}
+
+#bodyCell{padding:20px;}
+#templateContainer{width:600px;}
+
+body, #bodyTable{
+	/*@editable*/ background-color:#ffffff;
+}
+#bodyCell{
+	/*@editable*/ border-top:4px solid #BBBBBB;
+}
+#templateContainer{
+	/*@editable*/ border:1px solid #BBBBBB;
+}
+#templatePreheader{
+	/*@editable*/ background-color:#F4F4F4;
+	/*@editable*/ border-bottom:1px solid #CCCCCC;
+}
+.preheaderContent{
+	/*@editable*/ color:#808080;
+	/*@editable*/ font-family:Helvetica;
+	/*@editable*/ font-size:10px;
+	/*@editable*/ line-height:125%;
+	/*@editable*/ text-align:left;
+}
+.preheaderContent a:link, .preheaderContent a:visited, /* Yahoo! Mail Override */ .preheaderContent a .yshortcuts /* Yahoo! Mail Override */{
+	/*@editable*/ color:#606060;
+	/*@editable*/ font-weight:normal;
+	/*@editable*/ text-decoration:underline;
+}
+#templateHeader{
+	/*@editable*/ background-color:#F4F4F4;
+	/*@editable*/ border-top:1px solid #FFFFFF;
+	/*@editable*/ border-bottom:1px solid #CCCCCC;
+}
+.headerContent{
+	/*@editable*/ color:#505050;
+	/*@editable*/ font-family:Helvetica;
+	/*@editable*/ font-size:20px;
+	/*@editable*/ font-weight:bold;
+	/*@editable*/ line-height:100%;
+	/*@editable*/ padding-top:0;
+	/*@editable*/ padding-right:0;
+	/*@editable*/ padding-bottom:0;
+	/*@editable*/ padding-left:0;
+	/*@editable*/ text-align:left;
+	/*@editable*/ vertical-align:middle;
+	background-color: #F4F4F4;
+}
+.headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */{
+	/*@editable*/ color:#EB4102;
+	/*@editable*/ font-weight:normal;
+	/*@editable*/ text-decoration:underline;
+}
+
+#headerImage{
+	height:auto;
+	max-width:600px;
+}
+
+/* ========== Body Styles ========== */
+#templateBody{
+	/*@editable*/ background-color:#F4F4F4;
+	/*@editable*/ border-top:1px solid #FFFFFF;
+	/*@editable*/ border-bottom:1px solid #CCCCCC;
+}
+.bodyContent a:link, .bodyContent a:visited, /* Yahoo! Mail Override */ .bodyContent a .yshortcuts /* Yahoo! Mail Override */{
+	/*@editable*/ color:$blue-dark;
+	/*@editable*/ font-weight:normal;
+	/*@editable*/ text-decoration:underline;
+}
+
+.bodyContent{
+	/*@editable*/ color:#505050;
+	/*@editable*/ font-family:Helvetica;
+	/*@editable*/ font-size:0.9em;
+	/*@editable*/ line-height:150%;
+	padding-top:20px;
+	padding-right:20px;
+	padding-bottom:20px;
+	padding-left:20px;
+	/*@editable*/ text-align:left;
+	a.btn-myusa{
+	  font: bold 15px Arial;
+	  text-decoration: none;
+	  background-color: $blue-dark;
+	  
+	  padding: 4px 12px 4px 12px;
+	  border-top: 1px solid #CCCCCC;
+	  border-right: 1px solid #333333;
+	  border-bottom: 1px solid #333333;
+	  border-left: 1px solid #CCCCCC;
+	  border-radius: 5px;
+	  color: #ffffff;
+	}
+}
+
+.bodyContent img{
+	display:inline;
+	height:auto;
+	max-width:560px;
+}
+
+/* ========== Footer Styles ========== */
+#templateFooter{
+	/*@editable*/ background-color:#F4F4F4;
+	/*@editable*/ border-top:1px solid #FFFFFF;
+}
+.footerContent{
+	/*@editable*/ color:#808080;
+	/*@editable*/ font-family:Helvetica;
+	/*@editable*/ font-size:10px;
+	/*@editable*/ line-height:150%;
+	padding-top:20px;
+	padding-right:20px;
+	padding-bottom:20px;
+	padding-left:20px;
+	/*@editable*/ text-align:left;
+}
+.footerContent a:link, .footerContent a:visited, /* Yahoo! Mail Override */ .footerContent a .yshortcuts, .footerContent a span /* Yahoo! Mail Override */{
+	/*@editable*/ color:#606060;
+	/*@editable*/ font-weight:normal;
+	/*@editable*/ text-decoration:underline;
+}
+
+
+td{
+	background-color:#ffffff;
+}
+
+
+/* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
+
+@media only screen and (max-width: 480px){
+	/* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
+	body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none !important;} /* Prevent Webkit platforms from changing default text sizes */
+    body{width:100% !important; min-width:100% !important;} /* Prevent iOS Mail from adding padding to the body */
+
+	/* /\/\/\/\/\/\/ MOBILE RESET STYLES /\/\/\/\/\/\/ */
+	#bodyCell{padding:10px !important;}
+
+	/* /\/\/\/\/\/\/ MOBILE TEMPLATE STYLES /\/\/\/\/\/\/ */
+
+	/* ======== Page Styles ======== */
+	#templateContainer{
+		max-width:600px !important;
+		/*@editable*/ width:100% !important;
+	}
+	/* ======== Header Styles ======== */
+
+	#templatePreheader{display:none !important;} /* Hide the template preheader to save space */
+	#headerImage{
+		height:auto !important;
+		/*@editable*/ max-width:600px !important;
+		/*@editable*/ width:100% !important;
+	}
+	.headerContent{
+		/*@editable*/ font-size:20px !important;
+		/*@editable*/ line-height:125% !important;
+	}
+
+	/* ======== Body Styles ======== */
+	.bodyContent{
+		/*@editable*/ font-size:18px !important;
+		/*@editable*/ line-height:125% !important;
+	}
+
+	/* ======== Footer Styles ======== */
+	.footerContent{
+		/*@editable*/ font-size:14px !important;
+		/*@editable*/ line-height:115% !important;
+	}
+
+	.footerContent a{display:block !important;} /* Place footer social and utility links on their own lines, for easier access */
+}

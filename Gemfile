@@ -20,6 +20,8 @@ gem 'font-awesome-sass'
 gem 'attr_encrypted'
 gem 'doorkeeper'
 gem 'rails-observers'
+gem 'hpricot'
+gem 'premailer-rails'
 gem 'twilio-ruby'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz

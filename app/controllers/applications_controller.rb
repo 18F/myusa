@@ -11,7 +11,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   def create
     @application = Doorkeeper::Application.new(application_params)
-    @application.owner = current_user
+    @application.owners << current_user
     if @application.save
       message = I18n.t('new_application')
       flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',

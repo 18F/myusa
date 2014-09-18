@@ -4,49 +4,16 @@ require 'feature_helper'
 describe 'OAuth' do
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
 
-  scopes = 'profile.email profile.title profile.first_name ' \
+  let(:scopes) { 'profile.email profile.title profile.first_name ' \
   'profile.middle_name profile.last_name profile.phone_number profile.suffix ' \
   'profile.address profile.address2 profile.zip profile.gender ' \
   'profile.marital_status profile.is_parent profile.is_student ' \
-  'profile.is_veteran profile.is_retired notifications'
+  'profile.is_veteran profile.is_retired notifications' }
 
-  let(:client_app) do
-    FactoryGirl.create(:application, name: 'Client App 1', scopes: scopes)
-  end
+  let(:client_app) { FactoryGirl.create(:application, name: 'Client App 1', scopes: scopes) }
   let(:client_app2) { FactoryGirl.create(:application, name: 'Client App 2') }
+
   let(:requested_scopes) { 'profile.email profile.last_name notifications' }
-
-  # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
-  # Capybara context. More detail here:
-  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
-  let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid,
-                       client_app.secret,
-                       site: 'http://www.example.com') do |b|
-      b.request :url_encoded
-      b.adapter :rack, Rails.application
-    end
-  end
-
-  let(:oauth_client2) do
-    # Set up an OAuth2::Client instance for HTTP calls that happen outside of
-    # the Capybara context.
-    # More detail here: https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
-    OAuth2::Client.new(client_app2.uid,
-                       client_app2.secret,
-                       site: 'http://www.example.com/2') do |b|
-      b.request :url_encoded
-      b.adapter :rack, Rails.application
-    end
-  end
-
-  def visit_oauth_authorize_url(client, app, scopes)
-    visit(client.auth_code.authorize_url(
-      redirect_uri: app.redirect_uri,
-      scope: scopes,
-      state: 'state'
-    ))
-  end
 
   describe 'Authorizations' do
     let(:requested_scopes) do
@@ -76,52 +43,12 @@ describe 'OAuth' do
       @auths_page = OAuth2::AuthorizationsPage.new
     end
 
-    context 'when not logged in' do
-      before :each do
-        @auths_page.load
-      end
-
-      scenario 'redirects to login page' do
-        @sign_in_page = SignInPage.new
-        expect(@sign_in_page).to be_displayed
-      end
-    end
-
     context 'when logged in' do
       before :each do
+        FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: requested_scopes)
+        FactoryGirl.create(:access_token, resource_owner: user, application: client_app2, scopes: requested_scopes2)
+
         login user
-        @auth_page = OAuth2::AuthorizationPage.new
-        @token_page = OAuth2::TokenPage.new
-        visit_oauth_authorize_url(oauth_client, client_app, requested_scopes)
-        expect(@auth_page).to be_displayed
-        @auth_page.allow_button.click
-
-        # Retrieve the code
-        expect(@token_page).to be_displayed
-        code = @token_page.code.text
-
-        # Turn the code into a token
-        token = oauth_client.auth_code.get_token(
-          code, redirect_uri: client_app.redirect_uri
-        )
-        expect(token).to_not be_expired
-        client_app.redirect_uri = 'http://localhost:3000'
-        client_app.save!
-
-        visit_oauth_authorize_url(oauth_client2, client_app2, requested_scopes2)
-        expect(@auth_page).to be_displayed
-        @auth_page.allow_button.click
-
-        # Retrieve the code
-        expect(@token_page).to be_displayed
-        code = @token_page.code.text
-
-        # Turn the code into a token
-        token = oauth_client2.auth_code.get_token(
-          code, redirect_uri: client_app2.redirect_uri
-        )
-        expect(token).to_not be_expired
-
         @auths_page.load
       end
 
@@ -162,8 +89,8 @@ describe 'OAuth' do
     end
   end
 
-  describe 'applications' do 
-    before :each do 
+  describe 'applications' do
+    before :each do
       login user
       @new_application_page = OAuth2::NewApplicationPage.new
       @auths_page = OAuth2::AuthorizationsPage.new

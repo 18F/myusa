@@ -37,6 +37,39 @@ describe User, type: :model do
     end
   end
 
+  describe '#destroy' do
+    let(:user) { FactoryGirl.create(:user) }
+    subject { -> { user.destroy! } }
+
+    before :each do
+      @app_id = app.id
+    end
+
+    context 'user is co-owner of oauth application' do
+      let(:co_owner) { FactoryGirl.create(:user) }
+      let!(:app) { FactoryGirl.create(:application, owners: [user, co_owner]) }
+
+      it 'does not delete application' do
+        is_expected.to_not change { Doorkeeper::Application.count(id: @app_id) }
+      end
+    end
+    context 'user is only owner of oauth application' do
+      let!(:app) { FactoryGirl.create(:application, owners: [user]) }
+
+      it 'deletes application' do
+        is_expected.to change { Doorkeeper::Application.count(id: @app_id) }.by(-1)
+      end
+
+      context 'with developers' do
+        let!(:app) { FactoryGirl.create(:application, :with_developers, owners: [user]) }
+
+        it 'deletes application' do
+          is_expected.to change { Doorkeeper::Application.count(id: @app_id) }.by(-1)
+        end
+      end
+    end
+  end
+
   describe "#find_from_omniauth" do
     let(:provider) { 'google_oauth2' }
     let(:email) { 'testy@example.gov' }

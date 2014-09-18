@@ -37,6 +37,9 @@ en:
   resent_token: A new access link has been sent to your email address.
   new_api_key: Your API Key has been updated.
   new_application: Your application has been created.
+  contact_form:
+    success: 'Thank you. Your message has been sent.'
+    failure: 'Could not send empty message.'
   app_status:
     public: Public
     private: Private

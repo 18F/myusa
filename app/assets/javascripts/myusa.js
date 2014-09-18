@@ -121,11 +121,15 @@ $(document).ready(function () {
  */
  $("#contact-form").submit(function(e){
   e.preventDefault();
+  var form = $(this)[0];
   var formData = $(this).serialize();
   $.post('contact_us', formData, function(response){
-    $(".contact-flash").text(response.message).removeClass('hidden');
+    $(".contact-flash .message").text(response.message)
+    $(".contact-flash").removeClass('hidden');
+    if(response['success']){
+      form.reset();      
+    } 
   });
-  $(this)[0].reset();
  });
 
 });

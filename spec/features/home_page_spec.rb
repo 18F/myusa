@@ -13,7 +13,9 @@ describe 'Home Page' do
 
   shared_examples 'user contact form' do
     scenario 'user can contact us' do
-      expect(display_message).to have_content('Thank you. Your message has been sent.')
+      expect(display_message).to have_content(
+        'Thank you. Your message has been sent.'
+      )
     end
   end
 

@@ -72,21 +72,5 @@ describe Oauth::AuthorizationsController do
       end
     end
 
-    context "token request" do
-      # legacy implementation used POST /oauth/authorize for both the user facing
-      # authorization screen and the API endpoint to request a token ... so, we
-      # have to support it here.
-      it 'redirects to the token path if `grant_type` is passed' do
-        post :create, {
-          client_id: client_app.uid,
-          client_secret: client_app.secret,
-          code: "baz",
-          grant_type: "authorization_code",
-          redirect_uri: client_app.redirect_uri
-        }
-
-        expect(response).to redirect_to(oauth_token_path)
-      end
-    end
   end
 end

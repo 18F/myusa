@@ -17,14 +17,13 @@ describe 'Home Page' do
     end
   end
 
+  it 'Displays message in email' do
+    open_email('myusa@gsa.gov')
+    expect(current_email).to have_content(message)
+  end
+
   context 'without javascript' do
     let(:display_message) { @home_page.contact_flash_no_js }
-
-    it 'Displays message in email' do
-      open_email('myusa@gsa.gov')
-      expect(current_email).to have_content(message)
-    end
-
     it_behaves_like 'user contact form'
   end
 

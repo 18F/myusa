@@ -25,4 +25,5 @@ class OAuth2::AuthorizationPage < SitePrism::Page
   element :sign_in_button, "#myusa-connect"
   element :settings, "#user-settings"
   element :ownership, "footer[contains('MyUSA is an official website of the United States Government')]"
+  element :not_me_link, "a[contains('This is not me')]"
 end

@@ -45,13 +45,18 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     @application = Doorkeeper::Application.find(params[:id])
     @application.requested_public_at = DateTime.now
     @application.save
-    redirect_to oauth_applications_path, notice: I18n.t('app_status.requested_public')
+    redirect_to oauth_applications_path, notice: I18n.t(
+      'app_status.requested_public'
+    )
   end
 
   private
 
   def application_params
-    app_params = params.require(:application).permit(:name, :description, :short_description, :custom_text, :url, :image, :scopes, :redirect_uri, :logo_url)
+    app_params = params.require(:application).permit(
+      :name, :description, :short_description, :custom_text, :url, :image,
+      :scopes, :redirect_uri, :logo_url
+    )
     app_params[:scopes] = params[:scope] ? params[:scope].join(' ') : []
     app_params
   end

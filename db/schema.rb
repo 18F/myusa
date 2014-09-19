@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909015306) do
+ActiveRecord::Schema.define(version: 20140919145133) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -108,11 +108,8 @@ ActiveRecord::Schema.define(version: 20140909015306) do
     t.string   "description"
     t.string   "short_description"
     t.string   "custom_text"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
     t.datetime "requested_public_at"
+    t.string   "logo_url"
   end
 
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree

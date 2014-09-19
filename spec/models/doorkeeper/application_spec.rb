@@ -30,6 +30,5 @@ describe Doorkeeper::Application do
         expect(application).not_to be_valid
       end
     end
-
   end
 end

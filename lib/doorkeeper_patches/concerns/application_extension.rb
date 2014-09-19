@@ -2,7 +2,8 @@ module ApplicationExtension
   extend ActiveSupport::Concern
 
   included do
-    validates_format_of :logo_url, with: URI.regexp(['https']), if: :logo_url?,
+    validates_format_of :logo_url, with: URI.regexp(['https']),
+                                   allow_blank: true,
                                    message: 'Logo url must begin with https'
   end
 

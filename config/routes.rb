@@ -56,4 +56,11 @@ Rails.application.routes.draw do
       resources :tasks, only: [:index, :create, :show, :update]
     end
   end
+
+  rack_error_handler = ActionDispatch::PublicExceptions.new(
+    File.join(Rails.public_path, 'assets')
+  )
+  match '/404' => 'errors#not_found', via: [:get, :post, :patch, :put, :delete]
+  match '/422' => 'errors#change_rejected', via: [:get, :post, :patch, :put, :delete]
+  match '/500' => rack_error_handler, via: [:get, :post, :patch, :put, :delete]
 end

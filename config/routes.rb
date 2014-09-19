@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   get 'developer' => 'home#developer'
   post 'contact_us' => 'home#contact_us'
 
+  # Legacy implementation used POST /oauth/authorize for both the user facing
+  # authorization screen and the API endpoint to request a token ... so, we have
+  # to support it. Set this route before the `use_doorkeeper` call so that this
+  # route takes precedence over the other doorkeeper routes.
+  post '/oauth/authorize' => 'doorkeeper/tokens#create', constraints: ->(req) {
+    req.params['grant_type'] == 'authorization_code'
+  }
+
   use_doorkeeper do
     skip_controllers :applications
     controllers authorizations: 'oauth/authorizations',

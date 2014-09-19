@@ -24,6 +24,16 @@ describe 'OAuth' do
     ))
   end
 
+  shared_examples 'authorizable' do
+    scenario 'user can authorize' do
+      expect(@auth_page).to be_displayed
+      @auth_page.allow_button.click
+
+      token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+      expect(token).to_not be_expired
+    end
+  end
+
   shared_examples 'scope error' do
     scenario 'displays scope error message' do
       expect(@auth_page).to be_displayed
@@ -188,31 +198,29 @@ describe 'OAuth' do
              'Allow the application send you notifications via MyUSA'])
         end
 
-        it 'user can authorize' do
-          expect(@auth_page).to be_displayed
-          @auth_page.allow_button.click
-
-          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-          expect(token).to_not be_expired
-        end
+        it_behaves_like 'authorizable'
       end
 
       context 'with non-public (sandboxed) app' do
         let(:owner) { FactoryGirl.create(:user, email: 'owner@gsa.gov') }
         let(:client_app) do
-          FactoryGirl.create(:application, public: false, owner: owner)
+          FactoryGirl.create(:application, public: false, owners: [owner])
         end
 
         context 'current user is client application owner' do
           let(:owner) { user }
 
-          scenario 'user can authorize' do
-            expect(@auth_page).to be_displayed
-            @auth_page.allow_button.click
+          it_behaves_like 'authorizable'
+        end
 
-            token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-            expect(token).to_not be_expired
+        context 'current user is a client application developer' do
+          let(:client_app) do
+            FactoryGirl.create(:application, public: false,
+                                             owners: [owner],
+                                             developers: [user])
           end
+
+          it_behaves_like 'authorizable'
         end
 
         context 'current user is not client application owner' do

@@ -24,8 +24,8 @@ module OAuth2
 
   # OAuth2::AuthorizationsPage
   class AuthorizationsPage < SitePrism::Page
-    set_url '/applications'
-    set_url_matcher(/\/applications/)
+    set_url '/authorizations'
+    set_url_matcher(/\/authorizations/)
 
     element :secret_key,      '#secret-key'
     element :new_api_key,     'input[type="submit"][value="New API Key"]'

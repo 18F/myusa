@@ -4,6 +4,12 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   before_filter :pre_auth, only: [:new]
   before_filter :display_not_me, only: [:new]
 
+  def index
+    @authorizations = Doorkeeper::AccessToken.where(
+      resource_owner_id: current_user.id, revoked_at: nil)
+    @applications = current_user.oauth_applications
+  end
+
   def create
     if params.key?(:profile)
       current_user.profile.tap do |profile|

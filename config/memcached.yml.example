@@ -1,0 +1,3 @@
+servers:
+  - memcache1.example.com
+  - memcache2.example.com

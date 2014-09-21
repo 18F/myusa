@@ -11,6 +11,7 @@ describe 'Users' do
         login(user)
         @profile_edit_page = EditProfilePage.new
         @profile_edit_page.load
+        @additional_profile_page = AdditionalProfilePage.new
         @results_page = ProfilePage.new
       end
 
@@ -18,21 +19,24 @@ describe 'Users' do
         @profile_edit_page.first_name.set 'Jane'
         @profile_edit_page.submit.click
         expect(@results_page).to be_displayed
-        expect(@results_page.first_name.text).to eq 'Jane'
+        expect(@results_page.first_name.value).to eq 'Jane'
       end
 
       it "should allow setting a 'Yes/No' field to blank" do
-        @profile_edit_page.is_student.select 'Yes'
-        @profile_edit_page.submit.click
-        expect(@results_page).to be_displayed
-        expect(@results_page.is_student.text).to eq 'Yes'
-
-        @profile_edit_page.load
-        @profile_edit_page.is_student.select ''
-        @profile_edit_page.submit.click
+        @additional_profile_page.load
+        @additional_profile_page.is_student.select 'Yes'
+        @additional_profile_page.submit.click
 
         expect(@results_page).to be_displayed
-        expect(@results_page.is_student.text).to be_blank
+        @additional_profile_page.load
+        expect(@additional_profile_page.is_student.value).to eq 'true'
+
+        @additional_profile_page.is_student.select ''
+        @additional_profile_page.submit.click
+
+        expect(@results_page).to be_displayed
+        @additional_profile_page.load
+        expect(@additional_profile_page.is_student.value).to be_blank
       end
     end
   end

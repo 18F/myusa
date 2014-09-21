@@ -7,6 +7,5 @@ class EditProfilePage < SitePrism::Page
   set_url_matcher(/\/profile\/edit/)
 
   element :first_name, '#profile_first_name'
-  element :submit, 		 'input[type="submit"][value="Update Profile"]'
-  element :is_student, '#profile_is_student'
+  element :submit, 		 'input[type="submit"][value="Save Information"]'
 end

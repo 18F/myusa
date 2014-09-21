@@ -7,9 +7,13 @@ class ProfilesController < ApplicationController
   layout 'dashboard'
 
   def show
+    render :edit
   end
 
   def edit
+  end
+
+  def additional
   end
 
   def update

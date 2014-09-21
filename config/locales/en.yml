@@ -185,15 +185,18 @@ en:
 
   cancel: 'Cancel'
   profile:
-    settings_title: 'Settings'
-    heading: 'Your Profile'
-    name_heading: 'Name'
+    settings_title: 'Personal Information'
+    additional_title: 'Additional Information'
+    settings_heading: 'Personal Information'
+    additional_heading: 'Additional Information About You'
+    name_heading: 'Your Name'
     address_heading: 'Address'
     phone_heading: 'Phone'
     gender_heading: 'Gender'
     marital_status_heading: 'Marital Status'
     about_you_heading: 'About You'
-    update: 'Update Profile'
+    settings_update: 'Save Information'
+    additional_update: 'Save Information'
 
   not_specified: Not Specified
 
@@ -212,6 +215,7 @@ en:
       profile: 'Profile'
     attributes:
       profile:
+        email: 'Email Address'
         title: 'Title'
         first_name: 'First name'
         middle_name: 'Middle name'

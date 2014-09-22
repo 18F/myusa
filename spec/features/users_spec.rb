@@ -13,6 +13,7 @@ describe 'Users' do
         @profile_edit_page.load
         @additional_profile_page = AdditionalProfilePage.new
         @results_page = ProfilePage.new
+        @additional_results_page = AdditionalProfilePage.new
       end
 
       it "should change the user's name when first or last name changes" do
@@ -27,16 +28,14 @@ describe 'Users' do
         @additional_profile_page.is_student.select 'Yes'
         @additional_profile_page.submit.click
 
-        expect(@results_page).to be_displayed
-        @additional_profile_page.load
-        expect(@additional_profile_page.is_student.value).to eq 'true'
+        expect(@additional_results_page).to be_displayed
+        expect(@additional_results_page.is_student.value).to eq 'true'
 
-        @additional_profile_page.is_student.select 'Not Specified'
-        @additional_profile_page.submit.click
+        @additional_results_page.is_student.select 'Not Specified'
+        @additional_results_page.submit.click
 
-        expect(@results_page).to be_displayed
-        @additional_profile_page.load
-        expect(@additional_profile_page.is_student.value).to be_blank
+        expect(@additional_results_page).to be_displayed
+        expect(@additional_results_page.is_student.value).to be_blank
       end
     end
   end

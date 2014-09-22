@@ -46,7 +46,7 @@ class ProfilesController < ApplicationController
   private
 
   def target
-    params[:profile][:target]
+    params[:target]
   end
 
   def redirect_to_target(target_path)

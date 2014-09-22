@@ -1,4 +1,4 @@
-<!-- for tablets and mobile phones -->
+<% # SECTION: for tablets and mobile phones %>
 <div class="hidden-md hidden-lg">
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
@@ -40,7 +40,7 @@
     </div>
   </nav>
 </div>
-<!-- for desktops -->
+<% # SECTION: for desktops %>
 <div class="hidden-xs hidden-sm">
   <nav id="nav" data-spy="affix" data-offset-top="80" class="nav">
 
@@ -58,14 +58,14 @@
       <%= link_to 'My Settings', delete_account_profile_path, :class => 'list-group-item heading' %>
       <div id="oauth-menu">
         <%= link_to 'Delete Account', delete_account_profile_path, :class => 'list-group-item' %>
-        <!--
-          TODO: These nav links are included as a placeholder for future functionality
-          Notification Settings - turn on/off notifications
-          Security - add/change 2FA phone number, change email address, and delete account
-          (Delete Account should move inside Security / Settings)
-            <%= link_to 'Notifications', '#', :class => 'list-group-item' %>
-            <%= link_to 'Security', '#', :class => 'list-group-item' %>
-        -->
+        <% #
+           # TODO: These nav links are included as a placeholder for future functionality
+           # Notification Settings - turn on/off notifications
+           # Security - add/change 2FA phone number, change email address, and delete account
+           # (Delete Account should move inside Security / Settings)
+           # <= link_to 'Notifications', '#', :class => 'list-group-item' >
+           # <= link_to 'Security', '#', :class => 'list-group-item' >
+        %>
       </div>
     </div>
   </nav>

@@ -19,8 +19,30 @@ body, #bodyTable, #bodyCell{height:100% !important; margin:0; padding:0; width:1
 
 /* ========== Page Styles ========== */
 
-.logo{
+.left-20{
 	margin-left: 20px;
+}
+
+.photo{
+	padding: 5px 5px 5px 5px;
+	height: 75;
+	width: 75;
+}
+
+h1{
+	/*@editable*/ color: $blue-light;
+	display:block;
+	/*@editable*/ font-family:Helvetica;
+	/*@editable*/ font-size:20px;
+	/*@editable*/ font-style:normal;
+	/*@editable*/ font-weight:400;
+	/*@editable*/ line-height:100%;
+	/*@editable*/ letter-spacing:normal;
+	margin-top:10px;
+	margin-right:0;
+	margin-bottom:10px;
+	margin-left:0;
+	/*@editable*/ text-align:left;
 }
 
 #bodyCell{padding:20px;}

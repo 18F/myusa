@@ -14,6 +14,34 @@ describe Api::V1 do
   let(:client_app) { FactoryGirl.create(:application) }
   let(:user) { create_confirmed_user_with_profile(is_student: nil, is_retired: false) }
 
+  describe 'Legacy tokens path' do
+    let(:grant) {
+      FactoryGirl.create(:access_grant,
+        application: client_app,
+        redirect_uri: client_app.redirect_uri,
+        resource_owner: user
+      )
+    }
+    let(:params) do
+      {
+        client_id: client_app.uid,
+        client_secret: client_app.secret,
+        code: grant.token,
+        grant_type: 'authorization_code',
+        redirect_uri: client_app.redirect_uri
+      }
+    end
+
+    subject { post  '/oauth/authorize', params }
+    it 'response http code is 200' do
+      expect(subject.status).to eql(200)
+    end
+    it 'response should have an access token' do
+      expect(JSON.parse(subject.body)).to have_key('access_token')
+    end
+
+  end
+
   describe 'Token validity check' do
     subject { get '/api/v1/profile', nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
     context 'with a valid token' do

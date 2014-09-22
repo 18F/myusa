@@ -4,7 +4,7 @@ module Doorkeeper::OAuth
   describe PreAuthorization do
     let(:server) { Doorkeeper.configuration }
 
-    let(:client_app) { FactoryGirl.create(:application, public: true) }
+    let(:client_app) { FactoryGirl.create(:application, public: true, owners: [user]) }
     let(:client) do
       c = double(:client,
         redirect_uri: 'http://www.example.com',

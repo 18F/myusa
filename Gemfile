@@ -39,7 +39,6 @@ group :development do
   gem 'letter_opener'
   gem 'rubocop', require: false
   gem 'better_errors'
-  gem 'newrelic_rpm'
   gem 'binding_of_caller'
 end
 

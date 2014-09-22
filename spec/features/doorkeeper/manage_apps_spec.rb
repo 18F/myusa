@@ -120,6 +120,9 @@ describe 'OAuth' do
     it 'allows a user to request public access' do
       @auths_page.first_developer_app.request_public.click
       expect(@auths_page.first_developer_app.status).to eq('Pending Approval')
+      expect(ActionMailer::Base.deliveries.last.subject).to eq(
+        'testApp has gone public'
+      )
     end
 
     it 'displays public status' do

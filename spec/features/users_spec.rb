@@ -31,7 +31,7 @@ describe 'Users' do
         @additional_profile_page.load
         expect(@additional_profile_page.is_student.value).to eq 'true'
 
-        @additional_profile_page.is_student.select ''
+        @additional_profile_page.is_student.select 'Not Specified'
         @additional_profile_page.submit.click
 
         expect(@results_page).to be_displayed

@@ -22,7 +22,7 @@ class ProfilesController < ApplicationController
     else
       flash.now[:error] = t('profile.error')
     end
-    redirect_to_target target
+    redirect_to_target
   end
 
   def delete_account
@@ -45,13 +45,9 @@ class ProfilesController < ApplicationController
 
   private
 
-  def target
-    params[:target]
-  end
-
-  def redirect_to_target(target_path)
+  def redirect_to_target
     redirect_path = profile_path
-    if target_path == 'additional'
+    if params[:target] == 'additional'
       redirect_path = additional_profile_path
     end
     redirect_to redirect_path

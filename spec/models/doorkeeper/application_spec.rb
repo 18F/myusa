@@ -17,5 +17,18 @@ describe Doorkeeper::Application do
       end
     end
 
+    context 'with valid logo_url' do
+      it 'is valid' do
+        application.logo_url = 'https://www.example.com'
+        expect(application).to be_valid
+      end
+    end
+
+    context 'with invalid logo_url' do
+      it 'is valid' do
+        application.logo_url = 'http://www.example.com'
+        expect(application).not_to be_valid
+      end
+    end
   end
 end

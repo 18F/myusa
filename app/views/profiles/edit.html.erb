@@ -18,7 +18,7 @@
           <div class='form-group'>
             <div class="col-sm-2 col-md-2">
               <%= form.label :title, class: 'sr-only' %>
-              <%= form.select :title, title_options, { include_blank: true }, { class: 'form-control' } %>
+              <%= form.select :title, suffix_options, { include_blank: t('profile.select_fields.title.placeholder') }, { class: 'form-control' } %>
             </div>
             <div class="col-sm-3 col-md-3">
               <%= form.label :first_name, class: 'sr-only' %>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-sm-1 col-md-1">
               <%= form.label :suffix, class: 'sr-only' %>
-              <%= form.select :suffix, suffix_options, { include_blank: true }, { class: 'form-control' } %>
+              <%= form.select :suffix, suffix_options, { include_blank: t('profile.select_fields.suffix.placeholder') }, { class: 'form-control' } %>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
             </div>
             <div class='col-sm-2 col-md-2'>
               <%= form.label :state, class: 'control-label' %><br/>
-              <%= form.select :state, us_state_options, { include_blank: true }, { class: 'form-control' } %>
+              <%= form.select :state, us_state_options, { include_blank: t('profile.select_fields.state.placeholder') }, { class: 'form-control' } %>
             </div>
             <div class='col-sm-4 col-md-4'>
               <%= form.label :zip, class: 'control-label' %><br/>

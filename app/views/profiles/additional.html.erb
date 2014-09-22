@@ -7,37 +7,38 @@
       <%= t('profile.additional_title') %>
     </h1>
     <%= form_for @profile, html: { class: 'form' } do |form| %>
+      <%= form.hidden_field 'target', :value => 'additional' %>
       <fieldset>
         <h2>
           <%= t('profile.about_you_heading') %>
         </h2>
         <div class='form-group'>
           <%= form.label :gender, class: 'control-label' %>
-          <%= form.select :gender, gender_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.select :gender, gender_options, { include_blank: t('profile.select_fields.default.placeholder') }, { class: 'form-control' } %>
         </div>
       </fieldset>
       <fieldset>
         <div class='form-group'>
           <%= form.label :marital_status, class: 'control-label' %>
-          <%= form.select :marital_status, marital_status_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.select :marital_status, marital_status_options, { include_blank: t('profile.select_fields.default.placeholder') }, { class: 'form-control' } %>
         </div>
       </fieldset>
       <fieldset>
         <div class="form-group">
           <%= form.label t('scopes.profile.is_parent.label'), class: 'control-label' %>
-          <%= form.select :is_parent, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.select :is_parent, yes_no_options, { include_blank: t('profile.select_fields.default.placeholder') }, { class: 'form-control' } %>
         </div>
         <div class="form-group">
           <%= form.label t('scopes.profile.is_veteran.label'), class: 'control-label' %>
-          <%= form.select :is_veteran, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.select :is_veteran, yes_no_options, { include_blank: t('profile.select_fields.default.placeholder') }, { class: 'form-control' } %>
         </div>
         <div class="form-group">
           <%= form.label t('scopes.profile.is_student.label'), class: 'control-label' %>
-          <%= form.select :is_student, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.select :is_student, yes_no_options, { include_blank: t('profile.select_fields.default.placeholder') }, { class: 'form-control' } %>
         </div>
         <div class="form-group">
           <%= form.label t('scopes.profile.is_retired.label'), class: 'control-label' %>
-          <%= form.select :is_retired, yes_no_options, { include_blank: true }, { class: 'form-control' } %>
+          <%= form.select :is_retired, yes_no_options, { include_blank: t('profile.select_fields.default.placeholder') }, { class: 'form-control' } %>
         </div>
       </fieldset>
       <div class="row submit">

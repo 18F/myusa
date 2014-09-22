@@ -197,8 +197,19 @@ en:
     about_you_heading: 'About You'
     settings_update: 'Save Information'
     additional_update: 'Save Information'
+    success: 'Your profile was sucessfully updated.'
+    error: 'Something went wrong.  Please try again.'
+    select_fields:
+      default:
+        placeholder: 'Not Specified'
+      title:
+        placeholder: 'Title'
+      suffix:
+        placeholder: ''
+      state:
+        placeholder: 'None'
 
-  not_specified: Not Specified
+  not_specified: 'Not Specified'
 
   email:
     contact_us:

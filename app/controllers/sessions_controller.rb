@@ -1,9 +1,10 @@
 class SessionsController < Devise::SessionsController
   include Devise::Controllers::Rememberable
-
+  include ClearSession
   before_filter :set_logout_user, only: [:destroy]
+  before_filter :clear_return_to, only: [:new]
 
-  layout "login", only: [:new]
+  layout 'login', only: [:new]
   before_action :authenticate_user_from_token!, only: [:new]
 
   def create

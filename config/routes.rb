@@ -43,7 +43,8 @@ Rails.application.routes.draw do
   get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
   get 'mobile_recovery/resend' => 'mobile_recoveries#resend'
 
-  resource :profile, only: [:show, :edit, :update, :destroy] do
+  resource :profile, only: [:show, :additional, :edit, :update, :destroy] do
+    get :additional
     get :delete_account
   end
 

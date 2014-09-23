@@ -18,7 +18,7 @@ module OAuth2
     element :request_public, 'input[type="submit"][value="Request Public Access"]'
 
     def status
-      app_properties[3].text
+      app_properties[1].text
     end
   end
 

@@ -223,8 +223,45 @@ footer {
 /*******************
   Marketing
 ********************/
+/** MyUSA Marketing Glyphs Font **/
+@font-face {
+  font-family: 'MyUSA-marketing';
+  src: font-url('myusa-mkt.eot?m9u969');
+  src: font-url('myusa-mkt.eot?#iefixm9u969') format('embedded-opentype'),
+    font-url('myusa-mkt.woff?m9u969') format('woff'),
+    font-url('myusa-mkt.ttf?m9u969') format('truetype'),
+    font-url('myusa-mkt.svg?m9u969#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="icon-"], [class*=" icon-"] {
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-compass:before {
+  font-family: 'MyUSA-marketing';
+  content: "\e600";
+}
+.icon-id-badge:before {
+  font-family: 'MyUSA-marketing';
+  content: "\e601";
+}
+.icon-map:before {
+  font-family: 'MyUSA-marketing';
+  content: "\e602";
+}
+.icon-paper-airplane:before {
+  font-family: 'MyUSA-marketing';
+  content: "\e603";
+}
 .marketing {
   .top-border {
     border-top: 1px solid $gray-highlight;

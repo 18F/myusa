@@ -1,86 +1,86 @@
-<div class="page-header">
-  <h1>Settings</h1>
-  <p class="sub-heading">Developer applications</p>
-</div>
+<div class="row aglio app-settings">
+  <div class="col-md-3">
+    <%= render 'profiles/nav'%>
+  </div>
+  <div class="col-md-9">
+    <h1>
+      My Applications
+    </h1>
+    <h2>
+      Developer applications
+      <div class="pull-right">
+        <%= link_to 'New Application', new_oauth_application_path, class: 'btn btn-success' %>
+      </div>
+    </h2>
 
-<p><%= link_to 'New Application', new_oauth_application_path, class: 'btn btn-success' %></p>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Scopes</th>
-    <th>Callback URL</th>
-    <th>Status</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @applications.each do |application| %>
-    <tr id="application_<%= application.id %>">
-      <td><%= link_to application.name, [:oauth, application] %></td>
-      <td><%= application.scopes %></td>
-      <td><%= application.redirect_uri %></td>
-      <td><%= app_status(application) %></td>
-      <td>
-        <%= form_tag new_api_key_path, method: :post do %>
-          <%= hidden_field_tag(:id, application.id) %>
-          <%= submit_tag 'New API Key',
-            onclick: "return confirm('Are you sure you want to generate a new client secret key?')",
-            class: 'btn btn-link' %>
-        <% end %>
-        <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>
-        <% if !application.public && application.requested_public_at.nil? %>
-          <%= form_tag make_public_path, method: :post do %>
-            <%= hidden_field_tag(:id, application.id) %>
-            <%= submit_tag 'Request Public Access', class: 'btn btn-link' %>
-          <% end %>
-        <% end %>
-        <%= render 'delete_form', application: application %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<header class="page-header">
-  <p class="sub-heading">Authorized Applications</p>
-</header>
-
-<div class="main">
-  <div class="row scope-page">
-    <div class="col-md-12">
-      <%- if @authorizations.blank? -%>
-      <p><%= t('no_authorizations') %></p>
-      <%- end -%>
-      <% @authorizations.each do |authorization| %>
-        <% application = authorization.application %>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-md-7">
-                <h3 class="panel-title">
-                  <%= application.name %>
-                </h3>
-              </div>
-              <div class="col-md-3 text-right">
-                <h3 class="panel-title">
-                  Granted: <%= authorization.created_at.strftime('%m/%d/%Y') %>
-                </h3>
-              </div>
-              <div class="col-md-2 text-right">
-                <h3 class="panel-title">
-                  <%= render 'authorized_delete_form', application: application %>
-                </h3>
-              </div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <h1>Permissions</h1>
-            <%= render 'authorized_scope_list', scopes: authorization.scopes %>
-          </div>
-        </div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @applications.blank? %>
+        <tr>
+          <td colspan="3">
+            You do not have any applications.
+          </td>
+        </tr>
       <% end %>
-    </div>
+      <% @applications.each do |application| %>
+        <tr id="application_<%= application.id %>">
+          <td><%= link_to application.name, [:oauth, application] %></td>
+          <td><%= app_status(application) %></td>
+          <td>
+            <%= form_tag new_api_key_path, method: :post do %>
+              <%= hidden_field_tag(:id, application.id) %>
+              <%= submit_tag 'New API Key',
+                onclick: "return confirm('Are you sure you want to generate a new client secret key?')",
+                class: 'btn btn-link' %>
+            <% end %>
+            <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>
+            <% if !application.public && application.requested_public_at.nil? %>
+              <%= form_tag make_public_path, method: :post do %>
+                <%= hidden_field_tag(:id, application.id) %>
+                <%= submit_tag 'Request Public Access', class: 'btn btn-link' %>
+              <% end %>
+            <% end %>
+            <%= render 'delete_form', application: application %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <h2>Authorized Applications</h2>
+
+      <div class="row scope-page">
+        <div class="col-md-12">
+          <%- if @authorizations.blank? -%>
+            <p><%= t('no_authorizations') %></p>
+          <%- else -%>
+            <% @authorizations.each do |authorization| %>
+              <% application = authorization.application %>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><%= application.name %></span>
+                    <br/>
+                    <span class="panel-subtitle">Granted: <%= authorization.created_at.strftime('%m/%d/%Y') %></span>
+                    <div class="pull-right text-right">
+                      <%= render 'authorized_delete_form', application: application %>
+                    </div>
+                </div>
+                <div class="panel-body">
+                  <h1>Permissions</h1>
+                  <%= render 'authorized_scope_list', scopes: authorization.scopes %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
   </div>
 </div>

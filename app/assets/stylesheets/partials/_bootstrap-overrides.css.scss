@@ -48,6 +48,15 @@ ul.dropdown-menu {
   @extend .btn-link;
   padding: 0;
 }
+/**
+ * Font sizing extensions
+ */
+.fa.fa-6x {
+  font-size: 6.0em;
+}
+.fa.fa-8x {
+  font-size: 8.0em;
+}
 
 /**
  * for some reason, the pills variables are not being

@@ -7,18 +7,22 @@ class ProfilesController < ApplicationController
   layout 'dashboard'
 
   def show
+    render :edit
   end
 
   def edit
   end
 
+  def additional
+  end
+
   def update
     if @profile.update(profile_attributes)
-      redirect_to profile_path, notice: 'Your profile was sucessfully updated.'
+      flash[:notice] = t('profile.success')
     else
-      flash.now[:error] = 'Something went wrong.'
-      render :edit
+      flash.now[:error] = t('profile.error')
     end
+    redirect_to_target
   end
 
   def delete_account
@@ -40,6 +44,14 @@ class ProfilesController < ApplicationController
   end
 
   private
+
+  def redirect_to_target
+    redirect_path = profile_path
+    if params[:target] == 'additional'
+      redirect_path = additional_profile_path
+    end
+    redirect_to redirect_path
+  end
 
   def assign_profile
     @profile = current_user.profile

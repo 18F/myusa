@@ -58,6 +58,10 @@ Rails.application.configure do
     config.cache_store = :dalli_store, *memcached_hosts
   end
 
+  # SMS sender number.
+  # This is the number from which our 2FA SMS messages will be sent.
+  config.sms_sender_number = '+12407433320'
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
 

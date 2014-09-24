@@ -121,7 +121,7 @@ describe 'OAuth' do
       @auths_page.first_developer_app.request_public.click
       expect(@auths_page.first_developer_app.status).to eq('Pending Approval')
       expect(ActionMailer::Base.deliveries.last.subject).to eq(
-        'testApp has gone public'
+        'testApp has requested to become public'
       )
     end
 

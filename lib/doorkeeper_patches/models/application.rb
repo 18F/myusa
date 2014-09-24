@@ -23,4 +23,17 @@ class Doorkeeper::Application
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   audit_on :create
+
+  def owner_emails=(val)
+    email_list = val.split(' ')
+    self.owners = User.where("email in (?)", email_list)
+    super
+  end
+
+  def developer_emails=(val)
+    email_list = val.split(' ')
+    self.developers = User.where("email in (?)", email_list)
+    super
+  end
+
 end

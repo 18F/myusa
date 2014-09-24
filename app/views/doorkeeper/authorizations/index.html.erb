@@ -31,7 +31,7 @@
       <% end %>
       <% @applications.each do |application| %>
         <tr id="application_<%= application.id %>">
-          <td><%= link_to application.name, [:oauth, application] %></td>
+          <td><%= link_to application.name, edit_oauth_application_path(application) %></td>
           <td><%= app_status(application) %></td>
           <td>
             <%= form_tag new_api_key_path, method: :post do %>

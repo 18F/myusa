@@ -23,6 +23,7 @@ gem 'rails-observers'
 gem 'hpricot'
 gem 'premailer-rails'
 gem 'twilio-ruby'
+gem 'bootstrap_tokenfield_rails'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'

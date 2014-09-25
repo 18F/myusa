@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   protected
-    
+
   def clear_return_to
     key = stored_location_key_for(:user)
     session.delete(key)

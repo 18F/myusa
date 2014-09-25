@@ -2,7 +2,7 @@ class SessionsController < Devise::SessionsController
   include Devise::Controllers::Rememberable
   before_filter :set_logout_user, only: [:destroy]
 
-  before_filter :clear_return_to, unless: -> { params[:login_required].present? }
+  before_filter :clear_return_to, only: [:new], unless: -> { params[:login_required].present? }
 
   layout 'login', only: [:new]
   before_action :authenticate_user_from_token!, only: [:new]

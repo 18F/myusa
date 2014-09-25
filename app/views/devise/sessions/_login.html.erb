@@ -23,14 +23,10 @@
   </div>
   <div class="row">
     <div class="col-md-5 col-md-offset-1">
-      <button class="btn btn-primary btn-lg width-100">
-        My Profile
-      </button>
+      <%= link_to 'My Profile', profile_path, :class => 'btn btn-primary btn-lg width-100' %>
     </div>
     <div class="col-md-5">
-      <button class="btn btn-primary btn-lg width-100">
-        My Applications
-      </button>
+      <%= link_to 'My Applications', authorizations_path, :class => 'btn btn-primary btn-lg width-100' %>
     </div>
   </div>
 

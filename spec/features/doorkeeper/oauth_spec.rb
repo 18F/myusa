@@ -86,6 +86,16 @@ describe 'OAuth' do
 
     context 'when logged in', logged_in: true do
       context 'with valid url params' do
+        scenario 'user can switch to another user' do
+          # Authorize the client app
+          expect(@auth_page).to be_displayed
+          @auth_page.not_me_link.click
+          sign_in_page = SignInPage.new
+          expect(sign_in_page).to have_content(
+            'You need to sign in or sign up before continuing.'
+          )
+        end
+
         scenario 'user can authorize' do
           # Authorize the client app
           expect(@auth_page).to be_displayed

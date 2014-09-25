@@ -30,7 +30,12 @@ class ApplicationController < ActionController::Base
   # Overriding Devise method to allow for redirect_url
   def after_sign_out_path_for(resource_or_scope)
     url = params[:continue]
-    if !url.blank? &&
+    oauth_params = params.slice(
+      'client_id', 'redirect_uri', 'state', 'response_type', 'scope'
+    )
+    if url == oauth_authorization_path && oauth_params.present?
+      return oauth_authorization_path(oauth_params)
+    elsif !url.blank? &&
        valid_url?(url) &&
        @logged_out_user &&
        member_subdomain?(

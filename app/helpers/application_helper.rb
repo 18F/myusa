@@ -124,4 +124,15 @@ module ApplicationHelper
   def yes_no_options_for_select(value)
     options_for_select(yes_no_options, value)
   end
+
+  def not_me_path
+    if params[:client_id].blank?
+      destroy_user_session_path
+    else
+      new_params = params.slice(
+        'client_id', 'redirect_uri', 'state', 'response_type', 'scope'
+      ).merge(continue: oauth_authorization_path)
+      destroy_user_session_path(new_params)
+    end
+  end
 end

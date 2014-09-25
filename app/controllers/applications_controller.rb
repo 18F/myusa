@@ -61,7 +61,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     end
 
     params.require(:application).permit(
-      :name, :description, :short_description, :custom_text, :url, :image,
+      :name, :description, :short_description, :custom_text, :url, :logo_url,
       :owner_emails, :developer_emails, :scopes, :redirect_uri
     )
   end

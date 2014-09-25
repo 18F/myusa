@@ -116,11 +116,8 @@ ActiveRecord::Schema.define(version: 20140923210054) do
     t.string   "description"
     t.string   "short_description"
     t.string   "custom_text"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
     t.datetime "requested_public_at"
+    t.string   "logo_url"
     t.string   "owner_emails",        limit: 2000
     t.string   "developer_emails",    limit: 2000
   end

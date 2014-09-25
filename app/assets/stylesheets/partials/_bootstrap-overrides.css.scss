@@ -70,3 +70,10 @@ ul.dropdown-menu {
   background-color: transparent;
   font-weight: 700;
 }
+
+/**
+ * needed for the column to actually float in the center of the layout
+ */
+.center-block {
+  float: none;
+}

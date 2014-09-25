@@ -408,12 +408,12 @@ footer {
       @media (min-width: $screen-md-min) {
         font-family: 'FontAwesome';
         content: "\f105";
-        font-size: 300px;
+        font-size: 150px;
         color: #666;
-        opacity: 0.075;
+        opacity: 0.15;
         position: absolute;
-        top: -100px;
-        right: -100px;
+        top: -65px;
+        right: -40px;
       }
     }
   }

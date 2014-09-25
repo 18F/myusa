@@ -2,6 +2,29 @@
 # Group Profile
 
 
+## GET /api/v1/userinfo
+
+Get the user profile with attributes limited to just those chosen by app owner during app registration in an OpenID Connect format.
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "sub": "a83dead6-d98d-4377-9e69-eb00488839f5"
+      "email": "joe@citizen.org",
+      "given_name": "Joe",
+      "middle_name": null,
+      "family_name": "Citizen",
+      "address": {
+        "street_address": null,
+        "locality": null,
+        "region": null,
+        "postal_code": null
+      },
+      "phone_number": null,
+      "gender": null,
+      "updated_at": "2014-09-26T20:06:04.000Z"
+    }
+
 ## GET /api/v1/profile?schema=
 
 Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.
@@ -18,7 +41,7 @@ Get the user profile with attributes limited to just those chosen by app owner d
       "additionalName": null,
       "familyName": "Citizen",
       "homeLocation": {
-        "streetAddress": "",
+        "streetAddress": null,
         "addressLocality": null,
         "addressRegion": null,
         "postalCode": null

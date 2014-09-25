@@ -61,17 +61,53 @@ describe Api::V1 do
     let(:path)   { '/api/v1/tokeninfo' }
     let(:scopes) { ['profile.first_name', 'profile.last_name'] }
     let(:token)  { build_access_token(client_app, scopes) }
-    describe "response status" do
-      subject { get path, nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
+
+    describe 'response status' do
+      subject { get path, nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}" }
       its(:status) { should eq 200 }
     end
-    describe "response body" do
+
+    describe 'response body' do
       subject { JSON.parse(get(path, nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}").body) }
       its(['resource_owner_id'])  { should eq user.id }
       its(['scopes'])             { should eq scopes }
       its(['expires_in_seconds']) { should be_within(2).of Doorkeeper.configuration.access_token_expires_in }
-      its(['application'])        { should eql 'uid'=>client_app.uid }
+      its(['application'])        { should eql 'uid' => client_app.uid }
       its(:size)                  { should eq 4 }
+    end
+  end
+
+  describe 'GET /api/v1/userinfo' do
+    let(:path)   { '/api/v1/tokeninfo' }
+    let(:scopes) { ['profile.email', 'profile.first_name', 'profile.last_name'] }
+    let(:token) { build_access_token(client_app, scopes) }
+
+    it 'should return profile limited to requested scopes' do
+      response = get '/api/v1/userinfo', nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}"
+      expect(response.status).to eq 200
+      parsed_json = JSON.parse(response.body)
+      expect(parsed_json).to be
+      expect(parsed_json['sub']).to eq user.uid
+      expect(parsed_json['given_name']).to eq 'Joe'
+      expect(parsed_json['family_name']).to eq 'Citizen'
+      expect(parsed_json['email']).to eq 'joe@citizen.org'
+    end
+
+    context 'when app has limited scope' do
+      let(:token) do
+        build_access_token(client_app, ['profile.first_name', 'profile.last_name'])
+      end
+
+      it 'should return profile limited to requested scopes' do
+        response = get '/api/v1/userinfo', nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}"
+        expect(response.status).to eq 200
+        parsed_json = JSON.parse(response.body)
+        expect(parsed_json).to be
+        expect(parsed_json['sub']).to eq user.uid
+        expect(parsed_json['given_name']).to eq 'Joe'
+        expect(parsed_json['family_name']).to eq 'Citizen'
+        expect(parsed_json['email']).to be_blank
+      end
     end
   end
 

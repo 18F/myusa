@@ -94,15 +94,6 @@ describe 'OAuth' do
         expect(@auth_page).to be_displayed
       end
 
-      feature 'session gets destroyed unless when redirected' do
-        scenario 'user visits sign in page during oauth process' do
-          @profile_page = ProfilePage.new
-          visit(new_user_session_path)
-          @sign_in_page.google_button.click
-          expect(@profile_page).to be_displayed
-        end
-      end
-
       scenario 'it tells you why you\'re here' do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to have_welcome

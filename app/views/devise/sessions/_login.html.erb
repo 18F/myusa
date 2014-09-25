@@ -20,7 +20,7 @@
   </div>
   <div class="row">
     <div class="col-md-12 omniauth-buttons text-center">
-      <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-lg btn-google" %>
+      <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2, login_required: params[:login_required]), :class => "btn btn-social btn-lg btn-google" %>
     </div>
     <div class="col-md-12 hidden-buttons">
       <%= render partial: 'devise/sessions/email_option', locals: { resource: User.new, resource_name: :user } %>

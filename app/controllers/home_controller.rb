@@ -1,7 +1,5 @@
 class HomeController < ApplicationController
-  include ClearSession
   layout 'marketing', only: [:index, :legal, :developer]
-  before_filter :clear_return_to, only: [:index]
 
   def contact_us
     send_contact_us_email

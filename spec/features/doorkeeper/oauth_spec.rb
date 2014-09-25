@@ -74,6 +74,9 @@ describe 'OAuth' do
       scenario 'redirects to login page' do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to be_displayed
+        expect(@sign_in_page).to_not have_content(
+          'You need to sign in or sign up before continuing'
+        )
       end
 
       scenario 'it tells you why you\'re here' do

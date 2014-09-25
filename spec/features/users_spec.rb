@@ -6,6 +6,16 @@ describe 'Users' do
   let(:user) { create_confirmed_user_with_profile(email: email) }
 
   describe 'change your name' do
+    context 'user is not signed in' do
+      it 'should display need to sign in warning' do
+        visit edit_profile_url
+        @sign_in_page = SignInPage.new
+        expect(@sign_in_page).to have_content(
+          'You need to sign in or sign up before continuing'
+        )
+      end
+    end
+
     context 'user is signed in' do
       before do
         login(user)

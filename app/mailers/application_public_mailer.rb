@@ -1,4 +1,5 @@
 class ApplicationPublicMailer < ActionMailer::Base
+  layout 'mailers/notification_template'
   def notify_is_public(application, user)
     @to      = 'myusa@gsa.gov'
     @message = "<p>#{application.name} has requested to become public.</p>"\

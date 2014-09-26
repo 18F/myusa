@@ -1,4 +1,5 @@
 class NotificationMailer < ActionMailer::Base
+  layout 'mailers/notification_template'
   def notification_email(notification)
     @notification = notification
     @app = @notification.app

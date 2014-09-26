@@ -1,4 +1,5 @@
 class ContactMailer < ActionMailer::Base
+  layout 'mailers/notification_template'
   def contact_us(from, return_email, message)
     @from = from
     @message = message

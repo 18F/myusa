@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919145133) do
+ActiveRecord::Schema.define(version: 20140923210054) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20140919145133) do
     t.string   "custom_text"
     t.datetime "requested_public_at"
     t.string   "logo_url"
+    t.string   "owner_emails",        limit: 2000
+    t.string   "developer_emails",    limit: 2000
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree

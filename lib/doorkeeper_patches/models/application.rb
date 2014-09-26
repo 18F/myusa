@@ -24,4 +24,17 @@ class Doorkeeper::Application
   end
 
   audit_on :create
+
+  def owner_emails=(val)
+    email_list = val.split(' ')
+    self.owners = User.where("email in (?)", email_list)
+    super
+  end
+
+  def developer_emails=(val)
+    email_list = val.split(' ')
+    self.developers = User.where("email in (?)", email_list)
+    super
+  end
+
 end

@@ -10,7 +10,7 @@ describe 'Users' do
       it 'should display need to sign in warning' do
         visit edit_profile_url
         @sign_in_page = SignInPage.new
-        expect(@sign_in_page).to have_content(
+        expect(@sign_in_page).to_not have_content(
           'You need to sign in or sign up before continuing'
         )
       end

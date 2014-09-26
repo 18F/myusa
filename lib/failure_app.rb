@@ -9,8 +9,6 @@ class FailureApp < Devise::FailureApp
     if flash[:timedout] && flash[:alert]
       flash.keep(:timedout)
       flash.keep(:alert)
-    else
-      flash[:alert] = i18n_message unless warden_options[:client_id]
     end
     redirect_to redirect_url
   end

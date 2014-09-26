@@ -1,9 +1,10 @@
 class SessionsController < Devise::SessionsController
   include Devise::Controllers::Rememberable
-
   before_filter :set_logout_user, only: [:destroy]
 
-  layout "login", only: [:new]
+  before_filter :clear_return_to, only: [:new], unless: -> { params[:login_required].present? }
+
+  layout 'login', only: [:new]
   before_action :authenticate_user_from_token!, only: [:new]
 
   def create
@@ -33,10 +34,6 @@ class SessionsController < Devise::SessionsController
   end
 
   private
-
-  def create_authentication_token(user)
-    user.set_authentication_token
-  end
 
   def authenticate_user_from_token!
     if warden.authenticate(:email_authenticatable)

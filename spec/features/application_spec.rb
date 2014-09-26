@@ -13,7 +13,7 @@ describe 'Applications' do
       end
 
       it "should change the user's name when first or last name changes" do
-        expect(@application_new_page.logo_url_hint.text).to eq(
+        expect(@application_new_page).to have_content(
           'Please provide '\
           'a secure (https) URL for an image that identifies your application.'\
           ' The image should be 120px by 120px in size.'

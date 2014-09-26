@@ -53,12 +53,11 @@
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:logo_url].present?}" do %>
     <div class="form-group">
       <%= f.label :logo_url, class: ' control-label', for: 'application_logo_url' %>
-      <br>
-      <%= f.text_field :logo_url, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :logo_url %>
-      <span id="logo_url_hint" class="help-block">
+      <span class="help-block">
         <%= t('application.logo_url_hint') %>
       </span>
+      <%= f.text_field :logo_url, class: 'form-control' %>
+      <%= doorkeeper_errors_for application, :logo_url %>
     </div>
   <% end %>
 

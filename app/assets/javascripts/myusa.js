@@ -119,14 +119,15 @@ $(document).ready(function () {
 /**
  * Marketing page
  */
- $("#contact-form").submit(function(e){
-  e.preventDefault();
-  var formData = $(this).serialize();
-  $.post('contact_us', formData, function(response){
-    $(".contact-flash .message").text(response.message)
-    $(".contact-flash").removeClass('hidden');
+  $('#contact-form').submit(function(e){
+    $('#contact_submit').val('Sending your message...').attr('disabled','disabled')
+    e.preventDefault();
+    var formData = $(this).serialize();
+    $.post('contact_us', formData, function(response){
+      $('.contact-flash .message').text(response.message)
+      $('.contact-flash').removeClass('hidden');
+      $('#contact_submit').val('Send Us Your Message').removeAttr('disabled','disabled')
+    });
+    $(this)[0].reset();
   });
-  $(this)[0].reset();
- });
-
 });

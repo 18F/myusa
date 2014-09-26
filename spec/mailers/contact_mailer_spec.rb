@@ -11,7 +11,7 @@ describe ContactMailer do
     its(:subject) { should eql 'Contact - MyUSA marketing page' }
     its(:reply_to) { should contain_exactly email }
     # its('body.encoded') { should include message }
-    its(:body) { should include message }
-    its(:body) { should include 'User Name'}
+    its('body.encoded') { should include message }
+    its('body.encoded') { should include 'User Name'}
   end
 end

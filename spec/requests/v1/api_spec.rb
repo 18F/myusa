@@ -142,6 +142,12 @@ describe Api::V1 do
           expect(user.notifications.size).to eq 1
           expect(user.notifications.first.subject).to eq 'Project MyUSA'
         end
+
+        it 'sends a notification email when a notification is created' do
+          expect do
+            Notification.create!({subject: "Notification", received_at: Time.now - 1.hour, body: "This is a notification", user_id: user.id, app_id: client_app_2.id})
+          end.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end
       end
 
       context 'when the notification attributes are not valid' do

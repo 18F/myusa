@@ -86,6 +86,23 @@ describe 'OAuth' do
 
     context 'when logged in', logged_in: true do
       context 'with valid url params' do
+        let(:user2) { FactoryGirl.create(:user) }
+
+        scenario 'user can switch to another user' do
+          @sign_in_page = SignInPage.new
+
+          expect(@auth_page).to be_displayed
+          @auth_page.not_me_link.click
+          expect(@sign_in_page).to be_displayed
+          @sign_in_page.email.set user2.email
+          @sign_in_page.submit.click
+
+          open_email(user2.email)
+          current_email.click_link('Connect to MyUSA')
+
+          expect(@auth_page).to be_displayed
+        end
+
         scenario 'user can authorize' do
           # Authorize the client app
           expect(@auth_page).to be_displayed

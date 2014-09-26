@@ -6,7 +6,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'mysql2'
-gem "paperclip", "~> 4.1.1"
 ## app dependencies
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
@@ -23,6 +22,7 @@ gem 'rails-observers'
 gem 'hpricot'
 gem 'premailer-rails'
 gem 'twilio-ruby'
+gem 'bootstrap_tokenfield_rails'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'

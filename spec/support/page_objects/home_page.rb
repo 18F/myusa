@@ -7,6 +7,11 @@ class HomePage < SitePrism::Page
   element :contact_flash, 'div.contact-flash'
   element :contact_flash_no_js, '.alert.alert-info'
 
+  section :login_form, 'section.login-section' do
+    element :email, "noscript input#inputEmail"
+    element :submit, "noscript input[value='Connect']"
+  end
+
   section :contact_form, '#contact-form' do
     element :message, '#contact_us_message'
     element :from, '#contact_us_from'

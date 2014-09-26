@@ -54,23 +54,23 @@ describe 'OAuth' do
 
       it 'displays the authorizations' do
         expect(@auths_page).to be_displayed
-        expect(@auths_page.first_app.app_name).to have_content 'Client App 1'
-        expect(@auths_page.second_app.app_name).to have_content 'Client App 2'
-        expect(@auths_page.first_app.app_scopes.map(&:text)).to eq(
+        expect(@auths_page.authorizations.first.app_name).to have_content 'Client App 1'
+        expect(@auths_page.authorizations.second.app_name).to have_content 'Client App 2'
+        expect(@auths_page.authorizations.first.app_scopes.map(&:text)).to eq(
           ['Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
            'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
            'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
            'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'])
-        expect(@auths_page.first_app.app_scope_sections.map(&:text)).to eq(
+        expect(@auths_page.authorizations.first.app_scope_sections.map(&:text)).to eq(
           ['Identify you by your email address',
            'Address you by name',
            'Know where you live',
            'Know how to contact you by phone or text message',
            'Find out more about you',
            'Send you notifications via MyUSA'])
-        expect(@auths_page.second_app.app_scopes.map(&:text)).to eq(
+        expect(@auths_page.authorizations.second.app_scopes.map(&:text)).to eq(
           ['Email Address', 'Zip Code', 'Phone Number', 'Gender'])
-        expect(@auths_page.second_app.app_scope_sections.map(&:text)).to eq(
+        expect(@auths_page.authorizations.second.app_scope_sections.map(&:text)).to eq(
           ['Identify you by your email address',
            'Know where you live',
            'Know how to contact you by phone or text message',
@@ -80,10 +80,10 @@ describe 'OAuth' do
 
       it 'revokes authorization to an application' do
         expect(@auths_page).to be_displayed
-        expect(@auths_page.second_app.app_name).to have_content 'Client App 2'
-        @auths_page.second_revoke_button.click
+        expect(@auths_page.authorizations.second.app_name).to have_content 'Client App 2'
+        @auths_page.authorizations.second.revoke_access_button.click
         expect(@auths_page).to be_displayed
-        expect(@auths_page.first_app.app_name).to have_content 'Client App 1'
+        expect(@auths_page.authorizations.first.app_name).to have_content 'Client App 1'
         expect(@auths_page).to_not have_content 'Client App 2'
       end
     end
@@ -92,7 +92,8 @@ describe 'OAuth' do
   describe 'applications' do
     before :each do
       login user
-      @new_application_page = OAuth2::NewApplicationPage.new
+      @new_application_page = NewApplicationPage.new
+      @edit_application_page = EditApplicationPage.new
       @auths_page = OAuth2::AuthorizationsPage.new
       @new_application_page.load
       @new_application_page.name.set 'testApp'
@@ -102,19 +103,19 @@ describe 'OAuth' do
     end
 
     it "allows user to create app with image and get secret" do
+      puts page.current_url
       expect(@auths_page).to be_displayed
       expect(@auths_page.secret_key).to be_present
     end
 
     it "allows user to generate new api key" do
-      app = Doorkeeper::Application.find_by_name('testApp')
-      old_secret = app.secret
+      old_secret = @auths_page.secret_key.text
       @auths_page.new_api_key.click
       expect(@auths_page.secret_key).to_not match(old_secret)
     end
 
     it 'displays private status' do
-      expect(@auths_page.first_developer_app.status).to eq('Private')
+      expect(@auths_page.developer_apps.first.status).to eq('Private')
     end
 
     it 'allows a user to request public access' do
@@ -130,7 +131,12 @@ describe 'OAuth' do
       app.public = true
       app.save
       @auths_page.load
-      expect(@auths_page.first_developer_app.status).to eq('Public')
+      expect(@auths_page.developer_apps.first.status).to eq('Public')
+    end
+
+    it 'can navigate to the edit page' do
+      @auths_page.developer_apps.first.name.click
+      expect(@edit_application_page).to be_displayed
     end
   end
 end

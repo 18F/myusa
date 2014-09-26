@@ -15,18 +15,18 @@ module Audit
       observe ::UserAction
 
       def before(controller)
-        self.controller = controller
+        @user = controller.send(:current_user)
+        @ip = controller.request.remote_ip
       end
 
       def after(controller);
-        self.controller = nil
+        @user = nil
+        @ip = nil
       end
 
       def before_create(record)
-        if controller.present?
-          record.user = controller.send(:current_user)
-          record.remote_ip = controller.request.remote_ip
-        end
+        record.user = @user if record.user.nil?
+        record.remote_ip = @ip if record.remote_ip.nil?
       end
     end
 

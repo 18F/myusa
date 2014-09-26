@@ -1,6 +1,8 @@
 require 'feature_helper'
 
 describe 'Sign In' do
+  def link_text; 'Connect to MyUSA'; end
+
   describe 'page' do
     before do
       @page = SignInPage.new
@@ -42,18 +44,11 @@ describe 'Sign In' do
 
     context 'with an email address and valid token' do
       it 'logs them in' do
+        @target_page.load
         visit new_user_session_path(email: user.email, token: token.raw)
 
         @target_page.load
         expect(@target_page).to be_displayed
-      end
-    end
-    context 'with an email address and bad token' do
-      it 'does not log them in' do
-        visit new_user_session_path(email: user.email, token: 'foobar')
-
-        @target_page.load
-        expect(@sign_in_page).to be_displayed
       end
     end
   end
@@ -72,7 +67,6 @@ describe 'Sign In' do
     context 'Signing in for the first time' do
       describe 'with email address' do
         let(:email) { 'testy@example.gov' }
-        let(:link_text) { 'Connect to MyUSA' }
         let(:instructions) { "CYM, #{email}" }
         let(:remember_me) { false  }
 
@@ -154,6 +148,125 @@ describe 'Sign In' do
         end
       end
     end
+
+    context 'with existing user' do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:email) { user.email }
+
+      let(:omniauth_provider) { :google_oauth2 }
+      let(:omniauth_uid) { 12345 }
+
+      let(:omniauth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: :omniauth_provider,
+          uid: :omniauth_uid,
+          info: {
+            email: user.email
+          }
+        )
+      end
+
+      before :each do
+        clear_emails
+
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.mock_auth[omniauth_provider] = omniauth_hash
+
+        @target_page = TargetPage.new
+        @sign_in_page = SignInPage.new
+        @token_instructions_page = TokenInstructionsPage.new
+      end
+
+      context 'when redirected to login page' do
+        before :each do
+          @target_page.load
+        end
+
+        context 'when signing in with an emailed token' do
+          it 'redirects back' do
+            expect(@sign_in_page).to be_displayed
+
+            @sign_in_page.email.set email
+            @sign_in_page.submit.click
+
+            open_email(email)
+            current_email.click_link(link_text)
+
+            expect(@target_page).to be_displayed
+          end
+        end
+        context 'when signing in with oauth' do
+          it 'redirects to profile' do
+            @sign_in_page.google_button.click
+            expect(@target_page).to be_displayed
+          end
+        end
+      end
+
+      context 'when logging in from the home page' do
+        context 'after abanoning sign in flow' do
+          before :each do
+            @home_page = HomePage.new
+            @profile_page = ProfilePage.new
+
+            @target_page.load
+            @home_page.load
+          end
+
+          context 'when signing in with an emailed token' do
+            it 'redirects to profile' do
+              expect(@home_page).to be_displayed
+
+              @home_page.login_form.email.set email
+              @home_page.login_form.submit.click
+
+              open_email(email)
+              current_email.click_link(link_text)
+
+              expect(@profile_page).to be_displayed
+            end
+          end
+
+          context 'when signing in with oauth' do
+            it 'redirects to profile' do
+              @sign_in_page.google_button.click
+              expect(@profile_page).to be_displayed
+            end
+          end
+        end
+
+        context 'when logging in from the sign in page' do
+          context 'after abanoning sign in flow' do
+            before :each do
+              @profile_page = ProfilePage.new
+
+              @target_page.load
+              @sign_in_page.load
+              expect(@sign_in_page).to be_displayed
+            end
+
+            context 'when signing in with an emailed token' do
+              it 'redirects to profile' do
+                @sign_in_page.email.set email
+                @sign_in_page.submit.click
+
+                open_email(email)
+                current_email.click_link(link_text)
+
+                expect(@profile_page).to be_displayed
+              end
+            end
+
+            context 'when signing in with oauth' do
+              it 'redirects to profile' do
+                @sign_in_page.google_button.click
+                expect(@profile_page).to be_displayed
+              end
+            end
+          end
+        end
+      end
+    end
   end
 
   describe 'Authenticate with an external identity provider' do
@@ -164,21 +277,21 @@ describe 'Sign In' do
     let(:gender) { 'female' }
     let(:phone) { '987-654-3210' }
 
-    let(:uid) { '12345' }
-
     before :each do
       @target_page = TargetPage.new
       @sign_in_page = SignInPage.new
+
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.mock_auth[omniauth_provider] = omniauth_hash
     end
 
     context 'with Google' do
-      let(:provider) { :google_oauth2 }
-
-      before :each do
-        OmniAuth.config.test_mode = true
-        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
-          provider: provider,
-          uid: uid,
+      let(:omniauth_provider) { :google_oauth2 }
+      let(:omniauth_uid) { 12345 }
+      let(:omniauth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: omniauth_provider,
+          uid: omniauth_uid,
           info: OmniAuth::AuthHash.new(
             email: email,
             first_name: first_name,
@@ -195,7 +308,10 @@ describe 'Sign In' do
         before :each do
           User.create! do |user|
             user.email = email
-            user.authentications.build(provider: provider, uid: uid)
+            user.authentications.build(
+              provider: omniauth_provider,
+              uid: omniauth_uid
+            )
           end
 
         end

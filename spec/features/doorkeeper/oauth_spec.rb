@@ -10,7 +10,9 @@ describe 'OAuth' do
   # Capybara context. More detail here:
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
+    OAuth2::Client.new(
+      client_app.uid, client_app.secret, site: 'http://www.example.com'
+    ) do |b|
       b.request :url_encoded
       b.adapter :rack, Capybara.app
     end
@@ -71,9 +73,25 @@ describe 'OAuth' do
     end
 
     context 'when not logged in' do
-      scenario 'redirects to login page' do
+      let(:provider) { :google_oauth2 }
+
+      before :each do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to be_displayed
+
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
+          provider: provider,
+          uid: user.uid,
+          info: OmniAuth::AuthHash.new(
+            email: user.email
+          )
+        )
+      end
+
+      scenario 'redirects to login page and preserves session' do
+        @sign_in_page.google_button.click
+        expect(@auth_page).to be_displayed
       end
 
       scenario 'it tells you why you\'re here' do
@@ -86,6 +104,23 @@ describe 'OAuth' do
 
     context 'when logged in', logged_in: true do
       context 'with valid url params' do
+        let(:user2) { FactoryGirl.create(:user) }
+
+        scenario 'user can switch to another user' do
+          @sign_in_page = SignInPage.new
+
+          expect(@auth_page).to be_displayed
+          @auth_page.not_me_link.click
+          expect(@sign_in_page).to be_displayed
+          @sign_in_page.email.set user2.email
+          @sign_in_page.submit.click
+
+          open_email(user2.email)
+          current_email.click_link('Connect to MyUSA')
+
+          expect(@auth_page).to be_displayed
+        end
+
         scenario 'user can authorize' do
           # Authorize the client app
           expect(@auth_page).to be_displayed

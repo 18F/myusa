@@ -7,6 +7,10 @@ class Doorkeeper::Application
   has_many :owners, -> { where 'memberships.member_type' => 'owner' }, through: :memberships, source: :user
   has_many :developers, -> { where 'memberships.member_type' => 'developer' }, through: :memberships, source: :user
 
+  validates_format_of :logo_url, with: URI.regexp(['https']),
+                                 allow_blank: true,
+                                 message: 'Logo url must begin with https'
+
   scope :public?, -> { where public: true }
   scope :private?, -> { where public: false }
 
@@ -19,8 +23,18 @@ class Doorkeeper::Application
     end
   end
 
-  has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-
   audit_on :create
+
+  def owner_emails=(val)
+    email_list = val.split(' ')
+    self.owners = User.where("email in (?)", email_list)
+    super
+  end
+
+  def developer_emails=(val)
+    email_list = val.split(' ')
+    self.developers = User.where("email in (?)", email_list)
+    super
+  end
+
 end

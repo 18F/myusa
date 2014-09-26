@@ -1,9 +1,37 @@
 <div class="row">
-<div class="col-md-10 col-md-offset-1">
-<div class="login callout-box">
+<div class="col-sm-10 col-md-8 col-lg-7 center-block">
+<div class="login callout-box <% if user_signed_in? %>logged-in<% end %>">
   <div class="shield">
     <i class="fa icon-myusa"></i>
   </div>
+
+  <% if user_signed_in? %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">
+        Welcome to MyUSA<% if current_user.profile.first_name %>, <%= current_user.profile.first_name %><% end %>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center">
+        Here's a few ways to get started with MyUSA.
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5 col-md-offset-1">
+      <%= link_to 'My Profile', profile_path, :class => 'btn btn-primary btn-lg width-100' %>
+    </div>
+    <div class="col-md-5">
+      <%= link_to 'My Applications', authorizations_path, :class => 'btn btn-primary btn-lg width-100' %>
+    </div>
+  </div>
+
+  <% else %>
+
   <div class="row">
     <div class="col-md-12">
       <h1 class="text-center">
@@ -20,7 +48,7 @@
   </div>
   <div class="row">
     <div class="col-md-12 omniauth-buttons text-center">
-      <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2), :class => "btn btn-social btn-lg btn-google" %>
+      <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2, login_required: params[:login_required]), :class => "btn btn-social btn-lg btn-google" %>
     </div>
     <div class="col-md-12 hidden-buttons">
       <%= render partial: 'devise/sessions/email_option', locals: { resource: User.new, resource_name: :user } %>
@@ -49,5 +77,7 @@
       </span>
     </div>
   </div>
+
+  <% end %>
 </div>
 </div></div>

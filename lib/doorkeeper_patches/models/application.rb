@@ -1,11 +1,11 @@
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
-  has_many :memberships, foreign_key: 'oauth_application_id', dependent: :destroy
-  has_many :members, through: :memberships, source: :user
+  # has_many :memberships, foreign_key: 'oauth_application_id', dependent: :destroy
+  # has_many :members, through: :memberships, source: :user
 
-  has_many :owners, -> { where 'memberships.member_type' => 'owner' }, through: :memberships, source: :user
-  has_many :developers, -> { where 'memberships.member_type' => 'developer' }, through: :memberships, source: :user
+  # has_many :owners, -> { where 'memberships.member_type' => 'owner' }, through: :memberships, source: :user
+  # has_many :developers, -> { where 'memberships.member_type' => 'developer' }, through: :memberships, source: :user
 
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
@@ -25,16 +25,16 @@ class Doorkeeper::Application
 
   audit_on :create
 
-  def owner_emails=(val)
-    email_list = val.split(' ')
-    self.owners = User.where("email in (?)", email_list)
-    super
-  end
-
-  def developer_emails=(val)
-    email_list = val.split(' ')
-    self.developers = User.where("email in (?)", email_list)
-    super
-  end
+  # def owner_emails=(val)
+  #   email_list = val.presence && val.split(' ')
+  #   self.owners = User.where("email in (?)", email_list)
+  #   super
+  # end
+  #
+  # def developer_emails=(val)
+  #   email_list = val.presence && val.split(' ')
+  #   self.developers = User.where("email in (?)", email_list)
+  #   super
+  # end
 
 end

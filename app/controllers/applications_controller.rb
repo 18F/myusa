@@ -3,13 +3,14 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   layout 'dashboard'
 
   def new
-    @application = Doorkeeper::Application.new(owner_emails: current_user.email)
+    @application = Doorkeeper::Application.new
   end
 
   def create
     @application = Doorkeeper::Application.new(application_params)
+    @application.owner = current_user
 
-    validate_owner_emails
+    # validate_owner_emails
 
     if @application.errors.empty? && @application.save
       message = I18n.t('new_application')
@@ -24,7 +25,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   def update
     @application.attributes = application_params
 
-    validate_owner_emails
+    # validate_owner_emails
 
     if @application.errors.empty? && @application.save
       flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])

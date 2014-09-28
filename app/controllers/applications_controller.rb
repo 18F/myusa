@@ -1,5 +1,7 @@
 class ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
+  before_filter :ensure_application_owner!, only: [:show, :edit, :update, :destroy]
+
   layout 'dashboard'
 
   def new
@@ -9,8 +11,6 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   def create
     @application = Doorkeeper::Application.new(application_params)
     @application.owner = current_user
-
-    # validate_owner_emails
 
     if @application.errors.empty? && @application.save
       message = I18n.t('new_application')
@@ -24,8 +24,6 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   def update
     @application.attributes = application_params
-
-    # validate_owner_emails
 
     if @application.errors.empty? && @application.save
       flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
@@ -53,6 +51,12 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   end
 
   private
+
+  def ensure_application_owner!
+    unless @application.owner == current_user
+      raise ActiveRecord::RecordNotFound
+    end
+  end
 
   def validate_owner_emails
     return unless application_params.has_key?(:owner_emails)

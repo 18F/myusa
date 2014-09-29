@@ -257,7 +257,7 @@ end
 Warden::Manager.after_fetch do |user, auth, opts|
   request = Rack::Request.new(auth.env)
   params = request.params
-
+  
   if auth.authenticated? && request.get? && !!params["logout"]
     auth.logout
   end

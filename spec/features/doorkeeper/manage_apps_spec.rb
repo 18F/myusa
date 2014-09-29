@@ -103,7 +103,6 @@ describe 'OAuth' do
     end
 
     it "allows user to create app with image and get secret" do
-      puts page.current_url
       expect(@auths_page).to be_displayed
       expect(@auths_page.secret_key).to be_present
     end

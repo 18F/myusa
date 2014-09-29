@@ -29,7 +29,6 @@ describe 'OAuth' do
   shared_examples 'authorizable' do
     scenario 'user can authorize' do
       expect(@auth_page).to be_displayed
-      puts page.body
       @auth_page.allow_button.click
 
       token = @token_page.get_token(oauth_client, client_app.redirect_uri)

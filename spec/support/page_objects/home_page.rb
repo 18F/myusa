@@ -8,7 +8,7 @@ class HomePage < SitePrism::Page
   element :contact_flash_no_js, '.alert.alert-info'
 
   section :login_form, 'section.login-section' do
-    element :email, "noscript input#inputEmail"
+    element :email, 'noscript input#inputEmail'
     element :submit, "noscript input[value='Connect']"
   end
 
@@ -19,7 +19,7 @@ class HomePage < SitePrism::Page
     element :submit, "input[value='Send Us Your Message']"
   end
 
-  def submit_contact_form(message='lorum', email='user@gsa.gov')
+  def submit_contact_form(message = 'lorum', email = 'user@gsa.gov')
     load
     contact_form.message.set(message)
     contact_form.from.set(email)

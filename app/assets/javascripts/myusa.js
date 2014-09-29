@@ -124,15 +124,18 @@ $(document).ready(function () {
 /**
  * Marketing page
  */
-  $('#contact-form').submit(function(e){
-    $('#contact_submit').val('Sending your message...').attr('disabled','disabled')
+
+  $('#contact_submit').click(function (e) {
+    var btn  = $(this)
+    var form = $('#contact-form')
+    btn.button('loading');
     e.preventDefault();
-    var formData = $(this).serialize();
+    var formData =  form.serialize();
     $.post('contact_us', formData, function(response){
       $('.contact-flash .message').text(response.message)
       $('.contact-flash').removeClass('hidden');
-      $('#contact_submit').val('Send Us Your Message').removeAttr('disabled','disabled')
+       btn.button('reset')
     });
-    $(this)[0].reset();
+    form[0].reset();
   });
 });

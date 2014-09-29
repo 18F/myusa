@@ -124,4 +124,8 @@ module ApplicationHelper
   def yes_no_options_for_select(value)
     options_for_select(yes_no_options, value)
   end
+
+  def not_me_path
+    '?' + Rack::Utils.build_query(request.query_parameters.merge(logout: true))
+  end
 end

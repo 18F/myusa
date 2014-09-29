@@ -4,6 +4,7 @@ class MobileRecoveriesController < ApplicationController
   before_filter :authenticate_user!
 
   def new; end
+
   def cancel
     render text: t(:skip_this_step, scope: [:mobile_confirmation], profile_link: profile_path).html_safe,
            layout: 'welcome'
@@ -34,7 +35,7 @@ class MobileRecoveriesController < ApplicationController
 
   def resend
     mobile_confirmation.regenerate_token
-    render :update
+    render :create
   end
 
   private

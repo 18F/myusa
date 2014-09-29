@@ -58,9 +58,17 @@
 
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:custom_text].present?}" do %>
     <div class="form-group">
-      <%= f.label :custom_text, class: 'control-label', for: 'application_url' %>    
+      <%= f.label :custom_text, class: 'control-label', for: 'application_url' %>
       <%= f.text_field :custom_text, class: 'form-control' %>
       <%= doorkeeper_errors_for application, :custom_text %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:developer_emails].present?}" do %>
+    <div class="form-group">
+      <%= f.label :developer_emails, class: 'control-label', for: 'application_url' %>
+      <%= f.text_field :developer_emails, class: 'form-control tokenize' %>
+      <%= doorkeeper_errors_for application, :developer_emails %>
     </div>
   <% end %>
 

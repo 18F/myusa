@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       resources :notifications, only: [:create]
       resources :tasks, only: [:index, :create, :show, :update]
       get 'tokeninfo', to: '/doorkeeper/token_info#show'
+      get 'userinfo', to: '/api/v1/profiles#show', defaults: { openid_connect: 'true' }
     end
 
     # For legacy reasons, we translate any API request without a version

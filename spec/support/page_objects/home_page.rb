@@ -9,7 +9,9 @@ class HomePage < SitePrism::Page
 
   section :login_form, 'section.login-section' do
     element :email, "noscript input#inputEmail"
+    element :remember_me, "noscript input#user_remember_me"
     element :submit, "noscript input[value='Connect']"
+    element :google_button,     '.login button', text: 'Connect with Google'
   end
 
   section :contact_form, '#contact-form' do

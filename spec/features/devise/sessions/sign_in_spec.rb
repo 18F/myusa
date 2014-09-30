@@ -3,38 +3,43 @@ require 'feature_helper'
 describe 'Sign In' do
   def link_text; 'Connect to MyUSA'; end
 
+  let(:sign_in_page) { SignInPage.new }
+  let(:target_page) { TargetPage.new }
+  let(:sign_in_page) { SignInPage.new }
+  let(:token_instructions_page) { TokenInstructionsPage.new }
+  let(:profile_page) { ProfilePage.new }
+  let(:home_page) { HomePage.new }
+  let(:mobile_confirmation_page) { MobileConfirmationPage.new }
+
   describe 'page' do
     before do
-      @page = SignInPage.new
-      @page.load
+      sign_in_page.load
     end
 
     it 'has an app slogan' do
-      expect(@page.slogan.text).to match('one account for government')
+      expect(sign_in_page.slogan.text).to match('one account for government')
     end
 
     describe '"More Options" button,', js: true do
       describe 'at load time,' do
-        specify { expect(@page).to have_more_options }
-        specify { expect(@page).to_not have_less_options }
+        specify { expect(sign_in_page).to have_more_options }
+        specify { expect(sign_in_page).to_not have_less_options }
       end
 
       describe 'when clicked once,' do
         before do
-          @page.more_options_link.click
-          @page.wait_for_less_options
+          sign_in_page.more_options_link.click
+          sign_in_page.wait_for_less_options
         end
 
-        specify { expect(@page).to_not have_more_options }
-        specify { expect(@page).to have_less_options }
+        specify { expect(sign_in_page).to_not have_more_options }
+        specify { expect(sign_in_page).to have_less_options }
       end
     end
 
     it 'signed-out user should be redirected to sign-in page' do
-      @target_page = TargetPage.new
-      @sign_in_page = SignInPage.new
-      @target_page.load
-      expect(@sign_in_page).to be_displayed
+      target_page.load
+      expect(sign_in_page).to be_displayed
     end
   end
 
@@ -58,13 +63,6 @@ describe 'Sign In' do
     before :each do
       clear_emails
 
-      @target_page = TargetPage.new
-      @sign_in_page = SignInPage.new
-      @token_instructions_page = TokenInstructionsPage.new
-      @profile_page = ProfilePage.new
-      @home_page = HomePage.new
-      @mobile_confirmation_page = MobileConfirmationPage.new
-
       OmniAuth.config.test_mode = true
       OmniAuth.config.mock_auth[omniauth_provider] = omniauth_hash
     end
@@ -83,8 +81,8 @@ describe 'Sign In' do
       end
 
       it 'allows user to navigate directly to protected pages' do
-        @target_page.load
-        expect(@target_page).to be_displayed
+        target_page.load
+        expect(target_page).to be_displayed
       end
     end
 
@@ -94,8 +92,8 @@ describe 'Sign In' do
       end
 
       it 'lets user know about the token email' do
-        expect(@token_instructions_page).to be_displayed
-        expect(@token_instructions_page.source).to match body
+        expect(token_instructions_page).to be_displayed
+        expect(token_instructions_page.source).to match body
       end
 
       it 'sends the user an email with sign in link' do
@@ -105,12 +103,12 @@ describe 'Sign In' do
 
       describe 'resending token via email' do
         before :each do
-          @token_instructions_page.resend_link.click
+          token_instructions_page.resend_link.click
           open_email(email)
         end
 
         it 'allows the user to resend token via email' do
-          expect(@token_instructions_page).to have_content(
+          expect(token_instructions_page).to have_content(
             'A new access link has been sent to your email address.')
         end
 
@@ -158,27 +156,27 @@ describe 'Sign In' do
       let(:phone_number) { '415-555-3455' }
 
       it 'redirects user to mobile confirmation page' do
-        expect(@mobile_confirmation_page).to be_displayed
+        expect(mobile_confirmation_page).to be_displayed
       end
 
       it 'welcome page has redirect link' do
-        @mobile_confirmation_page.mobile_number.set phone_number
-        @mobile_confirmation_page.submit.click
+        mobile_confirmation_page.mobile_number.set phone_number
+        mobile_confirmation_page.submit.click
 
         open_last_text_message_for(phone_number)
         expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
         raw_token = current_text_message.body.match /\d{6}/
 
-        @mobile_confirmation_page.mobile_number_confirmation_token.set raw_token
-        @mobile_confirmation_page.submit.click
+        mobile_confirmation_page.mobile_number_confirmation_token.set raw_token
+        mobile_confirmation_page.submit.click
 
-        expect(@mobile_confirmation_page).to be_displayed
-        expect(@mobile_confirmation_page.heading).to have_content('Welcome to MyUSA')
+        expect(mobile_confirmation_page).to be_displayed
+        expect(mobile_confirmation_page.heading).to have_content('Welcome to MyUSA')
 
-        expect(@mobile_confirmation_page).to have_redirect_link
-        expect(@mobile_confirmation_page).to have_meta_refresh
+        expect(mobile_confirmation_page).to have_redirect_link
+        expect(mobile_confirmation_page).to have_meta_refresh
 
-        @mobile_confirmation_page.redirect_link.click
+        mobile_confirmation_page.redirect_link.click
         expect(redirect_page).to be_displayed
       end
     end
@@ -234,33 +232,33 @@ describe 'Sign In' do
     end
 
     context 'from sign in page' do
-      def redirect_page; @profile_page; end
-      def form; @sign_in_page; end
+      def redirect_page; profile_page; end
+      def form; sign_in_page; end
 
       before :each do
-        @sign_in_page.load
+        sign_in_page.load
       end
 
       include_examples 'authentication flows'
     end
 
     context 'after redirect to sign in page' do
-      def redirect_page; @target_page; end
-      def form; @sign_in_page; end
+      def redirect_page; target_page; end
+      def form; sign_in_page; end
 
       before :each do
-        @target_page.load
+        target_page.load
       end
 
       include_examples 'authentication flows'
     end
 
     context 'signing in from home page' do
-      def redirect_page; @profile_page; end
-      def form; @home_page.login_form; end
+      def redirect_page; profile_page; end
+      def form; home_page.login_form; end
 
       before :each do
-        @home_page.load
+        home_page.load
       end
 
       include_examples 'authentication flows'

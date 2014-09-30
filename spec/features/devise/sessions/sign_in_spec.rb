@@ -1,8 +1,6 @@
 require 'feature_helper'
 
 describe 'Sign In' do
-  def link_text; 'Connect to MyUSA'; end
-
   let(:sign_in_page) { SignInPage.new }
   let(:target_page) { TargetPage.new }
   let(:sign_in_page) { SignInPage.new }
@@ -10,6 +8,8 @@ describe 'Sign In' do
   let(:profile_page) { ProfilePage.new }
   let(:home_page) { HomePage.new }
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
+
+  let(:email_link_text) { 'Connect to MyUSA' }
 
   describe 'page' do
     before do
@@ -98,7 +98,7 @@ describe 'Sign In' do
 
       it 'sends the user an email with sign in link' do
         open_email(email)
-        expect(current_email).to have_link(link_text)
+        expect(current_email).to have_link(email_link_text)
       end
 
       describe 'resending token via email' do
@@ -113,7 +113,7 @@ describe 'Sign In' do
         end
 
         it 'sends the user an email' do
-          expect(current_email).to have_link(link_text)
+          expect(current_email).to have_link(email_link_text)
         end
       end
     end
@@ -159,7 +159,16 @@ describe 'Sign In' do
         expect(mobile_confirmation_page).to be_displayed
       end
 
-      it 'welcome page has redirect link' do
+      it 'sends an sms message with a verification code' do
+        mobile_confirmation_page.mobile_number.set phone_number
+        mobile_confirmation_page.submit.click
+
+        open_last_text_message_for(phone_number)
+        expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
+        raw_token = current_text_message.body.match /\d{6}/
+      end
+
+      it 'redirects to welcome page, which has redirect link' do
         mobile_confirmation_page.mobile_number.set phone_number
         mobile_confirmation_page.submit.click
 
@@ -185,7 +194,7 @@ describe 'Sign In' do
       def perform_login!
         submit_form
         open_email(email)
-        current_email.click_link(link_text)
+        current_email.click_link(email_link_text)
       end
 
       def submit_form
@@ -232,8 +241,8 @@ describe 'Sign In' do
     end
 
     context 'from sign in page' do
-      def redirect_page; profile_page; end
-      def form; sign_in_page; end
+      let(:redirect_page) { profile_page }
+      let(:form) { sign_in_page }
 
       before :each do
         sign_in_page.load
@@ -243,8 +252,8 @@ describe 'Sign In' do
     end
 
     context 'after redirect to sign in page' do
-      def redirect_page; target_page; end
-      def form; sign_in_page; end
+      let(:redirect_page) { target_page }
+      let(:form) { sign_in_page }
 
       before :each do
         target_page.load
@@ -254,8 +263,8 @@ describe 'Sign In' do
     end
 
     context 'signing in from home page' do
-      def redirect_page; profile_page; end
-      def form; home_page.login_form; end
+      let(:redirect_page) { profile_page }
+      let(:form) { home_page.login_form }
 
       before :each do
         home_page.load

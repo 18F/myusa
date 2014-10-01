@@ -1,7 +1,4 @@
-
-# Oauth::AuthorizationsController
 class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
-  before_filter :pre_auth, only: [:new]
   before_filter :display_not_me, only: [:new]
 
   layout 'dashboard'
@@ -10,6 +7,19 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
     @authorizations = Doorkeeper::AccessToken.where(
       resource_owner_id: current_user.id, revoked_at: nil)
     @applications = current_user.oauth_applications
+  end
+
+  def new
+    if pre_auth.authorizable?
+      if matching_token? || skip_authorization?
+        auth = authorization.authorize
+        redirect_to auth.redirect_uri
+      else
+        render :new
+      end
+    else
+      render :error
+    end
   end
 
   def create

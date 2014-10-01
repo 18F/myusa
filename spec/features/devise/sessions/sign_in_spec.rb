@@ -76,13 +76,21 @@ describe 'Sign In' do
         perform_login!
       end
 
-      it 'allows user to authenticate and redirects' do
-        expect(redirect_page).to be_displayed
-      end
-
       it 'allows user to navigate directly to protected pages' do
         target_page.load
         expect(target_page).to be_displayed
+      end
+
+      it 'creates sign in audit record' do
+        audit = UserAction.where(action: 'sign_in').last
+        expect(audit.created_at).to be_within(5.seconds).of(Time.now)
+      end
+    end
+
+    shared_examples 'sign in and redirect' do
+      include_examples 'sign in'
+      it 'allows user to authenticate and redirects' do
+        expect(redirect_page).to be_displayed
       end
     end
 
@@ -214,13 +222,14 @@ describe 'Sign In' do
       context 'for the first time' do
         context 'with email' do
           include_context 'with email'
-          it_behaves_like 'sign in'
+          it_behaves_like 'sign in and redirect'
           it_behaves_like 'sending token'
           it_behaves_like 'remember me'
         end
 
         context 'with google' do
           include_context 'with google'
+          it_behaves_like 'sign in'
           it_behaves_like 'mobile recovery'
         end
       end
@@ -228,14 +237,14 @@ describe 'Sign In' do
       context 'with existing user', create_user: true do
         context 'with email' do
           include_context 'with email'
-          it_behaves_like 'sign in'
+          it_behaves_like 'sign in and redirect'
           it_behaves_like 'sending token'
           it_behaves_like 'remember me'
         end
 
         context 'with google' do
           include_context 'with google'
-          it_behaves_like 'sign in'
+          it_behaves_like 'sign in and redirect'
         end
       end
     end

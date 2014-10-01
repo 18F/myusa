@@ -1,14 +1,8 @@
-# MySQL.  Versions 5.0+ are recommended.
-#
-# Install the MYSQL driver
-#   gem install mysql2
-#
-# Ensure the MySQL gem is defined in your Gemfile
-#   gem 'mysql2'
-#
-# And be sure to use new-style password hashing:
-#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
-#
+# Custom database config for Snap-CI
+# This is copied over their own custom database.yml during setup, so that
+# we can supply database encryption keys in our usual way.
+# More info: http://docs.snap-ci.com/the-ci-environment/databases/relational/
+
 default: &default
   adapter: mysql2
   encoding: utf8
@@ -24,36 +18,7 @@ development:
   database: myusa_development
   encryption_key: cdaed00f0161582218638cb5493c1b1e0a59e022eb9f01cce8ff5ab1d1baddde072d9e12a67ca713d39258f5ce0cc518e404497e9f6aa68ada3ad21b2d2b64ed
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
   database: myusa_test
   encryption_key: d1a99b6befcc188fb8a6a8b3e40c5439ae9d7dbbe73254c76504f150c5cbcabc42bed0465bd7336e7822bacb92829d75e72b3674bed18fc9212d76f0f8b17650
-
-# As with config/secrets.yml, you never want to store sensitive information,
-# like your database password, in your source code. If your source code is
-# ever seen by anyone, they now have access to your database.
-#
-# Instead, provide the password as a unix environment variable when you boot
-# the app. Read http://guides.rubyonrails.org/configuring.html#configuring-a-database
-# for a full rundown on how to provide these environment variables in a
-# production deployment.
-#
-# On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
-#
-#   DATABASE_URL="mysql2://myuser:mypass@localhost/somedatabase"
-#
-# You can use this database configuration with:
-#
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
-production:
-  <<: *default
-  database: myusa_production
-  username: myusa
-  password: <%= ENV['MYUSA-SERVER_DATABASE_PASSWORD'] %>
-  encryption_key: <%= ENV['MYUSA-SERVER_DATABASE_ENCRYPTION_KEY'] %>

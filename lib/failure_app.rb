@@ -6,6 +6,7 @@ class FailureApp < Devise::FailureApp
 
   def redirect
     store_location!
+    #  supress the timedout flash alert message from rendering
     if flash[:timedout] && flash[:alert]
       flash.keep(:timedout)
       flash.keep(:alert)

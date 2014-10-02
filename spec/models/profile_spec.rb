@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Profile do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:profile) { user.profile }
+  let(:profile) { FactoryGirl.create(:profile) }
 
   it 'responds to encrypted & unencrypted versions of its methods' do
     p = Profile.new
@@ -56,7 +55,7 @@ describe Profile do
     end
   end
 
-  it "strips dashes out of phone numbers" do
+  it 'strips dashes out of phone numbers' do
     profile_with_phone = create(:full_profile, phone_number: '123-456-7890')
     expect(profile_with_phone.phone).to eq '1234567890'
 
@@ -64,7 +63,7 @@ describe Profile do
     expect(profile_with_mobile.mobile).to eq '1234567890'
   end
 
-  it "strips dashes out of phone numbers on updates" do
+  it 'strips dashes out of phone numbers on updates' do
     profile_with_phone = create(:profile, phone_number: '123-456-7890')
     profile_with_phone.update_attributes(phone_number: '123-567-4567', mobile_number: '3-45-678-9012')
 
@@ -73,34 +72,36 @@ describe Profile do
   end
 
   it "rejects zip codes that aren't five digits" do
-    profile = build(:profile, zip: "Bad Zip Example")
+    profile = build(:profile, zip: 'Bad Zip Example')
 
     expect{profile.save!}.to raise_error(ActiveRecord::RecordInvalid)
     expect(profile.id).to be_nil
-    expect(profile.errors.messages[:zip]).to eq ["should be in the form 12345"]
+    expect(profile.errors.messages[:zip]).to eq ['should be in the form 12345']
   end
 
-  describe "as_json" do
-    let(:user) { FactoryGirl.create(:user, profile: FactoryGirl.create(:full_profile)) }
-    let(:fields) { [:first_name, :last_name, :email, :phone_number, :gender, :mobile_number] }
-    let(:profile_hash) do
-      fields.each_with_object({}) { |f, h| h[f.to_s] = user.profile.send f }
-    end
+  describe 'as_json' do
+    let(:profile) { FactoryGirl.create(:full_profile) }
 
     context "when called without any parameters" do
+      let(:json) { profile.as_json }
       it "outputs the full profile in JSON" do
-        json = user.profile.as_json
-        expect(json).to include profile_hash
+        expect(json).to include 'first_name'=>'Joan',
+                                'last_name'=>'Public',
+                                'email'=>'user_1@gsa.gov',
+                                'phone_number'=>'123-456-7890',
+                                'gender'=>'Female',
+                                'mobile_number'=>'123-456-7890'
       end
     end
 
-    context "when called with a set of specific profile scopes" do
-      let(:json) { user.profile.as_json(scope_list: scope_list) }
-      let(:scope_list) { ["profile.first_name", "profile.email", "profile.mobile_number"] }
-      let(:fields) { [:first_name, :email, :mobile_number] }
+    context 'when called with a set of specific profile scopes' do
+      let(:json) { profile.as_json(scope_list: scope_list) }
+      let(:scope_list) { ['profile.first_name', 'profile.email', 'profile.mobile_number'] }
 
-      it "only includes information allowed by the scopes" do
-        expect(json).to eql profile_hash
+      it 'only includes information allowed by the scopes' do
+        expect(json).to eql 'first_name'=>'Joan',
+                            'email'=>'user_2@gsa.gov',
+                            'mobile_number'=>'123-456-7890'
       end
     end
   end

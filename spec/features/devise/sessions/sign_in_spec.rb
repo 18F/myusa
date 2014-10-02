@@ -67,8 +67,15 @@ describe 'Sign In' do
       OmniAuth.config.mock_auth[omniauth_provider] = omniauth_hash
     end
 
+    # make sure a user with this email exists
     before :each, create_user: true do
       FactoryGirl.create(:user, email: email)
+    end
+
+    # trick our authentication libraries into failing
+    before :each, authentication_failure: true do
+      allow(AuthenticationToken).to receive(:authenticate) { nil }
+      OmniAuth.config.mock_auth[omniauth_provider] = :invalid_credentials
     end
 
     shared_examples 'sign in' do
@@ -80,11 +87,6 @@ describe 'Sign In' do
         target_page.load
         expect(target_page).to be_displayed
       end
-
-      it 'creates sign in audit record' do
-        audit = UserAction.where(action: 'sign_in').last
-        expect(audit.created_at).to be_within(5.seconds).of(Time.now)
-      end
     end
 
     shared_examples 'sign in and redirect' do
@@ -92,6 +94,44 @@ describe 'Sign In' do
       it 'allows user to authenticate and redirects' do
         expect(redirect_page).to be_displayed
       end
+    end
+
+    shared_examples 'audit' do
+      it 'creates audit record' do
+        expect { perform_login! }.to change(audit_records, :count).by(1)
+      end
+      it 'sets the authentication method' do
+        perform_login!
+        expect(audit_records.last.data['authentication_method']).to eql(authentication_method)
+      end
+    end
+
+    shared_examples 'audit authentication' do
+      context 'success' do
+        let(:audit_records) do
+          UserAction.successful_authentication.joins(:user).where(users: { email: email })
+        end
+
+        include_examples 'audit'
+      end
+
+      context 'failure', authentication_failure: true do
+        let(:audit_records) do
+          UserAction.failed_authentication
+        end
+
+        include_examples 'audit'
+      end
+    end
+
+    shared_examples 'audit email authentication' do
+      let(:authentication_method) { 'email' }
+      include_examples 'audit authentication'
+    end
+
+    shared_examples 'audit google authentication' do
+      let(:authentication_method) { 'google_oauth2' }
+      include_examples 'audit authentication'
     end
 
     shared_examples 'sending token' do
@@ -223,6 +263,7 @@ describe 'Sign In' do
         context 'with email' do
           include_context 'with email'
           it_behaves_like 'sign in and redirect'
+          it_behaves_like 'audit email authentication'
           it_behaves_like 'sending token'
           it_behaves_like 'remember me'
         end
@@ -230,6 +271,7 @@ describe 'Sign In' do
         context 'with google' do
           include_context 'with google'
           it_behaves_like 'sign in'
+          it_behaves_like 'audit google authentication'
           it_behaves_like 'mobile recovery'
         end
       end
@@ -238,6 +280,7 @@ describe 'Sign In' do
         context 'with email' do
           include_context 'with email'
           it_behaves_like 'sign in and redirect'
+          it_behaves_like 'audit email authentication'
           it_behaves_like 'sending token'
           it_behaves_like 'remember me'
         end
@@ -245,6 +288,7 @@ describe 'Sign In' do
         context 'with google' do
           include_context 'with google'
           it_behaves_like 'sign in and redirect'
+          it_behaves_like 'audit google authentication'
         end
       end
     end

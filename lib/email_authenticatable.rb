@@ -22,17 +22,34 @@ module Devise
       def authenticate!
         user = params[:email].present? && User.find_by_email(params[:email])
 
-        @token = AuthenticationToken.authenticate(user, params[:token])
-        if validate(user) { @token.present? }
+        if validate(user) { @token = AuthenticationToken.authenticate(user, params[:token]) }
           session['user_return_to'] = @token.return_to if @token.return_to.present?
+          log_success(user)
           success!(user)
         else
+          log_failure(user)
           fail!(:invalid_token)
         end
       end
 
       def remember_me?
         !!@token.remember_me
+      end
+
+      def log_success(user)
+        ::UserAction.create(
+          action: 'successful_authentication',
+          user: user,
+          data: { 'authentication_method' => 'email' }
+        )
+      end
+
+      def log_failure(user)
+        ::UserAction.create(
+          action: 'failed_authentication',
+          user: user,
+          data: { 'email' => params[:email], 'authentication_method' => 'email' }
+        )
       end
     end
   end

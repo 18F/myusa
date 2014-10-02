@@ -11,6 +11,8 @@ class AuthenticationToken < ActiveRecord::Base
   attr_accessor :raw
 
   def self.authenticate(user, raw)
+    return nil unless user.present?
+    
     digested = Devise.token_generator.digest(self, :token, raw)
     token = user.authentication_tokens.find_by_token(digested)
 

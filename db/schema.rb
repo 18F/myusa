@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928181621) do
+ActiveRecord::Schema.define(version: 20141001194534) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 20140928181621) do
     t.string   "action"
     t.string   "remote_ip"
     t.datetime "created_at"
+    t.text     "data"
   end
 
   add_index "user_actions", ["record_id", "record_type"], name: "index_user_actions_on_record_id_and_record_type", using: :btree

@@ -257,7 +257,7 @@ end
 Warden::Manager.after_fetch do |user, auth, opts|
   request = Rack::Request.new(auth.env)
   params = request.params
-  
+
   if auth.authenticated? && request.get? && !!params["logout"]
     auth.logout
   end
@@ -266,8 +266,8 @@ end
 Warden::Manager.before_failure do |env, opts|
   uri = URI(opts[:attempted_path])
   params = Rack::Utils.parse_query(uri.query)
-  params.delete('logout')
-  uri.query = params.empty? ? nil : params.to_param
-
-  opts[:attempted_path] = uri.to_s
+  if params.delete('logout')
+    uri.query = params.empty? ? nil : params.to_param
+    opts[:attempted_path] = uri.to_s
+  end
 end

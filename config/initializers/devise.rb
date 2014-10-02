@@ -233,7 +233,6 @@ Devise.setup do |config|
   #
   config.warden do |manager|
     manager.failure_app = FailureApp
-    # manager.default_strategies(scope: :user).unshift :email_authenticatable
   end
 
   # ==> Mountable engine configurations

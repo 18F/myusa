@@ -7,7 +7,4 @@ class UserAction < ActiveRecord::Base
 
   scope :successful_authentication, -> { where(action: 'successful_authentication') }
   scope :failed_authentication, -> { where(action: 'failed_authentication') }
-
-  # def self.log
-
 end

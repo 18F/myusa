@@ -10,7 +10,9 @@ describe 'OAuth' do
   # Capybara context. More detail here:
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Testing-your-provider-with-OAuth2-gem
   let(:oauth_client) do
-    OAuth2::Client.new(client_app.uid, client_app.secret, site: 'http://www.example.com') do |b|
+    OAuth2::Client.new(
+      client_app.uid, client_app.secret, site: 'http://www.example.com'
+    ) do |b|
       b.request :url_encoded
       b.adapter :rack, Capybara.app
     end
@@ -22,6 +24,16 @@ describe 'OAuth' do
       scope: scopes,
       state: 'state'
     ))
+  end
+
+  shared_examples 'authorizable' do
+    scenario 'user can authorize' do
+      expect(@auth_page).to be_displayed
+      @auth_page.allow_button.click
+
+      token = @token_page.get_token(oauth_client, client_app.redirect_uri)
+      expect(token).to_not be_expired
+    end
   end
 
   shared_examples 'scope error' do
@@ -61,9 +73,28 @@ describe 'OAuth' do
     end
 
     context 'when not logged in' do
-      scenario 'redirects to login page' do
+      let(:provider) { :google_oauth2 }
+
+      before :each do
         @sign_in_page = SignInPage.new
         expect(@sign_in_page).to be_displayed
+        expect(@sign_in_page).to_not have_content(
+          'You need to sign in or sign up before continuing'
+        )
+
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
+          provider: provider,
+          uid: user.uid,
+          info: OmniAuth::AuthHash.new(
+            email: user.email
+          )
+        )
+      end
+
+      scenario 'redirects to login page and preserves session' do
+        @sign_in_page.google_button.click
+        expect(@auth_page).to be_displayed
       end
 
       scenario 'it tells you why you\'re here' do
@@ -76,6 +107,24 @@ describe 'OAuth' do
 
     context 'when logged in', logged_in: true do
       context 'with valid url params' do
+        let(:user2) { FactoryGirl.create(:user) }
+
+        scenario 'user can switch to another user' do
+          @sign_in_page = SignInPage.new
+
+          expect(@auth_page).to be_displayed
+          @auth_page.not_me_link.click
+
+          expect(@sign_in_page).to be_displayed
+          @sign_in_page.email.set user2.email
+          @sign_in_page.submit.click
+
+          open_email(user2.email)
+          current_email.click_link('Connect to MyUSA')
+
+          expect(@auth_page).to be_displayed
+        end
+
         scenario 'user can authorize' do
           # Authorize the client app
           expect(@auth_page).to be_displayed
@@ -188,13 +237,7 @@ describe 'OAuth' do
              'Allow the application send you notifications via MyUSA'])
         end
 
-        it 'user can authorize' do
-          expect(@auth_page).to be_displayed
-          @auth_page.allow_button.click
-
-          token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-          expect(token).to_not be_expired
-        end
+        it_behaves_like 'authorizable'
       end
 
       context 'with non-public (sandboxed) app' do
@@ -206,14 +249,19 @@ describe 'OAuth' do
         context 'current user is client application owner' do
           let(:owner) { user }
 
-          scenario 'user can authorize' do
-            expect(@auth_page).to be_displayed
-            @auth_page.allow_button.click
-
-            token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-            expect(token).to_not be_expired
-          end
+          it_behaves_like 'authorizable'
         end
+
+        # context 'current user is a client application developer' do
+        #   pending 'implement developers'
+        #   let(:client_app) do
+        #     FactoryGirl.create(:application, public: false,
+        #                                      owners: [owner],
+        #                                      developers: [user])
+        #   end
+        #
+        #   it_behaves_like 'authorizable'
+        # end
 
         context 'current user is not client application owner' do
           scenario 'displays unknown application error' do

@@ -1,9 +1,26 @@
-
-# Oauth::AuthorizationsController
 class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
-  prepend_before_action :redirect_to_tokens, only: [:create]
-  before_filter :pre_auth, only: [:new]
   before_filter :display_not_me, only: [:new]
+
+  layout 'dashboard'
+
+  def index
+    @authorizations = Doorkeeper::AccessToken.where(
+      resource_owner_id: current_user.id, revoked_at: nil)
+    @applications = current_user.oauth_applications
+  end
+
+  def new
+    if pre_auth.authorizable?
+      if matching_token? || skip_authorization?
+        auth = authorization.authorize
+        redirect_to auth.redirect_uri
+      else
+        render :new
+      end
+    else
+      render :error
+    end
+  end
 
   def create
     if params.key?(:profile)
@@ -23,13 +40,6 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
 
   def display_not_me
     @display_not_me = true
-  end
-
-  def redirect_to_tokens
-    # legacy implementation used POST /oauth/authorize for both the user facing
-    # authorization screen and the API endpoint to request a token ... so, we
-    # have to support it here.
-    redirect_to oauth_token_path if params.key?(:grant_type)
   end
 
   def profile_params

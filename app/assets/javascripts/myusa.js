@@ -1,6 +1,11 @@
 $(document).ready(function () {
   var background = false;
 
+  $('input.tokenize').tokenfield({
+    delimiter: ' ',
+    createTokensOnBlur: true
+  });
+
   /**
    * Authorization page
    */
@@ -123,7 +128,8 @@ $(document).ready(function () {
   e.preventDefault();
   var formData = $(this).serialize();
   $.post('contact_us', formData, function(response){
-    $(".contact-flash").text(response.message).removeClass('hidden');
+    $(".contact-flash .message").text(response.message)
+    $(".contact-flash").removeClass('hidden');
   });
   $(this)[0].reset();
  });

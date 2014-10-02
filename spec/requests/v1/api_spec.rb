@@ -14,6 +14,34 @@ describe Api::V1 do
   let(:client_app) { FactoryGirl.create(:application) }
   let(:user) { FactoryGirl.create(:user, :with_profile) }
 
+  describe 'Legacy tokens path' do
+    let(:grant) {
+      FactoryGirl.create(:access_grant,
+        application: client_app,
+        redirect_uri: client_app.redirect_uri,
+        resource_owner: user
+      )
+    }
+    let(:params) do
+      {
+        client_id: client_app.uid,
+        client_secret: client_app.secret,
+        code: grant.token,
+        grant_type: 'authorization_code',
+        redirect_uri: client_app.redirect_uri
+      }
+    end
+
+    subject { post  '/oauth/authorize', params }
+    it 'response http code is 200' do
+      expect(subject.status).to eql(200)
+    end
+    it 'response should have an access token' do
+      expect(JSON.parse(subject.body)).to have_key('access_token')
+    end
+
+  end
+
   describe 'Token validity check' do
     subject { get '/api/v1/profile', nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
     context 'with a valid token' do
@@ -113,6 +141,12 @@ describe Api::V1 do
           user.notifications.reload
           expect(user.notifications.size).to eq 1
           expect(user.notifications.first.subject).to eq 'Project MyUSA'
+        end
+
+        it 'sends a notification email when a notification is created' do
+          expect do
+            Notification.create!({subject: "Notification", received_at: Time.now - 1.hour, body: "This is a notification", user_id: user.id, app_id: client_app_2.id})
+          end.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
       end
 

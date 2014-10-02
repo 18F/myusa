@@ -1,6 +1,14 @@
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
-  include ApplicationExtension
+
+  validates_format_of :logo_url, with: URI.regexp(['https']),
+                                 allow_blank: true,
+                                 message: 'Logo url must begin with https'
+
+  scope :public?, -> { where public: true }
+  scope :private?, -> { where public: false }
+
+  scope :requested_public, -> { where.not(requested_public_at: nil) }
 
   validate do |a|
     return if a.scopes.nil?
@@ -10,4 +18,5 @@ class Doorkeeper::Application
   end
 
   audit_on :create
+
 end

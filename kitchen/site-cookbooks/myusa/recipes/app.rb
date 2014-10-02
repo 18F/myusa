@@ -69,7 +69,9 @@ template  "#{deploy_to_dir}/shared/config/secrets.yml" do
     aws_ses_username: secrets['aws_ses_username'],
     aws_ses_password: secrets['aws_ses_password'],
     omniauth_google_app_id: secrets['omniauth_google_app_id'],
-    omniauth_google_secret: secrets['omniauth_google_secret']
+    omniauth_google_secret: secrets['omniauth_google_secret'],
+    twilio_account_sid: secrets['twilio_account_sid'],
+    twilio_auth_token: secrets['twilio_auth_token']
   )
 end
 
@@ -78,6 +80,14 @@ template "#{deploy_to_dir}/shared/config/memcached.yml" do
   source 'memcached.yml.erb'
   variables(
     memcached_host: node[:myusa][:memcached][:host]
+  )
+end
+
+# New Relic configuration
+template "#{deploy_to_dir}/shared/config/newrelic.yml" do
+  source 'newrelic.yml.erb'
+  variables(
+    newrelic_license_key: secrets['newrelic_license_key']
   )
 end
 

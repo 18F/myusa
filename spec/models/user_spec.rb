@@ -37,6 +37,20 @@ describe User, type: :model do
     end
   end
 
+  describe '#destroy' do
+    let(:user) { FactoryGirl.create(:user) }
+    subject { -> { user.destroy! } }
+
+    context 'user is owner of oauth application' do
+      before :each do
+        FactoryGirl.create(:application, owner: user)
+      end
+      it 'deletes application' do
+        is_expected.to change { Doorkeeper::Application.count }.by(-1)
+      end
+    end
+  end
+
   describe "#find_from_omniauth" do
     let(:provider) { 'google_oauth2' }
     let(:email) { 'testy@example.gov' }

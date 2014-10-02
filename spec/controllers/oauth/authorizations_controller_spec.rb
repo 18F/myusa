@@ -7,12 +7,9 @@ describe Oauth::AuthorizationsController do
   let(:client_application_scopes) { 'profile.email profile.first_name profile.last_name' }
 
   let(:client_app) do
-    Doorkeeper::Application.create do |a|
-      a.name = 'Client App'
-      a.redirect_uri = 'http://www.example.com/auth/myusa/callback'
-      a.scopes = client_application_scopes
-      a.owner = user
-    end
+    FactoryGirl.create(:application,
+                        redirect_uri: 'http://www.example.com/auth/myusa/callback',
+                        scopes: client_application_scopes)
   end
 
   let(:oauth_client) do
@@ -75,21 +72,5 @@ describe Oauth::AuthorizationsController do
       end
     end
 
-    context "token request" do
-      # legacy implementation used POST /oauth/authorize for both the user facing
-      # authorization screen and the API endpoint to request a token ... so, we
-      # have to support it here.
-      it 'redirects to the token path if `grant_type` is passed' do
-        post :create, {
-          client_id: client_app.uid,
-          client_secret: client_app.secret,
-          code: "baz",
-          grant_type: "authorization_code",
-          redirect_uri: client_app.redirect_uri
-        }
-
-        expect(response).to redirect_to(oauth_token_path)
-      end
-    end
   end
 end

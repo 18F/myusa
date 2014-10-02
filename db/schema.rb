@@ -59,10 +59,9 @@ ActiveRecord::Schema.define(version: 20141001194534) do
     t.datetime "viewed_at"
   end
 
-  add_index "notifications", ["app_id"], name: "index_messages_on_o_auth2_model_client_id", using: :btree
   add_index "notifications", ["app_id"], name: "index_notifications_on_app_id", using: :btree
   add_index "notifications", ["deleted_at"], name: "index_notifications_on_deleted_at", using: :btree
-  add_index "notifications", ["user_id"], name: "index_messages_on_user_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id",              null: false
@@ -204,6 +203,6 @@ ActiveRecord::Schema.define(version: 20141001194534) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
-  add_index "users", ["uid"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
 end

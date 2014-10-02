@@ -1,0 +1,15 @@
+# Custom database config for Snap-CI
+# This is copied over their own custom database.yml during setup, so that
+# we can supply database encryption keys in our usual way.
+# More info http://docs.snap-ci.com/the-ci-environment/databases/relational/
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: <%= ENV['SNAP_DB_MYSQL_USER'] %>
+  password: <%= ENV['SNAP_DB_MYSQL_PASSWORD'] %>
+  host: <%= ENV['SNAP_DB_MYSQL_HOST'] %>
+  port: <%= ENV['SNAP_DB_MYSQL_PORT'] %>
+  database: myusa_test
+  encryption_key: d1a99b6befcc188fb8a6a8b3e40c5439ae9d7dbbe73254c76504f150c5cbcabc42bed0465bd7336e7822bacb92829d75e72b3674bed18fc9212d76f0f8b17650

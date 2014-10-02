@@ -50,13 +50,6 @@ describe 'Mobile Confirmation', sms: true do
         expect(@mobile_confirmation_page).to have_content('Your mobile number has been successfully added')
         expect(@mobile_confirmation_page).to have_redirect_link
       end
-
-      scenario 'creates a successful authentication user action' do
-        raw_token = receive_code
-
-        audit_records = UserAction.successful_authentication.where(user: user)
-        expect{ enter_code! raw_token }.to change(audit_records, :count).by(1)
-      end
     end
 
     context 'code does not match' do
@@ -67,11 +60,6 @@ describe 'Mobile Confirmation', sms: true do
         expect(@mobile_confirmation_page.flash_message).to have_content('Please check the number sent to your mobile and re-enter that code')
         expect(@mobile_confirmation_page).to have_flash_resend_link
         expect(@mobile_confirmation_page).to have_flash_reenter_link
-      end
-
-      scenario 'creates a failed authentication user action' do
-        audit_records = UserAction.failed_authentication.where(user: user)
-        expect{ enter_code! 'bad token' }.to change(audit_records, :count).by(1)
       end
     end
 

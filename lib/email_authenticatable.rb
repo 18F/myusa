@@ -24,11 +24,7 @@ module Devise
 
         if validate(user) { @token = AuthenticationToken.authenticate(user, params[:token]) }
           session['user_return_to'] = @token.return_to if @token.return_to.present?
-          log_success(user)
           success!(user)
-        else
-          log_failure(user)
-          fail!(:invalid_token)
         end
       end
 
@@ -36,20 +32,14 @@ module Devise
         !!@token.remember_me
       end
 
-      def log_success(user)
-        ::UserAction.create(
-          action: 'successful_authentication',
-          user: user,
-          data: { 'authentication_method' => 'email' }
-        )
+      def success!(user)
+        super
+        UserAction.successful_authentication.create(user: user, data: { authentication_method: 'email' })
       end
 
-      def log_failure(user)
-        ::UserAction.create(
-          action: 'failed_authentication',
-          user: user,
-          data: { 'email' => params[:email], 'authentication_method' => 'email' }
-        )
+      def fail!(*args)
+        super
+        UserAction.failed_authentication.create(user: user, data: { authentication_method: 'email', message: @message })
       end
     end
   end

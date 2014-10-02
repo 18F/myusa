@@ -74,7 +74,7 @@ describe 'Sign In' do
 
     # trick our authentication libraries into failing
     before :each, authentication_failure: true do
-      allow(AuthenticationToken).to receive(:authenticate) { nil }
+      allow(AuthenticationToken).to receive(:authenticate) { false }
       OmniAuth.config.mock_auth[omniauth_provider] = :invalid_credentials
     end
 

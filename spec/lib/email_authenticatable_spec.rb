@@ -54,7 +54,7 @@ describe Devise::Strategies::EmailAuthenticatable do
       end
 
       it 'sets messgae' do
-        expect(subject.message).to eq(:invalid_token)
+        expect(subject.message).to eq(:invalid)
       end
     end
 

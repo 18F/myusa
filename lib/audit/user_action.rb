@@ -8,9 +8,8 @@ module Audit
         wrapper_opts = opts.slice(:action)
 
         audit_wrapper = Wrapper.new(opts)
-        hooks = events.map {|e| "after_#{e}".to_sym }
 
-        hooks.each {|h| send h, audit_wrapper, callback_opts }
+        events.each {|e| send e, audit_wrapper, callback_opts }
       end
     end
 
@@ -44,6 +43,10 @@ module Audit
 
       def after_update(record)
         audit(@action || 'update', record)
+      end
+
+      def before_destroy(record)
+        audit(@action || 'destroy', record)
       end
 
       private

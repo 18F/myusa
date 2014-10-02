@@ -85,22 +85,35 @@ describe Profile do
     context "when called without any parameters" do
       let(:json) { profile.as_json }
       it "outputs the full profile in JSON" do
-        expect(json).to include 'first_name'=>'Joan',
+        expect(json).to include 'title'=>'Sir',
+                                'first_name'=>'Joan',
+                                'middle_name'=>'Quincy',
                                 'last_name'=>'Public',
-                                'email'=>'user_1@gsa.gov',
-                                'phone_number'=>'123-456-7890',
+                                'suffix'=>'III',
+                                'address'=>'1 Infinite Loop',
+                                'address2'=>'Attn: Steve Jobs',
+                                'city'=>'Cupertino',
+                                'state'=>'CA',
+                                'zip'=>'92037',
                                 'gender'=>'Female',
+                                'marital_status'=>'Married',
+                                'is_parent'=>true,
+                                'is_student'=>false,
+                                'is_veteran'=>true,
+                                'is_retired'=>false,
+                                'email'=> profile.user.email,
+                                'phone_number'=>'123-456-7890',
                                 'mobile_number'=>'123-456-7890'
       end
     end
 
     context 'when called with a set of specific profile scopes' do
       let(:json) { profile.as_json(scope_list: scope_list) }
-      let(:scope_list) { ['profile.first_name', 'profile.email', 'profile.mobile_number'] }
+      let(:scope_list) { ['profile.first_name', 'profile.last_name', 'profile.mobile_number'] }
 
       it 'only includes information allowed by the scopes' do
         expect(json).to eql 'first_name'=>'Joan',
-                            'email'=>'user_2@gsa.gov',
+                            'last_name'=>'Public',
                             'mobile_number'=>'123-456-7890'
       end
     end

@@ -99,10 +99,15 @@ describe 'OAuth' do
       @new_application_page.name.set 'testApp'
       @new_application_page.redirect_uri.set 'urn:ietf:wg:oauth:2.0:oob'
       @new_application_page.check('First Name')
+      expect(@new_application_page).to have_content(
+        'Please provide '\
+        'a secure (https) URL for an image that identifies your application.'\
+        ' The image should be 120px by 120px in size.'
+      )
       @new_application_page.submit.click
     end
 
-    it "allows user to create app with image and get secret" do
+    it "allows user to create app and get secret" do
       expect(@auths_page).to be_displayed
       expect(@auths_page.secret_key).to be_present
     end

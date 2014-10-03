@@ -30,3 +30,21 @@ def submit_new_application_form(options = {})
   fill_in 'Redirect uri', with: 'urn:ietf:wg:oauth:2.0:oob'
   click_button 'Submit'
 end
+
+class SecretController < ApplicationController
+  before_filter :authenticate_user!
+
+  def secret
+    render text: 'you got me'
+  end
+end
+
+RSpec.configure do |config|
+  config.before(:suite) do
+    Rails.application.routes.disable_clear_and_finalize = true
+
+    Rails.application.routes.draw do
+      get 'secret' => "secret#secret"
+    end
+  end
+end

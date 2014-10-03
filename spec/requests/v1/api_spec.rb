@@ -12,7 +12,7 @@ describe Api::V1 do
   end
 
   let(:client_app) { FactoryGirl.create(:application) }
-  let(:user) { create_confirmed_user_with_profile(is_student: nil, is_retired: false) }
+  let(:user) { FactoryGirl.create(:user, :with_profile) }
 
   describe 'Legacy tokens path' do
     let(:grant) {
@@ -95,7 +95,7 @@ describe Api::V1 do
         expect(response.status).to eq 200
         parsed_json = JSON.parse(response.body)
         expect(parsed_json).to be
-        expect(parsed_json['first_name']).to eq 'Joe'
+        expect(parsed_json['first_name']).to eq 'Joan'
         expect(parsed_json).to_not include('email')
       end
     end
@@ -118,7 +118,7 @@ describe Api::V1 do
 
   describe 'POST /api/v1/notifications' do
     let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
-    let(:other_user) { create_confirmed_user_with_profile(email: 'jane@citizen.org', first_name: 'Jane') }
+    let(:other_user) { FactoryGirl.create(:user) }
 
     let(:token) { build_access_token(client_app_2, ['notifications']) }
 
@@ -141,6 +141,12 @@ describe Api::V1 do
           user.notifications.reload
           expect(user.notifications.size).to eq 1
           expect(user.notifications.first.subject).to eq 'Project MyUSA'
+        end
+
+        it 'sends a notification email when a notification is created' do
+          expect do
+            Notification.create!({subject: "Notification", received_at: Time.now - 1.hour, body: "This is a notification", user_id: user.id, app_id: client_app_2.id})
+          end.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
       end
 

@@ -1,11 +1,13 @@
 class HomeController < ApplicationController
   layout 'marketing', only: [:index, :legal, :developer]
 
+  before_filter :clear_return_to, only: [:index]
+
   def contact_us
     send_contact_us_email
 
     respond_to do |format|
-      format.json { render json: {:success => true, :message => 'Thank you. Your message has been sent.' } }
+      format.json { render json: { success: true, message: 'Thank you. Your message has been sent.' } }
       format.html { redirect_to root_url, notice: 'Thank you. Your message has been sent.' }
     end
   end

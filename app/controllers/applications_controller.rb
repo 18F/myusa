@@ -1,11 +1,18 @@
 class ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
+  before_filter :ensure_application_owner!, only: [:show, :edit, :update, :destroy]
+
   layout 'dashboard'
+
+  def new
+    @application = Doorkeeper::Application.new
+  end
 
   def create
     @application = Doorkeeper::Application.new(application_params)
-    @application.owners << current_user
-    if @application.save
+    @application.owner = current_user
+
+    if @application.errors.empty? && @application.save
       message = I18n.t('new_application')
       flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
                                         locals: { application: @application, message: message }
@@ -16,7 +23,9 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   end
 
   def update
-    if @application.update_attributes(application_params)
+    @application.attributes = application_params
+
+    if @application.errors.empty? && @application.save
       flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
       redirect_to authorizations_path
     else
@@ -43,12 +52,27 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   private
 
+  def ensure_application_owner!
+    unless @application.owner == current_user
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
+  def validate_owner_emails
+    return unless application_params.has_key?(:owner_emails)
+    if !application_params[:owner_emails].split(' ').include?(current_user.email)
+      @application.errors.add(:owner_emails, 'cannot remove self from owners list')
+    end
+  end
+
   def application_params
-    app_params = params.require(:application).permit(
-      :name, :description, :short_description, :custom_text, :url, :image,
-      :scopes, :redirect_uri, :logo_url
+    if params.has_key?(:scope)
+      params[:application][:scopes] = params[:scope].join(' ')
+    end
+
+    params.require(:application).permit(
+      :name, :description, :short_description, :custom_text, :url, :logo_url,
+      :owner_emails, :developer_emails, :scopes, :redirect_uri
     )
-    app_params[:scopes] = params[:scope] ? params[:scope].join(' ') : []
-    app_params
   end
 end

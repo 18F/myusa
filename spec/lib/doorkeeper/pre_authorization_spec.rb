@@ -4,16 +4,10 @@ module Doorkeeper::OAuth
   describe PreAuthorization do
     let(:server) { Doorkeeper.configuration }
 
-    let(:client_app) { FactoryGirl.create(:application, public: true, owners: [user]) }
-    let(:client) do
-      c = double(:client,
-        redirect_uri: 'http://www.example.com',
-        application: client_app
-      )
-      allow(c).to receive(:valid_for?).and_return(true)
-      c
-    end
+    let(:client_app) { FactoryGirl.create(:application, public: true, owner: owner) }
+    let(:client) { Doorkeeper::OAuth::Client.new(client_app) }
 
+    let(:owner) { FactoryGirl.create(:user) }
     let(:user) { FactoryGirl.create(:user) }
 
     let(:scopes) { 'profile.email' }
@@ -21,7 +15,7 @@ module Doorkeeper::OAuth
     let(:attributes) do
       {
         response_type: 'code',
-        redirect_uri: 'http://www.example.com',
+        redirect_uri: client_app.redirect_uri,
         state: 'save-this',
         scope: scopes
       }
@@ -53,6 +47,33 @@ module Doorkeeper::OAuth
           expect(subject).to be_authorizable
         end
       end
+    end
+
+    context 'app is public' do
+      it 'is valid' do
+        expect(subject).to be_authorizable
+      end
+    end
+    context 'app is private' do
+      let(:client_app) { FactoryGirl.create(:application, public: false, owner: owner) }
+      context 'user is owner' do
+        let(:user) { owner }
+        it 'is valid' do
+          expect(subject).to be_authorizable
+        end
+      end
+      context 'user is developer' do
+        let(:client_app) { FactoryGirl.create(:application, public: false, owner: owner, developer_emails: user.email) }
+        it 'is valid' do
+          expect(subject).to be_authorizable
+        end
+      end
+      context 'user is neither owner nor developer' do
+        it 'is not valid' do
+          expect(subject).to_not be_authorizable
+        end
+      end
+
     end
 
   end

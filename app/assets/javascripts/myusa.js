@@ -1,6 +1,11 @@
 $(document).ready(function () {
   var background = false;
 
+  $('input.tokenize').tokenfield({
+    delimiter: ' ',
+    createTokensOnBlur: true
+  });
+
   /**
    * Authorization page
    */

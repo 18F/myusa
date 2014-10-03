@@ -1,9 +1,14 @@
-
-# ApplicationController
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+
+  protected
+
+  def clear_return_to
+    key = stored_location_key_for(:user)
+    session.delete(key)
+  end
 
   private
 
@@ -40,4 +45,5 @@ class ApplicationController < ActionController::Base
     end
     super(resource_or_scope)
   end
+
 end

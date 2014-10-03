@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919145133) do
+ActiveRecord::Schema.define(version: 20140928181620) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -36,17 +36,6 @@ ActiveRecord::Schema.define(version: 20140919145133) do
   add_index "authentications", ["uid", "provider"], name: "index_authentications_on_uid_and_provider", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
-  create_table "memberships", force: true do |t|
-    t.integer  "oauth_application_id"
-    t.integer  "user_id"
-    t.string   "member_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "memberships", ["oauth_application_id"], name: "index_memberships_on_oauth_application_id", using: :btree
-  add_index "memberships", ["user_id", "member_type"], name: "index_memberships_on_user_id_and_member_type", using: :btree
-
   create_table "mobile_confirmations", force: true do |t|
     t.integer  "profile_id"
     t.string   "token"
@@ -70,10 +59,9 @@ ActiveRecord::Schema.define(version: 20140919145133) do
     t.datetime "viewed_at"
   end
 
-  add_index "notifications", ["app_id"], name: "index_messages_on_o_auth2_model_client_id", using: :btree
   add_index "notifications", ["app_id"], name: "index_notifications_on_app_id", using: :btree
   add_index "notifications", ["deleted_at"], name: "index_notifications_on_deleted_at", using: :btree
-  add_index "notifications", ["user_id"], name: "index_messages_on_user_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id",              null: false
@@ -118,6 +106,9 @@ ActiveRecord::Schema.define(version: 20140919145133) do
     t.string   "custom_text"
     t.datetime "requested_public_at"
     t.string   "logo_url"
+    t.string   "developer_emails",    limit: 2000
+    t.integer  "owner_id"
+    t.string   "owner_type"
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
@@ -211,6 +202,6 @@ ActiveRecord::Schema.define(version: 20140919145133) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
-  add_index "users", ["uid"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
 end

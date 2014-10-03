@@ -300,6 +300,7 @@ footer {
   .callout-box{
     margin-top: 20px;
     opacity: 0.8;
+    min-height: 300px;
   }
   .login {
     margin-left: 15px;
@@ -312,6 +313,17 @@ footer {
     .shield {
       .icon-myusa {
         color: $blue-lightest;
+      }
+    }
+    &.logged-in {
+      h2 {
+        font-size: 1.4em;
+        padding-top: 20px;
+        padding-bottom: 10px;
+      }
+      .btn-lg {
+        margin-top: 5px;
+        margin-bottom: 15px;
       }
     }
     .omniauth-buttons {
@@ -408,12 +420,12 @@ footer {
       @media (min-width: $screen-md-min) {
         font-family: 'FontAwesome';
         content: "\f105";
-        font-size: 300px;
+        font-size: 150px;
         color: #666;
-        opacity: 0.075;
+        opacity: 0.15;
         position: absolute;
-        top: -100px;
-        right: -100px;
+        top: -65px;
+        right: -40px;
       }
     }
   }

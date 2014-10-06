@@ -3,7 +3,7 @@ require 'spec_helper'
 module Audit
   describe ApplicationController, type: :controller do
     class Dummy < ActiveRecord::Base
-      audit_on :create
+      audit_on :after_create
     end
 
     before :all do

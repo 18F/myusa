@@ -5,9 +5,8 @@ module UserAction::ModelHooks
     callback_opts = opts.slice(:if, :unless)
     wrapper_opts = opts.slice(:action)
 
-    audit_wrapper = UserAction::AuditWrapper.new(opts)
-    hooks = events.map {|e| "after_#{e}".to_sym }
+    audit_wrapper = AuditWrapper.new(opts)
 
-    hooks.each {|h| send h, audit_wrapper, callback_opts }
+    events.each {|e| send e, audit_wrapper, callback_opts }
   end
 end

@@ -1,7 +1,8 @@
 class AuthenticationToken < ActiveRecord::Base
   belongs_to :user
 
-  audit_on :create
+  audit_on :after_create
+  
   before_create {|t| t.sent_at = Time.now }
 
   default_scope -> { where(['sent_at > ?', Time.now - 2.hours]) }

@@ -11,6 +11,10 @@ class AuditWrapper
     audit(@action || 'update', record)
   end
 
+  def before_destroy(record)
+    audit(@action || 'destroy', record)
+  end
+
   private
 
   def audit(action, record)

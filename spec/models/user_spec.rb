@@ -48,6 +48,9 @@ describe User, type: :model do
       it 'deletes application' do
         is_expected.to change { Doorkeeper::Application.count }.by(-1)
       end
+      it 'creates delete user action' do
+        is_expected.to change(UserAction.where(action: 'destroy'), :count).by(1)
+      end
     end
   end
 

@@ -6,7 +6,7 @@ class Api::ApiController < ActionController::Base
 
   doorkeeper_for :all
 
-  around_filter Audit::UserAction::ApiSweeper.instance
+  around_filter ApiSweeper.instance
 
   protected
 
@@ -22,12 +22,12 @@ class Api::ApiController < ActionController::Base
   def resources
     [ resource ]
   end
-  
+
   def audit_api_access
     resources.each do |r|
       UserAction.create(
         user: current_resource_owner,
-        action: "api_access",
+        action: 'api_access',
         record: r,
         data: { action: params[:action] }
       )

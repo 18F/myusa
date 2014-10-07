@@ -46,4 +46,24 @@ class ApplicationController < ActionController::Base
     super(resource_or_scope)
   end
 
+  def require_owner_or_admin!
+    require_owner!
+  rescue Acl9::AccessDenied => e
+    require_admin!
+  end
+
+  def require_owner!
+    current_user.has_role_for?(resource) or raise Acl9::AccessDenied
+  end
+
+  def require_admin!
+    if current_user.has_role?(:admin)
+      # TODO: enforce 2FA here
+      UserAction.admin_action.create(data: params)
+      return true
+    else
+      raise Acl9::AccessDenied
+    end
+  end
+
 end

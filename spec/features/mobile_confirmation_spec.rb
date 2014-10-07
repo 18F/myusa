@@ -11,7 +11,7 @@ describe 'Mobile Confirmation', sms: true do
   end
 
   def enter_code!(code)
-    @mobile_confirmation_page.mobile_number_confirmation_token.set code # 'bad token'
+    @mobile_confirmation_page.mobile_number_confirmation_token.set code
     @mobile_confirmation_page.submit.click
   end
 
@@ -64,18 +64,11 @@ describe 'Mobile Confirmation', sms: true do
     end
 
     scenario 'user can resend code' do
-      open_last_text_message_for(phone_number)
-      expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
-      first_token = current_text_message.body.match /\d{6}/
-
+      first_token = receive_code
       @mobile_confirmation_page.resend.click
-
       expect(@mobile_confirmation_page).to be_displayed
-      open_last_text_message_for(phone_number)
-      expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
-      second_token = current_text_message.body.match /\d{6}/
 
-      expect(first_token).to_not match(second_token)
+      expect(first_token).to_not match(receive_code)
     end
   end
 end

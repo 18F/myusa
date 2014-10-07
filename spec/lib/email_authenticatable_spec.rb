@@ -53,7 +53,7 @@ describe Devise::Strategies::EmailAuthenticatable do
         expect(subject.result).to eq(:failure)
       end
 
-      it 'sets messgae' do
+      it 'sets message' do
         subject.authenticate!
         expect(subject.message).to eq(:invalid)
       end

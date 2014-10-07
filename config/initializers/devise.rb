@@ -265,7 +265,7 @@ Warden::Manager.after_fetch(scope: :user) do |user, auth, opts|
 end
 
 Warden::Manager.before_failure(scope: :user) do |env, opts|
-  if opts[:attempted_path]
+  opts[:attempted_path] = begin
     uri = URI(opts[:attempted_path])
     params = Rack::Utils.parse_query(uri.query)
     params.delete('logout')

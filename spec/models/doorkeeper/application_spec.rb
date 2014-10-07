@@ -16,6 +16,10 @@ describe Doorkeeper::Application do
         expect(application).not_to be_valid
       end
     end
+  end
+
+  describe '#logo_url' do
+    let(:application) { FactoryGirl.build(:application) }
 
     context 'with valid logo_url' do
       it 'is valid' do
@@ -31,4 +35,5 @@ describe Doorkeeper::Application do
       end
     end
   end
+
 end

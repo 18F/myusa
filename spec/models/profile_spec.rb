@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Profile do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:profile) { user.profile }
+  let(:profile) { FactoryGirl.create(:profile) }
 
   it 'responds to encrypted & unencrypted versions of its methods' do
     p = Profile.new
@@ -56,7 +55,7 @@ describe Profile do
     end
   end
 
-  it "strips dashes out of phone numbers" do
+  it 'strips dashes out of phone numbers' do
     profile_with_phone = create(:full_profile, phone_number: '123-456-7890')
     expect(profile_with_phone.phone).to eq '1234567890'
 
@@ -64,7 +63,7 @@ describe Profile do
     expect(profile_with_mobile.mobile).to eq '1234567890'
   end
 
-  it "strips dashes out of phone numbers on updates" do
+  it 'strips dashes out of phone numbers on updates' do
     profile_with_phone = create(:profile, phone_number: '123-456-7890')
     profile_with_phone.update_attributes(phone_number: '123-567-4567', mobile_number: '3-45-678-9012')
 
@@ -73,65 +72,49 @@ describe Profile do
   end
 
   it "rejects zip codes that aren't five digits" do
-    profile = build(:profile, zip: "Bad Zip Example")
+    profile = build(:profile, zip: 'Bad Zip Example')
 
     expect{profile.save!}.to raise_error(ActiveRecord::RecordInvalid)
     expect(profile.id).to be_nil
-    expect(profile.errors.messages[:zip]).to eq ["should be in the form 12345"]
+    expect(profile.errors.messages[:zip]).to eq ['should be in the form 12345']
   end
 
-  describe "as_json" do
-    before do
-      @user = create_confirmed_user_with_profile
-      @user.profile.update_attributes(:phone_number => '202-555-1212', :gender => 'male')
-    end
+  describe 'as_json' do
+    let(:profile) { FactoryGirl.create(:full_profile) }
 
     context "when called without any parameters" do
+      let(:json) { profile.as_json }
       it "outputs the full profile in JSON" do
-        json = @user.profile.as_json
-
-        expect(json["first_name"]).to eq 'Joe'
-        expect(json["last_name"]).to eq 'Citizen'
-        expect(json["email"]).to eq 'joe@citizen.org'
-        expect(json["phone_number"]).to eq '202-555-1212'
-        expect(json["gender"]).to eq 'male'
-        expect(json["mobile_number"]).to be_blank
+        expect(json).to include 'title'=>'Sir',
+                                'first_name'=>'Joan',
+                                'middle_name'=>'Quincy',
+                                'last_name'=>'Public',
+                                'suffix'=>'III',
+                                'address'=>'1 Infinite Loop',
+                                'address2'=>'Attn: Steve Jobs',
+                                'city'=>'Cupertino',
+                                'state'=>'CA',
+                                'zip'=>'92037',
+                                'gender'=>'Female',
+                                'marital_status'=>'Married',
+                                'is_parent'=>true,
+                                'is_student'=>false,
+                                'is_veteran'=>true,
+                                'is_retired'=>false,
+                                'email'=> profile.user.email,
+                                'phone_number'=>'123-456-7890',
+                                'mobile_number'=>'123-456-7890'
       end
     end
 
-    context "when called with a scope list that includes the profile scope" do
-      it "returns the full profile" do
-        json = @user.profile.as_json(:scope_list => ["profile", "tasks", "notifications"])
-        expect(json["first_name"]).to eq 'Joe'
-        expect(json["last_name"]).to eq 'Citizen'
-        expect(json["email"]).to eq 'joe@citizen.org'
-        expect(json["phone_number"]).to eq '202-555-1212'
-        expect(json["gender"]).to eq 'male'
-        expect(json["mobile_number"]).to be_blank
-      end
+    context 'when called with a set of specific profile scopes' do
+      let(:json) { profile.as_json(scope_list: scope_list) }
+      let(:scope_list) { ['profile.first_name', 'profile.last_name', 'profile.mobile_number'] }
 
-      context "and there are other profile scopes as well" do
-        it "returns the full profile" do
-          json = @user.profile.as_json(:scope_list => ["profile", "tasks", "notifications", "profile.first_name", "profile.gender"])
-          expect(json["first_name"]).to eq 'Joe'
-          expect(json["last_name"]).to eq 'Citizen'
-          expect(json["email"]).to eq 'joe@citizen.org'
-          expect(json["phone_number"]).to eq '202-555-1212'
-          expect(json["gender"]).to eq 'male'
-          expect(json["mobile_number"]).to be_blank
-        end
-      end
-    end
-
-    context "when called with a set of specific profile scopes" do
-      it "returns only those profile fields" do
-        json = @user.profile.as_json(:scope_list => ["profile.first_name", "profile.email", "profile.mobile_number"])
-        expect(json["first_name"]).to eq 'Joe'
-        expect(json["last_name"]).to be_nil
-        expect(json["email"]).to eq 'joe@citizen.org'
-        expect(json["phone_number"]).to be_nil
-        expect(json["gender"]).to be_nil
-        expect(json["mobile_number"]).to be_blank
+      it 'only includes information allowed by the scopes' do
+        expect(json).to eql 'first_name'=>'Joan',
+                            'last_name'=>'Public',
+                            'mobile_number'=>'123-456-7890'
       end
     end
   end

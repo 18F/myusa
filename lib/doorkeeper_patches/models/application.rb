@@ -1,12 +1,6 @@
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
-  has_many :memberships, foreign_key: 'oauth_application_id', dependent: :destroy
-  has_many :members, through: :memberships, source: :user
-
-  has_many :owners, -> { where 'memberships.member_type' => 'owner' }, through: :memberships, source: :user
-  has_many :developers, -> { where 'memberships.member_type' => 'developer' }, through: :memberships, source: :user
-
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
                                  message: 'Logo url must begin with https'
@@ -23,5 +17,6 @@ class Doorkeeper::Application
     end
   end
 
-  audit_on :create
+  audit_on :after_create
+
 end

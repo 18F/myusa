@@ -4,8 +4,7 @@ class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
 
-  has_many :memberships, dependent: :destroy
-  has_many :oauth_applications, -> { where 'memberships.member_type' => 'owner' }, through: :memberships
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
 
   has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
   has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
@@ -23,6 +22,8 @@ class User < ActiveRecord::Base
 
   before_validation :generate_uid
   before_create :build_default_profile
+
+  audit_on :before_destroy
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 

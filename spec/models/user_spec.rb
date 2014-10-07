@@ -41,31 +41,15 @@ describe User, type: :model do
     let(:user) { FactoryGirl.create(:user) }
     subject { -> { user.destroy! } }
 
-    before :each do
-      @app_id = app.id
-    end
-
-    context 'user is co-owner of oauth application' do
-      let(:co_owner) { FactoryGirl.create(:user) }
-      let!(:app) { FactoryGirl.create(:application, owners: [user, co_owner]) }
-
-      it 'does not delete application' do
-        is_expected.to_not change { Doorkeeper::Application.count(id: @app_id) }
+    context 'user is owner of oauth application' do
+      before :each do
+        FactoryGirl.create(:application, owner: user)
       end
-    end
-    context 'user is only owner of oauth application' do
-      let!(:app) { FactoryGirl.create(:application, owners: [user]) }
-
       it 'deletes application' do
-        is_expected.to change { Doorkeeper::Application.count(id: @app_id) }.by(-1)
+        is_expected.to change { Doorkeeper::Application.count }.by(-1)
       end
-
-      context 'with developers' do
-        let!(:app) { FactoryGirl.create(:application, :with_developers, owners: [user]) }
-
-        it 'deletes application' do
-          is_expected.to change { Doorkeeper::Application.count(id: @app_id) }.by(-1)
-        end
+      it 'creates delete user action' do
+        is_expected.to change(UserAction.where(action: 'destroy'), :count).by(1)
       end
     end
   end

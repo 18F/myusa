@@ -67,7 +67,7 @@ class Profile < ActiveRecord::Base
 
   def as_json(options = {})
     fields, methods = [], []
-    if (options[:scope_list] and options[:scope_list].include?("profile")) or options[:scope_list].nil?
+    if options[:scope_list].nil?
       fields += FIELDS
       methods += METHODS.collect{|method| method.to_s}
     else

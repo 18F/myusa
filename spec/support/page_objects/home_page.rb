@@ -8,8 +8,10 @@ class HomePage < SitePrism::Page
   element :contact_flash_no_js, '.alert.alert-info'
 
   section :login_form, 'section.login-section' do
-    element :email, 'noscript input#inputEmail'
+    element :email, "noscript input#inputEmail"
+    element :remember_me, "noscript input#user_remember_me"
     element :submit, "noscript input[value='Connect']"
+    element :google_button,     '.login button', text: 'Connect with Google'
   end
 
   section :contact_form, '#contact-form' do

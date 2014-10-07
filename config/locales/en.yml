@@ -221,6 +221,9 @@ en:
     successfully_added: Your mobile number has been successfully added to your MyUSA account.
     token_message: Your MyUSA verification code is %{raw_token}
 
+  application:
+    logo_url_hint: "Please provide a secure (https) URL for an image that identifies your application. The image should be 120px by 120px in size."
+
   activerecord:
     models:
       profile: 'Profile'

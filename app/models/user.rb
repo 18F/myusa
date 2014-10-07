@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   before_validation :generate_uid
   before_create :build_default_profile
 
+  audit_on :before_destroy
+
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
   attr_accessor :just_created, :auto_approve

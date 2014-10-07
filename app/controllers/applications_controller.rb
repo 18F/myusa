@@ -14,8 +14,9 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   def create
     @application = Doorkeeper::Application.new(application_params)
-    @application.owner = current_user
 
+    # TODO: just use the acl9 role
+    @application.owner = current_user
     current_user.has_role!(:owner, @application)
 
     if @application.errors.empty? && @application.save

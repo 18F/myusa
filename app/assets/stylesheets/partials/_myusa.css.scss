@@ -681,36 +681,26 @@ footer {
 .btn-myusa.active {
   color: #ffffff;
 }
-.btn-myusa-white:before {
-  font-family: 'MyUSA';
+.btn-myusa.white:before {
   color: #32689a;
-  content: "\e600";
   border-right: 0.075em solid rgba(0,0,0,0.1);
-  float: left;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  font-size: 120%;
-  margin: 0 0.5em 0 0;
-  padding: 0 0.5em;
 }
-.btn-myusa-white {
+.btn-myusa.white {
   background-color: #f5f5f5;
   border-color: #d0d0d0;
   color: $blue-dark;
 }
-.btn-myusa-white:hover:before,
-.btn-myusa-white:focus:before {
+.btn-myusa.white:hover:before,
+.btn-myusa.white:focus:before,
+.btn-myusa.white:active:before,
+.btn-myusa.white:active,
+.btn-myusa.white.active {
   color: #ffffff;
 }
-.btn-myusa-white:hover,
-.btn-myusa-white:focus {
+.btn-myusa.white:hover,
+.btn-myusa.white:focus {
   background-color: $blue-dark;
   border-color: $blue-lightest;
-  color: #ffffff;
-}
-.btn-myusa-white:active:before,
-.btn-myusa-white:active,
-.btn-myusa-white.active {
   color: #ffffff;
 }
 

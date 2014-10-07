@@ -123,5 +123,15 @@
     margin: 0;
     border: none;
   }
+  pre {
+    padding: 5px;
+    code {
+      overflow: auto;
+      word-wrap: normal;
+      white-space: pre;
+      font-size: 0.8em;
+      line-height: 1;
+    }
+  }
 
 }

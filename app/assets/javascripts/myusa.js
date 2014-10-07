@@ -121,21 +121,22 @@ $(document).ready(function () {
       }
     }
   });
-/**
- * Marketing page
- */
 
+  /**
+   * Contact form submission via javascript
+   */
   $('#contact_submit').click(function (e) {
-    var btn  = $(this)
-    var form = $('#contact-form')
-    btn.button('loading');
     e.preventDefault();
+    btn.button('loading');
+    var btn  = $(this);
+    var form = $('#contact-form');
     var formData =  form.serialize();
-    $.post('contact_us', formData, function(response){
-      $('.contact-flash .message').text(response.message)
+    $.post('contact_us', formData, function (response) {
+      $('.contact-flash .message').text(response.message);
       $('.contact-flash').removeClass('hidden');
-       btn.button('reset')
+      btn.button('reset');
     });
     form[0].reset();
   });
+
 });

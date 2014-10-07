@@ -231,6 +231,7 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
+
   config.warden do |manager|
     manager.failure_app = FailureApp
     manager.default_strategies(scope: :user).unshift :email_authenticatable
@@ -254,20 +255,22 @@ Devise.setup do |config|
 end
 
 
-Warden::Manager.after_fetch do |user, auth, opts|
+Warden::Manager.after_fetch(scope: :user) do |user, auth, opts|
   request = Rack::Request.new(auth.env)
   params = request.params
-  
+
   if auth.authenticated? && request.get? && !!params["logout"]
     auth.logout
   end
 end
 
-Warden::Manager.before_failure do |env, opts|
-  uri = URI(opts[:attempted_path])
-  params = Rack::Utils.parse_query(uri.query)
-  params.delete('logout')
-  uri.query = params.empty? ? nil : params.to_param
+Warden::Manager.before_failure(scope: :user) do |env, opts|
+  if opts[:attempted_path]
+    uri = URI(opts[:attempted_path])
+    params = Rack::Utils.parse_query(uri.query)
+    params.delete('logout')
+    uri.query = params.empty? ? nil : params.to_param
 
-  opts[:attempted_path] = uri.to_s
+    opts[:attempted_path] = uri.to_s
+  end
 end

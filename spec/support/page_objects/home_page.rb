@@ -4,6 +4,9 @@ class HomePage < SitePrism::Page
   set_url '/'
   set_url_matcher(/\/?$/)
 
+  element :dropdown_navigation_toggle, 'div.header-signedin.dropdown'
+  section :dropdown_navigation, DropdownNavigationSection, 'div.header-signedin.dropdown'
+
   element :contact_flash, 'div.contact-flash'
   element :contact_flash_no_js, '.alert.alert-info'
 

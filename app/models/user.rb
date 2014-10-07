@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
 
+  acts_as_authorization_subject association_name: :roles
+
   attr_accessor :just_created, :auto_approve
 
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]

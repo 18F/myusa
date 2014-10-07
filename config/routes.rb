@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   # Pull this out of the `use_doorkeeper` block so that we can put it at the
   # root level.
-  resources :applications, only: %w(new create edit update destroy), as: 'oauth_applications'
+  resources :applications, only: %w(new create show edit update destroy), as: 'oauth_applications'
 
   post 'new_api_key' => 'applications#new_api_key'
   post 'make_public' => 'applications#make_public'

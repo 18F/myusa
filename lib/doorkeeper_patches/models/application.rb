@@ -1,6 +1,8 @@
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
+  acts_as_authorization_object
+
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
                                  message: 'Logo url must begin with https'
@@ -18,5 +20,4 @@ class Doorkeeper::Application
   end
 
   audit_on :after_create
-
 end

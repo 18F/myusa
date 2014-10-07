@@ -6,5 +6,7 @@ FactoryGirl.define do
     scopes 'profile.email profile.last_name'
     association :owner, factory: [:user]
     public true
+
+    after(:create) {|a| a.accepts_role!(:owner, a.owner) }
   end
 end

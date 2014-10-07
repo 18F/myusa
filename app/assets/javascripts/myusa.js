@@ -127,14 +127,16 @@ $(document).ready(function () {
    */
   $('#contact_submit').click(function (e) {
     e.preventDefault();
+    var btn = $(this);
     btn.button('loading');
-    var btn  = $(this);
+    btn.prop('disabled', true);
     var form = $('#contact-form');
     var formData =  form.serialize();
     $.post('contact_us', formData, function (response) {
       $('.contact-flash .message').text(response.message);
       $('.contact-flash').removeClass('hidden');
       btn.button('reset');
+      btn.prop('disabled', false);
     });
     form[0].reset();
   });

@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   audit_on :before_destroy
 
-  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
+  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
 
   acts_as_authorization_subject association_name: :roles
 
@@ -73,6 +73,10 @@ class User < ActiveRecord::Base
       when 'google_oauth2'
         auth.extra.raw_info.gender
       end
+    end
+
+    def find_or_create_from_omniauth(auth)
+      find_from_omniauth(auth) || create_from_omniauth(auth)
     end
 
     def find_from_omniauth(auth)

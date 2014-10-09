@@ -20,7 +20,7 @@ describe SessionsController do
     end
 
     context 'email and token are present' do
-      let(:user) { User.create(email: email) }
+      let(:user) { FactoryGirl.create(:user, email: email) }
 
       context 'and are valid' do
         before :each do
@@ -44,6 +44,12 @@ describe SessionsController do
           expect(AuthenticationToken.authenticate(controller.current_user, @token.raw)).to be_nil
         end
 
+        context 'first time experience' do
+          let(:user) { FactoryGirl.create(:user, :new_user, email: email) }
+          it 'redirects to mobile recovery flow' do
+            expect(response).to redirect_to(new_mobile_recovery_path)
+          end
+        end
         context 'return to path is not set' do
           it 'redirects to the profile path' do
             expect(response).to redirect_to(profile_path)

@@ -216,9 +216,10 @@ describe 'Sign In' do
       context 'for the first time' do
         context 'with email' do
           include_context 'with email'
-          it_behaves_like 'sign in and redirect'
+          it_behaves_like 'sign in'
           it_behaves_like 'sending token'
           it_behaves_like 'remember me'
+          it_behaves_like 'mobile recovery'
         end
 
         context 'with google' do

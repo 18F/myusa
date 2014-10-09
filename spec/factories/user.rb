@@ -1,6 +1,11 @@
 FactoryGirl.define do
   factory :user do
     sequence(:email) {|n| "user_#{n}@gsa.gov" }
+    sign_in_count 42
+
+    trait :new_user do
+      sign_in_count 0
+    end
 
     trait :with_profile do
       profile

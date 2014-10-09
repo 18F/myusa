@@ -23,7 +23,7 @@
               <%= f.label 'Return Email:' %>
               <%= f.text_field :return_email, class: 'form-control', placeholder: 'What is your email address?' %>
             </div>
-            <%= f.submit 'Send Us Your Message', class: 'btn btn-primary width-100' %>
+            <%= f.submit 'Send Us Your Message', id: 'contact_submit', 'data-loading-text' => "Sending your message...", class: 'btn btn-primary width-100' %>
           <% end %>
         </div>
       </div>

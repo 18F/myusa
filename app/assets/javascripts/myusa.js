@@ -121,17 +121,29 @@ $(document).ready(function () {
       }
     }
   });
-/**
- * Marketing page
- */
- $("#contact-form").submit(function(e){
-  e.preventDefault();
-  var formData = $(this).serialize();
-  $.post('contact_us', formData, function(response){
-    $(".contact-flash .message").text(response.message)
-    $(".contact-flash").removeClass('hidden');
+
+  /**
+   * Contact form submission via javascript
+   */
+  $('#contact_submit').click(function (e) {
+    e.preventDefault();
+    var btn = $(this);
+    btn.button('loading');
+    btn.prop('disabled', true);
+    var form = $('#contact-form');
+    var formData =  form.serialize();
+    $.post('contact_us', formData, function (response) {
+      $('.contact-flash .message').text(response.message);
+      $('.contact-flash').removeClass('hidden');
+      btn.button('reset');
+      btn.prop('disabled', false);
+      form[0].reset();
+    }).fail(function (error) {
+      $('.contact-flash .message').text("Whoops! Something went wrong.  We're really sorry.  Try emailing us at <a href='mailto:myusa@gsa.gov'>myusa@gsa.gov</a>.");
+      $('.contact-flash').removeClass('hidden');
+      btn.button('reset');
+      btn.prop('disabled', false);
+    });
   });
-  $(this)[0].reset();
- });
 
 });

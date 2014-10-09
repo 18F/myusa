@@ -234,7 +234,6 @@ Devise.setup do |config|
 
   config.warden do |manager|
     manager.failure_app = FailureApp
-    manager.default_strategies(scope: :user).unshift :email_authenticatable
   end
 
   # ==> Mountable engine configurations
@@ -265,12 +264,10 @@ Warden::Manager.after_fetch(scope: :user) do |user, auth, opts|
 end
 
 Warden::Manager.before_failure(scope: :user) do |env, opts|
-  opts[:attempted_path] = begin
-    uri = URI(opts[:attempted_path])
-    params = Rack::Utils.parse_query(uri.query)
-    params.delete('logout')
+  uri = URI(opts[:attempted_path])
+  params = Rack::Utils.parse_query(uri.query)
+  if params.delete('logout')
     uri.query = params.empty? ? nil : params.to_param
-
     opts[:attempted_path] = uri.to_s
   end
 end

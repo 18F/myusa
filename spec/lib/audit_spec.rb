@@ -47,15 +47,5 @@ module Audit
         expect(user.user_actions.where(record_type: Dummy, action: 'create')).to exist
       end
     end
-
-    context 'warden hooks' do
-      before :each do
-        get :index, u: user
-      end
-
-      it 'audits user sign in' do
-        expect(user.user_actions.where(action: 'sign_in')).to exist
-      end
-    end
   end
 end

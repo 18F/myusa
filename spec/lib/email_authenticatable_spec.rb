@@ -40,36 +40,48 @@ describe Devise::Strategies::EmailAuthenticatable do
       @raw = @token.raw
 
       allow(subject).to receive(:session).and_return(session)
-
-      subject.authenticate!
     end
 
     shared_context 'bad token' do
       it 'does not set the user' do
+        subject.authenticate!
         expect(subject.user).to be_nil
       end
 
       it 'fails' do
+        subject.authenticate!
         expect(subject.result).to eq(:failure)
       end
 
-      it 'sets messgae' do
-        expect(subject.message).to eq(:invalid_token)
+      it 'sets message' do
+        subject.authenticate!
+        expect(subject.message).to eq(:invalid)
+      end
+
+      it 'creates failed_authentication user action' do
+        expect { subject.authenticate! }.to change(UserAction.failed_authentication, :count).by(1)
       end
     end
 
     shared_context 'good token' do
 
       it 'sets the user' do
+        subject.authenticate!
         expect(subject.user).to be
       end
 
       it 'halts warden' do
+        subject.authenticate!
         expect(subject).to be_halted
       end
 
       it 'invalidates the token' do
+        subject.authenticate!
         expect(AuthenticationToken.authenticate(@user, @raw)).to be_nil
+      end
+
+      it 'creates successful_authentication user action' do
+        expect { subject.authenticate! }.to change(UserAction.successful_authentication, :count).by(1)
       end
     end
 

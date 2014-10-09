@@ -46,7 +46,6 @@ describe 'Two Factor Authentication', sms: true do
 
     context 'code is correct' do
       it 'redirects back' do
-        puts page.current_url
         expect(admin_page).to be_displayed
       end
     end

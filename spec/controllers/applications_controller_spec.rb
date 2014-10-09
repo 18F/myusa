@@ -41,6 +41,7 @@ describe ApplicationsController do
 
     before :each do
       sign_in user
+      sign_in :two_factor, user
     end
 
     context 'current user is owner' do
@@ -81,7 +82,8 @@ describe ApplicationsController do
     subject { -> { put :update, id: app.id, application: application_params } }
 
     before :each do
-      sign_in user
+      sign_in :user, user
+      sign_in :two_factor, user
     end
 
     context 'with valid params' do

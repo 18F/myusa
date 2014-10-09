@@ -9,7 +9,7 @@ class Profile < ActiveRecord::Base
   validates_format_of :mobile, :with => /\A\d+\z/, :allow_blank => true
   validates_length_of :mobile, :maximum => 10
 
-  has_one :mobile_confirmation, autosave: true, dependent: :destroy
+  # has_one :mobile_confirmation, autosave: true, dependent: :destroy
 
   after_validation :set_errors
 
@@ -46,7 +46,7 @@ class Profile < ActiveRecord::Base
 
   def mobile_number=(value)
     self.mobile = normalize_phone_number(value)
-    mobile_confirmation.mark_for_destruction if mobile_confirmation.present?
+    # mobile_confirmation.mark_for_destruction if mobile_confirmation.present?
   end
 
   def mobile_number
@@ -54,7 +54,7 @@ class Profile < ActiveRecord::Base
   end
 
   def mobile_number_confirmed?
-    !!(mobile_confirmation.present? && mobile_confirmation.confirmed?)
+    false #!!(mobile_confirmation.present? && mobile_confirmation.confirmed?)
   end
 
   def print_gender

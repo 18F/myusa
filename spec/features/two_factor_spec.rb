@@ -13,7 +13,6 @@ describe 'Two Factor Authentication', sms: true do
     current_text_message.body.match /\d{6}/
   end
 
-
   before :each do
     login user
   end
@@ -28,6 +27,15 @@ describe 'Two Factor Authentication', sms: true do
     expect(receive_code).to_not be_nil
   end
 
+  scenario 'user can resend code' do
+    sms_page.load
+    first_code = receive_code
+    sms_page.resend_link.click
+    expect(sms_page).to be_displayed
+    expect(second_code = receive_code).to_not be_nil
+    expect(second_code).to_not eql(first_code)
+  end
+
   context 'user submits code' do
     def code; receive_code; end
 
@@ -40,12 +48,22 @@ describe 'Two Factor Authentication', sms: true do
     context 'code is bad' do
       def code; 'foobar'; end
 
-      it 'shows error and displays sms form' do
+      scenario 'shows error and displays sms form' do
+        expect(sms_page).to be_displayed
+        expect(sms_page).to have_flash_message('Please check the number sent to your mobile and re-enter that code')
+      end
+
+      scenario 'user can resend code' do
+        first_code = receive_code
+        sms_page.flash_resend_link.click
+        expect(sms_page).to be_displayed
+        expect(second_code = receive_code).to_not be_nil
+        expect(second_code).to_not eql(first_code)
       end
     end
 
     context 'code is correct' do
-      it 'redirects back' do
+      scenario 'redirects back' do
         expect(admin_page).to be_displayed
       end
     end

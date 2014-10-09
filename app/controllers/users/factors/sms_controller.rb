@@ -5,14 +5,17 @@ module Users
       before_filter :require_mobile_number!
 
       def show
-        current_user.create_mobile_confirmation!
+        current_user.mobile_confirmation.present? ?
+          current_user.mobile_confirmation.regenerate_token :
+          current_user.create_mobile_confirmation!
       end
 
       def create
         if warden.authenticate(:sms, scope: :two_factor)
           redirect_to retrieve_stored_location
         else
-          render text: 'foobar'
+          flash[:error] = t(:bad_token, scope: [:two_factor, :sms], resend_link: users_factors_sms_path).html_safe
+          render :show
         end
       end
 
@@ -26,10 +29,9 @@ module Users
         raise MissingMobileNumber if mobile_number.nil?
       end
 
+      #TODO: this should be shared between 2FA controllers
       def retrieve_stored_location
-        foo = session.delete(:two_factor_return_to)
-        pp foo
-        foo
+        session.delete(:two_factor_return_to)
       end
 
     end

@@ -52,14 +52,11 @@ body, #bodyTable{
 	background-color:#ffffff;
 }
 #bodyCell{
-	border-top:4px solid #BBBBBB;
 }
 #templateContainer{
-	border:1px solid #BBBBBB;
 }
 #templatePreheader{
 	background-color:#F4F4F4;
-	border-bottom:1px solid #CCCCCC;
 }
 .preheaderContent{
 	color:#808080;
@@ -75,8 +72,6 @@ body, #bodyTable{
 }
 #templateHeader{
 	background-color:#F4F4F4;
-	border-top:1px solid #FFFFFF;
-	border-bottom:1px solid #CCCCCC;
 }
 .headerContent{
 	color:#505050;
@@ -106,8 +101,6 @@ body, #bodyTable{
 /* ========== Body Styles ========== */
 #templateBody{
 	background-color:#F4F4F4;
-	border-top:1px solid #FFFFFF;
-	border-bottom:1px solid #CCCCCC;
 }
 .bodyContent a:link, .bodyContent a:visited, /* Yahoo! Mail Override */ .bodyContent a .yshortcuts /* Yahoo! Mail Override */{
 	color:$blue-dark;
@@ -128,7 +121,7 @@ body, #bodyTable{
 	a.btn-myusa{
 	  font: bold 15px Arial;
 	  text-decoration: none;
-	  background-color: $blue-dark;
+	  background-color: $blue;
 	  
 	  padding: 4px 12px 4px 12px;
 	  border-top: 1px solid #CCCCCC;
@@ -149,7 +142,6 @@ body, #bodyTable{
 /* ========== Footer Styles ========== */
 #templateFooter{
 	background-color:#F4F4F4;
-	border-top:1px solid #FFFFFF;
 }
 .footerContent{
 	color:#808080;

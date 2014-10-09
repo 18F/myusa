@@ -17,6 +17,6 @@ class Doorkeeper::Application
     end
   end
 
-  audit_on :create
+  audit_on :after_create
 
 end

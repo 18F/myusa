@@ -5,31 +5,40 @@ describe 'Home Page' do
   let(:email) { user.email }
   let(:message) { "I'm sold. I want to enter all my profile data in MyUSA!" }
   let(:display_message) { @home_page.contact_flash }
+  let(:message_area) { @home_page.contact_form.message }
 
   before :each do
     @home_page = HomePage.new
-    @home_page.submit_contact_form(message)
+    @home_page.submit_contact_form(message, email)
   end
 
   shared_examples 'user contact form' do
-    scenario 'user can contact us' do
+    scenario 'contact form displays reset fields after submission' do
+      expect(message_area.value).to be_blank
+    end
+
+    scenario 'contact form displays notice after submission' do
       expect(display_message).to have_content(
         'Thank you. Your message has been sent.'
       )
     end
   end
 
-  it 'Displays message in email' do
+  it 'displays message and email address in email' do
     open_email('myusa@gsa.gov')
     expect(current_email).to have_content(message)
+    expect(current_email).to have_content(email)
   end
 
   context 'without javascript' do
-    let(:display_message) { @home_page.contact_flash_no_js }
-    it_behaves_like 'user contact form'
+    it_behaves_like 'user contact form' do
+      let(:display_message) { @home_page.contact_flash_no_js }
+    end
   end
 
   context 'with javascript', js: true do
-    it_behaves_like 'user contact form'
+    it_behaves_like 'user contact form' do
+      let(:message_area) { @home_page.contact_form.message }
+    end
   end
 end

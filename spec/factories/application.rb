@@ -6,15 +6,5 @@ FactoryGirl.define do
     scopes 'profile.email profile.last_name'
     association :owner, factory: [:user]
     public true
-
-    # after(:create) {|a| a.owner_emails = a.owners.map(&:email).join(' ') }
-
-    # trait :with_developers do
-    #   after(:create) do |application|
-    #     application.developers = create_list(:user, 2)
-    #     application.save!
-    #     application
-    #   end
-    # end
   end
 end

@@ -8,9 +8,8 @@ describe ContactMailer do
 
     subject { ContactMailer.contact_us('User Name', email, message) }
 
-    its(:subject) { should eql 'Contact - MyUSA marketing page' }
+    its(:subject) { should eql 'MyUSA question from User Name' }
     its(:reply_to) { should contain_exactly email }
-    # its('body.encoded') { should include message }
     its('body.encoded') { should include message }
     its('body.encoded') { should include 'User Name'}
   end

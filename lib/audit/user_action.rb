@@ -4,10 +4,12 @@ module Audit
       def audit_on(*events)
         opts = events.last.is_a?(Hash) ? events.pop : {}
 
-        audit_wrapper = Wrapper.new(opts)
-        hooks = events.map {|e| "after_#{e}".to_sym }
+        callback_opts = opts.slice(:if, :unless)
+        wrapper_opts = opts.slice(:action)
 
-        hooks.each {|h| send h, audit_wrapper }
+        audit_wrapper = Wrapper.new(opts)
+
+        events.each {|e| send e, audit_wrapper, callback_opts }
       end
     end
 
@@ -37,6 +39,14 @@ module Audit
 
       def after_create(record)
         audit(@action || 'create', record)
+      end
+
+      def after_update(record)
+        audit(@action || 'update', record)
+      end
+
+      def before_destroy(record)
+        audit(@action || 'destroy', record)
       end
 
       private

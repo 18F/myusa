@@ -1,7 +1,8 @@
 class AuthenticationToken < ActiveRecord::Base
   belongs_to :user
 
-  audit_on :create
+  audit_on :after_create
+  
   before_create {|t| t.sent_at = Time.now }
 
   default_scope -> { where(['sent_at > ?', Time.now - 2.hours]) }
@@ -11,6 +12,8 @@ class AuthenticationToken < ActiveRecord::Base
   attr_accessor :raw
 
   def self.authenticate(user, raw)
+    return nil unless user.present?
+    
     digested = Devise.token_generator.digest(self, :token, raw)
     token = user.authentication_tokens.find_by_token(digested)
 

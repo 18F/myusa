@@ -3,7 +3,7 @@ require 'spec_helper'
 module Audit
   describe ApplicationController, type: :controller do
     class Dummy < ActiveRecord::Base
-      audit_on :create
+      audit_on :after_create
     end
 
     before :all do
@@ -45,16 +45,6 @@ module Audit
 
       it 'audits model creation' do
         expect(user.user_actions.where(record_type: Dummy, action: 'create')).to exist
-      end
-    end
-
-    context 'warden hooks' do
-      before :each do
-        get :index, u: user
-      end
-
-      it 'audits user sign in' do
-        expect(user.user_actions.where(action: 'sign_in')).to exist
       end
     end
   end

@@ -17,7 +17,7 @@ describe NotificationMailer do
     end
 
     subject { NotificationMailer.notification_email(notification) }
-    its(:from) { should eql ['no-reply@example.com'] }
+    its(:from) { should eql ['no-reply@' + ActionMailer::Base.default_url_options[:host]] }
     its(:subject) { should eql notification.subject }
     its(:reply_to) { should contain_exactly 'myusa@gsa.gov' }
     its('body.encoded') { should have_content notification.body }

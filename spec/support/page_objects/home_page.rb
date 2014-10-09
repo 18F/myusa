@@ -9,7 +9,9 @@ class HomePage < SitePrism::Page
 
   section :login_form, 'section.login-section' do
     element :email, "noscript input#inputEmail"
+    element :remember_me, "noscript input#user_remember_me"
     element :submit, "noscript input[value='Connect']"
+    element :google_button,     '.login button', text: 'Connect with Google'
   end
 
   section :contact_form, '#contact-form' do
@@ -19,7 +21,7 @@ class HomePage < SitePrism::Page
     element :submit, "input[value='Send Us Your Message']"
   end
 
-  def submit_contact_form(message='lorum', email='user@gsa.gov')
+  def submit_contact_form(message = 'lorum', email = 'user@example.com')
     load
     contact_form.message.set(message)
     contact_form.from.set(email)

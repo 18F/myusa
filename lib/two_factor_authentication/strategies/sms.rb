@@ -8,8 +8,8 @@ module TwoFactorAuthentication
       end
 
       def authenticate!
-        if current_user.mobile_confirmation.present? &&
-           current_user.mobile_confirmation.authenticate(authentication_code)
+        if current_user.sms_code.present? &&
+           current_user.sms_code.authenticate(authentication_code)
 
            success!(current_user)
         else

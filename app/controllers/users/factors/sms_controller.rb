@@ -5,9 +5,9 @@ module Users
       before_filter :require_mobile_number!
 
       def show
-        current_user.mobile_confirmation.present? ?
-          current_user.mobile_confirmation.regenerate_token :
-          current_user.create_mobile_confirmation!
+        current_user.sms_code.present? ?
+          current_user.sms_code.regenerate_token :
+          current_user.create_sms_code!
       end
 
       def create

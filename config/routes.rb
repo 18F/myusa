@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
   resource :mobile_recovery
   get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
-  get 'mobile_recovery/resend' => 'mobile_recoveries#resend'
+  get 'mobile_recovery/welcome' => 'mobile_recoveries#welcome'
 
   resource :profile, only: [:show, :additional, :edit, :update, :destroy] do
     get :additional

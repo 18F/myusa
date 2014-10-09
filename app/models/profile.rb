@@ -46,15 +46,10 @@ class Profile < ActiveRecord::Base
 
   def mobile_number=(value)
     self.mobile = normalize_phone_number(value)
-    # mobile_confirmation.mark_for_destruction if mobile_confirmation.present?
   end
 
   def mobile_number
     pretty_print_phone(self.mobile)
-  end
-
-  def mobile_number_confirmed?
-    false #!!(mobile_confirmation.present? && mobile_confirmation.confirmed?)
   end
 
   def print_gender

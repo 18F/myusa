@@ -1,5 +1,4 @@
 require 'spec_helper'
-# require 'warden_helpers'
 require 'two_factor_authentication/strategies/sms'
 
 describe TwoFactorAuthentication::Strategies::Sms do
@@ -50,8 +49,8 @@ describe TwoFactorAuthentication::Strategies::Sms do
 
     before :each do
       env['warden'].set_user(user, scope: :user)
-      allow(MobileConfirmation).to receive(:new_token) { raw_token }
-      user.create_mobile_confirmation!
+      allow(SmsCode).to receive(:new_token) { raw_token }
+      user.create_sms_code!
       subject.authenticate!
     end
 

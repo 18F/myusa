@@ -5,7 +5,7 @@
 
   <%= form_for :sms, url: users_factors_sms_url do |f| %>
     <div class='row'>
-      <%= f.label :raw_token %>
+      <%= f.label :raw_token, t(:token_label, scope: [:two_factor, :sms]) %>
       <%= f.text_field :raw_token, class: 'form-control' %>
     </div>
     <br>

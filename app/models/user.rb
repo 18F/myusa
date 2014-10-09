@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
 
+  has_one :mobile_confirmation, dependent: :destroy
+
   # TODO: use the owner acl role to join these
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
 

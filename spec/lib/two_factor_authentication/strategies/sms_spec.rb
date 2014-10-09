@@ -36,13 +36,7 @@ describe TwoFactorAuthentication::Strategies::Sms do
       end
 
       context 'sms authentication code is in params' do
-        let(:raw_token) { '123456' }
-        let(:params) { { sms_authentication_code: raw_token } }
-
-        before :each do
-          allow(MobileConfirmation).to receive(:new_token) { raw_token }
-          user.create_mobile_confirmation!
-        end
+        let(:params) { { "sms[raw_token]" => 'bad token' }}
 
         it 'is valid' do
           expect(subject).to be_valid
@@ -62,7 +56,7 @@ describe TwoFactorAuthentication::Strategies::Sms do
     end
 
     context 'raw token is bad' do
-      let(:params) { { sms_authentication_code: 'bad token' } }
+      let(:params) { { "sms[raw_token]" => 'bad token' }}
       it 'does not set user' do
         expect(subject.user).to be_nil
       end
@@ -73,7 +67,7 @@ describe TwoFactorAuthentication::Strategies::Sms do
     end
 
     context 'raw token matches' do
-      let(:params) { { sms_authentication_code: raw_token } }
+      let(:params) { { "sms[raw_token]" => raw_token }}
       it 'sets user' do
         expect(subject.user).to eql(user)
       end

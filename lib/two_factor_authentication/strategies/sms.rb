@@ -18,12 +18,12 @@ module TwoFactorAuthentication
       end
 
       private
-      
+
       def authentication_code
-        params[:sms_authentication_code]
+        params[:sms].present? && params[:sms][:raw_token]
       end
     end
   end
 end
 
-Warden::Strategies.add(:test, TwoFactorAuthentication::Strategies::Sms)
+Warden::Strategies.add(:sms, TwoFactorAuthentication::Strategies::Sms)

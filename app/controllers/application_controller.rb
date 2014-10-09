@@ -53,17 +53,24 @@ class ApplicationController < ActionController::Base
   end
 
   def require_owner!
+    authenticate_user!
     current_user.has_role_for?(resource) or raise Acl9::AccessDenied
   end
 
   def require_admin!
+    authenticate_user!
     if current_user.has_role?(:admin)
       # TODO: enforce 2FA here
+      require_two_factor!
       UserAction.admin_action.create(data: params)
       return true
     else
       raise Acl9::AccessDenied
     end
+  end
+
+  def require_two_factor!
+    warden.authenticate!(scope: :two_factor)
   end
 
 end

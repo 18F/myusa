@@ -20,6 +20,7 @@ module Warden::Spec
       Rack::Builder.new do
         use opts[:session] || Warden::Spec::Helpers::Session unless opts[:nil_session]
         use Warden::Manager, opts, &blk
+        use ActionDispatch::ParamsParser
         run app
       end
     end

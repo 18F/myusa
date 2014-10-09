@@ -37,6 +37,12 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'users/sign_in/:token_id' => 'sessions#show', as: 'user_session_token'
+
+    namespace :users do
+      namespace :factors do
+        resource :sms
+      end
+    end
   end
 
   resource :mobile_recovery
@@ -47,6 +53,8 @@ Rails.application.routes.draw do
     get :additional
     get :delete_account
   end
+
+  get 'admin/test' => 'admin#test'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do

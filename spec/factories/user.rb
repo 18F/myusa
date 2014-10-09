@@ -16,5 +16,11 @@ FactoryGirl.define do
       after(:create) {|u| u.has_role!(:admin) }
     end
 
+    trait :with_mobile_number do
+      # we are currently storing the mobile number for SMS recovery and 2FA in
+      # the user's profile ... this will need to change when we move it.
+      profile { create(:profile, mobile_number: '800-555-3455') }
+    end
+
   end
 end

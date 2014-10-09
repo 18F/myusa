@@ -16,11 +16,6 @@ class Notification < ActiveRecord::Base
     self.update_attribute :viewed_at, Time.now
   end
 
-  def email_from_address
-    url = app.url.blank? ? app.redirect_uri : app.url
-    "no-reply@#{URI(url).host}"
-  end
-
   private
 
   def deliver_notification

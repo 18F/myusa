@@ -48,16 +48,32 @@ describe MobileRecoveriesController do
 
         expect(confirmation).to be_confirmed
       end
+
+      it 'creates successful_authentication user action' do
+        confirmation = user.profile.create_mobile_confirmation
+        confirmation.send(:generate_token)
+        raw_token = confirmation.raw_token
+        confirmation.save!
+
+        expect { patch :update, mobile_confirmation: { raw_token: raw_token } }.to change(UserAction.successful_authentication, :count).by(1)
+      end
     end
 
     context 'with an invalid token' do
       it 'does not confirm the mobile number' do
-        confirmation = user.profile.create_mobile_confirmation!
+        confirmation = user.profile.create_mobile_confirmation
+
         patch :update, mobile_confirmation: { raw_token: 'foobar' }
         confirmation.reload
 
         expect(flash[:error]).to match(/Please check the number sent to your mobile and re-enter that code/)
         expect(confirmation).to_not be_confirmed
+      end
+
+      it 'creates successful_authentication user action' do
+        confirmation = user.profile.create_mobile_confirmation
+
+        expect { patch :update, mobile_confirmation: { raw_token: 'foobar' } }.to change(UserAction.failed_authentication, :count).by(1)
       end
     end
   end

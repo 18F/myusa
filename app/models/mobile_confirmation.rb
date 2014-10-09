@@ -16,10 +16,15 @@ class MobileConfirmation < ActiveRecord::Base
     if Devise.secure_compare(digested, self.token)
       self.token = nil
       self.confirm!
+      true
+    else
+      UserAction.failed_authentication.create(data: { authentication_method: 'sms' })
+      false
     end
   end
 
   def confirm!
+    UserAction.successful_authentication.create(data: { authentication_method: 'sms' })
     self.confirmed_at = Time.now
     save!
   end

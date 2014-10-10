@@ -4,8 +4,6 @@ class HomePage < SitePrism::Page
   set_url '/'
   set_url_matcher(/\/?$/)
 
-  include DropdownNavigationElements
-
   element :contact_flash, 'div.contact-flash'
   element :contact_flash_no_js, '.alert.alert-info'
 

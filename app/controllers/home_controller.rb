@@ -19,7 +19,7 @@ class HomeController < ApplicationController
   end
 
   def send_contact_us_email
-    ContactMailer.contact_us(
+    SystemMailer.contact_email(
       contact_params[:from],
       contact_params[:return_email],
       contact_params[:message]

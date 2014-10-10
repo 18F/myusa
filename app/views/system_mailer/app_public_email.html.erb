@@ -1,0 +1,8 @@
+<p><%= @metadata[:subject] %></p>
+<p>
+  <u>Application owner:</u>
+  <br/>
+  Name: <%= @user.profile.first_name %> <%= @user.profile.last_name %>
+  <br/>
+  Email: <%= @user.profile.email %>
+</p>

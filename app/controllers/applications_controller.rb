@@ -47,7 +47,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     @application = Doorkeeper::Application.find(params[:id])
     @application.requested_public_at = DateTime.now
     @application.save
-    ApplicationPublicMailer.notify_is_public(@application, current_user).deliver
+    SystemMailer.app_public_email(@application, current_user).deliver
     redirect_to authorizations_path, notice: I18n.t('app_status.requested_public')
   end
 

@@ -572,7 +572,7 @@ DEPENDENCIES
   premailer-rails
   pry-rails
   quiet_assets
-  rails (~> 4.1.0)
+  rails (~> 4.1.5)
   rails-observers
   rspec-its
   rspec-rails

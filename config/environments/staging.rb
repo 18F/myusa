@@ -73,7 +73,7 @@ Rails.application.configure do
   # AWS SES config
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:    'email-smtp.us-west-2.amazonaws.com',
+    address:    'email-smtp.us-east-1.amazonaws.com',
     port:       '587',
     user_name:  Rails.application.secrets.aws_ses_username,
     password:   Rails.application.secrets.aws_ses_password,

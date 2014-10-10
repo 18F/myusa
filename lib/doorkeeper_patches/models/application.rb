@@ -20,4 +20,12 @@ class Doorkeeper::Application
   end
 
   audit_on :after_create
+
+  before_save :send_request_public_email
+
+  def send_request_public_email
+    if requested_public_at_changed?
+      SystemMailer.app_public_email(self, owner).deliver
+    end
+  end
 end

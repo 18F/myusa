@@ -48,6 +48,8 @@ Rails.application.routes.draw do
     get :delete_account
   end
 
+  get 'admin' => 'admin#index'
+
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do
       resource :profile, only: [:show]

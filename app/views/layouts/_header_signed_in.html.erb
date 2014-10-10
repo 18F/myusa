@@ -6,6 +6,9 @@
   <ul class="dropdown-menu settings-menu" role="menu" aria-labelledby="user-settings">
     <li role="presentation"><%= link_to 'Your Profile', profile_path, role: 'menuitem', tabindex: -1 %></li>
     <li role="presentation"><%= link_to 'Your Applications', authorizations_path, role: 'menuitem', tabindex: -1 %></li>
+    <% if current_user.has_role?(:admin) %>
+      <li role="presentation"><%= link_to 'Administration', admin_path, role: 'menuitem', tabindex: -1 %></li>
+    <% end %>
     <% if @display_not_me %>
       <li role="presentation"><%= link_to 'This is not me', not_me_path, role: 'menuitem', tabindex: -1 %></li>
     <% end %>

@@ -75,7 +75,7 @@ describe ApplicationsController do
 
   describe '#update' do
     let(:owner) { user }
-    let(:app) { FactoryGirl.create(:application, name: 'My App', owner: owner) }
+    let(:app) { FactoryGirl.create(:application, name: 'My App', owner: owner, public: false) }
     let(:application_params) { { name: 'Best App Ever' } }
 
     subject { -> { put :update, id: app.id, application: application_params } }
@@ -84,9 +84,17 @@ describe ApplicationsController do
       sign_in user
     end
 
-    context 'with valid params' do
-      it 'updates' do
+    context 'current user is owner' do
+      it 'updates app name' do
         is_expected.to change { app.reload.name }.to('Best App Ever')
+      end
+
+      context 'user attempts to set app to public' do
+        let(:application_params) { { public: true } }
+
+        it 'does not set public status' do
+          is_expected.to_not change { app.reload.public }
+        end
       end
     end
 
@@ -94,9 +102,18 @@ describe ApplicationsController do
       let(:owner) { FactoryGirl.create(:user) }
       let(:user) { FactoryGirl.create(:admin_user) }
 
-      it 'updates' do
+      it 'updates app name' do
         is_expected.to change { app.reload.name }.to('Best App Ever')
       end
+
+      context 'user attempts to set app to public' do
+        let(:application_params) { { public: true } }
+
+        it 'sets public status' do
+          is_expected.to change { app.reload.public }.from(false).to(true)
+        end
+      end
+
     end
 
     context 'current user is neither owner nor admin' do

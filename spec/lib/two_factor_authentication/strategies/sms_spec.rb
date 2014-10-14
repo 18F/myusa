@@ -67,8 +67,8 @@ describe TwoFactorAuthentication::Strategies::Sms do
 
     context 'raw token matches' do
       let(:params) { { "sms[raw_token]" => raw_token }}
-      it 'sets user' do
-        expect(subject.user).to eql(user)
+      it 'sets sms_code object' do
+        expect(subject.user).to eql(user.sms_code)
       end
       it 'succeeds' do
         expect(subject.result).to eql(:success)

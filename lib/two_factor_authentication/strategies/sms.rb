@@ -4,14 +4,13 @@ module TwoFactorAuthentication
   module Strategies
     class Sms < Base
       def valid?
-        super && authentication_code.present?
+        super && raw_token.present?
       end
 
       def authenticate!
-        if current_user.sms_code.present? &&
-           current_user.sms_code.authenticate(authentication_code)
-
-           success!(current_user)
+        sms_code = current_user.sms_code
+        if sms_code.present? && sms_code.authenticate(raw_token)
+          success!(sms_code)
         else
           fail!(:sms_authentication_failed)
         end
@@ -19,7 +18,7 @@ module TwoFactorAuthentication
 
       private
 
-      def authentication_code
+      def raw_token
         params[:sms].present? && params[:sms][:raw_token]
       end
     end

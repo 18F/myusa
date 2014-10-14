@@ -9,8 +9,6 @@ class Profile < ActiveRecord::Base
   validates_format_of :mobile, :with => /\A\d+\z/, :allow_blank => true
   validates_length_of :mobile, :maximum => 10
 
-  # has_one :mobile_confirmation, autosave: true, dependent: :destroy
-
   after_validation :set_errors
 
   FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address,

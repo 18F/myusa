@@ -35,6 +35,8 @@ class SecretController < ApplicationController
   before_filter :authenticate_user!
   before_filter :require_admin!, only: [:admin]
 
+  include RolesHelper
+  
   def secret
     render text: 'you got me'
   end

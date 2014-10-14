@@ -220,10 +220,14 @@ en:
       subject: 'Message from %{name} about %{subject}'
 
   mobile_confirmation:
-    bad_token: 'Please check the number sent to your mobile and re-enter that code. If that seems to match, you can also <a href="%{resend_link}">resend a code</a> or <a href=''%{reenter_link}''>re-enter your mobile number</a>.'
     skip_this_step: 'You can add your mobile number on your <a href="%{profile_link}">MyUSA profile</a> at another time.'
     successfully_added: Your mobile number has been successfully added to your MyUSA account.
-    token_message: Your MyUSA verification code is %{raw_token}
+
+  two_factor:
+    sms:
+      token_label: 'Enter Code'
+      bad_token: 'Please check the number sent to your mobile and re-enter that code. If that seems to match, you can also <a href="%{resend_link}">resend a code</a>.'
+      token_message: Your MyUSA verification code is %{raw_token}
 
   application:
     logo_url_hint: "Please provide a secure (https) URL for an image that identifies your application. The image should be 120px by 120px in size."

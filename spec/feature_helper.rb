@@ -33,10 +33,16 @@ end
 
 class SecretController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :require_admin!, only: [:admin]
 
   def secret
     render text: 'you got me'
   end
+
+  def admin
+    render :text => 'welcome to the adults table'
+  end
+
 end
 
 RSpec.configure do |config|
@@ -44,7 +50,8 @@ RSpec.configure do |config|
     Rails.application.routes.disable_clear_and_finalize = true
 
     Rails.application.routes.draw do
-      get 'secret' => "secret#secret"
+      get 'secret' => 'secret#secret'
+      get 'admin' => 'secret#admin'
     end
   end
 end

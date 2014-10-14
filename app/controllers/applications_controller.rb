@@ -1,6 +1,10 @@
 class ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
-  before_filter :ensure_application_owner!, only: [:show, :edit, :update, :destroy]
+
+  # this is set in the parent for typical resource routes, but we need to add :new_api_key and :make_public
+  before_filter :set_application, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
+
+  before_filter :require_owner_or_admin!, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
 
   layout 'dashboard'
 
@@ -10,7 +14,10 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   def create
     @application = Doorkeeper::Application.new(application_params)
+
+    # TODO: just use the acl9 role
     @application.owner = current_user
+    current_user.has_role!(:owner, @application)
 
     if @application.errors.empty? && @application.save
       message = I18n.t('new_application')
@@ -33,6 +40,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     end
   end
 
+  # TODO: roll this into update
   def new_api_key
     @application = Doorkeeper::Application.find(params[:id])
     @application.secret = Doorkeeper::OAuth::Helpers::UniqueToken.generate
@@ -43,6 +51,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     redirect_to authorizations_path
   end
 
+  # TODO: roll this into update
   def make_public
     @application = Doorkeeper::Application.find(params[:id])
     @application.requested_public_at = DateTime.now
@@ -53,10 +62,8 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   private
 
-  def ensure_application_owner!
-    unless @application.owner == current_user
-      raise ActiveRecord::RecordNotFound
-    end
+  def resource
+    @application
   end
 
   def validate_owner_emails

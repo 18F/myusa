@@ -84,6 +84,7 @@ Rails.application.configure do
   # SMS sender number.
   # This is the number from which our 2FA SMS messages will be sent.
   config.sms_sender_number = '+12407433320'
+  config.sms_delivery_method = :twilio
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

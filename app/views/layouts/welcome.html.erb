@@ -1,5 +1,5 @@
 <% content_for :refresh_tag do %>
-  <meta http-equiv='refresh' content='5;<%= after_sign_in_path_for(:user) %>'>
+  <meta http-equiv='refresh' content='3;<%= after_sign_in_path_for(:user) %>'>
 <% end %>
 <% content_for :header do %>
   <%= render 'layouts/header_auth', :shield => true %>
@@ -8,7 +8,7 @@
   <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
     <h2>Welcome to MyUSA</h2>
     <p><%= yield %></p>
-    <p>You will now be automatically redirected <%= stored_location_for(:user) ? 'back' : 'to your profile' %> in 5
+    <p>You will now be automatically redirected <%= stored_location_for(:user) ? 'back' : 'to your profile' %> in 3
       seconds, or you can click <%= link_to 'here', after_sign_in_path_for(:user) %>.</p>
   </div>
 <% end %>

@@ -43,49 +43,45 @@ describe 'OAuth' do
       @auths_page = OAuth2::AuthorizationsPage.new
     end
 
-    context 'when logged in' do
-      before :each do
-        FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: requested_scopes)
-        FactoryGirl.create(:access_token, resource_owner: user, application: client_app2, scopes: requested_scopes2)
 
-        login user
-        @auths_page.load
+    before :each do
+      FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: requested_scopes)
+      FactoryGirl.create(:access_token, resource_owner: user, application: client_app, created_at: Time.now - 1.day, expires_in: 600, scopes: requested_scopes)
+      FactoryGirl.create(:access_token, resource_owner: user, application: client_app2, scopes: requested_scopes2)
+
+      login user
+      @auths_page.load
+    end
+
+    it 'displays the authorizations' do
+      expect(@auths_page).to be_displayed
+
+      expect(@auths_page).to have_authorization_section_for('Client App 1')
+      expect(@auths_page).to have_authorization_section_for('Client App 2')
+    end
+
+    it 'displayes scopes for authorization' do
+      expect(@auths_page.authorization_section_for('Client App 1')).to have_scopes(
+        'Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
+        'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
+        'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
+        'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'
+      )
+    end
+
+    scenario 'user can revoke access to an application' do
+      expect(@auths_page).to be_displayed
+      @auths_page.authorization_section_for('Client App 2').revoke_access_button.click
+      expect(@auths_page).to be_displayed
+      expect(@auths_page).to_not have_authorization_section_for('Client App 2')
+    end
+
+    it 'does not show expired authorizations' do
+      sections = @auths_page.authorizations.select do |section|
+        section.app_name.text == 'Client App 1'
       end
 
-      it 'displays the authorizations' do
-        expect(@auths_page).to be_displayed
-        expect(@auths_page.authorizations.first.app_name).to have_content 'Client App 1'
-        expect(@auths_page.authorizations.second.app_name).to have_content 'Client App 2'
-        expect(@auths_page.authorizations.first.app_scopes.map(&:text)).to eq(
-          ['Email Address', 'Title', 'First Name', 'Middle Name', 'Last Name',
-           'Suffix', 'Home Address', 'Home Address (Line 2)', 'Zip Code',
-           'Phone Number', 'Gender', 'Marital Status', 'Are you a Parent?',
-           'Are you a Student?', 'Are you a Veteran?', 'Are you Retired?'])
-        expect(@auths_page.authorizations.first.app_scope_sections.map(&:text)).to eq(
-          ['Identify you by your email address',
-           'Address you by name',
-           'Know where you live',
-           'Know how to contact you by phone or text message',
-           'Find out more about you',
-           'Send you notifications via MyUSA'])
-        expect(@auths_page.authorizations.second.app_scopes.map(&:text)).to eq(
-          ['Email Address', 'Zip Code', 'Phone Number', 'Gender'])
-        expect(@auths_page.authorizations.second.app_scope_sections.map(&:text)).to eq(
-          ['Identify you by your email address',
-           'Know where you live',
-           'Know how to contact you by phone or text message',
-           'Find out more about you',
-           'Send you notifications via MyUSA'])
-      end
-
-      it 'revokes authorization to an application' do
-        expect(@auths_page).to be_displayed
-        expect(@auths_page.authorizations.second.app_name).to have_content 'Client App 2'
-        @auths_page.authorizations.second.revoke_access_button.click
-        expect(@auths_page).to be_displayed
-        expect(@auths_page.authorizations.first.app_name).to have_content 'Client App 1'
-        expect(@auths_page).to_not have_content 'Client App 2'
-      end
+      expect(sections.length).to eql(1)
     end
   end
 

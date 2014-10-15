@@ -20,11 +20,12 @@ Rails.application.routes.draw do
                 authorized_applications: 'oauth/authorized_applications'
   end
 
-  get 'authorizations' => 'oauth/authorizations#index'
+  get 'authorizations' => 'oauth/authorized_applications#index'
 
   # Pull this out of the `use_doorkeeper` block so that we can put it at the
   # root level.
-  resources :applications, only: %w(new create show edit update destroy), as: 'oauth_applications'
+  # resources :applications, only: %w(new create show edit update destroy), as: 'oauth_applications'
+  resources :applications, as: 'oauth_applications'
 
   post 'new_api_key' => 'applications#new_api_key'
   post 'make_public' => 'applications#make_public'

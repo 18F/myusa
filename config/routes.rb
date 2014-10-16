@@ -76,7 +76,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/401' => 'errors#unauthorized'
   get '/404' => 'errors#not_found'
   get '/422' => 'errors#unprocessable_entity'
 end

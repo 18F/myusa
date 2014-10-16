@@ -41,3 +41,5 @@ module Acl9
     end
   end
 end
+
+ActionDispatch::ExceptionWrapper.rescue_responses['Acl9::AccessDenied'] = :not_found

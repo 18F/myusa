@@ -17,9 +17,13 @@ Capybara.javascript_driver = :poltergeist
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-def login(user)
-  token = user.set_authentication_token
-  visit new_user_session_path(email: user.email, token: token.raw)
+def login(user, opts={})
+  visit stub_login_path(id: user.id)
+  visit stub_two_factor_path if opts[:two_factor]
+end
+
+def second_factor
+  visit stub_two_factor_path
 end
 
 def submit_new_application_form(options = {})
@@ -33,18 +37,23 @@ end
 
 class SecretController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :require_admin!, only: [:admin]
-
   include RolesHelper
-  
+
   def secret
     render text: 'you got me'
   end
+end
 
-  def admin
-    render :text => 'welcome to the adults table'
+class StubLoginController < ApplicationController
+  def login
+    sign_in :user, User.find(params[:id])
+    render text: 'logged in!'
   end
 
+  def two_factor
+    warden.set_user current_user.create_sms_code, scope: :two_factor
+    render text: 'two factor!'
+  end
 end
 
 RSpec.configure do |config|
@@ -53,7 +62,8 @@ RSpec.configure do |config|
 
     Rails.application.routes.draw do
       get 'secret' => 'secret#secret'
-      get 'admin' => 'secret#admin'
+      get 'stub_login' => 'stub_login#login'
+      get 'stub_two_factor' => 'stub_login#two_factor'
     end
   end
 end

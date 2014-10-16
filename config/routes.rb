@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     get :delete_account
   end
 
-  get 'admin/test' => 'admin#test'
+  get 'admin' => 'admin#index'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do

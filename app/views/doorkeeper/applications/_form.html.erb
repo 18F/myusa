@@ -69,6 +69,16 @@
     </div>
   <% end %>
 
+  <% if current_user.has_role?(:admin) %>
+    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:public].present?}" do %>
+      <div class="form-group">
+        <%= f.label :public, class: 'control-label', for: 'application_url' %>
+        <%= f.select :public, [['Public', true], ['Private', false]], {}, class: 'form-control' %>
+        <%= doorkeeper_errors_for application, :public %>
+      </div>
+    <% end %>
+  <% end %>
+
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:developer_emails].present?}" do %>
     <div class="form-group">
       <%= f.label :developer_emails, class: 'control-label', for: 'application_url' %>

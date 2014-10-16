@@ -264,10 +264,16 @@ Warden::Manager.after_fetch(scope: :user) do |user, auth, opts|
 end
 
 Warden::Manager.before_failure(scope: :user) do |env, opts|
-  uri = URI(opts[:attempted_path])
-  params = Rack::Utils.parse_query(uri.query)
-  if params.delete('logout')
-    uri.query = params.empty? ? nil : params.to_param
-    opts[:attempted_path] = uri.to_s
+  begin
+    uri = URI(opts[:attempted_path])
+    params = Rack::Utils.parse_query(uri.query)
+    if params.delete('logout')
+      uri.query = params.empty? ? nil : params.to_param
+      opts[:attempted_path] = uri.to_s
+    end
+  rescue URI::InvalidURIError
+    nil
   end
 end
+
+require 'two_factor_authentication/strategies/sms'

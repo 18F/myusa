@@ -14,13 +14,39 @@ describe SessionsController do
   end
 
   describe '#new' do
-    it 'renders a template' do
-      get :new
-      expect(response).to render_template(:new)
+    let(:user) { FactoryGirl.create(:user, :with_mobile_number, email: email) }
+
+    context 'user is signed in' do
+      before :each do
+        sign_in user
+      end
+
+      it 'redirects' do
+        get :new
+        expect(response).to redirect_to(profile_path)
+      end
+    end
+
+    context 'user is signed out' do
+      it 'renders a template' do
+        get :new
+        expect(response).to render_template(:new)
+      end
+
+      context 'but user has a 2-factor scope signed in' do
+        before :each do
+          sign_in :two_factor, user.create_sms_code
+        end
+
+        it 'renders a template' do
+          get :new
+          expect(response).to render_template(:new)
+        end
+      end
     end
 
     context 'email and token are present' do
-      let(:user) { User.create(email: email) }
+      let(:user) { FactoryGirl.create(:user, email: email) }
 
       context 'and are valid' do
         before :each do
@@ -44,6 +70,12 @@ describe SessionsController do
           expect(AuthenticationToken.authenticate(controller.current_user, @token.raw)).to be_nil
         end
 
+        context 'first time experience' do
+          let(:user) { FactoryGirl.create(:user, :new_user, email: email) }
+          it 'redirects to mobile recovery flow' do
+            expect(response).to redirect_to(new_mobile_recovery_path)
+          end
+        end
         context 'return to path is not set' do
           it 'redirects to the profile path' do
             expect(response).to redirect_to(profile_path)

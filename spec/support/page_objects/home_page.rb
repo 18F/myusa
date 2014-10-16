@@ -1,4 +1,5 @@
 require 'site_prism'
+require 'support/page_objects/dropdown_navigation_section'
 
 class HomePage < SitePrism::Page
   set_url '/'

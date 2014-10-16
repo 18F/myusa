@@ -1,7 +1,9 @@
 require 'sms_wrapper'
 
-class MobileConfirmation < ActiveRecord::Base
-  belongs_to :profile
+class SmsCode < ActiveRecord::Base
+  self.table_name = 'mobile_confirmations'
+
+  belongs_to :user
 
   attr_accessor :raw_token
 
@@ -40,6 +42,10 @@ class MobileConfirmation < ActiveRecord::Base
 
   private
 
+  def mobile_number
+    user.profile.mobile_number
+  end
+
   def generate_token
     self.raw_token = self.class.new_token
     self.token = Devise.token_generator.digest(self.class, :token, self.raw_token)
@@ -48,8 +54,8 @@ class MobileConfirmation < ActiveRecord::Base
 
   def send_raw_token
     if self.raw_token.present?
-      sms_message = I18n.t(:token_message, scope: [:mobile_confirmation], raw_token: self.raw_token)
-      SmsWrapper.instance.send_message(self.profile.mobile_number, sms_message)
+      sms_message = I18n.t(:token_message, scope: [:two_factor, :sms], raw_token: self.raw_token)
+      SmsWrapper.instance.send_message(mobile_number, sms_message)
       self.raw_token = nil
     end
   end

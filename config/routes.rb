@@ -37,11 +37,17 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'users/sign_in/:token_id' => 'sessions#show', as: 'user_session_token'
+
+    namespace :users do
+      namespace :factors do
+        resource :sms
+      end
+    end
   end
 
   resource :mobile_recovery
   get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
-  get 'mobile_recovery/resend' => 'mobile_recoveries#resend'
+  get 'mobile_recovery/welcome' => 'mobile_recoveries#welcome'
 
   resource :profile, only: [:show, :additional, :edit, :update, :destroy] do
     get :additional

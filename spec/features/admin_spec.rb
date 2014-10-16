@@ -5,9 +5,10 @@ describe 'Admin' do
   let(:admin_page) { AdminPage.new }
 
   let(:user) { FactoryGirl.create(:admin_user) }
+  let(:two_factor) { false }
 
   before :each do
-    login user
+    login user, two_factor: two_factor
   end
 
   describe 'navigation to admin page' do
@@ -16,6 +17,8 @@ describe 'Admin' do
     end
 
     context 'user is admin' do
+      let(:two_factor) { true }
+
       it 'can navigate to admin from dropdown menu' do
         profile_page.dropdown_navigation_toggle.click
         profile_page.dropdown_navigation.admin_link.click

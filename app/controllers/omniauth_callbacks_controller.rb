@@ -2,13 +2,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     auth = request.env['omniauth.auth']
 
-    if user = User.find_from_omniauth(auth)
+    if user = User.find_or_create_from_omniauth(auth)
       log_success(user)
       sign_in_and_redirect user
-    elsif user = User.create_from_omniauth(auth)
-      log_success(user)
-      sign_in user
-      redirect_to new_mobile_recovery_path
     else
       log_failure(user)
       flash.alert = 'Unable to connect with Google'

@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
 
+  has_one :sms_code, dependent: :destroy
+
   # TODO: use the owner acl role to join these
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
 
@@ -26,7 +28,7 @@ class User < ActiveRecord::Base
 
   audit_on :before_destroy
 
-  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
+  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
 
   acts_as_authorization_subject association_name: :roles
 
@@ -71,6 +73,10 @@ class User < ActiveRecord::Base
       when 'google_oauth2'
         auth.extra.raw_info.gender
       end
+    end
+
+    def find_or_create_from_omniauth(auth)
+      find_from_omniauth(auth) || create_from_omniauth(auth)
     end
 
     def find_from_omniauth(auth)

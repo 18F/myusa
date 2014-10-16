@@ -26,7 +26,7 @@ module Users
       end
 
       def require_mobile_number!
-        raise MissingMobileNumber if mobile_number.nil?
+        redirect_to new_mobile_recovery_path unless mobile_number.present?
       end
 
       #TODO: this should be shared between 2FA controllers
@@ -35,7 +35,5 @@ module Users
       end
 
     end
-
-    class MissingMobileNumber < Exception; end
   end
 end

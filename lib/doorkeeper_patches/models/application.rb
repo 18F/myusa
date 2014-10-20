@@ -5,6 +5,8 @@ class Doorkeeper::Application
 
   acts_as_authorization_object
 
+  # belongs_to :owner, through: :roles, as: :authorizable
+
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
                                  message: 'Logo url must begin with https'
@@ -23,11 +25,9 @@ class Doorkeeper::Application
 
   audit_on :after_create
 
-  before_save :send_request_public_email
-
-  def send_request_public_email
-    if requested_public_at_changed?
-      SystemMailer.app_public_email(self, owner).deliver
+  def request_public(user)
+    if self.update_attribute(:requested_public_at, DateTime.now)
+      SystemMailer.app_public_email(self, user).deliver
     end
   end
 end

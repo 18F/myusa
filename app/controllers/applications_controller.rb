@@ -15,9 +15,10 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   def create
     # TODO: just use the acl9 role
     @application.owner = current_user
-    current_user.has_role!(:owner, @application)
 
     if @application.errors.empty? && @application.save
+      current_user.has_role!(:owner, @application)
+
       message = I18n.t('new_application')
       flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
                                         locals: { application: @application, message: message }

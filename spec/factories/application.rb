@@ -7,6 +7,6 @@ FactoryGirl.define do
     association :owner, factory: [:user]
     public true
 
-    after(:create) {|a| a.accepts_role!(:owner, a.owner) }
+    after(:create) {|a| a.owner.has_role!(:owner, a) }
   end
 end

@@ -5,9 +5,11 @@ module Users
       before_filter :require_mobile_number!
 
       def show
-        current_user.sms_code.present? ?
-          current_user.sms_code.regenerate_token :
+        if current_user.sms_code.present?
+          current_user.sms_code.regenerate_token
+        else
           current_user.create_sms_code!
+        end
       end
 
       def create

@@ -1,4 +1,5 @@
 require 'email_authenticatable'
+require 'simple_role'
 
 class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
 
-  acts_as_authorization_subject association_name: :roles
+  acts_as_authorization_subject
 
   attr_accessor :just_created, :auto_approve
 

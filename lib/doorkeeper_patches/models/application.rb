@@ -1,3 +1,5 @@
+require 'simple_role'
+
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 

@@ -17,7 +17,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     @application.owner = current_user
 
     if @application.errors.empty? && @application.save
-      current_user.has_role!(:owner, @application)
+      current_user.grant_role!(:owner, @application)
 
       message = I18n.t('new_application')
       flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',

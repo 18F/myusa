@@ -28,7 +28,56 @@
                   <!-- // END PREHEADER -->
                 </td>
               </tr>
-              <%= yield %>
+
+              <tr>
+                <td align="center" valign="top">
+                  <!-- BEGIN HEADER // -->
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
+                    <tr>
+                      <td valign="top" class="headerContent">
+                        <h1 class="left-20">
+                          <%= @metadata[:title] %>
+                        </h1>
+                      </td>
+                      <td valign="top" class="headerContent">
+                        <% if @app.present? && defined? @app.logo_url %>
+                          <%= image_tag @app.logo_url, alt: @app.name, class: 'photo' -%>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- // END HEADER -->
+                </td>
+              </tr>
+              <tr>
+                <td align="center" valign="top">
+                  <!-- BEGIN BODY // -->
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                    <tr>
+                      <td valign="top" class="bodyContent" mc:edit="body_content">
+                        <%= yield %>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- // END BODY -->
+                </td>
+              </tr>
+              <tr>
+                <td align="center" valign="top">
+                  <!-- BEGIN FOOTER // -->
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
+                    <tr>
+                      <td valign="top" class="footerContent" style="padding-top:0; padding-bottom:40px;" mc:edit="footer_content02">
+                        <% if @metadata[:footer].present? %>
+                          This email was sent by MyUSA to <%= @user.email %> because you have approved notifications from <%= @app.name %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- // END FOOTER -->
+                </td>
+              </tr>
+
             </table>
             <!-- // END TEMPLATE -->
           </td>

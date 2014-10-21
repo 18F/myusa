@@ -39,7 +39,7 @@
           Registering your application with MyUSA is simple.
         </p>
         <p>
-          <%= link_to "Learn How", '/faq', :target => "_new", :class => "btn btn-primary width-80" %>
+          <%= link_to "Learn How", new_oauth_application_path, :target => "_new", :class => "btn btn-primary width-80" %>
         </p>
       </div>
       <div class="col-sm-4 col-md-4 text-center numbered-step">
@@ -56,7 +56,7 @@
           Make your application publicly available to anyone with a MyUSA account.
         </p>
         <p>
-          <%= link_to "Learn More", '/faq', :target => "_new", :class => "btn btn-primary width-80" %>
+          <%= link_to "Learn More", authorizations_path, :target => "_new", :class => "btn btn-primary width-80" %>
         </p>
       </div>
     </div>

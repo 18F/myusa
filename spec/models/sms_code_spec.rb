@@ -1,27 +1,28 @@
 require 'rails_helper'
 
-describe MobileConfirmation do
+describe SmsCode do
   let(:phone_number) { '800-555-3455' }
-  let(:profile) { FactoryGirl.create(:profile, mobile_number: phone_number) }
+  let(:user) { FactoryGirl.create(:user, :with_mobile_number, mobile_number: phone_number) } #profile, mobile_number: phone_number) }
 
   describe '#create', sms: true do
     it 'sends a 6-digit token' do
-      profile.create_mobile_confirmation
+      user.create_sms_code
       open_last_text_message_for(phone_number)
       expect(current_text_message.body).to match(/\d{6}/)
     end
   end
 
   describe '#save', sms: true do
-    subject { -> { profile.mobile_confirmation.save! }}
+    let(:sms_code) { user.sms_code}
+    subject { -> { sms_code.save! }}
 
     before :each do
-      profile.create_mobile_confirmation
+      user.create_sms_code
     end
 
     context 'when a raw token is present' do
       before :each do
-        profile.mobile_confirmation.send(:generate_token)
+        sms_code.send(:generate_token)
       end
 
       it 'sends a text message with the raw token' do
@@ -30,7 +31,7 @@ describe MobileConfirmation do
         expect(current_text_message.body).to match(/\d{6}/)
       end
       it 'clears the raw token' do
-        is_expected.to change { profile.mobile_confirmation.raw_token }.to(nil) 
+        is_expected.to change { sms_code.raw_token }.to(nil)
       end
     end
     context 'when raw token is not present' do
@@ -42,17 +43,19 @@ describe MobileConfirmation do
 
   describe '#authenticate' do
     let(:raw_token) { 'token' }
+    let(:sms_code) { user.sms_code }
+
+    before :each do
+      allow(SmsCode).to receive(:new_token).and_return(raw_token)
+      user.create_sms_code
+    end
 
     it 'is true for a valid token' do
-      allow(MobileConfirmation).to receive(:new_token).and_return(raw_token)
-      profile.create_mobile_confirmation
-      expect(profile.mobile_confirmation.authenticate(raw_token)).to be_truthy
+      expect(sms_code.authenticate(raw_token)).to be_truthy
     end
 
     it 'is false for an invalid token' do
-      allow(MobileConfirmation).to receive(:new_token).and_return(raw_token)
-      profile.create_mobile_confirmation
-      expect(profile.mobile_confirmation.authenticate('foobar')).to be_falsey
+      expect(sms_code.authenticate('foobar')).to be_falsey
     end
 
     context 'when token is old' do
@@ -67,26 +70,27 @@ describe MobileConfirmation do
       end
 
       it 'is false' do
-        allow(MobileConfirmation).to receive(:new_token).and_return(raw_token)
-        confirmation = profile.create_mobile_confirmation
+        sms_code.regenerate_token
         Timecop.travel(date + 1.hour)
-        expect(confirmation.authenticate(raw_token)).to be_falsey
+        expect(sms_code.authenticate(raw_token)).to be_falsey
       end
     end
   end
 
   describe '#re_generate_token', sms: true do
+    let(:sms_code) { user.create_sms_code }
+
     it 'creates a new token' do
-      confirmation = profile.create_mobile_confirmation
-      old_token = confirmation.token
-      confirmation.regenerate_token
-      expect(confirmation.token).to_not match(old_token)
+      # confirmation = profile.create_mobile_confirmation
+      # old_token = confirmation.token
+      old_token = sms_code.token
+      sms_code.regenerate_token
+      expect(sms_code.token).to_not match(old_token)
     end
 
     it 'sends a text message with the raw token' do
-      confirmation = profile.create_mobile_confirmation
       SmsSpec::Data.clear_messages
-      confirmation.regenerate_token
+      sms_code.regenerate_token
       open_last_text_message_for(phone_number)
       expect(current_text_message.body).to match(/\d{6}/)
     end

@@ -1,6 +1,8 @@
 class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
+  acts_as_authorization_object
+
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
                                  message: 'Logo url must begin with https'
@@ -19,4 +21,11 @@ class Doorkeeper::Application
 
   audit_on :after_create
 
+  before_save :send_request_public_email
+
+  def send_request_public_email
+    if requested_public_at_changed?
+      SystemMailer.app_public_email(self, owner).deliver
+    end
+  end
 end

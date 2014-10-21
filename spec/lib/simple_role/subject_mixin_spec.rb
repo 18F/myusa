@@ -47,6 +47,33 @@ describe User do
     end
   end
 
+  describe '#revoke_role!' do
+    let(:other_user) { FactoryGirl.create(:user) }
+
+    before do
+      user.grant_role!(role)
+      other_user.grant_role!(role)
+      user.grant_role!(:baz)
+      user.revoke_role!(role)
+    end
+
+    it 'revokes role for user' do
+      expect(user).to_not have_role(role)
+    end
+
+    it 'does not revoke other role for user' do
+      expect(user).to have_role(:baz)
+    end
+
+    it 'does not revoke role for other user' do
+      expect(other_user).to have_role(role)
+    end
+
+    it 'does not destroy the role object' do
+      expect(Role.find_by_name(role)).to_not be_nil
+    end
+  end
+
   describe '#has_role?' do
     context 'global role (symbol only)' do
       before { Role.create(name: role) }

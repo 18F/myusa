@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     get :delete_account
   end
 
-  get 'admin/test' => 'admin#test'
+  get 'admin' => 'admin#index'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do
@@ -76,4 +76,7 @@ Rails.application.routes.draw do
       resources :tasks, only: [:index, :create, :show, :update]
     end
   end
+
+  get '/404' => 'errors#not_found'
+  get '/422' => 'errors#unprocessable_entity'
 end

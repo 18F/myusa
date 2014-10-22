@@ -1,0 +1,27 @@
+<% content_for :header do %>
+  <%= render 'layouts/header_auth', :shield => false %>
+<% end %>
+
+<% content_for :container do %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1 text-left">
+            <h1>
+              <%= yield :headline %>
+            </h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'layouts/layout' %>

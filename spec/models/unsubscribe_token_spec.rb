@@ -9,7 +9,7 @@ describe UnsubscribeToken do
 
   describe '#unsubscribe' do
     before :each do
-      UnsubscribeToken.unsubscribe(user, authenticate_result.raw)
+      UnsubscribeToken.unsubscribe(user, authenticate_result.raw, 'email')
     end
 
     context 'call to authenticate succeeds' do

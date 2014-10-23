@@ -2,6 +2,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
 
   before_filter :build_application, only: [:new, :create]
+  
   # this is set in the parent for typical resource routes, but we need to add :new_api_key and :make_public
   before_filter :set_application, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
   before_filter :update_application, only: [:create, :update]

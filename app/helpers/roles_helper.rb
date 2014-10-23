@@ -2,13 +2,13 @@ module RolesHelper
 
   def require_owner_or_admin!
     require_owner!
-  rescue Acl9::AccessDenied => e
+  rescue SimpleRole::AccessDenied => e
     require_admin!
   end
 
   def require_owner!
     authenticate_user!
-    current_user.has_role_for?(resource) or raise Acl9::AccessDenied
+    current_user.has_role?(:owner, resource) or raise SimpleRole::AccessDenied
   end
 
   def require_admin!
@@ -18,7 +18,7 @@ module RolesHelper
       UserAction.admin_action.create(data: params)
       return true
     else
-      raise Acl9::AccessDenied
+      raise SimpleRole::AccessDenied
     end
   end
 

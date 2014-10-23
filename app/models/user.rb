@@ -1,4 +1,5 @@
 require 'email_authenticatable'
+require 'simple_role'
 
 class User < ActiveRecord::Base
   has_many :authentication_tokens, :dependent => :destroy
@@ -6,8 +7,8 @@ class User < ActiveRecord::Base
 
   has_one :sms_code, dependent: :destroy
 
-  # TODO: use the owner acl role to join these
-  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
+  has_many :oauth_applications, through: :roles, source: :authorizable, source_type: 'Doorkeeper::Application'
+  before_destroy :destroy_applications
 
   has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
   has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
 
-  acts_as_authorization_subject association_name: :roles
+  acts_as_authorization_subject
 
   attr_accessor :just_created, :auto_approve
 
@@ -104,6 +105,10 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def destroy_applications
+    oauth_applications.each(&:destroy)
+  end
 
   def build_default_profile
     build_profile unless profile

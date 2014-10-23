@@ -19,7 +19,7 @@ FactoryGirl.define do
 
     factory :admin_user do
       with_mobile_number
-      after(:create) {|u| u.has_role!(:admin) }
+      after(:create) {|u| u.grant_role!(:admin) }
     end
 
     trait :with_mobile_number do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008215843) do
+ActiveRecord::Schema.define(version: 20141022145728) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20141008215843) do
     t.datetime "sent_at"
     t.boolean  "remember_me"
     t.string   "return_to",   limit: 2000
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "authentication_tokens", ["token"], name: "index_authentication_tokens_on_token", unique: true, using: :btree
@@ -192,6 +194,14 @@ ActiveRecord::Schema.define(version: 20141008215843) do
   add_index "tasks", ["app_id"], name: "index_tasks_on_app_id", using: :btree
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
+  create_table "unsubscribe_tokens", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "notification_id"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_actions", force: true do |t|
     t.integer  "user_id"
     t.integer  "record_id"
@@ -218,6 +228,7 @@ ActiveRecord::Schema.define(version: 20141008215843) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
+    t.text     "settings"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

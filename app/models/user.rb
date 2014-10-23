@@ -1,8 +1,10 @@
 require 'email_authenticatable'
 
 class User < ActiveRecord::Base
-  has_many :authentication_tokens, :dependent => :destroy
-  has_many :authentications, :dependent => :destroy
+  serialize :settings, JSON
+
+  has_many :authentication_tokens, dependent: :destroy
+  has_many :authentications, dependent: :destroy
 
   has_one :sms_code, dependent: :destroy
 
@@ -12,19 +14,21 @@ class User < ActiveRecord::Base
   has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
   has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
 
-  has_one :profile, :dependent => :destroy
-  has_many :notifications, :dependent => :destroy
-  has_many :tasks, :dependent => :destroy
+  has_one :profile, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_many :tasks, dependent: :destroy
+
+  has_many :unsubscribe_tokens, dependent: :destroy
 
   has_many :user_actions
 
   validates_acceptance_of :terms_of_service
   validates_presence_of :uid
   validates_uniqueness_of :uid
-  validates_email_format_of :email, {:allow_blank => false}
+  validates_email_format_of :email, allow_blank: false
 
   before_validation :generate_uid
-  before_create :build_default_profile
+  before_create :set_defaults
 
   audit_on :before_destroy
 
@@ -105,8 +109,9 @@ class User < ActiveRecord::Base
 
   private
 
-  def build_default_profile
-    build_profile unless profile
+  def set_defaults
+    self.settings ||= {}
+    self.profile ||= build_profile
   end
 
   def valid_email?

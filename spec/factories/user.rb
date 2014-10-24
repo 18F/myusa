@@ -18,7 +18,6 @@ FactoryGirl.define do
     end
 
     factory :admin_user do
-      with_mobile_number
       after(:create) {|u| u.grant_role!(:admin) }
     end
 

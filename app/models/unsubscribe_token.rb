@@ -6,8 +6,8 @@ class UnsubscribeToken < ActiveRecord::Base
 
   def self.unsubscribe(user, raw, delivery_method)
     authenticate(user, raw) do |token|
-      user.settings["notification_settings.app_#{token.notification.app.id}.delivery_methods"] ||= []
-      user.settings["notification_settings.app_#{token.notification.app.id}.delivery_methods"].delete(delivery_method)
+      key = "notification_settings.app_#{token.notification.app.id}.delivery_methods.#{delivery_method}"
+      user.settings[key] = false
       user.save!
     end
   end

@@ -1,2 +1,2 @@
 <p><%= @notification.body %></p>
-<p><%= link_to 'Unsubscribe', notifications_unsubscribe_url(:email, email: @user.email, token: @unsubscribe_token.raw).html_safe %></p>
+<p><%= link_to 'Unsubscribe', unsubscribe_url(:email, email: @user.email, token: @unsubscribe_token.raw).html_safe %></p>

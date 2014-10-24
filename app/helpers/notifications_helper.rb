@@ -1,14 +1,15 @@
 module NotificationsHelper
-  def notifications_enabled?(app_id, notification_method)
-    setting = current_user.settings["notification_settings.app_#{app_id}.delivery_methods"]
-    return setting.nil? || setting.include?(notification_method)
-  end
+  def notification_delivery_methods_form(app_id, delivery_method)
+    key = "notification_settings.app_#{app_id}.delivery_methods.#{delivery_method}"
+    value = current_user.settings[key].nil? || current_user.settings[key]
 
-  def notifications_toggle(app_id, notification_method)
-    if notifications_enabled?(app_id, notification_method)
-      link_to 'Off', notifications_unsubscribe_path(app_id, notification_method), class: 'btn btn-default'
-    else
-      link_to 'On', notifications_subscribe_path(app_id, notification_method), class: 'btn btn-primary'
+    button_text = value ? 'On' : 'Off'
+    button_class = "btn btn-" + (value ? 'primary' : 'default')
+
+    form_tag(settings_path) do
+      hidden_field_tag('key', key) +
+      hidden_field_tag('value', !value) +
+      submit_tag(button_text, class: button_class)
     end
   end
 end

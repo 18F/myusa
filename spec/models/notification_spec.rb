@@ -16,7 +16,12 @@ describe Notification do
     end
 
     context 'user blocks email notificaitons' do
-      before { user.settings["notification_settings.app_#{client_app.id}.delivery_methods"] = [] }
+      before :each do
+        key = "notification_settings.app_#{client_app.id}.delivery_methods.email"
+        user.settings[key] = false
+        user.save!
+      end
+
       it 'does not send an email' do
         expect { subject }.to_not change(ActionMailer::Base.deliveries, :count)
       end

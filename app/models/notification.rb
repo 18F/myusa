@@ -17,16 +17,11 @@ class Notification < ActiveRecord::Base
     self.update_attribute :viewed_at, Time.now
   end
 
-  #TODO: maybe move this somewhere?
-  def notification_delivery_methods_key
-    "notification_settings.app_#{self.app.id}.delivery_methods"
-  end
-
   private
 
   def email_notification?
-    return true unless user.settings.has_key?(notification_delivery_methods_key)
-    user.settings[notification_delivery_methods_key].include?('email')
+    key = "notification_settings.app_#{app_id}.delivery_methods.email"
+    return user.settings[key].nil? || user.settings[key]
   end
 
   def deliver_notification

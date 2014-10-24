@@ -20,7 +20,9 @@
       <tbody>
         <tr>
           <td>Announcements from MyUSA</td>
-          <td><%= notifications_toggle('myusa', 'email') %></td>
+          <td>
+            <%= notification_delivery_methods_form('myusa', 'email') %>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -37,7 +39,9 @@
         <% @applications.each do |application| %>
           <tr>
             <td>Notifications from <%= application.name %></td>
-            <td><%= notifications_toggle(application.id, 'email') %></td>
+            <td>
+              <%= notification_delivery_methods_form(application.id, 'email') %>
+            </td>
           </tr>
         <% end %>
         </tbody>

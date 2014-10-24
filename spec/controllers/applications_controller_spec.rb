@@ -68,8 +68,8 @@ describe ApplicationsController do
     context 'current user is neither owner nor admin' do
       let(:owner) { FactoryGirl.create(:user) }
 
-      it 'raises ACL::AccessDenied' do
-        is_expected.to raise_error(Acl9::AccessDenied)
+      it 'raises SimpleRole::AccessDenied' do
+        is_expected.to raise_error(SimpleRole::AccessDenied)
       end
     end
   end
@@ -121,8 +121,8 @@ describe ApplicationsController do
     context 'current user is neither owner nor admin' do
       let(:owner) { FactoryGirl.create(:user) }
 
-      it 'raises ACL::AccessDenied' do
-        is_expected.to raise_error(Acl9::AccessDenied)
+      it 'raises SimpleRole::AccessDenied' do
+        is_expected.to raise_error(SimpleRole::AccessDenied)
       end
 
       it 'does not update' do

@@ -5,9 +5,11 @@ module Users
       before_filter :require_mobile_number!
 
       def show
-        current_user.sms_code.present? ?
-          current_user.sms_code.regenerate_token :
+        if current_user.sms_code.present?
+          current_user.sms_code.regenerate_token
+        else
           current_user.create_sms_code!
+        end
       end
 
       def create
@@ -26,7 +28,7 @@ module Users
       end
 
       def require_mobile_number!
-        raise MissingMobileNumber if mobile_number.nil?
+        redirect_to new_mobile_recovery_path unless mobile_number.present?
       end
 
       #TODO: this should be shared between 2FA controllers
@@ -35,7 +37,5 @@ module Users
       end
 
     end
-
-    class MissingMobileNumber < Exception; end
   end
 end

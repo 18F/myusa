@@ -1,8 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    acl9 (0.12.1)
-      rails (>= 2.3.12)
     actionmailer (4.1.5)
       actionpack (= 4.1.5)
       actionview (= 4.1.5)
@@ -533,7 +531,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acl9
   attr_encrypted
   autoprefixer-rails
   berkshelf (~> 3.0)

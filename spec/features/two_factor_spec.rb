@@ -3,6 +3,7 @@ require 'feature_helper'
 describe 'Two Factor Authentication', sms: true do
   let(:admin_page) { AdminPage.new }
   let(:sms_page) { TwoFactorAuthentication::SmsPage.new}
+  let(:mobile_confirmation_page) { MobileConfirmationPage.new }
 
   let(:user) { FactoryGirl.create(:admin_user, :with_mobile_number) }
   let(:phone_number) { '800-555-3455' }
@@ -17,9 +18,24 @@ describe 'Two Factor Authentication', sms: true do
     login user
   end
 
-  scenario 'visiting an admin-only page redirects to sms flow' do
-    admin_page.load
-    expect(sms_page).to be_displayed
+  context 'visiting an admin-only page' do
+    before :each do
+      admin_page.load
+    end
+
+    context 'if user has mobile number configured' do
+      it 'redirects to sms flow' do
+        expect(sms_page).to be_displayed
+      end
+    end
+
+    context 'if user does not have mobile number configured' do
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      it 'redirects to mobile confirmation page' do
+        expect(mobile_confirmation_page).to be_displayed
+      end
+    end
   end
 
   scenario 'user can receive sms code' do

@@ -25,6 +25,10 @@
 
           <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
+          <p>
+            You are authorizing MyUSA to share the selected information with <%= @pre_auth.client.application.name %>
+          </p>
+
           <div class="row">
             <div class="col-md-7 col-sm-8 col-xs-8">
               <%= hidden_field_tag :user_id, current_user.id %>
@@ -40,7 +44,7 @@
     </div>
     <p class="disclaimer-info label-pad">
       <small>
-        Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or update your MyUSA.gov profile at any time on myusa.com or whenever you see your name and the <span class="glyphicon glyphicon-cog"></span> symbol.
+        Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or <%= link_to 'update your MyUSA profile', profile_path %> at any time by clicking on your email address.
       </small>
     </p>
     <div class="alert alert-warning hidden" id="scopes-alert-none2">
@@ -49,5 +53,10 @@
         Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <%= link_to 'MyUSA Profile', profile_path, :title => 'MyUSA Profile' %>.
       </p>
     </div>
+    <p class="disclaimer-info label-pad">
+      <small>
+        <%= render 'application/privacy_act' %>
+      </small>
+    </p>
   </div>
 </div>

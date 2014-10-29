@@ -44,4 +44,23 @@ describe 'Admin' do
       end
     end
   end
+
+  describe 'app approval' do
+    before :each do
+      FactoryGirl.create(:application, name: 'App 1', public: false, requested_public_at: Time.now)
+      FactoryGirl.create(:application, name: 'App 2', public: false, requested_public_at: Time.now)
+      login user, two_factor: true
+      admin_page.load
+    end
+
+    it 'can see apps pending approval' do
+      expect(admin_page.apps.count).to eql(2)
+    end
+
+    it 'can approve an app' do
+      app_section = admin_page.apps.select {|a| a.name.text == 'App 1'}.first
+      expect { app_section.make_public_link.click }.to change { admin_page.apps.count }.by(-1)
+      expect(admin_page.flash_message.text).to match /Application updated/
+    end
+  end
 end

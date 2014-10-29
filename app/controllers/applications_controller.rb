@@ -28,7 +28,11 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   def update
     if @application.errors.empty? && @application.save
       flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
-      redirect_to authorizations_path
+      if params[:return_to]
+        redirect_to params[:return_to]
+      else
+        redirect_to authorizations_path
+      end
     else
       render :edit
     end

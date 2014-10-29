@@ -12,8 +12,8 @@ describe 'Notifications' do
   describe 'Receiving a notification' do
     before :each do
       clear_emails
-      FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: 'notifications')
-      FactoryGirl.create(:notification, user: user, app: client_app)
+      token = FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: 'notifications')
+      FactoryGirl.create(:notification, authorization: token.authorization) # user: user, app: client_app)
       open_email(user.email)
     end
 

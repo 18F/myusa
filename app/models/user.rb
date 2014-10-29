@@ -2,8 +2,6 @@ require 'email_authenticatable'
 require 'simple_role'
 
 class User < ActiveRecord::Base
-  serialize :settings, JSON
-
   has_many :authentication_tokens, dependent: :destroy
   has_many :authentications, dependent: :destroy
 
@@ -16,7 +14,8 @@ class User < ActiveRecord::Base
   has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
 
   has_one :profile, dependent: :destroy
-  has_many :notifications, dependent: :destroy
+  has_many :authorizations
+  has_many :notifications, through: :authorizations, dependent: :destroy
   has_many :tasks, dependent: :destroy
 
   has_many :unsubscribe_tokens, dependent: :destroy
@@ -28,14 +27,17 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :uid
   validates_email_format_of :email, allow_blank: false
 
+  after_initialize :set_defaults
   before_validation :generate_uid
-  before_create :set_defaults
+  before_create :build_default_profile
 
   audit_on :before_destroy
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
 
   acts_as_authorization_subject
+
+  serialize :notification_settings, JSON
 
   attr_accessor :just_created, :auto_approve
 
@@ -110,8 +112,14 @@ class User < ActiveRecord::Base
 
   private
 
+  DEFAULT_NOTIFICATION_SETTINGS = {
+    'receive_email' => true
+  }
   def set_defaults
-    self.settings ||= {}
+    self.notification_settings ||= DEFAULT_NOTIFICATION_SETTINGS
+  end
+
+  def build_default_profile
     self.profile ||= build_profile
   end
 

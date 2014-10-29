@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023133252) do
+ActiveRecord::Schema.define(version: 20141027193050) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20141023133252) do
   add_index "authentications", ["uid", "provider"], name: "index_authentications_on_uid_and_provider", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
+  create_table "authorizations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "application_id"
+    t.text     "notification_settings"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mobile_confirmations", force: true do |t|
     t.integer  "profile_id"
     t.string   "token"
@@ -56,10 +64,11 @@ ActiveRecord::Schema.define(version: 20141023133252) do
     t.datetime "received_at"
     t.integer  "app_id"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.datetime "deleted_at"
     t.datetime "viewed_at"
+    t.integer  "authorization_id"
   end
 
   add_index "notifications", ["app_id"], name: "index_notifications_on_app_id", using: :btree
@@ -88,6 +97,7 @@ ActiveRecord::Schema.define(version: 20141023133252) do
     t.datetime "revoked_at"
     t.datetime "created_at",                     null: false
     t.string   "scopes",            limit: 2000
+    t.integer  "authorization_id"
   end
 
   add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
@@ -216,9 +226,9 @@ ActiveRecord::Schema.define(version: 20141023133252) do
   add_index "user_actions", ["user_id"], name: "index_user_actions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",               default: "", null: false
+    t.string   "email",                 default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0
+    t.integer  "sign_in_count",         default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -229,6 +239,7 @@ ActiveRecord::Schema.define(version: 20141023133252) do
     t.datetime "updated_at"
     t.string   "remember_token"
     t.text     "settings"
+    t.text     "notification_settings"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

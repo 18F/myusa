@@ -6,7 +6,6 @@ class UnsubscribeController < ApplicationController
     raw_token = params[:token]
 
     if token = UnsubscribeToken.unsubscribe(user, raw_token, delivery_method)
-      # flash[:notice] = "You have been unsubscribed from #{token.notification.app.name}!"
       @application = token.notification.app
     else
       redirect_to root_path

@@ -4,11 +4,12 @@ class UnsubscribeToken < ActiveRecord::Base
   belongs_to :user
   belongs_to :notification
 
+  delegate :authorization, to: :notification
+
   def self.unsubscribe(user, raw, delivery_method)
     authenticate(user, raw) do |token|
-      key = "notification_settings.app_#{token.notification.app.id}.delivery_methods.#{delivery_method}"
-      user.settings[key] = false
-      user.save!
+      token.authorization.notification_settings['receive_email'] = false
+      token.authorization.save!
     end
   end
 end

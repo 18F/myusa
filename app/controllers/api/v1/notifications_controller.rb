@@ -4,8 +4,7 @@ class Api::V1::NotificationsController < Api::ApiController
   def create
     @notification = current_resource_owner.notifications.build(notification_params)
     @notification.received_at = Time.now
-    @notification.user_id = current_resource_owner.id
-    @notification.app_id = doorkeeper_token.application.id
+    @notification.authorization = doorkeeper_token.authorization
     if @notification.save
       render :json => @notification, :status => 200
     else

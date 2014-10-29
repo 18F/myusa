@@ -21,13 +21,15 @@
         <tr>
           <td>Announcements from MyUSA</td>
           <td>
-            <%= notification_delivery_methods_form('myusa', 'email') %>
+            <%= form_tag(settings_notifications_path) do %>
+              <%= notification_email_form(current_user.notification_settings) %>
+            <% end %>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <% unless @applications.empty? %>
+    <% unless @authorizations.empty? %>
       <table class="table table-striped application-settings">
         <thead>
         <tr>
@@ -36,11 +38,13 @@
         </tr>
         </thead>
         <tbody>
-        <% @applications.each do |application| %>
+        <% @authorizations.each do |authorization| %>
           <tr>
-            <td>Notifications from <%= application.name %></td>
+            <td>Notifications from <%= authorization.application.name %></td>
             <td>
-              <%= notification_delivery_methods_form(application.id, 'email') %>
+              <%= form_tag(settings_notifications_path(id: authorization.id)) do %>
+                <%= notification_email_form(authorization.notification_settings) %>
+              <% end %>
             </td>
           </tr>
         <% end %>

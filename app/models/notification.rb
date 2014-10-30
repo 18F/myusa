@@ -1,7 +1,11 @@
 class Notification < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :app, class_name: 'Doorkeeper::Application'
-  validates_presence_of :subject, :received_at, :user_id
+  belongs_to :authorization
+
+  delegate :user, :application, to: :authorization
+  alias_method :app, :application
+
+  has_many :unsubscribe_tokens
+  validates_presence_of :subject, :body, :authorization_id
   after_create :deliver_notification
 
   def self.newest_first
@@ -18,7 +22,14 @@ class Notification < ActiveRecord::Base
 
   private
 
+  def email_notification?
+    self.authorization.notification_settings['receive_email']
+  end
+
   def deliver_notification
-    NotificationMailer.notification_email(self).deliver
+    if email_notification?
+      token = UnsubscribeToken.generate(user: self.user, notification: self)
+      NotificationMailer.notification_email(self, token).deliver
+    end
   end
 end

@@ -34,6 +34,7 @@ describe 'Notifications' do
 
   describe 'Notification Settings' do
     before :each do
+      FactoryGirl.create(:access_token, resource_owner: user, scopes: 'profile.email')
       FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: 'notifications')
       login(user)
       notification_settings_page.load
@@ -53,6 +54,10 @@ describe 'Notifications' do
 
       expect(notification_settings_page).to be_displayed
       expect(notification_settings_page.myusa_settings).to have_email_on_button
+    end
+
+    scenario 'user can see apps with notifications scope' do
+      expect(notification_settings_page.app_settings.count).to eql(1)
     end
 
     scenario 'user can disable app email notifications' do

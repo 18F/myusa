@@ -5,10 +5,7 @@ class NotificationSettingsController < ApplicationController
   layout 'dashboard'
 
   def index
-    @authorizations = current_user.authorizations #oauth_tokens.select {|a| a.scopes.exists?('notifications')}
-    pp @authorizations
-
-    @applications = @authorizations.map(&:application)
+    @authorizations = current_user.oauth_tokens.select {|a| a.scopes.exists?('notifications')}.map(&:authorization)
   end
 
   def update

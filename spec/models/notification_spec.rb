@@ -17,7 +17,7 @@ describe Notification do
       end
     end
 
-    context 'user blocks email notificaitons' do
+    context 'user blocks email notifications' do
       let(:authorization) { FactoryGirl.create(:authorization, user: user, application: client_app, notification_settings: { 'receive_email' => false }) }
 
       it 'does not send an email' do

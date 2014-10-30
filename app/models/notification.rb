@@ -5,7 +5,7 @@ class Notification < ActiveRecord::Base
   alias_method :app, :application
 
   has_many :unsubscribe_tokens
-  validates_presence_of :subject, :body #, :user_id
+  validates_presence_of :subject, :body, :authorization_id
   after_create :deliver_notification
 
   def self.newest_first

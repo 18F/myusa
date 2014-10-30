@@ -238,7 +238,6 @@ ActiveRecord::Schema.define(version: 20141027193050) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
-    t.text     "settings"
     t.text     "notification_settings"
   end
 

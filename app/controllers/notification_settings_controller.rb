@@ -1,6 +1,6 @@
 class NotificationSettingsController < ApplicationController
 
-  before_filter :authenticate_user! #, only: [:index]
+  before_filter :authenticate_user!
 
   layout 'dashboard'
 
@@ -24,11 +24,8 @@ class NotificationSettingsController < ApplicationController
   private
 
   def params_value
-    case params[:value]
-    when 'false'
-      false
-    when 'true'
-      true
+    if params[:type] == 'boolean'
+      ActiveRecord::ConnectionAdapters::Column.value_to_boolean(params[:value])
     else
       params[:value]
     end

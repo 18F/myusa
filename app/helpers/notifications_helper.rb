@@ -8,6 +8,7 @@ module NotificationsHelper
 
     hidden_field_tag('key', key) +
     hidden_field_tag('value', !value) +
+    hidden_field_tag('type', 'boolean') +
     submit_tag(button_text, class: button_class)
   end
 end

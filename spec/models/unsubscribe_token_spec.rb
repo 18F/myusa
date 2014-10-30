@@ -4,7 +4,6 @@ describe UnsubscribeToken do
   let(:user) { FactoryGirl.create(:user) }
   let(:client_app) { FactoryGirl.create(:application) }
   let(:delivery_method) { "email" }
-  # let(:settings_key) { "notification_settings.app_#{client_app.id}.delivery_methods.#{delivery_method}" }
   let(:authorization) { FactoryGirl.create(:authorization, user: user, application: client_app) }
   let(:notification) { FactoryGirl.create(:notification, authorization: authorization) }
   let(:authenticate_result) { UnsubscribeToken.generate(user: user, notification: notification) }

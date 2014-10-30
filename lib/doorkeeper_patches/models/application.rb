@@ -5,11 +5,11 @@ class Doorkeeper::Application
 
   acts_as_authorization_object
 
-  # belongs_to :owner, through: :roles, as: :authorizable
-
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
                                  message: 'Logo url must begin with https'
+
+  before_save :clear_requested_public_at, if: ->(a) { a.public_changed? && a.public }
 
   scope :public?, -> { where public: true }
   scope :private?, -> { where public: false }
@@ -29,5 +29,11 @@ class Doorkeeper::Application
     if self.update_attribute(:requested_public_at, DateTime.now)
       SystemMailer.app_public_email(self, user).deliver
     end
+  end
+
+  private
+
+  def clear_requested_public_at
+    self.requested_public_at = nil
   end
 end

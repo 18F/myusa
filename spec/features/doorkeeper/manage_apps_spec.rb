@@ -76,13 +76,14 @@ describe 'OAuth' do
       expect(@auths_page).to_not have_authorization_section_for('Client App 2')
     end
 
-    it 'does not show expired authorizations' do
+    scenario 'user sees one entry per applciation' do
       sections = @auths_page.authorizations.select do |section|
         section.app_name.text == 'Client App 1'
       end
 
       expect(sections.length).to eql(1)
     end
+
   end
 
   describe 'applications' do

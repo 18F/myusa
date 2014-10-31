@@ -17,7 +17,7 @@ describe Doorkeeper::AccessToken do
       before :each do
         FactoryGirl.create(:access_token, resource_owner: user, application: client_app)
       end
-      
+
       it 'does not create a new authorization' do
         is_expected.to_not change(Authorization.where(user_id: user.id, application_id: client_app.id), :count)
       end
@@ -30,6 +30,10 @@ describe Doorkeeper::AccessToken do
 
   describe "#revoke" do
     let(:token) { FactoryGirl.create(:access_token) }
+
+    it 'revokes authorization' do
+      expect { token.revoke }.to change(token.authorization, :revoked?).from(false).to(true)
+    end
 
     it 'creates an audit record' do
       expect { token.revoke }.to change(UserAction.where(record_type: Doorkeeper::AccessToken, action: 'revoke'), :count).by(1)

@@ -9,6 +9,8 @@ class Doorkeeper::AccessToken
   audit_on :after_create, action: 'issue'
   audit_on :after_update, action: 'revoke', if: -> { revoked_at_changed? && revoked_at_was.nil? }
 
+  after_update :revoke_authorization, if: -> { revoked_at_changed? && revoked_at_was.nil? }
+
   before_create :create_authorization
 
   private
@@ -16,4 +18,9 @@ class Doorkeeper::AccessToken
   def create_authorization
     self.authorization = Authorization.where(user: resource_owner, application: application).first_or_create
   end
+
+  def revoke_authorization
+    self.authorization.revoke
+  end
+
 end

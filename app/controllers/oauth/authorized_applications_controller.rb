@@ -4,7 +4,7 @@ class Oauth::AuthorizedApplicationsController < Doorkeeper::AuthorizedApplicatio
   helper :all
 
   def index
-    @authorizations = current_user.oauth_tokens.not_revoked.not_expired
+    @authorizations = current_user.authorizations.not_revoked
     @applications = current_user.oauth_applications
   end
 

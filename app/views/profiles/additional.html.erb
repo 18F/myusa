@@ -6,6 +6,9 @@
     <h1>
       <%= t('profile.additional_title') %>
     </h1>
+    <p>
+    Government services can personalize your experience if you provide additional information about yourself.  Everything on this page is optional.
+    </p>
     <%= form_for @profile, html: { class: 'form' } do |form| %>
       <%= hidden_field_tag 'target', 'additional' %>
       <fieldset>
@@ -50,5 +53,12 @@
         </div>
       </div>
     <% end %>
+
+    <p class="disclaimer-info label-pad">
+      <small>
+        <%= render 'application/privacy_act' %>
+      </small>
+    </p>
+
   </div>
 </div>

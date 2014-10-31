@@ -50,6 +50,11 @@ Rails.application.routes.draw do
   get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
   get 'mobile_recovery/welcome' => 'mobile_recoveries#welcome'
 
+  get 'settings/notifications' => 'notification_settings#index'
+  post 'settings/notifications' => 'notification_settings#update'
+
+  get 'unsubscribe/:delivery_method', to: 'unsubscribe#unsubscribe', as: 'unsubscribe'
+
   resource :profile, only: [:show, :additional, :edit, :update, :destroy] do
     get :additional
     get :delete_account

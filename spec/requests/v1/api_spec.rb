@@ -123,21 +123,10 @@ describe Api::V1 do
 
   describe 'POST /api/v1/notifications' do
     let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
-    let(:other_user) { FactoryGirl.create(:user) }
-
+  
     let(:token) { FactoryGirl.create(:access_token, application: client_app_2, resource_owner: user, scopes: 'notifications') }
 
     subject { post '/api/v1/notifications', params, header }
-
-    before do
-      1.upto(14) do |index|
-        @notification = Notification.create!({subject: "Notification ##{index}", received_at: Time.now - 1.hour, body: "This is notification ##{index}.", user_id: user.id, app_id: client_app_2.id})
-      end
-      @other_user_notification = Notification.create!({subject: 'Other User Notification', received_at: Time.now - 1.hour, body: 'This is a notification for a different user.', user_id: other_user.id, app_id: client_app.id})
-      @other_app_notification = Notification.create!({subject: 'Other App Notification', received_at: Time.now - 1.hour, body: 'This is a notification for a different app.', user_id: user.id, app_id: client_app_2.id})
-      user.notifications.each{ |n| n.destroy(:force) }
-      user.notifications.reload
-    end
 
     context 'when the user has a valid token' do
       context 'when the notification attributes are valid' do

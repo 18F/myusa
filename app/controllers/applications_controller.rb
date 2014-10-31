@@ -2,6 +2,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!
 
   before_filter :build_application, only: [:new, :create]
+  
   # this is set in the parent for typical resource routes, but we need to add :new_api_key and :make_public
   before_filter :set_application, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
   before_filter :update_application, only: [:create, :update]
@@ -13,11 +14,9 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   def new; end
 
   def create
-    # TODO: just use the acl9 role
-    @application.owner = current_user
-    current_user.has_role!(:owner, @application)
-
     if @application.errors.empty? && @application.save
+      current_user.grant_role!(:owner, @application)
+
       message = I18n.t('new_application')
       flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
                                         locals: { application: @application, message: message }
@@ -30,7 +29,11 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   def update
     if @application.errors.empty? && @application.save
       flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
-      redirect_to authorizations_path
+      if params[:return_to]
+        redirect_to params[:return_to]
+      else
+        redirect_to authorizations_path
+      end
     else
       render :edit
     end
@@ -50,8 +53,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
   # TODO: roll this into update
   def make_public
     @application = Doorkeeper::Application.find(params[:id])
-    @application.requested_public_at = DateTime.now
-    @application.save
+    @application.request_public(current_user)
     redirect_to authorizations_path, notice: I18n.t('app_status.requested_public')
   end
 

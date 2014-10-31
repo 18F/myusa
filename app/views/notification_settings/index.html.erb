@@ -1,0 +1,55 @@
+<div class="row aglio app-settings">
+  <div class="col-md-3">
+    <%= render 'profiles/nav'%>
+  </div>
+  <div class="col-md-9">
+    <h1>
+      Manage Your Notifications
+    </h1>
+    <p>Notifications may be sent to you by MyUSA or <%= link_to "applications you've authorized", authorizations_path %>.
+      Here you can turn on and off which emails you receive from MyUSA.
+    </p>
+
+    <table class="table table-striped myusa-settings">
+      <thead>
+        <tr>
+          <th class='h2'>Notifications from MyUSA</th>
+          <th class='h2'>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Announcements from MyUSA</td>
+          <td>
+            <%= form_tag(settings_notifications_path) do %>
+              <%= notification_email_form(current_user.notification_settings) %>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <% unless @authorizations.empty? %>
+      <table class="table table-striped application-settings">
+        <thead>
+        <tr>
+          <th class='h2'>Notifications from your Applications</th>
+          <th class='h2'>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @authorizations.each do |authorization| %>
+          <tr>
+            <td>Notifications from <%= authorization.application.name %></td>
+            <td>
+              <%= form_tag(settings_notifications_path(id: authorization.id)) do %>
+                <%= notification_email_form(authorization.notification_settings) %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

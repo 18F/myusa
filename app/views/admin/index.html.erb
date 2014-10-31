@@ -31,20 +31,13 @@
           <td><%= link_to application.name, edit_oauth_application_path(application) %></td>
           <td><%= app_status(application) %></td>
           <td>
-            <%= form_tag new_api_key_path, method: :post do %>
-              <%= hidden_field_tag(:id, application.id) %>
-              <%= submit_tag 'New API Key',
-                onclick: "return confirm('Are you sure you want to generate a new client secret key?')",
-                class: 'btn btn-link' %>
-            <% end %>
             <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>
-            <% if !application.public && application.requested_public_at.nil? %>
-              <%= form_tag make_public_path, method: :post do %>
-                <%= hidden_field_tag(:id, application.id) %>
-                <%= submit_tag 'Request Public Access', class: 'btn btn-link' %>
-              <% end %>
+            <%= form_for application, url: oauth_application_path(application) do |f| %>
+              <%= hidden_field_tag(:return_to, admin_path) %>
+              <%= f.hidden_field(:public, value: true) %>
+              <%= f.submit 'Make Public', class: 'btn btn-link' %>
             <% end %>
-            <%= render 'doorkeeper/authorizations/delete_form', application: application %>
+            <%= render 'doorkeeper/authorized_applications/delete_form', application: application %>
           </td>
         </tr>
       <% end %>

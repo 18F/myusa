@@ -8,7 +8,6 @@ class Api::V1::TasksController < Api::ApiController
 
   def create
     begin
-      ActionController::Parameters.action_on_unpermitted_parameters = :raise
       @task = current_resource_owner.tasks.build(task_params)
       @task.app_id = doorkeeper_token.application.id
       if @task.save
@@ -18,8 +17,6 @@ class Api::V1::TasksController < Api::ApiController
       end
     rescue ActionController::ParameterMissing
       render :json => { :message => "can't be blank"}, :status => 400
-    rescue ActionController::UnpermittedParameters
-      render :json => { :message => "Invalid parameters. Check your values and try again."}, :status => 422
     end
   end
 
@@ -30,7 +27,6 @@ class Api::V1::TasksController < Api::ApiController
 
   def update
     begin
-      ActionController::Parameters.action_on_unpermitted_parameters = :raise
       if @task = current_resource_owner.tasks.find(params[:id])
         @task.assign_attributes(update_task_params)
         @task.complete! if params[:task][:completed]
@@ -41,8 +37,6 @@ class Api::V1::TasksController < Api::ApiController
       render :json => { :message => "Invalid parameters. Check your values and try again."}, :status => 422
     rescue ActionController::ParameterMissing
       render :json => { :message => "can't be blank"}, :status => 400
-    rescue ActionController::UnpermittedParameters
-      render :json => { :message => "Invalid parameters. Check your values and try again."}, :status => 422
     end
   end
 

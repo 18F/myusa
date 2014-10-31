@@ -5,6 +5,8 @@ class HomePage < SitePrism::Page
   set_url '/'
   set_url_matcher(/\/?$/)
 
+  element :flash_message, "div.flash.alert"
+
   element :contact_flash, 'div.contact-flash'
   element :contact_flash_no_js, '.alert.alert-info'
 

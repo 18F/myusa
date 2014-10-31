@@ -26,6 +26,17 @@ def second_factor
   visit stub_two_factor_path
 end
 
+def sign_in_with_email(email)
+  sign_in_page = SignInPage.new
+  token_instructions_page = TokenInstructionsPage.new
+
+  sign_in_page.email.set email
+  sign_in_page.submit.click
+
+  open_email(email)
+  current_email.click_link('Connect to MyUSA')
+end
+
 def submit_new_application_form(options = {})
   options = options.reverse_merge({email:'joe@citizen.org', password:'Password1'})
   fill_in 'Name', 		 with:  'Acme'

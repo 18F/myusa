@@ -45,8 +45,8 @@ describe 'OAuth' do
 
 
     before :each do
-      FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: requested_scopes)
       FactoryGirl.create(:access_token, resource_owner: user, application: client_app, created_at: Time.now - 1.day, expires_in: 600, scopes: requested_scopes)
+      FactoryGirl.create(:access_token, resource_owner: user, application: client_app, scopes: requested_scopes)
       FactoryGirl.create(:access_token, resource_owner: user, application: client_app2, scopes: requested_scopes2)
 
       login user
@@ -76,7 +76,7 @@ describe 'OAuth' do
       expect(@auths_page).to_not have_authorization_section_for('Client App 2')
     end
 
-    scenario 'user sees one entry per applciation' do
+    scenario 'user sees one entry per application' do
       sections = @auths_page.authorizations.select do |section|
         section.app_name.text == 'Client App 1'
       end

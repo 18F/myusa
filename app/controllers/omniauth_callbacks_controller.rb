@@ -20,7 +20,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def provider
-    params[:provider]
+    return request.env['omniauth.strategy'].name
   end
 
   def log_success(user)

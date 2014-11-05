@@ -79,7 +79,7 @@ end
 
 group :staging, :production do
   gem 'unicorn', :require => false
-  gem 'dalli'
+  gem 'dalli-elasticache'
   gem 'newrelic_rpm'
 end
 

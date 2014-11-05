@@ -16,7 +16,7 @@ module Users
         if warden.authenticate(:sms, scope: :two_factor)
           redirect_to retrieve_stored_location
         else
-          flash[:error] = t(:bad_token, scope: [:two_factor, :sms], resend_link: users_factors_sms_path).html_safe
+          flash.now[:error] = t(:bad_token, scope: [:two_factor, :sms], resend_link: users_factors_sms_path).html_safe
           render :show
         end
       end

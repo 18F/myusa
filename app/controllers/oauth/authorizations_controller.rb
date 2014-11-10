@@ -3,12 +3,6 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
 
   layout 'dashboard'
 
-  def index
-    @authorizations = Doorkeeper::AccessToken.where(
-      resource_owner_id: current_user.id, revoked_at: nil)
-    @applications = current_user.oauth_applications
-  end
-
   def new
     if pre_auth.authorizable?
       if matching_token? || skip_authorization?

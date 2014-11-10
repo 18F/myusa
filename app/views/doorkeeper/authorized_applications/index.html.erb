@@ -62,14 +62,13 @@
             <p><%= t('no_authorizations') %></p>
           <%- else -%>
             <% @authorizations.each do |authorization| %>
-              <% application = authorization.application %>
               <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title"><%= application.name %></span>
+                    <span class="panel-title"><%= authorization.application.name %></span>
                     <br/>
                     <span class="panel-subtitle">Granted: <%= authorization.created_at.strftime('%m/%d/%Y') %></span>
                     <div class="pull-right text-right">
-                      <%= render 'authorized_delete_form', application: application %>
+                      <%= render 'authorized_delete_form', application: authorization.application %>
                     </div>
                 </div>
                 <div class="panel-body">

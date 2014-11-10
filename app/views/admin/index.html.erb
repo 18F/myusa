@@ -37,7 +37,7 @@
               <%= f.hidden_field(:public, value: true) %>
               <%= f.submit 'Make Public', class: 'btn btn-link' %>
             <% end %>
-            <%= render 'doorkeeper/authorizations/delete_form', application: application %>
+            <%= render 'doorkeeper/authorized_applications/delete_form', application: application %>
           </td>
         </tr>
       <% end %>

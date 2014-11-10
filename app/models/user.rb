@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   has_one :sms_code, dependent: :destroy
 
-  has_many :oauth_applications, through: :roles, source: :authorizable, source_type: 'Doorkeeper::Application'
+  has_many :oauth_applications, -> { where("roles.name = 'owner'") }, through: :roles, source: :authorizable, source_type: 'Doorkeeper::Application'
   before_destroy :destroy_applications
 
   has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy

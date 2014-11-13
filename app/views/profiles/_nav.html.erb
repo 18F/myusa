@@ -66,14 +66,7 @@
       <%= link_to 'My Settings', delete_account_profile_path, :class => 'list-group-item heading' %>
       <div>
         <%= link_to 'Notifications', settings_notifications_path, :class => 'list-group-item heading' %>
-        <%= link_to 'Delete Account', delete_account_profile_path, :class => 'list-group-item' %>
-        <% #
-           # TODO: These nav links are included as a placeholder for future functionality
-           # Notification Settings - turn on/off notifications
-           # Security - add/change 2FA phone number, change email address, and delete account
-           # (Delete Account should move inside Security / Settings)
-           # <= link_to 'Security', '#', :class => 'list-group-item' >
-        %>
+        <%= link_to 'Account Settings', settings_account_settings_path, :class => 'list-group-item' %>
       </div>
     </div>
     <% if current_user.has_role?(:admin) %>

@@ -25,12 +25,6 @@ class ProfilesController < ApplicationController
     redirect_to_target
   end
 
-  def delete_account
-    @profile = current_user.profile
-    @private_apps = current_user.oauth_applications.private?
-    @public_apps = current_user.oauth_applications.public?
-  end
-
   def destroy
     unless params[:email] == current_user.email
       redirect_to delete_account_profile_url, alert: I18n.t('delete_account.invalid_email')

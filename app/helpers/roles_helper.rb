@@ -26,5 +26,9 @@ module RolesHelper
     warden.authenticate!(scope: :two_factor)
   end
 
+  def two_factor_configured?
+    current_user.profile.mobile_number.present?
+  end
+
   # helper_method(:require_owner_or_admin!, :require_owner!, :require_admin!, :require_two_factor!)
 end

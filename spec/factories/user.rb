@@ -29,5 +29,9 @@ FactoryGirl.define do
       after(:create) {|u, e| u.profile.update_attributes(mobile_number: e.mobile_number)}
     end
 
+    trait :with_2fa do
+      with_mobile_number
+    end
+
   end
 end

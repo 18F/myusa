@@ -44,6 +44,11 @@ class User < ActiveRecord::Base
   PROFILE_ATTRIBUTES = [:title, :first_name, :middle_name, :last_name, :suffix, :address, :address2, :city, :state, :zip, :phone, :mobile, :gender, :marital_status, :is_parent, :is_retired, :is_student, :is_veteran]
   SCOPE_ATTRIBUTES = PROFILE_ATTRIBUTES + [:email]
 
+  # TODO: delete me
+  def two_factor_exists?
+    self.profile.mobile_number.present?
+  end
+
   def sandbox_apps
     self.apps.sandbox
   end

@@ -6,10 +6,6 @@ class SettingsController < ApplicationController
 
   layout 'dashboard'
 
-  def account_settings
-    @profile = current_user.profile
-    @private_apps = current_user.oauth_applications.private?
-    @public_apps = current_user.oauth_applications.public?
-  end
+  def account_settings; end
 
 end

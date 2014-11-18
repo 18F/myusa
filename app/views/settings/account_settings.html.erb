@@ -15,24 +15,16 @@
     </div>
     <div class="row delete-account">
       <h1><%= t('account_settings.delete_account.heading') %></h1>
-      <%= form_tag @profile, method: :delete, class: 'form' do %>
+      <%= form_tag current_user.profile, method: :delete, class: 'form' do %>
         <fieldset>
           <div class="alert alert-warning">
             <p><%= t('account_settings.delete_account.alert') %></p>
           </div>
-          <% if @public_apps.present? %>
-          <p><%= t('account_settings.delete_account.public_apps_warning') %></p>
+          <% if current_user.oauth_applications.present? %>
+            <span><%= t('account_settings.delete_account.apps_deletion_warning') %></span>
             <ul>
-              <% @public_apps.each do |app| %>
-              <li><%= app.name %></li>
-              <% end %>
-            </ul>
-          <% end %>
-          <% if @private_apps.present? %>
-          <p><%= t('account_settings.delete_account.private_apps_warning') %></p>
-            <ul>
-              <% @private_apps.each do |app| %>
-              <li><%= app.name %></li>
+              <% current_user.oauth_applications.each do |app| %>
+                <li><%= app.name %></li>
               <% end %>
             </ul>
           <% end %>

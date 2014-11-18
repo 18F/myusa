@@ -14,10 +14,12 @@ module TwoFactor
         [:mobile_number, :unconfirmed_mobile_number]
       end
 
-      def confirm_mobile_number!
-        self.mobile_number = unconfirmed_mobile_number
-        self.unconfirmed_mobile_number = nil
-        save!
+      def confirm_mobile_number!(number)
+        if number.present? && number == unconfirmed_mobile_number
+          self.mobile_number = unconfirmed_mobile_number
+          self.unconfirmed_mobile_number = nil
+          save!
+        end
       end
 
       private

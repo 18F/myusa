@@ -11,7 +11,7 @@ module TwoFactor
         sms_code = current_user.sms_code
         if sms_code.present? && sms_code.authenticate(raw_token)
           success!(sms_code)
-          current_user.confirm_mobile_number!
+          current_user.confirm_mobile_number!(sms_code.mobile_number)
         else
           fail!(:sms_authentication_failed)
         end

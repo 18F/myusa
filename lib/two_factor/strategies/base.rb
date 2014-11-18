@@ -1,4 +1,4 @@
-module TwoFactorAuthentication
+module TwoFactor
   module Strategies
     class Base < Warden::Strategies::Base
 

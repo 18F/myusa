@@ -1,5 +1,6 @@
 require 'email_authenticatable'
 require 'simple_role'
+require 'two_factor'
 
 class User < ActiveRecord::Base
   has_many :authentication_tokens, dependent: :destroy
@@ -14,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
 
   has_one :profile, dependent: :destroy
-  has_many :authorizations
+  has_many :authorizations, dependent: :destroy
   has_many :notifications, through: :authorizations, dependent: :destroy
   has_many :tasks, dependent: :destroy
 
@@ -34,6 +35,7 @@ class User < ActiveRecord::Base
   audit_on :before_destroy
 
   devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
+  two_factor :sms
 
   acts_as_authorization_subject
 

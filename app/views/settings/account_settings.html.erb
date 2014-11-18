@@ -6,7 +6,7 @@
     <div class="row two-factor-settings">
       <h1><%= t('account_settings.two_factor.heading') %></h1>
       <div>Two Factor Authentication is
-        <% if current_user.two_factor_exists? %>
+        <% if current_user.mobile_number.present? %>
           <strong>enabled</strong> (<%= link_to('configure', new_mobile_recovery_path, class: 'two-factor-settings-link') %>)
         <% else %>
           <strong>disabled</strong> (<%= link_to('enable', new_mobile_recovery_path, class: 'two-factor-settings-link') %>)

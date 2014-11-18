@@ -2,22 +2,22 @@ require 'rails_helper'
 
 describe SmsCode do
   let(:phone_number) { '800-555-3455' }
-  let(:user) { FactoryGirl.create(:user, :with_mobile_number, mobile_number: phone_number) } #profile, mobile_number: phone_number) }
+  let(:user) { FactoryGirl.create(:user, mobile_number: phone_number) }
 
   describe '#create', sms: true do
     it 'sends a 6-digit token' do
-      user.create_sms_code
+      user.create_sms_code(mobile_number: user.mobile_number)
       open_last_text_message_for(phone_number)
       expect(current_text_message.body).to match(/\d{6}/)
     end
   end
 
   describe '#save', sms: true do
-    let(:sms_code) { user.sms_code}
+    let(:sms_code) { user.sms_code }
     subject { -> { sms_code.save! }}
 
     before :each do
-      user.create_sms_code
+      user.create_sms_code(mobile_number: user.mobile_number)
     end
 
     context 'when a raw token is present' do
@@ -47,7 +47,7 @@ describe SmsCode do
 
     before :each do
       allow(SmsCode).to receive(:new_token).and_return(raw_token)
-      user.create_sms_code
+      user.create_sms_code(mobile_number: user.mobile_number)
     end
 
     it 'is true for a valid token' do
@@ -77,12 +77,12 @@ describe SmsCode do
     end
   end
 
+  describe '#'
+
   describe '#re_generate_token', sms: true do
-    let(:sms_code) { user.create_sms_code }
+    let(:sms_code) { user.create_sms_code(mobile_number: user.mobile_number) }
 
     it 'creates a new token' do
-      # confirmation = profile.create_mobile_confirmation
-      # old_token = confirmation.token
       old_token = sms_code.token
       sms_code.regenerate_token
       expect(sms_code.token).to_not match(old_token)

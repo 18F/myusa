@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe MobileRecoveriesController do
-  let(:phone_number) { '800-555-3455' }
+  let(:phone_number) { '8005553455' }
   let(:user) { FactoryGirl.create(:user) }
 
   before :each do
@@ -9,18 +9,19 @@ describe MobileRecoveriesController do
   end
 
   describe '#create' do
-    before :each do
-      post :create, profile: { mobile_number: phone_number }
-      user.profile.reload
+    subject { -> { post :create, user: { unconfirmed_mobile_number: phone_number } } }
+
+    context 'two factor is not configured' do
+      it 'sets the user\'s unconfirmed_mobile_number' do
+        is_expected.to change{user.reload.unconfirmed_mobile_number}.from(nil).to(phone_number)
+      end
+
     end
 
-    it 'sets the profile mobile number' do
-      expect(user.profile.mobile_number).to match(phone_number)
-    end
     context 'mobile number is invalid' do
       let(:phone_number) { 'call me plz' }
       it 'validates phone number format' do
-        expect(user.profile.mobile_number).to be_nil
+        is_expected.to_not change{user.reload.unconfirmed_mobile_number}
         expect(flash[:error]).to be
       end
     end

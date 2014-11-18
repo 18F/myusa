@@ -2,7 +2,7 @@ require 'feature_helper'
 
 describe 'Mobile Confirmation', sms: true do
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
-  let(:sms_page) { TwoFactorAuthentication::SmsPage.new}
+  let(:sms_page) { TwoFactor::SmsPage.new}
   let(:welcome_page) { WelcomePage.new }
 
   let(:user) { FactoryGirl.create(:user) }
@@ -27,7 +27,7 @@ describe 'Mobile Confirmation', sms: true do
       mobile_confirmation_page.submit.click
     end
 
-    scenario 'user is redirected to 2FA/SMS flow' do
+    scenario 'user is prompted to enter code' do #redirected to 2FA/SMS flow' do
       expect(sms_page).to be_displayed
     end
 

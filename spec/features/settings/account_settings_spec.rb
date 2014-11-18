@@ -4,7 +4,7 @@ describe 'Account Settings' do
   let(:account_settings_page) { AccountSettingsPage.new }
   let(:home_page) { HomePage.new }
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
-  let(:sms_page) { TwoFactorAuthentication::SmsPage.new}
+  let(:sms_page) { TwoFactor::SmsPage.new}
   # let(:profile_page) { ProfilePage.new }
 
   describe 'visiting account settings page' do

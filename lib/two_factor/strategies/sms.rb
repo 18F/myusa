@@ -1,6 +1,6 @@
-require 'two_factor_authentication/strategies/base'
+require 'two_factor/strategies/base'
 
-module TwoFactorAuthentication
+module TwoFactor
   module Strategies
     class Sms < Base
       def valid?
@@ -11,6 +11,7 @@ module TwoFactorAuthentication
         sms_code = current_user.sms_code
         if sms_code.present? && sms_code.authenticate(raw_token)
           success!(sms_code)
+          current_user.confirm_mobile_number!
         else
           fail!(:sms_authentication_failed)
         end
@@ -25,4 +26,4 @@ module TwoFactorAuthentication
   end
 end
 
-Warden::Strategies.add(:sms, TwoFactorAuthentication::Strategies::Sms)
+Warden::Strategies.add(:sms, TwoFactor::Strategies::Sms)

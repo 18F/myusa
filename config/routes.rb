@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   get 'unsubscribe/:delivery_method', to: 'unsubscribe#unsubscribe', as: 'unsubscribe'
 
-  resource :profile, only: [:show, :additional, :update, :destroy] do
+  resource :profile, only: [:show, :edit, :additional, :update, :destroy] do
     get :additional
     get :delete_account
   end

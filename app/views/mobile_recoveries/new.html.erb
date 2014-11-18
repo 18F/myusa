@@ -6,10 +6,10 @@
     without hassle.</p>
   <p><a>Ways we will never use your number.</a></p>
 
-  <%= form_for :profile, url: mobile_recovery_path do |f| %>
+  <%= form_for :user, url: mobile_recovery_path do |f| %>
     <div class='row'>
-      <%= f.label :mobile_number %>
-      <%= f.text_field :mobile_number, class: 'form-control' %>
+      <%= f.label :unconfirmed_mobile_number, 'Mobile Number' %>
+      <%= f.text_field :unconfirmed_mobile_number, class: 'form-control' %>
     </div>
     <br>
     <div class='row'>

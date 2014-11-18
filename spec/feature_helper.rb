@@ -48,7 +48,6 @@ end
 
 class SecretController < ApplicationController
   before_filter :authenticate_user!
-  include RolesHelper
 
   def secret
     render text: 'you got me'

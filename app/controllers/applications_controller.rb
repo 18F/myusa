@@ -1,9 +1,7 @@
-class ApplicationsController < Doorkeeper::ApplicationsController
+class ApplicationsController < ApplicationController
   before_filter :authenticate_user!
 
   before_filter :build_application, only: [:new, :create]
-  
-  # this is set in the parent for typical resource routes, but we need to add :new_api_key and :make_public
   before_filter :set_application, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
   before_filter :update_application, only: [:create, :update]
 
@@ -18,7 +16,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
       current_user.grant_role!(:owner, @application)
 
       message = I18n.t('new_application')
-      flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
+      flash[:notice] = render_to_string partial: 'applications/flash',
                                         locals: { application: @application, message: message }
       redirect_to authorizations_path
     else
@@ -45,7 +43,7 @@ class ApplicationsController < Doorkeeper::ApplicationsController
     @application.secret = Doorkeeper::OAuth::Helpers::UniqueToken.generate
     @application.save
     message = I18n.t('new_api_key')
-    flash[:notice] = render_to_string partial: 'doorkeeper/applications/flash',
+    flash[:notice] = render_to_string partial: 'applications/flash',
                                       locals: { message: message }
     redirect_to authorizations_path
   end
@@ -65,6 +63,10 @@ class ApplicationsController < Doorkeeper::ApplicationsController
 
   def build_application
     @application = Doorkeeper::Application.new
+  end
+
+  def set_application
+    @application = Doorkeeper::Application.find(params[:id])
   end
 
   def update_application

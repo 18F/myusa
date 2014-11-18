@@ -12,7 +12,7 @@ module Users
 
       def create
         if warden.authenticate(:sms, scope: :two_factor)
-          redirect_to retrieve_stored_location
+          redirect_to after_two_factor_path
         else
           flash.now[:error] = t(:bad_token, scope: [:two_factor, :sms], resend_link: new_users_factors_sms_path).html_safe
           render :show
@@ -21,7 +21,12 @@ module Users
 
       private
 
-      #TODO: this should be shared between 2FA controllers
+      #TODO: these should be shared between 2FA controllers
+
+      def after_two_factor_path
+        retrieve_stored_location || settings_account_settings_path
+      end
+
       def retrieve_stored_location
         session.delete(:two_factor_return_to)
       end

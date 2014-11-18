@@ -3,22 +3,15 @@ require 'feature_helper'
 describe 'Mobile Confirmation', sms: true do
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
   let(:sms_page) { TwoFactor::SmsPage.new}
-  let(:welcome_page) { WelcomePage.new }
+  let(:account_settings_page) { AccountSettingsPage.new }
 
   let(:user) { FactoryGirl.create(:user) }
   let(:phone_number) { '800-555-3455' }
 
+
   before :each do
     login user
     mobile_confirmation_page.load
-  end
-
-  scenario 'user can skip mobile entry' do
-    mobile_confirmation_page.skip.click
-
-    expect(welcome_page).to be_displayed
-    expect(welcome_page.heading).to have_content('Welcome to MyUSA')
-    expect(welcome_page.welcome_text).to have_content('You can add your mobile number on your MyUSA profile at another time.')
   end
 
   context 'after entering phone number' do
@@ -39,14 +32,8 @@ describe 'Mobile Confirmation', sms: true do
         sms_page.submit.click
       end
 
-      scenario 'user is redirected to welcome page' do
-        expect(welcome_page).to be_displayed
-
-        expect(welcome_page.heading).to have_content('Welcome to MyUSA')
-        expect(welcome_page.welcome_text).to have_content('Your mobile number has been successfully added to your MyUSA account.')
-
-        expect(welcome_page).to have_redirect_link
-        expect(welcome_page).to have_meta_refresh
+      scenario 'user is redirected to account settings page' do
+        expect(account_settings_page).to be_displayed
       end
     end
   end

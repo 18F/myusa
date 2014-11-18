@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   include RolesHelper
-  
+
   protected
 
   def clear_return_to
@@ -31,7 +31,8 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    if current_user.sign_in_count == 1 && session[:user_return_to] !~ /auth\/authorize/
+    if current_user.sign_in_count == 1 && session[:user_return_to] !~ /oauth\/authorize/
+      session[:two_factor_return_to] = mobile_recovery_welcome_path
       new_mobile_recovery_path
     else
       stored_location_for(resource_or_scope) || profile_path

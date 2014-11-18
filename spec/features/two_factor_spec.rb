@@ -36,20 +36,18 @@ describe 'Two Factor Authentication', sms: true do
         expect(mobile_confirmation_page).to be_displayed
       end
     end
-  end
 
-  scenario 'user can receive sms code' do
-    admin_page.load
-    expect(receive_code).to_not be_nil
-  end
+    scenario 'user can receive sms code' do
+      expect(receive_code).to_not be_nil
+    end
 
-  scenario 'user can resend code' do
-    admin_page.load
-    first_code = receive_code
-    sms_page.resend_link.click
-    expect(sms_page).to be_displayed
-    expect(second_code = receive_code).to_not be_nil
-    expect(second_code).to_not eql(first_code)
+    scenario 'user can resend code' do
+      first_code = receive_code
+      sms_page.resend_link.click
+      expect(sms_page).to be_displayed
+      expect(second_code = receive_code).to_not be_nil
+      expect(second_code).to_not eql(first_code)
+    end
   end
 
   context 'user submits code' do

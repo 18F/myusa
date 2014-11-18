@@ -7,7 +7,6 @@ class MobileRecoveriesController < ApplicationController
 
   def create
     if user_params.has_key?(:unconfirmed_mobile_number) && current_user.update_attributes(user_params)
-      session[:two_factor_return_to] = mobile_recovery_welcome_path
       current_user.create_sms_code!(mobile_number: current_user.unconfirmed_mobile_number)
       redirect_to users_factors_sms_path
     else

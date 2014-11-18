@@ -30,7 +30,15 @@ describe 'Account Settings' do
     end
   end
 
-  describe '2FA Settings' do
+  describe '2FA Settings', sms: true do
+    let(:mobile_number) { '8005553455' }
+
+    def receive_code
+      open_last_text_message_for(mobile_number)
+      expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
+      current_text_message.body.match /\d{6}/
+    end
+
     before :each do
       login(user, two_factor: two_factor)
       account_settings_page.load
@@ -40,6 +48,20 @@ describe 'Account Settings' do
       it 'can start two factor configure flow' do
         account_settings_page.two_factor.link.click
         expect(mobile_confirmation_page).to be_displayed
+      end
+
+      it 'can configure 2fa' do
+        account_settings_page.two_factor.link.click
+        expect(mobile_confirmation_page).to be_displayed
+
+        mobile_confirmation_page.mobile_number.set mobile_number
+        mobile_confirmation_page.submit.click
+
+        code = receive_code
+        sms_page.token.set code
+        sms_page.submit.click
+
+        expect(account_settings_page).to be_displayed
       end
     end
 
@@ -55,7 +77,7 @@ describe 'Account Settings' do
     end
 
     context 'two-factor authentication is configured' do
-      let(:user) { FactoryGirl.create(:user, :with_2fa) }
+      let(:user) { FactoryGirl.create(:user, mobile_number: mobile_number) }
       let(:two_factor) { true }
 
       it 'configure link is present' do

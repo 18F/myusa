@@ -3,9 +3,9 @@
 
 We hold your privacy in the highest regard. MyUSA collects some anonymous information automatically to help us improve the service (such as what parts of our system are being used when). MyUSA also gives you an option to provide basic personal information, which we’ll use to customize your experience and simplify many common tasks. MyUSA has a few fundamental principles:
 
-1. Your personal information will only be used to improve or customize your experience.
-1. The information you provide is your information and you have the ultimate say in how it’s used.
-1. We’ll always ask before we share your information with an agency or other government entity, and unless you say otherwise, it will remain private to you (except where required by law, as detailed in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf)).
+1. Your personal information is primarily used to improve or customize your experience.
+1. The information you provide is your information and you can delete your account and associated information at any time.
+1. We’ll ask you before we share your information with an agency or other government entity, except where required by law or as detailed in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf)).
 1. We never store personal information on our servers unless required for the on-going operation of one of our services.
 
 ## Generally
@@ -38,7 +38,7 @@ You take your privacy seriously, and so do we. At no time will your profile or l
 The information we collect is used to improve our service such as providing you with a more customized or simpler experience. We make every effort to disclose clearly how information is used at the point where it is collected so that you can determine for yourself whether you wish to provide the information.
 
 ## Sharing and disclosure
-The information you give us is kept private, and is not shared with anyone, other than with your explicit permission, or as required by law. For more details on how we may share your information, please read our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf).
+The information you give us is kept private and is not shared with anyone, unless you provide explicit permission, disclosure is required by law, or as described in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf).
 
 ## Retention of information
 We destroy the information we collect when the purpose for which it was provided has been fulfilled, unless we are required to keep it longer by statute or official policy. Electronically submitted information is maintained and destroyed according to the principles of the Federal Records Act and the regulations and records schedules approved by the National Archives and Records Administration. In some cases information submitted to us may become an agency record and therefore might be subject to a Freedom of Information Act request.
@@ -59,7 +59,7 @@ This website and its associated services is not intended to be accessed by child
 ## Your rights
 
 ### Privacy Act
-If any personal information you provide will be maintained in a Privacy Act system of records, you will be notified at the point of collection, as to whether providing information is mandatory or voluntary, and the effects of not providing all or any part of the requested information. Clicking a form “submit” button will constitute consent in this regard. Visit our [Privacy Act Web Page](http://www.gsa.gov/portal/content/104278) for additional information.
+If any personal information you provide will be maintained in a Privacy Act system of records, you will be notified at the point of collection, as to whether providing information is mandatory or voluntary, and the effects of not providing all or any part of the requested information. Clicking a form "submit" button will constitute consent in this regard. Visit our [Privacy Act Web Page](http://www.gsa.gov/portal/content/104278) for additional information.
 
 ### Freedom of information
 Under the Freedom of Information Act (FOIA) and the Privacy Act of 1974, to the extent applicable, you have certain rights to obtain information about you that may be in our records. For more information about the circumstances under which you can get and correct this information, visit our [FOIA Web Page](http://www.gsa.gov/portal/content/105305).

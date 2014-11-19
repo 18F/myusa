@@ -22,7 +22,6 @@ describe MobileRecoveriesController do
       let(:phone_number) { 'call me plz' }
       it 'validates phone number format' do
         is_expected.to_not change{user.reload.unconfirmed_mobile_number}
-        expect(flash[:error]).to be
       end
     end
   end

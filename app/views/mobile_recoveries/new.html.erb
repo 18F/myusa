@@ -6,13 +6,13 @@
     without hassle.</p>
   <p><a>Ways we will never use your number.</a></p>
 
-  <%= form_for :user, url: mobile_recovery_path do |f| %>
-    <div class='row'>
+  <%= form_for resource, url: mobile_recovery_path, method: :post do |f| %>
+    <div class="form-group<%= resource.errors.present? ? ' has-error' : '' %>">
       <%= f.label :unconfirmed_mobile_number, 'Mobile Number' %>
       <%= f.text_field :unconfirmed_mobile_number, class: 'form-control' %>
+      <%= errors_for(current_user, :unconfirmed_mobile_number) %>
     </div>
-    <br>
-    <div class='row'>
+    <div class='form-group'>
       <%= f.submit value='Add a number', class: 'btn btn-primary' %>
       <%= link_to 'Skip this Step', mobile_recovery_cancel_path, class: 'btn btn-default' %>
     </div>

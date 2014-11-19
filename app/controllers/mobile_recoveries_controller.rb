@@ -3,14 +3,16 @@ class MobileRecoveriesController < ApplicationController
 
   before_filter :authenticate_user!
 
-  def new; end
+  def new
+    @user = User.new
+  end
 
   def create
     if user_params.has_key?(:unconfirmed_mobile_number) && current_user.update_attributes(user_params)
       current_user.create_sms_code!(mobile_number: current_user.unconfirmed_mobile_number)
       redirect_to users_factors_sms_path
     else
-      flash[:error] = current_user.errors.full_messages.join("\n")
+      @user = current_user
       render :new
     end
   end
@@ -24,6 +26,11 @@ class MobileRecoveriesController < ApplicationController
     render text: t(:successfully_added, scope: [:mobile_confirmation]),
            layout: 'welcome'
   end
+
+  def resource
+    @user
+  end
+  helper_method :resource
 
   private
 

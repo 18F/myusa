@@ -234,6 +234,9 @@ en:
     logo_url_hint: "Please provide a secure (https) URL for an image that identifies your application. The image should be 120px by 120px in size."
 
   activerecord:
+    errors:
+      messages:
+        phone_number_invalid: Please check your phone number. It should only contain numbers.
     models:
       profile: 'Profile'
     attributes:

@@ -5,7 +5,7 @@ We hold your privacy in the highest regard. MyUSA collects some anonymous inform
 
 1. Your personal information is primarily used to improve or customize your experience.
 1. The information you provide is your information and you can delete your account and associated information at any time.
-1. We’ll ask you before we share your information with an agency or other government entity, except where required by law or as detailed in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf)).
+1. We’ll ask you before we share your information with an agency or other government entity, except where required by law or as detailed in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf).
 1. We never store personal information on our servers unless required for the on-going operation of one of our services.
 
 ## Generally

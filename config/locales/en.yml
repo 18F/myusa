@@ -236,7 +236,8 @@ en:
   activerecord:
     errors:
       messages:
-        phone_number_invalid: Please check your phone number. It should only contain numbers.
+        phone_number_invalid: 'The phone number must be valid.'
+        phone_number_invalid_format: 'Phone numbers should only contain digits.'
     models:
       profile: 'Profile'
     attributes:

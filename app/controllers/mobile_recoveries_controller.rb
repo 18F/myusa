@@ -8,12 +8,20 @@ class MobileRecoveriesController < ApplicationController
   end
 
   def create
+    @user = current_user
+
     if user_params.has_key?(:unconfirmed_mobile_number) && current_user.update_attributes(user_params)
       current_user.create_sms_code!(mobile_number: current_user.unconfirmed_mobile_number)
       redirect_to users_factors_sms_path
     else
-      @user = current_user
       render :new
+    end
+  rescue Twilio::REST::RequestError => error
+    if error.code.to_s == '21211'
+      @user.errors.add(:unconfirmed_mobile_number, :phone_number_invalid)
+      render :new
+    else
+      raise error
     end
   end
 

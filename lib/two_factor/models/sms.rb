@@ -6,8 +6,8 @@ module TwoFactor
       included do
         before_validation :normalize_mobile_numbers
 
-        validates :mobile_number, format: { with: /\A\+?\d+\z/, message: :phone_number_invalid }, allow_blank: true
-        validates :unconfirmed_mobile_number, format: { with: /\A\+?\d+\z/, message: :phone_number_invalid }, allow_blank: true
+        validates :mobile_number, format: { with: /\A\+?\d+\z/, message: :phone_number_invalid_format }, allow_blank: true
+        validates :unconfirmed_mobile_number, format: { with: /\A\+?\d+\z/, message: :phone_number_invalid_format }, allow_blank: true
       end
 
       def self.required_fields(klass)

@@ -11,6 +11,8 @@ class Profile < ActiveRecord::Base
 
   after_validation :set_errors
 
+  audit_on :after_update
+
   FIELDS = [:title, :first_name, :middle_name, :last_name, :suffix, :address,
     :address2, :city, :state, :zip, :gender, :marital_status, :is_parent,
     :is_student, :is_veteran, :is_retired]

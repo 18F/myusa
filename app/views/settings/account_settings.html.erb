@@ -1,0 +1,43 @@
+<div class="row profile">
+  <div class="col-md-3">
+    <%= render 'profiles/nav'%>
+  </div>
+  <div class="col-md-9">
+    <div class="row two-factor-settings">
+      <h1><%= t('account_settings.two_factor.heading') %></h1>
+      <div>Two Factor Authentication is
+        <% if current_user.mobile_number.present? %>
+          <strong>enabled</strong> (<%= link_to('configure', new_mobile_recovery_path, class: 'two-factor-settings-link') %>)
+        <% else %>
+          <strong>disabled</strong> (<%= link_to('enable', new_mobile_recovery_path, class: 'two-factor-settings-link') %>)
+        <% end %>
+      </div>
+    </div>
+    <div class="row delete-account">
+      <h1><%= t('account_settings.delete_account.heading') %></h1>
+      <%= form_tag current_user.profile, method: :delete, class: 'form' do %>
+        <fieldset>
+          <div class="alert alert-warning">
+            <p><%= t('account_settings.delete_account.alert') %></p>
+          </div>
+          <% if current_user.oauth_applications.present? %>
+            <span><%= t('account_settings.delete_account.apps_deletion_warning') %></span>
+            <ul>
+              <% current_user.oauth_applications.each do |app| %>
+                <li><%= app.name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <div class="form-group">
+            <%= label_tag :email, t('account_settings.delete_account.enter_email_prompt'), class: 'control-label' %>
+            <div class="controls">
+              <%= text_field_tag :email, nil, class: 'form-control', placeholder: Profile.human_attribute_name(:email) %>
+              <p class="help-block"><span class="text-danger"><%= t('account_settings.delete_account.warning_message') %></span></p>
+            </div>
+            <%= submit_tag t('account_settings.delete_account.final_button'), class: 'btn btn-danger' %>
+          </div>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</div>

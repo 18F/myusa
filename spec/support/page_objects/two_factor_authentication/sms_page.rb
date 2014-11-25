@@ -1,6 +1,6 @@
 require 'site_prism'
 
-class TwoFactorAuthentication::SmsPage < SitePrism::Page
+class TwoFactor::SmsPage < SitePrism::Page
   set_url '/users/factors/sms'
   set_url_matcher(/\/users\/factors\/sms/)
 

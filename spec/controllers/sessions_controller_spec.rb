@@ -14,7 +14,7 @@ describe SessionsController do
   end
 
   describe '#new' do
-    let(:user) { FactoryGirl.create(:user, :with_mobile_number, email: email) }
+    let(:user) { FactoryGirl.create(:user, :with_2fa, email: email) }
 
     context 'user is signed in' do
       before :each do

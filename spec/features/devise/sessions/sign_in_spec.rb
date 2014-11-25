@@ -8,7 +8,7 @@ describe 'Sign In' do
   let(:profile_page) { ProfilePage.new }
   let(:home_page) { HomePage.new }
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
-  let(:sms_page) { TwoFactorAuthentication::SmsPage.new}
+  let(:sms_page) { TwoFactor::SmsPage.new}
   let(:welcome_page) { WelcomePage.new }
 
   let(:email_link_text) { 'Connect to MyUSA' }

@@ -4,7 +4,7 @@ describe 'Admin' do
   let(:profile_page) { ProfilePage.new }
   let(:admin_page) { AdminPage.new }
 
-  let(:user) { FactoryGirl.create(:admin_user, :with_mobile_number) }
+  let(:user) { FactoryGirl.create(:admin_user, :with_2fa) }
   let(:two_factor) { false }
 
   before :each do

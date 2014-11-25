@@ -1,8 +1,6 @@
 
 # Group Authentication
 
-# Getting started with MyUSA Authentication
-
 MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the [developers](https://my.usa.gov/developer) section of MyUSA.
 
 ## Overview
@@ -45,20 +43,19 @@ If your app uses the MyUSA API, you'll need to keep track of new versions to ens
 3. Select the scopes you wish to recieve about user data. Sample scopes are email first_name and phone_number.
 4. Take note of your Consumer Key and Consumer Secret.
 
-## Your Application
+## Authenticating Users
 
-First, direct your user to https://my.usa.gov/auth/myusa with the following parameters:
-
+To sign in to your app, users should be shown a "Connect with MyUSA" button. (See the [Branding section](#branding) for details and code.) The button should link to your app's custom sign in URL, which you can construct from this format:
 ```
- MYUSA_CLIENT_ID
- REDIRECT_URI
- TYPE : CODE
+    https://my.usa.gov/users/sign_in?login_reqired=true&client_id=ABCD
 ```
 
-At this point, the user will be presented with the myusa login page. When they login, they will be redirected back to your application via the redriect URI that you specified when you setup the application. If your redirect uri was `https://www.ryan.com/test`, MyUSA would redirect to:
+... where `ABCD` should be replaced with the **Consumer Public Key** (also known as the **Client ID**) that MyUSA provided when your app was registered.
+
+After clicking the "Connect with MyUSA" button, the user will be presented with the MyUSA login page. When they login, they will be redirected back to your application via the redirect URI that you specified when you setup the application. If your redirect uri was `https://www.example.com/test`, MyUSA would redirect to:
 
 ```
-https://www.ryan.com/test?code=12345abcde
+https://www.example.com/test?code=12345abcde
 ```
 
 ### Handling the response
@@ -72,7 +69,7 @@ Now that you have a valid code, you can make a server to server request to `api.
 
 ## Example Rails configuration
 
-First start by adding this gem to your Gemfile:
+Start by adding this gem to your Gemfile:
 
 ```ruby
 gem 'omniauth-myusa', :git => 'https://github.com/GSA-OCSIT/omniauth-myusa.git'

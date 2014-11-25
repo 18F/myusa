@@ -13,8 +13,6 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  config.action_mailer.default_url_options = { :host => 'localhost', :port => 3000 }
-
   config.action_mailer.delivery_method = :test #letter_opener
 
   # Don't care if the mailer can't send.
@@ -42,5 +40,6 @@ Rails.application.configure do
   # SMS sender number.
   # This is the number from which our 2FA SMS messages will be sent.
   config.sms_sender_number = '+12407433320'
+  config.sms_delivery_method = :email # or :twilio
 
 end

@@ -32,9 +32,22 @@ describe MobileRecoveriesController do
       before :each do
         allow(SmsWrapper.instance).to receive(:send_message).and_raise(exception)
       end
-      it 'flashes an error' do
+      it 'shows an error' do
         subject.call
         expect(controller.resource.errors[:unconfirmed_mobile_number]).to include("The phone number must be valid.")
+      end
+    end
+
+    context 'Twilio returns unknown error' do
+      let(:exception) { Twilio::REST::RequestError.new("Everything went bang and I'm really unhappy.", 21212) }
+      before :each do
+        allow(SmsWrapper.instance).to receive(:send_message).and_raise(exception)
+        agent = stub_const("NewRelic::Agent", Class.new)
+        allow(agent).to receive(:notice_error)
+      end
+      it 'shows an error' do
+        subject.call
+        expect(flash).to include ['alert', 'We had a problem sending you an SMS message. It looks like the problem may be on our end, so we have logged it for investigation. In the meantime it may be worth trying again. Sorry about this!']
       end
     end
 

@@ -223,6 +223,7 @@ en:
   mobile_confirmation:
     skip_this_step: 'You can add your mobile number on your <a href="%{profile_link}">MyUSA profile</a> at another time.'
     successfully_added: Your mobile number has been successfully added to your MyUSA account.
+    sms_send_error: 'We had a problem sending you an SMS message. It looks like the problem may be on our end, so we've logged it for investigation. In the meantime it may be worth trying again. Sorry about this!'
 
   two_factor:
     sms:

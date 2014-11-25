@@ -21,7 +21,11 @@ class MobileRecoveriesController < ApplicationController
       @user.errors.add(:unconfirmed_mobile_number, :phone_number_invalid)
       render :new
     else
-      raise error
+      NewRelic::Agent.notice_error(error, custom_params: {
+        mobile_number: current_user.unconfirmed_mobile_number
+      }
+      flash.alert = t(:sms_send_error, scope: [:mobile_confirmation])
+      render :new
     end
   end
 

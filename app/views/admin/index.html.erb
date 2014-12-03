@@ -6,10 +6,8 @@
     <h1>
       Applications
     </h1>
-    <h2>
-      Public Approval Pending
-    </h2>
 
+    <%= application_filter_tabs %>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -22,7 +20,7 @@
       <% if @applications.blank? %>
         <tr>
           <td colspan="3">
-            there are no applicaitons pending approval
+            there are no applications matching this criteria
           </td>
         </tr>
       <% end %>
@@ -33,9 +31,9 @@
           <td>
             <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>
             <%= form_for application, url: oauth_application_path(application) do |f| %>
-              <%= hidden_field_tag(:return_to, admin_path) %>
-              <%= f.hidden_field(:public, value: true) %>
-              <%= f.submit 'Make Public', class: 'btn btn-link' %>
+              <%= hidden_field_tag(:return_to, admin_path(filter: params[:filter], page: params[:page])) %>
+              <%= f.hidden_field(:public, value: !application.public) %>
+              <%= f.submit "Make #{application.public ? 'Private' : 'Public'}", class: 'btn btn-link' %>
             <% end %>
             <%= render 'doorkeeper/authorized_applications/delete_form', application: application %>
           </td>
@@ -43,5 +41,6 @@
       <% end %>
       </tbody>
     </table>
+    <%= will_paginate @applications %>
   </div>
 </div>

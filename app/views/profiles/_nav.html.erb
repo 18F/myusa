@@ -67,7 +67,10 @@
     </div>
     <% if current_user.has_role?(:admin) %>
       <div class="list-group">
-        <%= link_to 'Administration', admin_path, :class => 'list-group-item heading' %>
+        <a href="#" class="list-group-item heading">Administration</a>
+        <div>
+          <%= link_to 'Applications', admin_path, :class => 'list-group-item' %>
+        </div>
       </div>
     <% end %>
   </nav>

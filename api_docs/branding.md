@@ -12,7 +12,7 @@ or service.
 
 ## MyUSA Button
 
-The MyUSA button is available in two styles: with a blue background and with a white background.
+Two versions of the MyUSA button are available: one with a blue background and one with a white background.
 
 **Note:** In the HTML code below, replace `$URL` with your custom sign in URL. (See [the "Authenticating Users" section](#authenticating-users) for more information.)
 

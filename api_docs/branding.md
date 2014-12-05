@@ -16,7 +16,7 @@ Two versions of the MyUSA button are available: one with a blue background and o
 
 **Note:** In the HTML code below, replace `$URL` with your custom sign in URL. (See [the "Authenticating Users" section](#authenticating-users) for more information.)
 
-### Blue background
+### Blue Background
 
 <a href="" class="btn btn-social btn-myusa">Connect with MyUSA</a>
 
@@ -30,7 +30,7 @@ To add this button to your application, use the following HTML:
 </p>
 ```
 
-### White background
+### White Background
 
 <a href="" class="btn btn-social btn-myusa white">Connect with MyUSA</a>
 

@@ -1,7 +1,7 @@
 # Group Branding Guidelines
 
-These guidelines provide the design specifications for how to use the MyUSA brand
-with your application.  You can use these assets on your website or in your
+These guidelines provide the design specifications for using the MyUSA brand
+within your application.  You can use these assets on your website or in your
 application so long as they comply with the MyUSA Terms of Service.
 
 The use of the MyUSA brand in any way not disclosed in this document or the

@@ -1,5 +1,5 @@
 ActionMailer::Base.default_options = {
-  to: 'MyUSA <myusa@gsa.gov>',
-  reply_to: 'myusa@gsa.gov',
+  to: ENV['sender_email'],
+  reply_to: ENV['sender_email'],
   from: 'no-reply@' + ActionMailer::Base.default_url_options[:host]
 }

@@ -14,7 +14,8 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   config.action_mailer.delivery_method = :test #letter_opener
-
+  config.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
+  
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 

@@ -1,5 +1,5 @@
 ActionMailer::Base.default_options = {
-  to: ENV['sender_email'],
-  reply_to: ENV['sender_email'],
+  to: Rails.configuration.myusa_sender_email,
+  reply_to: Rails.configuration.myusa_sender_email,
   from: 'no-reply@' + ActionMailer::Base.default_url_options[:host]
 }

@@ -280,4 +280,4 @@ Warden::Manager.before_failure(scope: :user) do |env, opts|
   end
 end
 
-require 'two_factor_authentication/strategies/sms'
+require 'two_factor/strategies/sms'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031173111) do
+ActiveRecord::Schema.define(version: 20141118192817) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -46,18 +46,6 @@ ActiveRecord::Schema.define(version: 20141031173111) do
     t.datetime "updated_at"
     t.datetime "revoked_at"
   end
-
-  create_table "mobile_confirmations", force: true do |t|
-    t.integer  "profile_id"
-    t.string   "token"
-    t.datetime "confirmation_sent_at"
-    t.datetime "confirmed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
-  add_index "mobile_confirmations", ["profile_id"], name: "index_mobile_confirmations_on_profile_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.string   "subject"
@@ -182,6 +170,16 @@ ActiveRecord::Schema.define(version: 20141031173111) do
   add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
+  create_table "sms_codes", force: true do |t|
+    t.integer  "user_id"
+    t.string   "mobile_number"
+    t.string   "token"
+    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "task_items", force: true do |t|
     t.string   "name"
     t.string   "url"
@@ -227,9 +225,9 @@ ActiveRecord::Schema.define(version: 20141031173111) do
   add_index "user_actions", ["user_id"], name: "index_user_actions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                 default: "", null: false
+    t.string   "email",                     default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",         default: 0
+    t.integer  "sign_in_count",             default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -240,6 +238,8 @@ ActiveRecord::Schema.define(version: 20141031173111) do
     t.datetime "updated_at"
     t.string   "remember_token"
     t.text     "notification_settings"
+    t.string   "mobile_number"
+    t.string   "unconfirmed_mobile_number"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

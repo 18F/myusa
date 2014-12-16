@@ -24,6 +24,12 @@ describe Profile do
     end
   end
 
+  it 'updates are audited' do
+    expect do
+      profile.update_attributes(first_name: 'test', last_name: 'user')
+    end.to change { UserAction.where(record: profile, action: 'update').count }.by(1)
+  end
+
   describe '#attribute_from_scope' do
     it 'returns attribute symbol from valid profile scope' do
       expect(Profile.attribute_from_scope('profile.email')).to eq(:email)

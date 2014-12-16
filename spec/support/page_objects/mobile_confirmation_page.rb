@@ -7,10 +7,10 @@ class MobileConfirmationPage < SitePrism::Page
   element :heading, 'h2'
 
   element :submit, "input.btn-primary[type='submit']"
-  element :skip, "a[text()='Skip this Step']"
+  element :skip_link, "a[text()='Skip this Step']"
   element :resend, "a[text()='Resend Code']"
 
-  element :mobile_number, '#profile_mobile_number'
+  element :mobile_number, '#user_unconfirmed_mobile_number'
   element :mobile_number_confirmation_token, '#mobile_confirmation_raw_token'
 
   element :redirect_link, "a[text()='here']"

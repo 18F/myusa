@@ -24,6 +24,7 @@ class Doorkeeper::Application
   end
 
   audit_on :after_create
+  audit_on :after_update
 
   def request_public(user)
     if self.update_attribute(:requested_public_at, DateTime.now)

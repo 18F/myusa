@@ -1,11 +1,11 @@
 require 'sms_wrapper'
 
 class SmsCode < ActiveRecord::Base
-  self.table_name = 'mobile_confirmations'
-
   belongs_to :user
 
   attr_accessor :raw_token
+
+  validates :mobile_number, presence: true
 
   before_create :generate_token
   after_save :send_raw_token
@@ -41,10 +41,6 @@ class SmsCode < ActiveRecord::Base
   end
 
   private
-
-  def mobile_number
-    user.profile.mobile_number
-  end
 
   def generate_token
     self.raw_token = self.class.new_token

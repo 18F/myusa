@@ -82,4 +82,5 @@ group :staging, :production do
 end
 
 group :production do
+  gem 'logstasher'
 end

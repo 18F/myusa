@@ -28,4 +28,10 @@ Rails.application.configure do
 
   config.sms_sender_number = ENV['SMS_NUMBER']
   config.sms_delivery_method = :twilio
+
+  # Logstasher
+  config.logstasher.enabled = true
+  config.logstasher.suppress_app_log = false
+  config.logstasher.source = 'myusa'
+  config.logstasher.backtrace = true
 end

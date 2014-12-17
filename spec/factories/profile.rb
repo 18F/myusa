@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :profile do
     first_name 'Joan'
     last_name 'Public'
+    city 'Cupertino'
     association :user
 
     factory :full_profile do

@@ -87,13 +87,13 @@ describe Api::V1 do
     end
 
     context 'when app has limited scope' do
-      let(:scopes) { 'profile.first_name profile.last_name' }
+      let(:scopes) { 'profile.city' }
 
       it 'should return profile limited to requested scopes' do
         expect(subject.status).to eq 200
         parsed_json = JSON.parse(subject.body)
         expect(parsed_json).to be
-        expect(parsed_json['first_name']).to eq 'Joan'
+        expect(parsed_json['city']).to eq 'Cupertino'
         expect(parsed_json).to_not include('email')
       end
 
@@ -123,7 +123,7 @@ describe Api::V1 do
 
   describe 'POST /api/v1/notifications' do
     let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
-  
+
     let(:token) { FactoryGirl.create(:access_token, application: client_app_2, resource_owner: user, scopes: 'notifications') }
 
     subject { post '/api/v1/notifications', params, header }

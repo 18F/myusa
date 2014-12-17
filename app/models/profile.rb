@@ -18,6 +18,8 @@ class Profile < ActiveRecord::Base
     :is_student, :is_veteran, :is_retired]
   METHODS = [:email, :phone_number, :mobile_number]
 
+  ALLOWED_FIELDS = [:address, :address2, :city, :state, :zip, :email]
+
   ENCRYPTED_FIELDS = FIELDS + [:mobile, :phone]
   ENCRYPTED_FIELDS.map { |attrib| attr_encrypted attrib.to_sym, key: :key, marshal: true }
 
@@ -61,39 +63,22 @@ class Profile < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    fields, methods = [], []
-    if options[:scope_list].nil?
-      fields += FIELDS
-      methods += METHODS.collect{|method| method.to_s}
+    fields = if options[:scope_list].nil?
+      (FIELDS + METHODS).select {|field| ALLOWED_FIELDS.include?(field) }
     else
-      profile_scope_list = options[:scope_list].collect{|scope| scope.starts_with?('profile') ? scope.split('.').last : nil}.compact
-      FIELDS.each{|field| fields << field if profile_scope_list.include?(field.to_s)}
-      METHODS.each{|method| methods << method.to_s if profile_scope_list.include?(method.to_s)}
-    end
-    options[:only], options[:methods] = fields, methods
+      profile_scope_list = options[:scope_list].collect do |scope|
+        scope.starts_with?('profile') ? scope.split('.').last : nil
+      end.compact
 
-    attribute_names = attributes.keys.map {|k| k.gsub(Profile.encrypted_column_prefix, '')}
-
-    if only = options[:only]
-      attribute_names &= Array(only).map(&:to_s)
-    elsif except = options[:except]
-      attribute_names -= Array(except).map(&:to_s)
+      profile_scope_list.select {|field| ALLOWED_FIELDS.map(&:to_s).include?(field) }
     end
 
-    hash = {}
-    attribute_names.each { |n| hash[n] = read_attribute_for_serialization(n) }
+    pp fields, options[:scope_list]
 
-    Array(options[:methods]).each { |m| hash[m.to_s] = send(m) if respond_to?(m) }
-
-    serializable_add_includes(options) do |association, records, opts|
-      hash[association.to_s] = if records.respond_to?(:to_ary)
-        records.to_ary.map { |a| a.serializable_hash(opts) }
-      else
-        records.serializable_hash(opts)
-      end
+    fields.inject({}) do |hash, field|
+      hash[field.to_s] = read_attribute_for_serialization(field)
+      hash
     end
-
-    hash
   end
 
   def to_schema_dot_org_hash(scope_list = [])

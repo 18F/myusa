@@ -18,7 +18,7 @@ class Profile < ActiveRecord::Base
     :is_student, :is_veteran, :is_retired]
   METHODS = [:email, :phone_number, :mobile_number]
 
-  ALLOWED_FIELDS = [:address, :address2, :city, :state, :zip, :email]
+  ALLOWED_FIELDS = [:city, :state, :zip, :email]
 
   ENCRYPTED_FIELDS = FIELDS + [:mobile, :phone]
   ENCRYPTED_FIELDS.map { |attrib| attr_encrypted attrib.to_sym, key: :key, marshal: true }

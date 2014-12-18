@@ -74,9 +74,7 @@ describe Profile do
     context "when called without any parameters" do
       let(:json) { profile.as_json }
       it "outputs the allowed fields in JSON" do
-        expect(json).to include 'address'=>'1 Infinite Loop',
-                                'address2'=>'Attn: Steve Jobs',
-                                'city'=>'Cupertino',
+        expect(json).to include 'city'=>'Cupertino',
                                 'state'=>'CA',
                                 'zip'=>'92037',
                                 'email'=> profile.user.email

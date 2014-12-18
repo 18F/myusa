@@ -66,18 +66,15 @@ class Profile < ActiveRecord::Base
     fields = if options[:scope_list].nil?
       (FIELDS + METHODS).select {|field| ALLOWED_FIELDS.include?(field) }
     else
-      profile_scope_list = options[:scope_list].collect do |scope|
+      profile_scope_list = options[:scope_list].map do |scope|
         scope.starts_with?('profile') ? scope.split('.').last : nil
       end.compact
 
       profile_scope_list.select {|field| ALLOWED_FIELDS.map(&:to_s).include?(field) }
     end
 
-    pp fields, options[:scope_list]
-
     fields.inject({}) do |hash, field|
-      hash[field.to_s] = read_attribute_for_serialization(field)
-      hash
+      hash.merge(field.to_s => read_attribute_for_serialization(field))
     end
   end
 

@@ -42,19 +42,6 @@
           </div>
         </div>
       </fieldset>
-      <fieldset>
-        <h2>
-          <%= t('profile.phone_heading') %>
-        </h2>
-        <div class='form-group'>
-          <%= form.label :phone_number, class: 'control-label' %>
-          <%= form.phone_field :phone_number, class: 'form-control', placeholder: Profile.human_attribute_name(:phone_number) %>
-        </div>
-        <div class='form-group'>
-          <%= form.label :mobile_number, class: 'control-label' %>
-          <%= form.phone_field :mobile_number, class: 'form-control', placeholder: Profile.human_attribute_name(:mobile_number) %>
-        </div>
-      </fieldset>
 
       <div class="row submit">
         <div class="col-md-8 col-sm-8">

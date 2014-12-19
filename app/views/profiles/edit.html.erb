@@ -15,49 +15,8 @@
     <%= form_for @profile, html: { class: 'form' } do |form| %>
       <fieldset>
         <h2>
-          <%= t('profile.name_heading') %>
-        </h2>
-        <label>
-          Full Name
-        </label>
-        <div class="form-inline row">
-          <div class='form-group'>
-            <div class="col-sm-2 col-md-2">
-              <%= form.label :title, class: 'sr-only' %>
-              <%= form.select :title, title_options, { include_blank: t('profile.select_fields.title.placeholder') }, { class: 'form-control' } %>
-            </div>
-            <div class="col-sm-3 col-md-3">
-              <%= form.label :first_name, class: 'sr-only' %>
-              <%= form.text_field :first_name, class: 'form-control', placeholder: Profile.human_attribute_name(:first_name) %>
-            </div>
-            <div class="col-sm-3 col-md-3">
-              <%= form.label :middle_name, class: 'sr-only' %>
-              <%= form.text_field :middle_name, class: 'form-control', placeholder: Profile.human_attribute_name(:middle_name) %>
-            </div>
-            <div class="col-sm-3 col-md-3">
-              <%= form.label :last_name, class: 'sr-only' %>
-              <%= form.text_field :last_name, class: 'form-control', placeholder: Profile.human_attribute_name(:last_name) %>
-            </div>
-            <div class="col-sm-1 col-md-1">
-              <%= form.label :suffix, class: 'sr-only' %>
-              <%= form.select :suffix, suffix_options, { include_blank: t('profile.select_fields.suffix.placeholder') }, { class: 'form-control' } %>
-            </div>
-          </div>
-        </div>
-        <div class="row"></div>
-      </fieldset>
-      <fieldset>
-        <h2>
           <%= t('profile.address_heading') %>
         </h2>
-        <div class='form-group'>
-          <%= form.label :address, class: 'control-label' %>
-          <%= form.text_field :address, class: 'form-control', placeholder: Profile.human_attribute_name(:address) %>
-        </div>
-        <div class='form-group'>
-          <%= form.label :address2, class: 'hidden-label' %>
-          <%= form.text_field :address2, class: 'form-control', placeholder: Profile.human_attribute_name(:address2) %>
-        </div>
         <div class='form-inline row'>
           <div class='form-group'>
             <div class='col-sm-6 col-md-6'>
@@ -73,19 +32,6 @@
               <%= form.text_field :zip, class: 'form-control', placeholder: Profile.human_attribute_name(:zip) %>
             </div>
           </div>
-        </div>
-      </fieldset>
-      <fieldset>
-        <h2>
-          <%= t('profile.phone_heading') %>
-        </h2>
-        <div class='form-group'>
-          <%= form.label :phone_number, class: 'control-label' %>
-          <%= form.phone_field :phone_number, class: 'form-control', placeholder: Profile.human_attribute_name(:phone_number) %>
-        </div>
-        <div class='form-group'>
-          <%= form.label :mobile_number, class: 'control-label' %>
-          <%= form.phone_field :mobile_number, class: 'form-control', placeholder: Profile.human_attribute_name(:mobile_number) %>
         </div>
       </fieldset>
 

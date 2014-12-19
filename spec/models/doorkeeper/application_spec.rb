@@ -1,18 +1,40 @@
 require 'rails_helper'
 
 describe Doorkeeper::Application do
-  it 'creation is audited' do
-    app = FactoryGirl.build(:application)
-    expect do
-      app.save!
-    end.to change { UserAction.where(record: app, action: 'create').count }.by(1)
+  let(:application) { FactoryGirl.create(:application) }
+
+  describe 'auditing' do
+    context 'creation' do
+      it 'is audited' do
+        expect do
+          FactoryGirl.create(:application)
+        end.to change { UserAction.where(record_type: 'Doorkeeper::Application', action: 'create').count }.by(1)
+      end
+    end
+
+    context 'updates' do
+      it 'is audited' do
+        expect do
+          application.update_attributes(name: 'My App', description: 'Is Awesome')
+        end.to change { UserAction.where(record: application, action: 'update').count }.by(1)
+      end
+    end
   end
 
-  it 'updates are audited' do
-    app = FactoryGirl.create(:application)
-    expect do
-      app.update_attributes(name: 'My App', description: 'Is Awesome')
-    end.to change { UserAction.where(record: app, action: 'update').count }.by(1)
+  describe 'validations' do
+    context 'application is not owned by a federal agency' do
+      let(:application) { FactoryGirl.build(:application, federal_agency: false) }
+      it 'requires tos to be accepted' do
+        expect(application.save).to be_truthy
+      end
+    end
+
+    context 'application is owned by a federal agency' do
+      let(:application) { FactoryGirl.build(:application, federal_agency: true) }
+      it 'requires tos to be accepted' do
+        expect(application.save).to be_falsy
+      end
+    end
   end
 
   describe 'application scopes' do

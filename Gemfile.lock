@@ -147,7 +147,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    doorkeeper (1.4.0)
+    doorkeeper (1.4.1)
       railties (>= 3.1)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -544,7 +544,7 @@ DEPENDENCIES
   dalli-elasticache
   database_cleaner
   devise
-  doorkeeper
+  doorkeeper (~> 1.4)
   factory_girl_rails
   fakeweb
   font-awesome-sass

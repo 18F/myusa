@@ -30,7 +30,7 @@ describe Doorkeeper::Application do
     end
 
     context 'application is owned by a federal agency' do
-      let(:application) { FactoryGirl.build(:application, federal_agency: true) }
+      let(:application) { FactoryGirl.build(:application, federal_agency: true, federal_agency_tos: false) }
       it 'requires tos to be accepted' do
         expect(application.save).to be_falsy
       end

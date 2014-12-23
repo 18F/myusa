@@ -22,17 +22,33 @@ describe Doorkeeper::Application do
   end
 
   describe 'validations' do
-    context 'application is not owned by a federal agency' do
-      let(:application) { FactoryGirl.build(:application, federal_agency: false) }
-      it 'requires tos to be accepted' do
+    context 'application is not owned by a federal agency and does not have TOS accepted' do
+      let(:application) { FactoryGirl.build(:application, federal_agency: false, terms_of_service_accepted: false) }
+      it 'does not fail validation' do
         expect(application.save).to be_truthy
       end
     end
 
     context 'application is owned by a federal agency' do
-      let(:application) { FactoryGirl.build(:application, federal_agency: true, federal_agency_tos: false) }
-      it 'requires tos to be accepted' do
-        expect(application.save).to be_falsy
+      context 'TOS is not accepted' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, terms_of_service_accepted: false) }
+        it 'fails validation' do
+          expect(application.save).to be_falsy
+        end
+      end
+
+      context 'organzation is blank' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, organization: '') }
+        it 'fails validation' do
+          expect(application.save).to be_falsy
+        end
+      end
+
+      context 'TOS is accepted' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, terms_of_service_accepted: true) }
+        it 'does not fail validation' do
+          expect(application.save).to be_truthy
+        end
       end
     end
   end

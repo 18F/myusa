@@ -15,5 +15,11 @@ FactoryGirl.define do
         evaluator.owner.grant_role!(:owner, a)
       end
     end
+
+    trait :federal_agency do
+      organization 'Office of Unspecified Services'
+      federal_agency true
+      terms_of_service_accepted true
+    end
   end
 end

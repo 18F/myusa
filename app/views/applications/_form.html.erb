@@ -27,6 +27,26 @@
     </div>
   <% end %>
 
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:organization].present?}" do %>
+  <div class="form-group">
+    <%= f.label :organization, class: 'control-label', for: 'application_organization' %>
+    <%= f.text_field :organization, class: 'form-control' %>
+    <%= doorkeeper_errors_for application, :organization %>
+  </div>
+  <% end %>
+
+  <div class="checkbox">
+    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
+      <label >
+        <%= f.check_box :federal_agency %>
+        <%= t('application.federal_agency') %>
+      </label>
+      <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency].present?}" do %>
+        <%= doorkeeper_errors_for application, :federal_agency %>
+      <% end %>
+    <% end %>
+  </div>
+
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:url].present?}" do %>
     <div class="form-group">
       <%= f.label :url, class: 'control-label', for: 'application_url' %>
@@ -95,6 +115,18 @@
     <% end %>
   <% end %>
 
+  <div class="checkbox">
+    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}" do %>
+    <label>
+      <%= f.check_box :terms_of_service_accepted %>
+      <%= t('application.federal_agency_tos') %>
+    </label>
+    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}" do %>
+    <%= doorkeeper_errors_for application, :terms_of_service_accepted %>
+    <% end %>
+    <% end %>
+  </div>
+
   <%= content_tag :div, class: "form-group" do %>
     <h2>
       Select the API Scopes that your Application will use
@@ -103,35 +135,7 @@
 
   <%= render 'scope_list', application: application, selected_scopes: application.scopes.to_s.split %>
 
-  <%= content_tag :div, class: "form-group" do %>
-  <h2>
-    Blah (need some sort of heading here to seperate the scopes)
-  </h2>
-  <% end %>
-
   <div>
-    <div class="checkbox">
-      <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
-        <label >
-          <%= f.check_box :federal_agency %>
-          <%= t('application.federal_agency') %>
-        </label>
-        <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency].present?}" do %>
-          <%= doorkeeper_errors_for application, :federal_agency %>
-        <% end %>
-      <% end %>
-
-      <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
-        <label>
-          <%= f.check_box :federal_agency_tos %>
-          <%= t('application.federal_agency_tos') %>
-        </label>
-        <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
-          <%= doorkeeper_errors_for application, :federal_agency_tos %>
-        <% end %>
-      <% end %>
-    </div>
-
     <div class="col-md-8 col-sm-8">
       <%= f.submit 'Save Application', class: "btn btn-primary width-100" %>
     </div>

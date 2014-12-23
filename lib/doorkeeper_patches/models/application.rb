@@ -9,8 +9,15 @@ class Doorkeeper::Application
                                  allow_blank: true,
                                  message: 'Logo url must begin with https'
 
-  validates_acceptance_of :federal_agency_tos, if: ->(a) { a.federal_agency? },
-                                               message: :federal_agency_tos_required
+  validates_acceptance_of :terms_of_service_accepted, if: :federal_agency,
+                                                      accept: true,
+                                                      allow_nil: false,
+                                                      message: :federal_agency_tos_required
+
+  validates_presence_of :organization, if: :federal_agency,
+                                       accept: true,
+                                       allow_nil: false,
+                                       message: :federal_agency_org_required
 
   before_save :clear_requested_public_at, if: ->(a) { a.public_changed? && a.public }
 

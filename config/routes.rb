@@ -57,7 +57,6 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :edit, :additional, :update, :destroy] do
     get :additional
-    get :delete_account
   end
 
   get 'settings/account_settings' => 'settings#account_settings'

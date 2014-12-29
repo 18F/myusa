@@ -7,7 +7,7 @@
     <div class="form-group">
       <%= f.label :name, class: 'control-label', for: 'application_name' %>
       <%= f.text_field :name, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :name %>
+      <%= errors_for application, :name %>
     </div>
   <% end %>
 
@@ -15,7 +15,7 @@
     <div class="form-group">
       <%= f.label :description, class: 'control-label', for: 'application_description' %>
       <%= f.text_area(:description, size:'50x5', class: 'form-control')%>
-      <%= doorkeeper_errors_for application, :description %>
+      <%= errors_for application, :description %>
     </div>
   <% end %>
 
@@ -23,7 +23,7 @@
     <div class="form-group">
       <%= f.label :short_description, class: 'control-label', for: 'application_short_description' %>
       <%= f.text_field :short_description, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :short_description %>
+      <%= errors_for application, :short_description %>
     </div>
   <% end %>
 
@@ -31,7 +31,7 @@
   <div class="form-group">
     <%= f.label :organization, class: 'control-label', for: 'application_organization' %>
     <%= f.text_field :organization, class: 'form-control' %>
-    <%= doorkeeper_errors_for application, :organization %>
+    <%= errors_for application, :organization %>
   </div>
   <% end %>
 
@@ -42,14 +42,14 @@
         <%= t('application.federal_agency') %>
       </label>
     </div>
-    <%= doorkeeper_errors_for application, :federal_agency %>
+    <%= errors_for application, :federal_agency %>
   <% end %>
 
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:url].present?}" do %>
     <div class="form-group">
       <%= f.label :url, class: 'control-label', for: 'application_url' %>
       <%= f.text_field :url, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :url %>
+      <%= errors_for application, :url %>
     </div>
   <% end %>
 
@@ -57,14 +57,7 @@
     <div class="form-group">
       <%= f.label :redirect_uri, class: 'control-label', for: 'application_redirect_uri' %>
       <%= f.text_field :redirect_uri, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :redirect_uri %>
-      <% if Rails.env.development? %>
-        <% if Doorkeeper.configuration.native_redirect_uri %>
-          <span class="help-block">
-            Use <code><%= Doorkeeper.configuration.native_redirect_uri %></code> for local tests
-          </span>
-        <% end %>
-      <% end %>
+      <%= errors_for application, :redirect_uri %>
     </div>
   <% end %>
 
@@ -75,7 +68,7 @@
         <%= t('application.logo_url_hint') %>
       </span>
       <%= f.text_field :logo_url, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :logo_url %>
+      <%= errors_for application, :logo_url %>
     </div>
   <% end %>
 
@@ -83,7 +76,7 @@
     <div class="form-group">
       <%= f.label :custom_text, class: 'control-label', for: 'application_url' %>
       <%= f.text_field :custom_text, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :custom_text %>
+      <%= errors_for application, :custom_text %>
     </div>
   <% end %>
 
@@ -92,7 +85,7 @@
       <div class="form-group">
         <%= f.label :public, class: 'control-label', for: 'application_url' %>
         <%= f.select :public, [['Public', true], ['Private', false]], {}, class: 'form-control' %>
-        <%= doorkeeper_errors_for application, :public %>
+        <%= errors_for application, :public %>
       </div>
     <% end %>
   <% end %>
@@ -101,7 +94,7 @@
     <div class="form-group">
       <%= f.label :developer_emails, class: 'control-label', for: 'developer_emails' %>
       <%= f.text_field :developer_emails, class: 'form-control tokenize' %>
-      <%= doorkeeper_errors_for application, :developer_emails %>
+      <%= errors_for application, :developer_emails %>
     </div>
   <% end %>
 
@@ -120,7 +113,7 @@
         <%= t('application.federal_agency_tos') %>
       </label>
     </div>
-    <%= doorkeeper_errors_for application, :terms_of_service_accepted %>
+    <%= errors_for application, :terms_of_service_accepted %>
   <% end %>
 
   <%= content_tag :div, class: "form-group" do %>

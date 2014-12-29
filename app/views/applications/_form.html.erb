@@ -35,17 +35,15 @@
   </div>
   <% end %>
 
-  <div class="checkbox">
-    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
+    <div class="checkbox">
       <label >
         <%= f.check_box :federal_agency %>
         <%= t('application.federal_agency') %>
       </label>
-      <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency].present?}" do %>
-        <%= doorkeeper_errors_for application, :federal_agency %>
-      <% end %>
-    <% end %>
-  </div>
+    </div>
+    <%= doorkeeper_errors_for application, :federal_agency %>
+  <% end %>
 
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:url].present?}" do %>
     <div class="form-group">
@@ -115,17 +113,15 @@
     <% end %>
   <% end %>
 
-  <div class="checkbox">
-    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}" do %>
-    <label>
-      <%= f.check_box :terms_of_service_accepted %>
-      <%= t('application.federal_agency_tos') %>
-    </label>
-    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}" do %>
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}#{' collapse' if !application.federal_agency}" do %>
+    <div class="checkbox">
+      <label>
+        <%= f.check_box :terms_of_service_accepted %>
+        <%= t('application.federal_agency_tos') %>
+      </label>
+    </div>
     <%= doorkeeper_errors_for application, :terms_of_service_accepted %>
-    <% end %>
-    <% end %>
-  </div>
+  <% end %>
 
   <%= content_tag :div, class: "form-group" do %>
     <h2>

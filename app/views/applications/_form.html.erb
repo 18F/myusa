@@ -44,6 +44,16 @@
     </div>
     <%= errors_for application, :federal_agency %>
   <% end %>
+  
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}#{' collapse' if !application.federal_agency}" do %>
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :terms_of_service_accepted %>
+      <%= t('application.federal_agency_tos') %>
+    </label>
+  </div>
+  <%= errors_for application, :terms_of_service_accepted %>
+  <% end %>
 
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:url].present?}" do %>
     <div class="form-group">
@@ -104,16 +114,6 @@
         You must select at least one scope.
       </div>
     <% end %>
-  <% end %>
-
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}#{' collapse' if !application.federal_agency}" do %>
-    <div class="checkbox">
-      <label>
-        <%= f.check_box :terms_of_service_accepted %>
-        <%= t('application.federal_agency_tos') %>
-      </label>
-    </div>
-    <%= errors_for application, :terms_of_service_accepted %>
   <% end %>
 
   <%= content_tag :div, class: "form-group" do %>

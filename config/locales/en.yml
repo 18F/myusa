@@ -234,7 +234,7 @@ en:
   application:
     logo_url_hint: "Please provide a secure (https) URL for an image that identifies your application. The image should be 120px by 120px in size."
     federal_agency: "This organization is a U.S. federal government agency"
-    federal_agency_tos: "I have the authority to represent my organization or agency. I agree to the MyUSA Terms of Service. I attest that my application is in compliance with all applicable laws, including the Privacy Act, the Paperwork Reduction Act, and any other local, state, or federal regulations."
+    federal_agency_tos: "I acknowledge that I have the authority to agree to MyUSA's Terms of Service on behalf of my organization, and that my application's use of MyUSA is compliant with the Terms of Service."
 
   activerecord:
     errors:

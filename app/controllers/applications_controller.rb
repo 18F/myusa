@@ -79,7 +79,7 @@ class ApplicationsController < ApplicationController
     params = [
       :name, :description, :short_description, :custom_text, :url,
       :logo_url, :owner_emails, :developer_emails, :scopes, :redirect_uri,
-      :federal_agency, :federal_agency_tos
+      :federal_agency, :organization, :terms_of_service_accepted
     ]
     if current_user.has_role?(:admin)
       params << :public

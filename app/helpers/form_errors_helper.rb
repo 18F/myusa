@@ -3,7 +3,7 @@ module FormErrorsHelper
     if object.errors[method].present?
       object.errors[method].map do |msg|
         content_tag(:span, class: 'help-block') do
-          msg          
+          msg.html_safe
         end
       end.reduce(&:join).html_safe
     end

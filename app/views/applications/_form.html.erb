@@ -44,12 +44,12 @@
     </div>
     <%= errors_for application, :federal_agency %>
   <% end %>
-  
+
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}#{' collapse' if !application.federal_agency}" do %>
   <div class="checkbox">
     <label>
       <%= f.check_box :terms_of_service_accepted %>
-      <%= t('application.federal_agency_tos') %>
+      <%= t('application.federal_agency_tos', tos_link: legal_path(anchor: 'terms-of-service')).html_safe %>
     </label>
   </div>
   <%= errors_for application, :terms_of_service_accepted %>

@@ -1,6 +1,4 @@
 class ApplicationsController < ApplicationController
-  # helper FormErrorsHelper
-
   before_filter :authenticate_user!
 
   before_filter :build_application, only: [:new, :create]

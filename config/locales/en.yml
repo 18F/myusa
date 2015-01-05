@@ -233,12 +233,16 @@ en:
 
   application:
     logo_url_hint: "Please provide a secure (https) URL for an image that identifies your application. The image should be 120px by 120px in size."
+    federal_agency: "This organization is a U.S. federal government agency"
+    federal_agency_tos: "I acknowledge that I have the authority to agree to MyUSA's <a href=\"%{tos_link}\">Terms of Service</a> on behalf of my organization, and that my application's use of MyUSA is compliant with the Terms of Service."
 
   activerecord:
     errors:
       messages:
         phone_number_invalid: 'The phone number must be valid.'
         phone_number_invalid_format: 'Phone numbers should only contain digits.'
+        federal_agency_tos_required: 'U.S. federal government agencies must agree to the MyUSA <a href="%{tos_link}">Terms of Service</a>.'
+        federal_agency_org_required: 'Organization is required for U.S. federal government agencies.'
     models:
       profile: 'Profile'
     attributes:

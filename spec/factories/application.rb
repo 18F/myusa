@@ -25,5 +25,9 @@ FactoryGirl.define do
     trait(:pending_approval) do
       requested_public_at DateTime.now
     end
+
+    trait(:private) do
+      public false
+    end
   end
 end

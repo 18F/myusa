@@ -27,6 +27,19 @@ class Doorkeeper::Application
 
   scope :requested_public, -> { where.not(requested_public_at: nil) }
 
+  scope :filter, ->(filter) {
+    case filter
+    when 'pending-approval'
+      requested_public
+    when 'all'
+      nil
+    else
+      nil
+    end
+  }
+
+  scope :search, ->(search) { search.present? && where("name like (?)", "%#{search}%") }
+
   validate do |a|
     return if a.scopes.nil?
     unless Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)

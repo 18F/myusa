@@ -7,6 +7,7 @@ describe AdminController do
     before :each do
       9.times { FactoryGirl.create(:application) }
       3.times { FactoryGirl.create(:application, :pending_approval) }
+
       sign_in :user, user
       sign_in :two_factor, user
     end
@@ -16,7 +17,7 @@ describe AdminController do
         get :index
       end
 
-      it 'gets 8 applications' do
+      it 'is limited to 8 applications' do
         expect(assigns(:applications).length).to eq(8)
       end
     end
@@ -40,6 +41,24 @@ describe AdminController do
       it 'filters by applications pending approval' do
         expect(assigns(:applications)).to be_all(&:requested_public_at)
       end
+    end
+
+    context 'search' do
+      let(:search_term) { 'foobar' }
+
+      before :each do
+        get :index, search: search_term
+      end
+
+      context 'searching for application by name' do
+        let!(:named_app) { FactoryGirl.create(:application, name: 'Named Test App') }
+        let(:search_term) { 'Named Test App' }
+
+        it 'finds app' do
+          expect(assigns(:applications)).to match_array([named_app])
+        end
+      end
+
     end
   end
 end

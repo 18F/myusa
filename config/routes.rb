@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     }
 
   devise_scope :user do
+    resource :user, only: [:update]
     get 'users/sign_in/:token_id' => 'sessions#show', as: 'user_session_token'
 
     namespace :users do

@@ -32,9 +32,8 @@ class ApplicationController < ActionController::Base
     if current_user.sign_in_count == 1 && session[:user_return_to] !~ /oauth\/authorize/
       session[:two_factor_return_to] = mobile_recovery_welcome_path
       new_mobile_recovery_path
-    elsif current_user.two_factor_required
-      require_two_factor!
     else
+      require_two_factor! if current_user.two_factor_required
       stored_location_for(resource_or_scope) || profile_path
     end
   end
@@ -53,7 +52,7 @@ class ApplicationController < ActionController::Base
     super(resource_or_scope)
   end
 
-  def authenticate_user!
+  def authenticate_user!(opts={})
     super
     require_two_factor! if current_user.two_factor_required
     current_user

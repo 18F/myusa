@@ -1,6 +1,7 @@
 require 'feature_helper'
 
 describe 'Two Factor Authentication', sms: true do
+  let(:target_page) { TargetPage.new }
   let(:admin_page) { AdminPage.new }
   let(:sms_page) { TwoFactor::SmsPage.new}
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
@@ -47,6 +48,18 @@ describe 'Two Factor Authentication', sms: true do
       expect(sms_page).to be_displayed
       expect(second_code = receive_code).to_not be_nil
       expect(second_code).to_not eql(first_code)
+    end
+  end
+
+  context 'user has required two factor' do
+    let(:user) { FactoryGirl.create(:user, two_factor_required: true, mobile_number: phone_number) }
+
+    before :each do
+      target_page.load
+    end
+
+    it 'redirects to sms flow' do
+      expect(sms_page).to be_displayed
     end
   end
 

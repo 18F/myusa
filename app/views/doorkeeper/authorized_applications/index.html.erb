@@ -5,13 +5,13 @@
   <div class="col-md-9">
     <h1>
       My Applications
+      <div class="pull-right">
+        <%= link_to 'New Application', new_oauth_application_path, class: 'btn btn-success' %>
+      </div>
     </h1>
     <% if !@applications.empty? %>
       <h2>
         Developer applications
-        <div class="pull-right">
-          <%= link_to 'New Application', new_oauth_application_path, class: 'btn btn-success' %>
-        </div>
       </h2>
 
       <table class="table table-striped">

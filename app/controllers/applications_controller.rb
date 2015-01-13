@@ -37,11 +37,6 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def destroy
-    flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :destroy]) if @application.destroy
-    redirect_to authorizations_path
-  end
-
   # TODO: roll this into update
   def new_api_key
     @application = Doorkeeper::Application.find(params[:id])

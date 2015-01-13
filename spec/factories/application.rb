@@ -21,9 +21,5 @@ FactoryGirl.define do
       federal_agency true
       terms_of_service_accepted true
     end
-
-    trait(:private) do
-      public false
-    end
   end
 end

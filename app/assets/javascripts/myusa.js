@@ -155,4 +155,8 @@ $(document).ready(function () {
     }
   });
 
+  $('#user_two_factor_required').click(function (e) {
+    $(this.form).submit();
+  });
+
 });

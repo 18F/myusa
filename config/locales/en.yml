@@ -236,6 +236,8 @@ en:
     federal_agency: "This organization is a U.S. federal government agency"
     federal_agency_tos: "I acknowledge that I have the authority to agree to MyUSA's <a href=\"%{tos_link}\">Terms of Service</a> on behalf of my organization, and that my application's use of MyUSA is compliant with the Terms of Service."
 
+  user:
+    two_factor_required: "Require two-factor authentication for log in."
   activerecord:
     errors:
       messages:

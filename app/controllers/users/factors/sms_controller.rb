@@ -31,6 +31,9 @@ module Users
         session.delete(:two_factor_return_to)
       end
 
+      # Don't require two factor when the user is trying to authenticate a
+      # second factor!
+      def require_two_factor!; end
     end
   end
 end

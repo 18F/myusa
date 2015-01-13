@@ -10,6 +10,7 @@ class ProfilePage < SitePrism::Page
   include DropdownNavigationElements
   include ProfileNavigationElements
 
+  element :first_name, '#profile_first_name'
   element :city, '#profile_city'
   element :submit, 		 'input[type="submit"][value="Save Information"]'
   element :delete_account_button, 'a[class="list-group-item"]', text: 'Delete Account'

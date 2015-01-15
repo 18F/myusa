@@ -13,13 +13,13 @@ class Feedback < ActiveRecord::Base
 
   def rate_limit_per_5_seconds
     if Feedback.where(remote_ip: self.remote_ip).last_5_seconds.exists?
-      errors.add(:base, 'errp') #:rate_limit_per_5_seconds)
+      errors.add(:base, :rate_limit_per_5_seconds)
     end
   end
 
   def rate_limit_per_day
     if Feedback.where(remote_ip: self.remote_ip).last_24_hours.count >= 10
-      errors.add(:base, 'errp') #:rate_limit_per_day)
+      errors.add(:base, :rate_limit_per_day)
     end
   end
 

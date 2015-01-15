@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150114223019) do
   create_table "feedbacks", force: true do |t|
     t.integer  "user_id"
     t.string   "email"
+    t.string   "from"
     t.string   "message"
     t.string   "remote_ip"
     t.datetime "created_at"

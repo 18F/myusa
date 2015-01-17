@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe MobileRecoveriesController do
-  let(:phone_number) { '800-555-3455' }
+  let(:phone_number) { '8005553455' }
   let(:user) { FactoryGirl.create(:user) }
 
   before :each do
@@ -9,89 +9,47 @@ describe MobileRecoveriesController do
   end
 
   describe '#create' do
-    before :each do
-      post :create, profile: { mobile_number: phone_number }
-      user.profile.reload
+    subject { -> { post :create, user: { unconfirmed_mobile_number: phone_number } } }
+
+    context 'two factor is not configured' do
+      it 'sets the user\'s unconfirmed_mobile_number' do
+        is_expected.to change{user.reload.unconfirmed_mobile_number}.from(nil).to(phone_number)
+      end
+
     end
 
-    it 'sets the profile mobile number' do
-      expect(user.profile.mobile_number).to match(phone_number)
-    end
-    it 'creates a mobile confirmation object' do
-      confirmation = user.profile.mobile_confirmation
-      expect(confirmation).to be
-    end
-    context 'mobile number is invalid' do
+    context 'mobile number contains letters' do
       let(:phone_number) { 'call me plz' }
       it 'validates phone number format' do
-        expect(user.profile.mobile_number).to be_nil
-        expect(flash[:error]).to be
+        is_expected.to_not change{user.reload.unconfirmed_mobile_number}
+        expect(controller.resource.errors[:unconfirmed_mobile_number]).to include("Phone numbers should only contain digits.")
+      end
+    end
+
+    context 'mobile number fails Twilio validation' do
+      let(:phone_number) { '94873457234905823049582039485' }
+      let(:exception) { Twilio::REST::RequestError.new("The 'To' number #{phone_number} is not a valid phone number.", 21211) }
+      before :each do
+        allow(SmsWrapper.instance).to receive(:send_message).and_raise(exception)
+      end
+      it 'shows an error' do
+        subject.call
+        expect(controller.resource.errors[:unconfirmed_mobile_number]).to include("The phone number must be valid.")
+      end
+    end
+
+    context 'Twilio returns unknown error' do
+      let(:exception) { Twilio::REST::RequestError.new("Everything went bang and I'm really unhappy.", 21212) }
+      before :each do
+        allow(SmsWrapper.instance).to receive(:send_message).and_raise(exception)
+        agent = stub_const("NewRelic::Agent", Class.new)
+        allow(agent).to receive(:notice_error)
+      end
+      it 'shows an error' do
+        subject.call
+        expect(flash).to include ['alert', 'We had a problem sending you an SMS message. It looks like the problem may be on our end, so we have logged it for investigation. In the meantime it may be worth trying again. Sorry about this!']
       end
     end
 
   end
-
-  describe "#update" do
-    before :each do
-      allow(SmsWrapper.instance).to receive(:send_message)
-    end
-
-    context 'with a valid token' do
-      it 'confirms the mobile number' do
-        confirmation = user.profile.create_mobile_confirmation
-        confirmation.send(:generate_token)
-        raw_token = confirmation.raw_token
-        confirmation.save!
-
-        patch :update, mobile_confirmation: { raw_token: raw_token }
-        confirmation.reload
-
-        expect(confirmation).to be_confirmed
-      end
-
-      it 'creates successful_authentication user action' do
-        confirmation = user.profile.create_mobile_confirmation
-        confirmation.send(:generate_token)
-        raw_token = confirmation.raw_token
-        confirmation.save!
-
-        expect { patch :update, mobile_confirmation: { raw_token: raw_token } }.to change(UserAction.successful_authentication, :count).by(1)
-      end
-    end
-
-    context 'with an invalid token' do
-      it 'does not confirm the mobile number' do
-        confirmation = user.profile.create_mobile_confirmation
-
-        patch :update, mobile_confirmation: { raw_token: 'foobar' }
-        confirmation.reload
-
-        expect(flash[:error]).to match(/Please check the number sent to your mobile and re-enter that code/)
-        expect(confirmation).to_not be_confirmed
-      end
-
-      it 'creates successful_authentication user action' do
-        confirmation = user.profile.create_mobile_confirmation
-
-        expect { patch :update, mobile_confirmation: { raw_token: 'foobar' } }.to change(UserAction.failed_authentication, :count).by(1)
-      end
-    end
-  end
-
-  describe "#resend" do
-    before :each do
-      allow(SmsWrapper.instance).to receive(:send_message)
-    end
-
-    it 'sets a new token' do
-      confirmation = user.profile.create_mobile_confirmation!
-      old_token = confirmation.token
-
-      get :resend
-      confirmation.reload
-
-      expect(confirmation.token).to_not match(old_token)
-    end
-  end
-
 end

@@ -20,11 +20,12 @@ Rails.application.routes.draw do
                 authorized_applications: 'oauth/authorized_applications'
   end
 
-  get 'authorizations' => 'oauth/authorizations#index'
+  get 'authorizations' => 'oauth/authorized_applications#index'
 
   # Pull this out of the `use_doorkeeper` block so that we can put it at the
   # root level.
-  resources :applications, only: %w(new create edit update destroy), as: 'oauth_applications'
+  # resources :applications, only: %w(new create show edit update destroy), as: 'oauth_applications'
+  resources :applications, as: 'oauth_applications'
 
   post 'new_api_key' => 'applications#new_api_key'
   post 'make_public' => 'applications#make_public'
@@ -36,17 +37,32 @@ Rails.application.routes.draw do
     }
 
   devise_scope :user do
+    resource :user, only: [:update]
     get 'users/sign_in/:token_id' => 'sessions#show', as: 'user_session_token'
+
+    namespace :users do
+      namespace :factors do
+        resource :sms
+      end
+    end
   end
 
   resource :mobile_recovery
   get 'mobile_recovery/cancel' => 'mobile_recoveries#cancel'
-  get 'mobile_recovery/resend' => 'mobile_recoveries#resend'
+  get 'mobile_recovery/welcome' => 'mobile_recoveries#welcome'
 
-  resource :profile, only: [:show, :additional, :edit, :update, :destroy] do
+  get 'settings/notifications' => 'notification_settings#index'
+  post 'settings/notifications' => 'notification_settings#update'
+
+  get 'unsubscribe/:delivery_method', to: 'unsubscribe#unsubscribe', as: 'unsubscribe'
+
+  resource :profile, only: [:show, :edit, :additional, :update, :destroy] do
     get :additional
-    get :delete_account
   end
+
+  get 'settings/account_settings' => 'settings#account_settings'
+
+  get 'admin' => 'admin#index'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1, as: 'v1' do
@@ -67,4 +83,7 @@ Rails.application.routes.draw do
       resources :tasks, only: [:index, :create, :show, :update]
     end
   end
+
+  get '/404' => 'errors#not_found'
+  get '/422' => 'errors#unprocessable_entity'
 end

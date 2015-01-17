@@ -1,31 +1,45 @@
 require 'email_authenticatable'
+require 'simple_role'
+require 'two_factor'
 
 class User < ActiveRecord::Base
-  has_many :authentication_tokens, :dependent => :destroy
-  has_many :authentications, :dependent => :destroy
+  has_many :authentication_tokens, dependent: :destroy
+  has_many :authentications, dependent: :destroy
 
-  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
+  has_one :sms_code, dependent: :destroy
+
+  has_many :oauth_applications, -> { where("roles.name = 'owner'") }, through: :roles, source: :authorizable, source_type: 'Doorkeeper::Application'
+  before_destroy :destroy_applications
 
   has_many :oauth_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id, dependent: :destroy
   has_many :oauth_grants, class_name: 'Doorkeeper::AccessGrant', foreign_key: :resource_owner_id, dependent: :destroy
 
-  has_one :profile, :dependent => :destroy
-  has_many :notifications, :dependent => :destroy
-  has_many :tasks, :dependent => :destroy
+  has_one :profile, dependent: :destroy
+  has_many :authorizations, dependent: :destroy
+  has_many :notifications, through: :authorizations, dependent: :destroy
+  has_many :tasks, dependent: :destroy
+
+  has_many :unsubscribe_tokens, dependent: :destroy
 
   has_many :user_actions
 
   validates_acceptance_of :terms_of_service
   validates_presence_of :uid
   validates_uniqueness_of :uid
-  validates_email_format_of :email, {:allow_blank => false}
+  validates_email_format_of :email, allow_blank: false
 
+  after_initialize :set_defaults
   before_validation :generate_uid
   before_create :build_default_profile
 
   audit_on :before_destroy
 
-  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable
+  devise :omniauthable, :email_authenticatable, :rememberable, :timeoutable, :trackable
+  two_factor :sms
+
+  acts_as_authorization_subject
+
+  serialize :notification_settings, JSON
 
   attr_accessor :just_created, :auto_approve
 
@@ -70,6 +84,10 @@ class User < ActiveRecord::Base
       end
     end
 
+    def find_or_create_from_omniauth(auth)
+      find_from_omniauth(auth) || create_from_omniauth(auth)
+    end
+
     def find_from_omniauth(auth)
       if (authentication = Authentication.find_by_uid(auth.uid))
         authentication.user
@@ -96,8 +114,19 @@ class User < ActiveRecord::Base
 
   private
 
+  DEFAULT_NOTIFICATION_SETTINGS = {
+    'receive_email' => true
+  }
+  def set_defaults
+    self.notification_settings ||= DEFAULT_NOTIFICATION_SETTINGS
+  end
+
   def build_default_profile
-    build_profile unless profile
+    self.profile ||= build_profile
+  end
+
+  def destroy_applications
+    oauth_applications.each(&:destroy)
   end
 
   def valid_email?

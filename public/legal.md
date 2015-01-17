@@ -69,9 +69,9 @@ If you represent a Federal agency and would like to understand the [risk managem
 
 We hold your privacy in the highest regard. MyUSA collects some anonymous information automatically to help us improve the service (such as what parts of our system are being used when). MyUSA also gives you an option to provide basic personal information, which we’ll use to customize your experience and simplify many common tasks. MyUSA has a few fundamental principles:
 
-1. Your personal information will only be used to improve or customize your experience.
-1. The information you provide is your information and you have the ultimate say in how it’s used.
-1. We’ll always ask before we share your information with an agency or other government entity, and unless you say otherwise, it will remain private to you (except where required by law, as detailed in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf)).
+1. Your personal information is primarily used to improve or customize your experience.
+1. The information you provide is your information and you can delete your account and associated information at any time.
+1. We’ll ask you before we share your information with an agency or other government entity, except where required by law or as detailed in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf).
 1. We never store personal information on our servers unless required for the on-going operation of one of our services.
 
 ## Generally
@@ -95,19 +95,19 @@ Certain users of our service choose to interact with it in ways that require us 
 When using our Service, you may be prompted with the opportunity to create a MyUSA account, or use an existing, third-party service to identify yourself (such as Google or PayPal). If you chose to do so, MyUSA will have access to the e-mail address you provide directly to MyUSA, or, possibly, indirectly via the third-party service. Unless you explicitly state otherwise, this pseudo-anonymous information will remain private to your account, and will only be used for notification and to simplify the process of retrieving your account on subsequent uses of the MyUSA Service.
 
 ## Profile information
-The Service offers the opportunity to store personally identifiable information (such as your name or address). We want you to feel comfortable trusting MyUSA with this basic profile information. Storing such information allows MyUSA to better customize many common tasks, such as pre-filling common fields across multiple forms. This information will remain private to your account, and will only be shared with government agencies if you explicitly grant permission on a case-by-case basis or where required by law. You may delete your personal information at any time.
+The Service offers the opportunity to store personally identifiable information (such as your name or address). We want you to feel comfortable trusting MyUSA with this basic profile information. Storing such information allows MyUSA to better customize many common tasks, such as pre-filling common fields across multiple forms. This information will remain private to your account.  Your information will only be shared if you explicitly grant permission, where required by law, or as described in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf). You may delete your personal information at any time.
 
 ## Prohibition on use of personal information
-You take your privacy seriously, and so do we. At no time will your profile or login information (the information you provide voluntarily) be used without your explicit permission (except where required by law) or combined with the automatically collected, anonymous information, or otherwise used to identify or track your individual use of the Service.
+You take your privacy seriously, and so do we. At no time will your profile or login information (the information you provide voluntarily) be used without your explicit permission (except where required by law or described in the [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf)) or combined with the automatically collected, anonymous information, or otherwise used to identify or track your individual use of the Service.
 
 ## How information is used
 The information we collect is used to improve our service such as providing you with a more customized or simpler experience. We make every effort to disclose clearly how information is used at the point where it is collected so that you can determine for yourself whether you wish to provide the information.
 
 ## Sharing and disclosure
-The information you give us is kept private, and is not shared with anyone, other than with your explicit permission, or as required by law. For more details on how we may share your information, please read our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf).
+The information you give us is kept private and is not shared with anyone, unless you provide explicit permission, disclosure is required by law, or as described in our [System of Records Notice](http://www.gpo.gov/fdsys/pkg/FR-2013-07-05/pdf/2013-16124.pdf).
 
 ## Retention of information
-We destroy the information we collect when the purpose for which it was provided has been fulfilled, unless we are required to keep it longer by statute or official policy. Electronically submitted information is maintained and destroyed according to the principles of the Federal Records Act and the regulations and records schedules approved by the National Archives and Records Administration. In some cases information submitted to us may become an agency record and therefore might be subject to a Freedom of Information Act request.
+We destroy the information we collect when the purpose for which it was provided has been fulfilled, unless we are required to keep it longer by statute or official policy. Electronically submitted information is maintained and destroyed according to the principles of the Federal Records Act and the regulations and records schedules approved by the National Archives and Records Administration. In some cases information submitted to us may become an agency record and therefore might be subject to a Freedom of Information Act request, except where the information is covered by an exemption.
 
 ## Security
 For site security purposes and to ensure that this service remains available to all users, we employ software to monitor network traffic to identify unauthorized attempts to upload or change information, or otherwise cause damage.
@@ -125,10 +125,10 @@ This website and its associated services is not intended to be accessed by child
 ## Your rights
 
 ### Privacy Act
-If any personal information you provide will be maintained in a Privacy Act system of records, you will be notified at the point of collection, as to whether providing information is mandatory or voluntary, and the effects of not providing all or any part of the requested information. Clicking a form “submit” button will constitute consent in this regard. Visit our [Privacy Act Web Page](http://www.gsa.gov/portal/content/104278) for additional information.
+If any personal information you provide will be maintained in a Privacy Act system of records, you will be notified at the point of collection, as to whether providing information is mandatory or voluntary, and the effects of not providing all or any part of the requested information. Clicking a form "submit" button will constitute consent in this regard. Visit our [Privacy Act Web Page](http://www.gsa.gov/portal/content/104278) for additional information.
 
 ### Freedom of information
-Under the Freedom of Information Act (FOIA) and the Privacy Act of 1974, to the extent applicable, you have certain rights to obtain information about you that may be in our records. For more information about the circumstances under which you can get and correct this information, visit our [FOIA Web Page](http://www.gsa.gov/portal/content/105305).
+Under the Freedom of Information Act (FOIA) and the Privacy Act of 1974, to the extent applicable, you have certain rights to obtain information about you that may be in our records. For more information about the circumstances under which you can get and correct this information, visit our [FOIA Web Page](http://www.gsa.gov/portal/content/105305) and [GSA Privacy Program](http://www.gsa.gov/privacygsa).
 
 ### Third party websites
 To better engage the public in ongoing dialog, we use several third-party platforms including bit.ly, Facebook, Twitter, Disqus, GitHub, and UserVoice. When interacting with our presence on those websites, you may reveal certain personal information to us or to third parties. Except when used for the purpose of responding to a specific message or request, we will neither use nor share nor retain such data. We also do not use personal information made available by the user to these third-party sites.
@@ -160,4 +160,4 @@ OMB No: 3090-00XX
 
 Expires: XX/XX/XXXX
 
-Paperwork Reduction Act Statement - This information collection meets the requirements of 44 U.S.C. § 3507, as amended by section 2 of the Paperwork Reduction Act of 1995. You do not need to answer these questions unless we display a valid Office of Management and Budget (OMB) control number. The OMB control number for this collection is 3090-00XX. We estimate that it will take 15 minutes to read the instructions, gather the facts, and answer the questions. Send only comments relating to our time estimate, including suggestions for reducing this burden, or any other aspects of this collection of information to: General Services Administration, Regulatory Secretariat (MVCB), ATTN: Regulatory Secretariat/IC 3090-00XX, 1800 F Street, NW, 2nd Floor, Washington, DC 20405.
+Paperwork Reduction Act Statement - This information collection meets the requirements of 44 U.S.C. § 3507, as amended by section 2 of the Paperwork Reduction Act of 1995. You do not need to answer these questions unless we display a valid Office of Management and Budget (OMB) control number. The OMB control number for this collection is 3090-00XX. We estimate that it will take 3 minutes to read the instructions, gather the facts, and answer the questions. Send only comments relating to our time estimate, including suggestions for reducing this burden, or any other aspects of this collection of information to: General Services Administration, Regulatory Secretariat (MVCB), ATTN: Regulatory Secretariat/IC 3090-00XX, 1800 F Street, NW, 2nd Floor, Washington, DC 20405.

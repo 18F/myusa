@@ -8,6 +8,8 @@ describe 'Sign In' do
   let(:profile_page) { ProfilePage.new }
   let(:home_page) { HomePage.new }
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
+  let(:sms_page) { TwoFactor::SmsPage.new}
+  let(:welcome_page) { WelcomePage.new }
 
   let(:email_link_text) { 'Connect to MyUSA' }
 
@@ -169,33 +171,23 @@ describe 'Sign In' do
         expect(mobile_confirmation_page).to be_displayed
       end
 
-      it 'sends an sms message with a verification code' do
+      it 'user can complete SMS/2FA flow and be redirected back' do
         mobile_confirmation_page.mobile_number.set phone_number
         mobile_confirmation_page.submit.click
 
         open_last_text_message_for(phone_number)
         expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
-        raw_token = current_text_message.body.match /\d{6}/
-      end
+        code = current_text_message.body.match /\d{6}/
 
-      it 'redirects to welcome page, which has redirect link' do
-        mobile_confirmation_page.mobile_number.set phone_number
-        mobile_confirmation_page.submit.click
+        sms_page.token.set code
+        sms_page.submit.click
 
-        open_last_text_message_for(phone_number)
-        expect(current_text_message.body).to match(/Your MyUSA verification code is \d{6}/)
-        raw_token = current_text_message.body.match /\d{6}/
+        expect(welcome_page).to be_displayed
 
-        mobile_confirmation_page.mobile_number_confirmation_token.set raw_token
-        mobile_confirmation_page.submit.click
+        expect(welcome_page).to have_redirect_link
+        expect(welcome_page).to have_meta_refresh
 
-        expect(mobile_confirmation_page).to be_displayed
-        expect(mobile_confirmation_page.heading).to have_content('Welcome to MyUSA')
-
-        expect(mobile_confirmation_page).to have_redirect_link
-        expect(mobile_confirmation_page).to have_meta_refresh
-
-        mobile_confirmation_page.redirect_link.click
+        welcome_page.redirect_link.click
         expect(redirect_page).to be_displayed
       end
     end
@@ -224,9 +216,10 @@ describe 'Sign In' do
       context 'for the first time' do
         context 'with email' do
           include_context 'with email'
-          it_behaves_like 'sign in and redirect'
+          it_behaves_like 'sign in'
           it_behaves_like 'sending token'
           it_behaves_like 'remember me'
+          it_behaves_like 'mobile recovery'
         end
 
         context 'with google' do

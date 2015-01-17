@@ -1,8 +1,8 @@
 
 # ProfilesController
 class ProfilesController < ApplicationController
-  before_filter :authenticate_user!, except: [:resend_token]
-  before_filter :assign_profile, except: [:resend_token]
+  before_filter :authenticate_user!
+  before_filter :assign_profile
 
   layout 'dashboard'
 
@@ -25,22 +25,16 @@ class ProfilesController < ApplicationController
     redirect_to_target
   end
 
-  def delete_account
-    @profile = current_user.profile
-    @private_apps = current_user.oauth_applications.private?
-    @public_apps = current_user.oauth_applications.public?
-  end
-
   def destroy
     unless params[:email] == current_user.email
-      redirect_to delete_account_profile_url, alert: I18n.t('delete_account.invalid_email')
+      redirect_to settings_account_settings_url, alert: I18n.t('account_settings.delete_account.invalid_email')
       return
     end
 
     user = current_user
     sign_out(user)
     user.destroy
-    redirect_to root_url, notice: I18n.t('delete_account.deleted_message')
+    redirect_to root_url, notice: I18n.t('account_settings.delete_account.deleted_message')
   end
 
   private

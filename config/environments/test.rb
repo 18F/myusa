@@ -42,5 +42,7 @@ Rails.application.configure do
   # SMS sender number.
   # This is the number from which our 2FA SMS messages will be sent.
   config.sms_sender_number = '+12407433320'
+  # SmsSpec is used to mock the Twilio requests
+  config.sms_delivery_method = :twilio
 
 end

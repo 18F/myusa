@@ -1,0 +1,135 @@
+<%= form_for [:oauth, application], id: 'new_application', html: {multipart: true, class: 'form', role: 'form'} do |f| %>
+  <% if application.errors.any? %>
+    <div class="alert alert-danger" data-alert><p>Whoops! Check your form for possible errors</p></div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:name].present?}" do %>
+    <div class="form-group">
+      <%= f.label :name, class: 'control-label', for: 'application_name' %>
+      <%= f.text_field :name, class: 'form-control' %>
+      <%= errors_for application, :name %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:description].present?}" do %>
+    <div class="form-group">
+      <%= f.label :description, class: 'control-label', for: 'application_description' %>
+      <%= f.text_area(:description, size:'50x5', class: 'form-control')%>
+      <%= errors_for application, :description %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:short_description].present?}" do %>
+    <div class="form-group">
+      <%= f.label :short_description, class: 'control-label', for: 'application_short_description' %>
+      <%= f.text_field :short_description, class: 'form-control' %>
+      <%= errors_for application, :short_description %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:organization].present?}" do %>
+  <div class="form-group">
+    <%= f.label :organization, class: 'control-label', for: 'application_organization' %>
+    <%= f.text_field :organization, class: 'form-control' %>
+    <%= errors_for application, :organization %>
+  </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:federal_agency_tos].present?}" do %>
+    <div class="checkbox">
+      <label >
+        <%= f.check_box :federal_agency %>
+        <%= t('application.federal_agency') %>
+      </label>
+    </div>
+    <%= errors_for application, :federal_agency %>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:terms_of_service_accepted].present?}#{' collapse' if !application.federal_agency}" do %>
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :terms_of_service_accepted %>
+      <%= t('application.federal_agency_tos', tos_link: legal_path(anchor: 'terms-of-service')).html_safe %>
+    </label>
+  </div>
+  <%= errors_for application, :terms_of_service_accepted %>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:url].present?}" do %>
+    <div class="form-group">
+      <%= f.label :url, class: 'control-label', for: 'application_url' %>
+      <%= f.text_field :url, class: 'form-control' %>
+      <%= errors_for application, :url %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:redirect_uri].present?}" do %>
+    <div class="form-group">
+      <%= f.label :redirect_uri, class: 'control-label', for: 'application_redirect_uri' %>
+      <%= f.text_field :redirect_uri, class: 'form-control' %>
+      <%= errors_for application, :redirect_uri %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:logo_url].present?}" do %>
+    <div class="form-group">
+      <%= f.label :logo_url, class: ' control-label', for: 'application_logo_url' %>
+      <span class="help-block">
+        <%= t('application.logo_url_hint') %>
+      </span>
+      <%= f.text_field :logo_url, class: 'form-control' %>
+      <%= errors_for application, :logo_url %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:custom_text].present?}" do %>
+    <div class="form-group">
+      <%= f.label :custom_text, class: 'control-label', for: 'application_url' %>
+      <%= f.text_field :custom_text, class: 'form-control' %>
+      <%= errors_for application, :custom_text %>
+    </div>
+  <% end %>
+
+  <% if current_user.has_role?(:admin) %>
+    <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:public].present?}" do %>
+      <div class="form-group">
+        <%= f.label :public, class: 'control-label', for: 'application_url' %>
+        <%= f.select :public, [['Public', true], ['Private', false]], {}, class: 'form-control' %>
+        <%= errors_for application, :public %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:developer_emails].present?}" do %>
+    <div class="form-group">
+      <%= f.label :developer_emails, class: 'control-label', for: 'developer_emails' %>
+      <%= f.text_field :developer_emails, class: 'form-control tokenize' %>
+      <%= errors_for application, :developer_emails %>
+    </div>
+  <% end %>
+
+  <% if application.errors[:scopes].present? %>
+    <%= content_tag :div, class: "form-group" do %>
+      <div class="alert alert-danger">
+        You must select at least one scope.
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group" do %>
+    <h2>
+      Select the API Scopes that your Application will use
+   </h2>
+  <% end %>
+
+  <%= render 'scope_list', application: application, selected_scopes: application.scopes.to_s.split %>
+
+  <div>
+    <div class="col-md-8 col-sm-8">
+      <%= f.submit 'Save Application', class: "btn btn-primary width-100" %>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <%= link_to t(:cancel), authorizations_path, :class => 'btn btn-default width-100' %>
+    </div>
+  </div>
+<% end %>

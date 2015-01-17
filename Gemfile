@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.1.5'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
@@ -17,10 +17,8 @@ gem 'secure_headers'
 gem 'permanent_records', '~> 2.3.0'
 gem 'font-awesome-sass'
 gem 'attr_encrypted'
-gem 'doorkeeper'
+gem 'doorkeeper', '~> 1.4'
 gem 'rails-observers'
-gem 'hpricot'
-gem 'premailer-rails'
 gem 'twilio-ruby'
 gem 'bootstrap_tokenfield_rails'
 
@@ -79,9 +77,10 @@ end
 
 group :staging, :production do
   gem 'unicorn', :require => false
-  gem 'dalli'
+  gem 'dalli-elasticache'
   gem 'newrelic_rpm'
 end
 
 group :production do
+  gem 'logstasher'
 end

@@ -1,18 +1,11 @@
 require 'spec_helper'
 
 describe Api::V1 do
-  def build_access_token(a, scopes=[])
-    Doorkeeper::AccessToken.create!(
-      application_id: a.id,
-      resource_owner_id: user.id,
-      scopes: scopes.join(' '),
-      expires_in: Doorkeeper.configuration.access_token_expires_in,
-      use_refresh_token: false
-    ).token
-  end
-
   let(:client_app) { FactoryGirl.create(:application) }
   let(:user) { FactoryGirl.create(:user, :with_profile) }
+  let(:scopes) { '' }
+  let(:token) { FactoryGirl.create(:access_token, application: client_app, resource_owner: user, scopes: scopes) }
+  let(:header) { {'HTTP_AUTHORIZATION' => "Bearer #{token.token}"} }
 
   describe 'Legacy tokens path' do
     let(:grant) {
@@ -43,13 +36,13 @@ describe Api::V1 do
   end
 
   describe 'Token validity check' do
-    subject { get '/api/v1/profile', nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
+    subject { get '/api/v1/profile', nil, header }
     context 'with a valid token' do
-      let(:token)  { build_access_token(client_app, ['profile.email']) }
+      let(:scopes) { 'profile.email' }
       its(:status) { should eq 200 }
     end
     context 'with an invalid token' do
-      let(:token)  { 'bad token! No cookie!' }
+      let(:token)  { double(:access_token, token: 'bad token! No cookie!') }
       its(:status) { should eq 401 }
       it 'should include an error message' do
         expect(JSON.parse(subject.body)['message']).to eql 'Not Authorized'
@@ -59,16 +52,15 @@ describe Api::V1 do
 
   describe 'GET /api/v1/tokeninfo' do
     let(:path)   { '/api/v1/tokeninfo' }
-    let(:scopes) { ['profile.first_name', 'profile.last_name'] }
-    let(:token)  { build_access_token(client_app, scopes) }
+    let(:scopes) { 'profile.first_name profile.last_name' }
     describe "response status" do
-      subject { get path, nil, { 'HTTP_AUTHORIZATION' => "Bearer #{token}" } }
+      subject { get path, nil, header }
       its(:status) { should eq 200 }
     end
     describe "response body" do
-      subject { JSON.parse(get(path, nil, 'HTTP_AUTHORIZATION' => "Bearer #{token}").body) }
+      subject { JSON.parse(get(path, nil, header).body) }
       its(['resource_owner_id'])  { should eq user.id }
-      its(['scopes'])             { should eq scopes }
+      its(['scopes'])             { should eq scopes.split(' ') }
       its(['expires_in_seconds']) { should be_within(2).of Doorkeeper.configuration.access_token_expires_in }
       its(['application'])        { should eql 'uid'=>client_app.uid }
       its(:size)                  { should eq 4 }
@@ -76,94 +68,100 @@ describe Api::V1 do
   end
 
   describe 'GET /api/v1/profile' do
-    let(:token) { build_access_token(client_app) }
+    let(:scopes) { 'profile.email' }
+    let(:params) { nil }
+    subject { get '/api/v1/profile', params, header }
 
     context 'when app does not specify required scopes' do
+      let(:scopes) { '' }
+
       it 'should return an error and message' do
-        response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-        expect(response.status).to eq 403
-        parsed_json = JSON.parse(response.body)
+        expect(subject.status).to eq 403
+        parsed_json = JSON.parse(subject.body)
         expect(parsed_json['message']).to eq 'Forbidden'
+      end
+
+      it 'does not create an user action record' do
+        expect { subject }.to_not change(UserAction.api_access.where(record_type: 'Profile'), :count)
       end
     end
 
     context 'when app has limited scope' do
-      let(:token) { build_access_token(client_app, ['profile.first_name', 'profile.last_name']) }
+      let(:scopes) { 'profile.first_name profile.last_name' }
 
       it 'should return profile limited to requested scopes' do
-        response = get '/api/v1/profile', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-        expect(response.status).to eq 200
-        parsed_json = JSON.parse(response.body)
+        expect(subject.status).to eq 200
+        parsed_json = JSON.parse(subject.body)
         expect(parsed_json).to be
         expect(parsed_json['first_name']).to eq 'Joan'
         expect(parsed_json).to_not include('email')
       end
+
+      it 'creates an user action record' do
+        expect { subject }.to change(UserAction.api_access.where(record_type: 'Profile'), :count).by(1)
+      end
     end
 
     context 'when the user queried exists' do
-      let(:token) { build_access_token(client_app, ['profile']) }
       context 'when the schema parameter is set' do
         pending 'need to understand Schema.org requirement' do
+          let(:params) { {'schema' => 'true'} }
           it 'should render the response in a Schema.org hash' do
-            response = get '/api/v1/profile', {'schema' => 'true'}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-            expect(response.status).to eq 200
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 200
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json).to_not be_nil
             expect(parsed_json['email']).to eq 'joe@citizen.org'
           end
         end
+      end
+
+      it 'creates an user action record' do
+        expect { subject }.to change(UserAction.api_access.where(record_type: 'Profile'), :count).by(1)
       end
     end
   end
 
   describe 'POST /api/v1/notifications' do
     let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
-    let(:other_user) { FactoryGirl.create(:user) }
+  
+    let(:token) { FactoryGirl.create(:access_token, application: client_app_2, resource_owner: user, scopes: 'notifications') }
 
-    let(:token) { build_access_token(client_app_2, ['notifications']) }
-
-    before do
-      1.upto(14) do |index|
-        @notification = Notification.create!({subject: "Notification ##{index}", received_at: Time.now - 1.hour, body: "This is notification ##{index}.", user_id: user.id, app_id: client_app_2.id})
-      end
-      @other_user_notification = Notification.create!({subject: 'Other User Notification', received_at: Time.now - 1.hour, body: 'This is a notification for a different user.', user_id: other_user.id, app_id: client_app.id})
-      @other_app_notification = Notification.create!({subject: 'Other App Notification', received_at: Time.now - 1.hour, body: 'This is a notification for a different app.', user_id: user.id, app_id: client_app_2.id})
-      user.notifications.each{ |n| n.destroy(:force) }
-      user.notifications.reload
-    end
+    subject { post '/api/v1/notifications', params, header }
 
     context 'when the user has a valid token' do
       context 'when the notification attributes are valid' do
+        let(:params) { {notification: {subject: 'Project MyUSA', body: 'This is a test.'}} }
         it 'should create a new notification when the notification info is valid' do
           expect(user.notifications.size).to eq 0
-          response = post '/api/v1/notifications', {notification: {subject: 'Project MyUSA', body: 'This is a test.'}}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 200
+          expect(subject.status).to eq 200
           user.notifications.reload
           expect(user.notifications.size).to eq 1
           expect(user.notifications.first.subject).to eq 'Project MyUSA'
         end
 
-        it 'sends a notification email when a notification is created' do
-          expect do
-            Notification.create!({subject: "Notification", received_at: Time.now - 1.hour, body: "This is a notification", user_id: user.id, app_id: client_app_2.id})
-          end.to change { ActionMailer::Base.deliveries.count }.by(1)
+        it 'creates an user action record' do
+          expect { subject }.to change(UserAction.api_write.where(record_type: 'Notification'), :count).by(1)
         end
       end
 
       context 'when the notification attributes are not valid' do
+        let(:params) { {notification: {body: 'This is a test.'} } }
         it 'should return an error message' do
-          response = post '/api/v1/notifications', {notification: {body: 'This is a test.'}}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 400
-          parsed_response = JSON.parse(response.body)
+          expect(subject.status).to eq 400
+          parsed_response = JSON.parse(subject.body)
           expect(parsed_response['message']['subject']).to eq ["can't be blank"]
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'Notification'), :count)
         end
       end
     end
   end
 
   describe 'Tasks API' do
-
-    let(:token) { build_access_token(client_app, ['tasks']) }
+    let(:scopes) { 'tasks' }
+    subject { get '/api/v1/tasks', nil, header }
 
     describe 'GET /api/v1/tasks.json' do
       context 'when token is valid' do
@@ -176,60 +174,78 @@ describe Api::V1 do
           end
 
           it 'should return the tasks that were created by the calling app' do
-            response = get '/api/v1/tasks', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}" }
-            expect(response.status).to eq 200
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 200
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json.size).to eq 1
             expect(parsed_json.first['name']).to eq 'Task #1'
           end
 
           it 'should return the task and task items' do
-            response = get '/api/v1/tasks', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}" }
-            parsed_json = JSON.parse(response.body)
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json.first['task_items'].first['name']).to eq 'Task item 1 (no url)'
+          end
+
+          it 'creates an user action record' do
+            expect { subject }.to change(UserAction.api_access.where(record_type: 'Task'), :count).by(1)
           end
         end
       end
 
       context 'when the the app does not have the proper scope' do
-        let(:token) { build_access_token(client_app, ['notifications']) }
+        let(:scopes) { 'notifications' }
 
         it 'should return an error message' do
-          response = get '/api/v1/tasks', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 403
-          parsed_json = JSON.parse(response.body)
+          expect(subject.status).to eq 403
+          parsed_json = JSON.parse(subject.body)
           expect(parsed_json['message']).to eq 'Forbidden'
         end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_access.where(record_type: 'Task'), :count)
+        end
+
       end
     end
 
     describe 'POST /api/v1/tasks' do
+      let(:params) { {task: { name: 'New Task' }} }
+      subject { post '/api/v1/tasks', params, header }
+
       context 'when the caller has a valid token' do
         context 'when the appropriate parameters are specified' do
           it 'should create a new task for the user' do
-            response = post '/api/v1/tasks', {task: { name: 'New Task' }}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-            expect(response.status).to eq 200
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 200
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json).to_not be_nil
             expect(parsed_json['name']).to eq 'New Task'
             expect(Task.where(name: 'New Task', user_id: user.id, app_id: client_app.id).count).to eq 1
           end
+
+          it 'creates an user action record' do
+            expect { subject }.to change(UserAction.api_write.where(record_type: 'Task'), :count).by(1)
+          end
         end
 
         context 'when the required parameters are missing' do
+          let(:params) { nil }
           it 'should return an error message' do
-            response = post '/api/v1/tasks', nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-            expect(response.status).to eq 400
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 400
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json['message']).to eq "can't be blank"
+          end
+
+          it 'does not create an user action record' do
+            expect { subject }.to_not change(UserAction.api_write.where(record_type: 'Task'), :count)
           end
         end
       end
+
     end
 
     describe 'PUT /api/v1/tasks:id.json' do
+      subject { put "/api/tasks/#{task.id}", params, header }
       context 'when the caller has a valid token' do
-        let(:task) do
+        let!(:task) do
           Task.create!({
             name: 'Mega task',
             completed_at: Time.now-1.day,
@@ -240,12 +256,17 @@ describe Api::V1 do
         end
 
         context 'when valid parameters are used' do
+          let(:params) { { task: { name: 'New Task', task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
+
           it 'should update the task and task items' do
-            response = put "/api/tasks/#{task.id}", {task: { name: 'New Task' , task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-            expect(response.status).to eq 200
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 200
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json['name']).to eq 'New Task'
             expect(parsed_json['task_items'].first['name']).to eq 'Task item one'
+          end
+
+          it 'creates an user action record' do
+            expect { subject }.to change(UserAction.api_write.where(record_type: 'Task'), :count).by(1)
           end
         end
 
@@ -259,20 +280,30 @@ describe Api::V1 do
             }).tap {|t| t.complete! }
           end
 
+          let(:params) { {task: { name: 'New Incomplete Task', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
+
           it 'should no longer be marked as complete when specified' do
-            response = put "/api/tasks/#{task.id}", {task: { name: 'New Incomplete Task', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-            expect(response.status).to eq 200
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 200
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json['name']).to eq 'New Incomplete Task'
             expect(parsed_json['task_items'].first['name']).to eq 'Task item one'
           end
+
+          it 'creates an user action record' do
+            expect { subject }.to change(UserAction.api_write.where(record_type: 'Task'), :count).by(1)
+          end
         end
         context 'when invalid parameters are used' do
+          let(:params) { {task: { name: 'New Task' , task_items_attributes: [{ id: 'chicken', name: 'updated task item name' }] }} }
+
           it 'should return meaningful errors' do
-            response = put "/api/tasks/#{task.id}", {task: { name: 'New Task' , task_items_attributes: [{ id: 'chicken', name: 'updated task item name' }] }}, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-            expect(response.status).to eq 422
-            parsed_json = JSON.parse(response.body)
+            expect(subject.status).to eq 422
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json['message']).to eq 'Invalid parameters. Check your values and try again.'
+          end
+
+          it 'does not create an user action record' do
+            expect { subject }.to_not change(UserAction.api_write.where(record_type: 'Task'), :count)
           end
         end
       end
@@ -290,20 +321,25 @@ describe Api::V1 do
           ]
         end
       end
+      subject { get "/api/tasks/#{task.id}", nil, header }
 
       context 'when the token is valid' do
         it 'should retrieve the task' do
-          response = get "/api/tasks/#{task.id}", nil, {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
-          expect(response.status).to eq 200
-          parsed_json = JSON.parse(response.body)
+          expect(subject.status).to eq 200
+          parsed_json = JSON.parse(subject.body)
           expect(parsed_json).to_not be_nil
           expect(parsed_json['name']).to eq 'New Task'
           expect(parsed_json['task_items'].first['name']).to eq "Task Item #1"
           expect(parsed_json['task_items'].last['url']).to eq 'http://valid_url.com'
         end
+
+        it 'creates an user action record' do
+          expect { subject }.to change(UserAction.api_access.where(record_type: 'Task'), :count).by(1)
+        end
       end
     end
   end
+
   describe 'Authorized Scopes API' do
     pending 'need to figure out how to query for scopes with Doorkeeper' do
       describe 'GET /api/v1/authorized_scopes' do
@@ -327,8 +363,7 @@ describe Api::V1 do
           let(:token) { build_access_token(scope_app, scopes_selected.map(&:scope_name).join(' ')) }
 
           it 'returns the list of scopes approved by user' do
-            response = get '/api/v1/authorized_scopes', nil,
-                           {'HTTP_AUTHORIZATION' => "Bearer #{token}"}
+            response = get '/api/v1/authorized_scopes', nil, header
 
             parsed_json = JSON.parse(response.body)
             expected_scopes = scopes_selected.map(&:scope_name)

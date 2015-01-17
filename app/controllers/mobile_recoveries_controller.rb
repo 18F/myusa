@@ -3,57 +3,51 @@ class MobileRecoveriesController < ApplicationController
 
   before_filter :authenticate_user!
 
-  def new; end
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = current_user
+
+    if user_params.has_key?(:unconfirmed_mobile_number) && current_user.update_attributes(user_params)
+      current_user.create_sms_code!(mobile_number: current_user.unconfirmed_mobile_number)
+      redirect_to users_factors_sms_path
+    else
+      render :new
+    end
+  rescue Twilio::REST::RequestError => error
+    if error.code.to_s == '21211'
+      @user.errors.add(:unconfirmed_mobile_number, :phone_number_invalid)
+      render :new
+    else
+      NewRelic::Agent.notice_error(error, custom_params: {
+        mobile_number: current_user.unconfirmed_mobile_number
+      })
+      flash.now[:alert] = t(:sms_send_error, scope: [:mobile_confirmation])
+      render :new
+    end
+  end
 
   def cancel
     render text: t(:skip_this_step, scope: [:mobile_confirmation], profile_link: profile_path).html_safe,
            layout: 'welcome'
   end
 
-  def create
-    if profile.update_attributes(profile_params)
-      profile.create_mobile_confirmation
-    else
-      flash[:error] = profile.errors.full_messages.join("\n")
-      render :new
-    end
+  def welcome
+    render text: t(:successfully_added, scope: [:mobile_confirmation]),
+           layout: 'welcome'
   end
 
-  def update
-    raw_token = mobile_confirmation_params[:raw_token]
-    if raw_token && mobile_confirmation && mobile_confirmation.authenticate(raw_token)
-      render text: t(:successfully_added, scope: [:mobile_confirmation]),
-             layout: 'welcome'
-    else
-      flash[:error] = t(:bad_token, scope: [:mobile_confirmation],
-                                    resend_link: mobile_recovery_resend_path,
-                                    reenter_link: new_mobile_recovery_path).html_safe
-      render :create
-    end
-
+  def resource
+    @user
   end
-
-  def resend
-    mobile_confirmation.regenerate_token
-    render :create
-  end
+  helper_method :resource
 
   private
 
-  def profile
-    current_user.profile
-  end
-
-  def mobile_confirmation
-    profile.mobile_confirmation
-  end
-
-  def profile_params
-    params.require(:profile).permit(:mobile_number)
-  end
-
-  def mobile_confirmation_params
-    params.require(:mobile_confirmation).permit(:raw_token)
+  def user_params
+    params.require(:user).permit(:unconfirmed_mobile_number)
   end
 
 end

@@ -24,6 +24,12 @@ describe Profile do
     end
   end
 
+  it 'updates are audited' do
+    expect do
+      profile.update_attributes(first_name: 'test', last_name: 'user')
+    end.to change { UserAction.where(record: profile, action: 'update').count }.by(1)
+  end
+
   describe '#attribute_from_scope' do
     it 'returns attribute symbol from valid profile scope' do
       expect(Profile.attribute_from_scope('profile.email')).to eq(:email)
@@ -35,23 +41,6 @@ describe Profile do
 
     it 'returns nil for non-profile scope' do
       expect(Profile.attribute_from_scope('notifications')).to be_nil
-    end
-  end
-
-  describe '#mobile_number_confirmed?' do
-    before :each do
-      profile.update_attributes(mobile_number: '415-555-3455')
-      allow(SmsWrapper.instance).to receive(:send_message)
-      profile.create_mobile_confirmation.confirm!
-    end
-
-    it 'is true if profile has a confirmed mobile_confirmation object' do
-      expect(profile).to be_mobile_number_confirmed
-    end
-
-    it 'is false when mobile is updated' do
-      profile.update_attributes(mobile_number: '415-555-3456')
-      expect(profile.reload).to_not be_mobile_number_confirmed
     end
   end
 

@@ -22,7 +22,7 @@ describe 'OmniAuth' do
 
   shared_examples 'success' do
     it 'creates successful_authentication user action' do
-      expect { get '/users/auth/google_oauth2/callback' }.to change(UserAction.successful_authentication, :count).by(1)
+      expect { get '/users/auth/google_oauth2/callback' }.to change(UserAction.successful_authentication.where(data: "{\"authentication_method\":\"google_oauth2\"}"), :count).by(1)
     end
   end
 
@@ -52,7 +52,7 @@ describe 'OmniAuth' do
     end
 
     it 'creates failed_authentication user action' do
-      expect { get '/users/auth/google_oauth2/callback' }.to change(UserAction.failed_authentication, :count).by(1)
+      expect { get '/users/auth/google_oauth2/callback' }.to change(UserAction.failed_authentication.where(data: "{\"authentication_method\":\"google_oauth2\"}"), :count).by(1)
     end
   end
 end

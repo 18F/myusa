@@ -7,4 +7,9 @@ class UserAction < ActiveRecord::Base
 
   scope :successful_authentication, -> { where(action: 'successful_authentication') }
   scope :failed_authentication, -> { where(action: 'failed_authentication') }
+
+  scope :api_access, -> { where(action: 'api_access') }
+  scope :api_write, -> { where(action: 'api_write') }
+
+  scope :admin_action, -> { where(action: 'admin_action') }
 end

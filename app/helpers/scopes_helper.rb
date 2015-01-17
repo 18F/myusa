@@ -1,5 +1,3 @@
-
-# ScopesHelper
 module ScopesHelper
 
   SCOPE_GROUPS = [

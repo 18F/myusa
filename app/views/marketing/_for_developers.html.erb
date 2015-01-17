@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <h1 class="text-center">
-          Simplified registration and account management starts here
+          Simplified registration and account management start here
         </h1>
       </div>
     </div>
@@ -16,7 +16,7 @@
           </span>
         </div>
         <h2>
-          Sign Up for MyUSA
+          Sign up for MyUSA
         </h2>
         <p>
           Create your MyUSA account or ask a representative from your agency to create an account.
@@ -39,7 +39,7 @@
           Registering your application with MyUSA is simple.
         </p>
         <p>
-          <%= link_to "Learn How", '/faq', :target => "_new", :class => "btn btn-primary width-80" %>
+          <%= link_to "Learn How", new_oauth_application_path, :target => "_new", :class => "btn btn-primary width-80" %>
         </p>
       </div>
       <div class="col-sm-4 col-md-4 text-center numbered-step">
@@ -53,10 +53,10 @@
           Publish your application
         </h2>
         <p>
-          Make your application publicly available to anyone with a MyUSA account.
+          Make your application available to anyone with a MyUSA account.
         </p>
         <p>
-          <%= link_to "Learn More", '/faq', :target => "_new", :class => "btn btn-primary width-80" %>
+          <%= link_to "Learn More", authorizations_path, :target => "_new", :class => "btn btn-primary width-80" %>
         </p>
       </div>
     </div>

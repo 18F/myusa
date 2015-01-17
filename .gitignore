@@ -22,6 +22,7 @@ Vagrantfile
 
 # other config
 config/*.yml
+config/environments/development.rb
 config/environments/production.rb
 config/initializers/recaptcha.rb
 config/deploy.rb

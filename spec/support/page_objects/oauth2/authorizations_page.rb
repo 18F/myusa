@@ -11,6 +11,10 @@ module OAuth2
     def app_name
       app_titles[0]
     end
+
+    def has_scopes?(*scopes)
+      (scopes - self.app_scopes.map(&:text)).empty?
+    end
   end
 
   class DeveloperApp < SitePrism::Section
@@ -31,5 +35,15 @@ module OAuth2
     element :new_api_key,     'input[type="submit"][value="New API Key"]'
     sections :developer_apps, DeveloperApp, 'tbody tr'
     sections :authorizations, AuthorizedApp, '.panel'
+
+    def authorization_section_for(app_name)
+      authorization_section = self.authorizations.select do |section|
+        section.app_name.text == app_name
+      end.first
+    end
+
+    def has_authorization_section_for?(app_name)
+      !!authorization_section_for(app_name)
+    end
   end
 end

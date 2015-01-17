@@ -231,6 +231,7 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
+
   config.warden do |manager|
     manager.failure_app = FailureApp
   end
@@ -248,12 +249,16 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  config.omniauth :google_oauth2, Rails.application.secrets.omniauth_google_app_id, Rails.application.secrets.omniauth_google_secret
+  config.omniauth :google_oauth2,
+    Rails.application.secrets.omniauth_google_app_id,
+    Rails.application.secrets.omniauth_google_secret,
+    access_type: 'online'
+
   config.add_module :email_authenticatable, controller: :sessions, route: { session: [nil, :new, :destroy] }
 end
 
 
-Warden::Manager.after_fetch do |user, auth, opts|
+Warden::Manager.after_fetch(scope: :user) do |user, auth, opts|
   request = Rack::Request.new(auth.env)
   params = request.params
 
@@ -262,11 +267,17 @@ Warden::Manager.after_fetch do |user, auth, opts|
   end
 end
 
-Warden::Manager.before_failure do |env, opts|
-  uri = URI(opts[:attempted_path])
-  params = Rack::Utils.parse_query(uri.query)
-  if params.delete('logout')
-    uri.query = params.empty? ? nil : params.to_param
-    opts[:attempted_path] = uri.to_s
+Warden::Manager.before_failure(scope: :user) do |env, opts|
+  begin
+    uri = URI(opts[:attempted_path])
+    params = Rack::Utils.parse_query(uri.query)
+    if params.delete('logout')
+      uri.query = params.empty? ? nil : params.to_param
+      opts[:attempted_path] = uri.to_s
+    end
+  rescue URI::InvalidURIError
+    nil
   end
 end
+
+require 'two_factor/strategies/sms'

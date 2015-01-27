@@ -10,18 +10,19 @@
     <nav class="nav nav-tabs">
       <%= application_filter_tabs %>
 
-      <form class="navbar-form navbar-right" role="search">
+      <%= form_for(:search, method: "get", html: {role: "search", class: "navbar-form navbar-right"}) do |f| %>
         <div class="form-group">
-          <input type="text" class="form-control" name="search" placeholder="Search">
+          <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+        <%= submit_tag("Submit", class: "btn btn-default") %>
+      <% end %>
     </nav>
 
     <table class="table table-striped">
       <thead>
       <tr>
         <th>Name</th>
+        <th>Owner</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
@@ -37,6 +38,7 @@
       <% @applications.each do |application| %>
         <tr id="application_<%= application.id %>">
           <td><%= link_to application.name, edit_oauth_application_path(application) %></td>
+          <td><%= application.owner.email %></td>
           <td><%= app_status(application) %></td>
           <td>
             <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>

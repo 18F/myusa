@@ -47,8 +47,8 @@ describe 'Admin' do
 
   describe 'app approval' do
     before :each do
-      FactoryGirl.create(:application, name: 'App 1', public: false, requested_public_at: Time.now)
-      FactoryGirl.create(:application, name: 'App 2', public: false, requested_public_at: Time.now)
+      FactoryGirl.create(:application, name: 'App 1', public: false, requested_public_at: Time.now, owner: user)
+      FactoryGirl.create(:application, name: 'App 2', public: false, requested_public_at: Time.now, owner: user)
       login user, two_factor: true
       admin_page.load
       admin_page.pending_approval_link.click

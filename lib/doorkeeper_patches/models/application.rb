@@ -4,6 +4,7 @@ class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
   acts_as_authorization_object
+
   has_many :authorizations, dependent: :destroy
 
   validates_format_of :logo_url, with: URI.regexp(['https']),
@@ -55,6 +56,11 @@ class Doorkeeper::Application
     if self.update_attribute(:requested_public_at, DateTime.now)
       SystemMailer.app_public_email(self, user).deliver
     end
+  end
+
+  # Could not figure out how to implement this as a relation ...
+  def owner
+    self.roles.where(name: 'owner').first.users.first
   end
 
   private

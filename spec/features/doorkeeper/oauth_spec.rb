@@ -4,7 +4,7 @@ require 'feature_helper'
 describe 'OAuth' do
   let(:user) { FactoryGirl.create(:user, email: 'testy.mctesterson@gsa.gov') }
   let(:client_app) { FactoryGirl.create(:application, name: 'Test App') }
-  let(:requested_scopes) { 'profile.email profile.city' }
+  let(:requested_scopes) { 'profile.email profile.last_name' }
 
   # Set up an OAuth2::Client instance for HTTP calls that happen outside of the
   # Capybara context. More detail here:
@@ -129,6 +129,7 @@ describe 'OAuth' do
         end
 
         scenario 'user can authorize' do
+          # Authorize the client app
           expect(@auth_page).to be_displayed
           @auth_page.allow_button.click
 
@@ -155,19 +156,19 @@ describe 'OAuth' do
           @auth_page.allow_button.click
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-          expect(token['scope']).to eq('profile.city')
+          expect(token['scope']).to eq('profile.last_name')
         end
 
         scenario 'user can update profile' do
           expect(@auth_page).to be_displayed
           expect(@auth_page).to have_no_profile_email
-          @auth_page.profile_city.set 'Enfield'
+          @auth_page.profile_last_name.set 'McTesterson'
           @auth_page.allow_button.click
 
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
 
           profile = JSON.parse token.get('/api/profile').body
-          expect(profile['city']).to eq('Enfield')
+          expect(profile['last_name']).to eq('McTesterson')
           expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
         end
 
@@ -254,6 +255,17 @@ describe 'OAuth' do
           it_behaves_like 'authorizable'
         end
 
+        # context 'current user is a client application developer' do
+        #   pending 'implement developers'
+        #   let(:client_app) do
+        #     FactoryGirl.create(:application, public: false,
+        #                                      owners: [owner],
+        #                                      developers: [user])
+        #   end
+        #
+        #   it_behaves_like 'authorizable'
+        # end
+
         context 'current user is not client application owner' do
           scenario 'displays unknown application error' do
             expect(@auth_page).to be_displayed
@@ -273,7 +285,7 @@ describe 'OAuth' do
       end
 
       context 'with scope not in client application scopes' do
-        let(:requested_scopes) { 'profile.zip' }
+        let(:requested_scopes) { 'profile.city' }
 
         it_behaves_like 'scope error'
       end

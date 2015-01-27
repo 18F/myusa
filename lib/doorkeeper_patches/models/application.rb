@@ -4,6 +4,7 @@ class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
   acts_as_authorization_object
+  has_many :authorizations, dependent: :destroy
 
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,

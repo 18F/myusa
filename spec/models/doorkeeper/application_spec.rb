@@ -21,6 +21,18 @@ describe Doorkeeper::Application do
     end
   end
 
+  describe 'destroy' do
+    before :each do
+      FactoryGirl.create(:authorization, application: application)
+    end
+
+    it 'deletes authorization objects' do
+      expect do
+        application.destroy
+      end.to change { Authorization.count }.by(-1)
+    end
+  end
+
   describe 'validations' do
     context 'application is not owned by a federal agency and does not have TOS accepted' do
       let(:application) { FactoryGirl.build(:application, federal_agency: false, terms_of_service_accepted: false) }

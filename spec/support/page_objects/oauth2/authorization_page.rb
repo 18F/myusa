@@ -10,7 +10,6 @@ class OAuth2::AuthorizationPage < SitePrism::Page
   element :profile_email, "input#profile_email"
   element :profile_last_name, "input#profile_last_name"
   element :profile_phone_number, "input#profile_phone_number"
-  element :profile_city, "input#profile_city"
 
   element :allow_button, "input[value='Allow Access']"
   element :cancel_button, "a[contains('No Thanks')]"

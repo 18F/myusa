@@ -273,7 +273,7 @@ GEM
     net-ssh-multi (1.2.0)
       net-ssh (>= 2.6.5)
       net-ssh-gateway (>= 1.2.0)
-    newrelic_rpm (3.9.1.236)
+    newrelic_rpm (3.9.9.275)
     nio4r (1.0.0)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)

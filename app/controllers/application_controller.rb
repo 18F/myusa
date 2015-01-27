@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
       session[:two_factor_return_to] = mobile_recovery_welcome_path
       new_mobile_recovery_path
     else
+      require_two_factor! if current_user.two_factor_required
       stored_location_for(resource_or_scope) || profile_path
     end
   end
@@ -49,6 +50,12 @@ class ApplicationController < ActionController::Base
       return url
     end
     super(resource_or_scope)
+  end
+
+  def authenticate_user!(opts={})
+    super
+    require_two_factor! if current_user.two_factor_required
+    current_user
   end
 
   def require_owner_or_admin!

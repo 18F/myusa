@@ -6,16 +6,10 @@ class HomeController < ApplicationController
   def contact_us
     feedback = feedback_from_params
 
-    if feedback.save
-      respond_to do |format|
-        format.json { render json: { success: true, message: 'Thank you. Your message has been sent.' } }
-        format.html { redirect_to root_url, notice: 'Thank you. Your message has been sent.' }
-      end
-    else
-      respond_to do |format|
-        format.json { render status: :unprocessable_entity, json: { errors: feedback.errors.full_messages } }
-        format.html { redirect_to root_url, alert: feedback.errors.full_messages.join("\n")}
-      end
+    feedback.save!
+    respond_to do |format|
+      format.json { render json: { success: true, message: 'Thank you. Your message has been sent.' } }
+      format.html { redirect_to root_url, notice: 'Thank you. Your message has been sent.' }
     end
   end
 

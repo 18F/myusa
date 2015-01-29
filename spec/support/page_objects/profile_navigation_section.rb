@@ -1,7 +1,7 @@
 require 'site_prism'
 
 class ProfileNavigationSection < SitePrism::Section
-  element :admin_link, "a[text()='Administration']"
+  element :admin_applications_link, "a[text()='Applications']"
 end
 
 module ProfileNavigationElements

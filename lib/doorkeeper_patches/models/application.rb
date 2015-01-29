@@ -4,6 +4,7 @@ class Doorkeeper::Application
   include Doorkeeper::Models::Scopes
 
   acts_as_authorization_object
+
   has_many :authorizations, dependent: :destroy
 
   validates_format_of :logo_url, with: URI.regexp(['https']),
@@ -28,6 +29,19 @@ class Doorkeeper::Application
 
   scope :requested_public, -> { where.not(requested_public_at: nil) }
 
+  scope :filter, ->(filter) {
+    case filter
+    when 'pending-approval'
+      requested_public
+    when 'all'
+      nil
+    else
+      nil
+    end
+  }
+
+  scope :search, ->(search) { search.present? && where("name like (?)", "%#{search}%") }
+
   validate do |a|
     return if a.scopes.nil?
     unless Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)
@@ -42,6 +56,11 @@ class Doorkeeper::Application
     if self.update_attribute(:requested_public_at, DateTime.now)
       SystemMailer.app_public_email(self, user).deliver
     end
+  end
+
+  # Could not figure out how to implement this as a relation ...
+  def owner
+    self.roles.where(name: 'owner').first.users.first
   end
 
   private

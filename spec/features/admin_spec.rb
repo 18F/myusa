@@ -26,7 +26,7 @@ describe 'Admin' do
       end
 
       it 'can navigate to admin from profile nav' do
-        profile_page.profile_navigation.admin_link.click
+        profile_page.profile_navigation.admin_applications_link.click
         expect(admin_page).to be_displayed
       end
     end
@@ -40,17 +40,18 @@ describe 'Admin' do
       end
 
       it 'does not have admin link profile nav' do
-        expect(profile_page.profile_navigation).to_not have_admin_link
+        expect(profile_page.profile_navigation).to_not have_admin_applications_link
       end
     end
   end
 
   describe 'app approval' do
     before :each do
-      FactoryGirl.create(:application, name: 'App 1', public: false, requested_public_at: Time.now)
-      FactoryGirl.create(:application, name: 'App 2', public: false, requested_public_at: Time.now)
+      FactoryGirl.create(:application, name: 'App 1', public: false, requested_public_at: Time.now, owner: user)
+      FactoryGirl.create(:application, name: 'App 2', public: false, requested_public_at: Time.now, owner: user)
       login user, two_factor: true
       admin_page.load
+      admin_page.pending_approval_link.click
     end
 
     it 'can see apps pending approval' do

@@ -128,4 +128,22 @@ module ApplicationHelper
   def not_me_path
     '?' + Rack::Utils.build_query(request.query_parameters.merge(logout: true))
   end
+
+  def application_filters
+    [
+      ['all', 'All'],
+      ['pending-approval', 'Pending Approval']
+    ]
+  end
+
+  def application_filter_tabs
+    filter = params[:filter] || 'all'
+    content_tag(:ul, class: 'nav navbar-nav nav-tabs') do
+      safe_join(application_filters.collect do |item|
+        content_tag(:li, role: 'presentation', class: item.first == filter ? 'active' : '') do
+          link_to(item.second, "?filter=#{item.first}")
+        end
+      end)
+    end
+  end
 end

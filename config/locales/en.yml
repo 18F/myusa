@@ -33,6 +33,18 @@ en:
       invalid_email: You must enter the email address that matches this account.
       alert: 'This will delete all of your account data, applications, and history.  Proceed with caution!'
       apps_deletion_warning: 'The following applications will also be deleted:'
+  devise:
+    welcome:
+      line_1: Welcome to MyUSA from %{app_name}
+      line_2: Create a MyUSA account or log in to your existing account to access %{app_name}.
+    connect_with: Connect with MyUSA
+    enter_your_email:  Enter your email to log in
+    almost_there: You're almost there
+    email:
+      instructions:
+        email_sent: We just sent an access link to %{email}.
+        click_that_link: Click the link (or copy and paste it into your browser) to finish logging in.
+        new_link_request: 'If you don’t receive this email within the next five minutes, please check your spam folder. If you don’t find it there, you may <a href="%{request_link_link}">request another link</a>.'
   no_authorizations: You have not authorized any applications.
   no_user_token: There was a problem resending your token. Please try creating your account again.
   resent_token: A new access link has been sent to your email address.

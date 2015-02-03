@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   validates_presence_of :uid
   validates_uniqueness_of :uid
   validates_email_format_of :email, allow_blank: false
+  validates_acceptance_of :two_factor_required, if: ->() { mobile_number.nil? }, accept: false, allow_nil: true
 
   after_initialize :set_defaults
   before_validation :generate_uid

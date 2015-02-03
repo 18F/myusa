@@ -37,6 +37,16 @@ describe User, type: :model do
     end
   end
 
+  describe '#save' do
+    context 'user does not have mobile number set' do
+      let(:user) { FactoryGirl.create(:user, mobile_number: nil) }
+      it 'is not valid to require 2fa' do
+        user.two_factor_required = true
+        expect{ user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
+
   describe '#destroy' do
     let(:user) { FactoryGirl.create(:user) }
     subject { -> { user.destroy! } }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118192817) do
+ActiveRecord::Schema.define(version: 20150106232116) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -94,23 +94,26 @@ ActiveRecord::Schema.define(version: 20141118192817) do
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: true do |t|
-    t.string   "name",                                             null: false
-    t.string   "uid",                                              null: false
-    t.string   "secret",                                           null: false
-    t.text     "redirect_uri",                                     null: false
+    t.string   "name",                                                   null: false
+    t.string   "uid",                                                    null: false
+    t.string   "secret",                                                 null: false
+    t.text     "redirect_uri",                                           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
-    t.string   "scopes",              limit: 2000
-    t.boolean  "public",                           default: false
+    t.string   "scopes",                    limit: 2000
+    t.boolean  "public",                                 default: false
     t.string   "description"
     t.string   "short_description"
     t.string   "custom_text"
     t.datetime "requested_public_at"
     t.string   "logo_url"
-    t.string   "developer_emails",    limit: 2000
+    t.string   "developer_emails",          limit: 2000
     t.integer  "owner_id"
     t.string   "owner_type"
+    t.boolean  "federal_agency"
+    t.string   "organization"
+    t.boolean  "terms_of_service_accepted"
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
@@ -240,6 +243,7 @@ ActiveRecord::Schema.define(version: 20141118192817) do
     t.text     "notification_settings"
     t.string   "mobile_number"
     t.string   "unconfirmed_mobile_number"
+    t.boolean  "two_factor_required"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

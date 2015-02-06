@@ -17,7 +17,7 @@ gem 'secure_headers'
 gem 'permanent_records', '~> 2.3.0'
 gem 'font-awesome-sass'
 gem 'attr_encrypted'
-gem 'doorkeeper'
+gem 'doorkeeper', '~> 1.4'
 gem 'rails-observers'
 gem 'twilio-ruby'
 gem 'bootstrap_tokenfield_rails'
@@ -82,4 +82,5 @@ group :staging, :production do
 end
 
 group :production do
+  gem 'logstasher'
 end

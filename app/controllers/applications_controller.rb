@@ -37,6 +37,11 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  def destroy
+    flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :destroy]) if @application.destroy
+    redirect_to authorizations_path
+  end
+
   # TODO: roll this into update
   def new_api_key
     @application = Doorkeeper::Application.find(params[:id])
@@ -76,7 +81,8 @@ class ApplicationsController < ApplicationController
   def allowed_application_params
     params = [
       :name, :description, :short_description, :custom_text, :url,
-      :logo_url, :owner_emails, :developer_emails, :scopes, :redirect_uri
+      :logo_url, :owner_emails, :developer_emails, :scopes, :redirect_uri,
+      :federal_agency, :organization, :terms_of_service_accepted
     ]
     if current_user.has_role?(:admin)
       params << :public

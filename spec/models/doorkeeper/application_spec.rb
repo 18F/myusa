@@ -1,18 +1,68 @@
 require 'rails_helper'
 
 describe Doorkeeper::Application do
-  it 'creation is audited' do
-    app = FactoryGirl.build(:application)
-    expect do
-      app.save!
-    end.to change { UserAction.where(record: app, action: 'create').count }.by(1)
+  let(:application) { FactoryGirl.create(:application) }
+
+  describe 'auditing' do
+    context 'creation' do
+      it 'is audited' do
+        expect do
+          FactoryGirl.create(:application)
+        end.to change { UserAction.where(record_type: 'Doorkeeper::Application', action: 'create').count }.by(1)
+      end
+    end
+
+    context 'updates' do
+      it 'is audited' do
+        expect do
+          application.update_attributes(name: 'My App', description: 'Is Awesome')
+        end.to change { UserAction.where(record: application, action: 'update').count }.by(1)
+      end
+    end
   end
 
-  it 'updates are audited' do
-    app = FactoryGirl.create(:application)
-    expect do
-      app.update_attributes(name: 'My App', description: 'Is Awesome')
-    end.to change { UserAction.where(record: app, action: 'update').count }.by(1)
+  describe 'destroy' do
+    before :each do
+      FactoryGirl.create(:authorization, application: application)
+    end
+
+    it 'deletes authorization objects' do
+      expect do
+        application.destroy
+      end.to change { Authorization.count }.by(-1)
+    end
+  end
+
+  describe 'validations' do
+    context 'application is not owned by a federal agency and does not have TOS accepted' do
+      let(:application) { FactoryGirl.build(:application, federal_agency: false, terms_of_service_accepted: false) }
+      it 'does not fail validation' do
+        expect(application.save).to be_truthy
+      end
+    end
+
+    context 'application is owned by a federal agency' do
+      context 'TOS is not accepted' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, terms_of_service_accepted: false) }
+        it 'fails validation' do
+          expect(application.save).to be_falsy
+        end
+      end
+
+      context 'organzation is blank' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, organization: '') }
+        it 'fails validation' do
+          expect(application.save).to be_falsy
+        end
+      end
+
+      context 'TOS is accepted' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, terms_of_service_accepted: true) }
+        it 'does not fail validation' do
+          expect(application.save).to be_truthy
+        end
+      end
+    end
   end
 
   describe 'application scopes' do

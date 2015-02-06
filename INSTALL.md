@@ -14,7 +14,7 @@ To get your Rails development environment setup, here's the steps to follow.
 
     [rbenv](https://github.com/sstephenson/rbenv) is convenient for managing Ruby/Rails versions.
 
-2. Clone the `myusa-server` project
+2. Clone the `myusa` project
 
     In the directory where you want to store your development files, do the following:
 
@@ -24,7 +24,7 @@ To get your Rails development environment setup, here's the steps to follow.
 
 3. Install Ruby Gems
 
-    Change into the directory (it would be `cd myusa-server` from wherever you executed the above command) and do the following:
+    Change into the directory (it would be `cd myusa` from wherever you executed the above command) and do the following:
 
     ```sh
     bundle install
@@ -35,6 +35,7 @@ To get your Rails development environment setup, here's the steps to follow.
 4. Create your configuration files
 
     ```sh
+    cp config/environments/development.example.rb config/environments/development.rb
     cp config/database.yml.example config/database.yml
     cp config/secrets.yml.example config/secrets.yml
     rake secret
@@ -77,7 +78,11 @@ Then, open your web browser and visit:
 
 [http://localhost:3000/](http://localhost:3000/)
 
-That's it!  Use the app just as you would any other web application.
+After you create a user account for yourself, be sure to [give one user administrative priviledges](https://github.com/18F/myusa/wiki/Administration).
+
+When running the application in development mode, all emails and text messages are logged to the rails development log (often the terminal).
+
+That's it!  Use MyUSA just as you would any other web application.
 
 ## Creating an Amazon Web Services EC2 host
 

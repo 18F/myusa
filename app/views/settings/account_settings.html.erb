@@ -1,4 +1,4 @@
-<div class="row profile">
+<div class="row aglio app-settings">
   <div class="col-md-3">
     <%= render 'profiles/nav'%>
   </div>
@@ -12,6 +12,14 @@
           <strong>disabled</strong> (<%= link_to('enable', new_mobile_recovery_path, class: 'two-factor-settings-link') %>)
         <% end %>
       </div>
+      <%= form_for [current_user], html: {class: 'form', role: 'form'} do |f| %>
+        <div class="input-group checkbox">
+          <label >
+            <%= f.check_box :two_factor_required %>
+            <%= t('user.two_factor_required') %>
+          </label>
+        </div>
+      <% end %>
     </div>
     <div class="row delete-account">
       <h1><%= t('account_settings.delete_account.heading') %></h1>

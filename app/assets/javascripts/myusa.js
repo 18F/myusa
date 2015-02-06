@@ -146,4 +146,17 @@ $(document).ready(function () {
     });
   });
 
+  $('#application_federal_agency').click(function (e) {
+    var formGroup = $('div.form-group').has('input#application_terms_of_service_accepted');
+    if (e.target.checked) {
+      formGroup.show();
+    } else {
+      formGroup.hide();
+    }
+  });
+
+  $('#user_two_factor_required').click(function (e) {
+    $(this.form).submit();
+  });
+
 });

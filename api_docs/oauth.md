@@ -1,19 +1,17 @@
 
 # Group Authentication
 
-MyUSA uses OAuth 2.0. To find out more information about MyUSA and how to create your own application visit the [developers](https://my.usa.gov/developer) section of MyUSA.
+MyUSA uses OAuth 2.0. The authentication flow is as follows:
 
-## Overview
-
-1. Your application redirects the user to a login dialog at the MyUSA.gov.
-2. The user authorizes MyUSA.gov.
-3. MyUSA.gov redirects the user back to your application, with an access_token.
-4. Your application validates the access token.
-5. The access token allows your application to access scope information from MyUSA.gov.
+1. Your application redirects the user to MyUSA.
+1. If the user is not logged in at MyUSA, they are redirected to a login dialog.
+1. The user authorizes MyUSA to grant access to your application.
+1. MyUSA redirects the user back to your application, with an access_token.
+1. Using the access token, your application may query MyUSA APIs that you granted access to.
 
 ## Scopes
 
-The scopes you define when you setup your app on MyUSA.gov define what information your app will require from the user. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.
+The scopes you define when you setup your app on MyUSA.gov define what information users will be asked to grant access to. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.
 
 ## API Versions
 
@@ -38,10 +36,10 @@ If your app uses the MyUSA API, you'll need to keep track of new versions to ens
 
 ## Connecting with OAuth
 
-1. Sign in to [MyUSA](https://my.usa.gov/developer) to register an application.
-2. Provide a redirect URI which is `YOUR_SITE/auth/myusa/callback` by default.
-3. Select the scopes you wish to recieve about user data. Sample scopes are email first_name and phone_number.
-4. Take note of your Consumer Key and Consumer Secret.
+1. Sign in to [MyUSA](/) to register an application.
+1. Provide a redirect URI which is `YOUR_SITE/auth/myusa/callback` by default.
+1. Select the scopes that your application will request. Sample scopes are email `profile.first_name` and `profile.phone_number`.
+1. Take note of your Consumer Key and Consumer Secret.
 
 ## Authenticating Users
 
@@ -64,7 +62,7 @@ Your application should have an end point to recieve the redirect at this url.
 
 ### Long-lived Token
 
-Now that you have a valid code, you can make a server to server request to `api.my.usa.gov` to get a long-lived token to keep users logged in.
+Now that you have a valid code, you can make a server to server request to the MyUSA API to get a long-lived token to keep users logged in.
 
 
 ## Example Rails configuration
@@ -72,23 +70,19 @@ Now that you have a valid code, you can make a server to server request to `api.
 Start by adding this gem to your Gemfile:
 
 ```ruby
-gem 'omniauth-myusa', :git => 'https://github.com/GSA-OCSIT/omniauth-myusa.git'
+gem 'omniauth-myusa', :git => 'https://github.com/18F/omniauth-myusa'
 ```
 
 Next, tell OmniAuth about this provider. For a Rails app, your `config/initializers/omniauth.rb` file should look like this:
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
- MYGOV_CLIENT_ID = "YOURKEY"
- MYGOV_SECRET_ID = "YOURSECRETKEY"
- MYGOV_HOME = 'http://my.usa.gov'
- SCOPES = "profile.email profile.title profile.first_name"
- provider :myusa, MYGOV_CLIENT_ID, MYGOV_SECRET_ID, :scope => SCOPES
+  provider :myusa, "YOURKEY", "YOURSECRET", scope: [...]
 end
 ```
 
 Set SCOPES equal to a space separated string of your scopes that you requested when you created the app. In the future, we will generate this for you.
-Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtained from [MyUSA](https://my.usa.gov/apps) earlier.
+Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtained from [MyUSA](/authorizations) earlier.
 
 Don't forget to create a route to handle the callback. For example:
 

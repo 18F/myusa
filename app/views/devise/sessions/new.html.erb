@@ -3,9 +3,9 @@
     <div class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span><span class="sr-only">Close</span></button>
       <div class="container">
-        <strong>Welcome to MyUSA from <%= client_app.name %></strong>
+        <strong><%= t('devise.welcome.line_1', app_name: client_app.name) %></strong>
         <p>
-          Create a MyUSA account or log in to MyUSA to continue using <%= client_app.name %>.
+          <%= t('devise.welcome.line_2', app_name: client_app.name) %>
           <%= link_to "Learn more about MyUSA.", "/", :class => "alert-link", :target => "_blank" %>
         </p>
       </div>

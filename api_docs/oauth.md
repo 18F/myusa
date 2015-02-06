@@ -45,7 +45,7 @@ If your app uses the MyUSA API, you'll need to keep track of new versions to ens
 
 To sign in to your app, users should be shown a "Connect with MyUSA" button. (See the [Branding section](#branding) for details and code.) The button should link to your app's custom sign in URL, which you can construct from this format:
 ```
-    https://my.usa.gov/users/sign_in?login_reqired=true&client_id=ABCD
+    https://my.usa.gov/users/sign_in?client_id=ABCD
 ```
 
 ... where `ABCD` should be replaced with the **Consumer Public Key** (also known as the **Client ID**) that MyUSA provided when your app was registered.

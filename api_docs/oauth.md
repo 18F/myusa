@@ -129,3 +129,52 @@ the list of scopes the user has authorized.
       "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
     }
   }
+
+## POST /oauth/token
+
++ Request Requesting the access token
+    {
+      "client_id": THE_ID,
+      "client_secret": THE_SECRET,
+      "code": RETURNED_CODE,
+      "grant_type": "authorization_code",
+      "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
+    }
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "access_token": "...",
+      "token_type": "bearer",
+      "expires_in": 7200,
+      "refresh_token": "..."
+    }
+
++ Request Refreshing the access token
+    {
+      "client_id": THE_ID,
+      "client_secret": THE_SECRET,
+      "refresh_token": REFRESH_TOKEN,
+      "grant_type": "refresh_token",
+      "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
+    }
+
++ Response 200 (application/json; charset=utf-8)
+
+    {
+      "access_token": "...",
+      "token_type": "bearer",
+      "expires_in": 7200,
+      "refresh_token": "..."
+    }
+
+## POST /oauth/revoke
+
++ Request Revoking the token
+    {
+      "token": TOKEN
+    }
+
++ Response 200 (application/json; charset=utf-8)
+
+  Always returns a 200, even if the token does not exist or has already been revoked.

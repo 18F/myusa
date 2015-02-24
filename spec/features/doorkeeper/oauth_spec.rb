@@ -189,7 +189,7 @@ describe 'OAuth' do
         end
 
         context 'when no scopes are requested' do
-          let(:requested_scopes) { '' }
+          let(:requested_scopes) { nil }
           it_behaves_like 'uses existing authorization'
         end
       end

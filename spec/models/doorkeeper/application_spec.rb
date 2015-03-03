@@ -63,6 +63,16 @@ describe Doorkeeper::Application do
         end
       end
     end
+
+    context 'tos link is present' do
+      let(:application) { FactoryGirl.build(:application, tos_link: 'http://www.example.org/tos') }
+      it 'fails without a privacy policy link' do
+        expect(application.save).to be_falsy
+      end
+      it 'succeeds with a privacy policy link' do
+        expect(application.update_attributes(privacy_policy_link: 'http://www.example.org/privacy')).to be_truthy
+      end
+    end
   end
 
   describe 'application scopes' do

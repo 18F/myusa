@@ -39,6 +39,10 @@ describe 'Two Factor Authentication', sms: true do
       end
     end
 
+    scenario 'user sees their mobile number on the form' do
+      expect(sms_page.heading.text).to include("Enter the code delivered to the mobile number ending in #{phone_number.last(4)}")
+    end
+
     scenario 'user can receive sms code' do
       expect(receive_code).to_not be_nil
     end

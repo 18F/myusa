@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114223019) do
+ActiveRecord::Schema.define(version: 20150303184510) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 20150114223019) do
     t.boolean  "federal_agency"
     t.string   "organization"
     t.boolean  "terms_of_service_accepted"
+    t.string   "tos_link"
+    t.string   "privacy_policy_link"
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree

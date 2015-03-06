@@ -259,9 +259,14 @@ en:
         federal_agency_org_required: 'Organization is required for U.S. federal government agencies.'
         rate_limit_per_5_seconds: 'Please wait a little while before sending us another message!'
         rate_limit_per_day: 'Maximum messages per day exceeded! Please come back tomorrow.'
+        tos_link_is_url: Terms of service link must be a valid url.
+        privacy_policy_link_is_url: Privacy policy link must be a valid url.
+        privacy_policy_link_required: Privacy policy link is required when TOS link is present.
     models:
       profile: 'Profile'
     attributes:
+      application:
+        tos_link: Terms of Service Link
       profile:
         email: 'Email Address'
         title: 'Title'

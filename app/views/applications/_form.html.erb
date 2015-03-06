@@ -82,9 +82,25 @@
     </div>
   <% end %>
 
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:tos_link].present?}" do %>
+    <div class="form-group">
+      <%= f.label :tos_link, class: 'control-label', for: 'application_tos_link' %>
+      <%= f.text_field :tos_link, class: 'form-control' %>
+      <%= errors_for application, :tos_link %>
+    </div>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:privacy_policy_link].present?}" do %>
+    <div class="form-group">
+      <%= f.label :privacy_policy_link, class: 'control-label', for: 'application_privacy_policy_link' %>
+      <%= f.text_field :privacy_policy_link, class: 'form-control' %>
+      <%= errors_for application, :privacy_policy_link %>
+    </div>
+  <% end %>
+
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:custom_text].present?}" do %>
     <div class="form-group">
-      <%= f.label :custom_text, class: 'control-label', for: 'application_url' %>
+      <%= f.label :custom_text, class: 'control-label', for: 'application_custom_text' %>
       <%= f.text_field :custom_text, class: 'form-control' %>
       <%= errors_for application, :custom_text %>
     </div>

@@ -11,6 +11,9 @@ class OAuth2::AuthorizationPage < SitePrism::Page
   element :profile_last_name, "input#profile_last_name"
   element :profile_phone_number, "input#profile_phone_number"
 
+  element :tos_link, "a[text()='Terms of Service']"
+  element :privacy_policy_link, "a[text()='Privacy Policy']"
+
   element :allow_button, "input[value='Allow Access']"
   element :cancel_button, "a[contains('No Thanks')]"
 

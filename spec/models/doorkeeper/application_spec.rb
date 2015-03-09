@@ -90,6 +90,13 @@ describe Doorkeeper::Application do
         expect(application).not_to be_valid
       end
     end
+
+    context 'with no scopes' do
+      it 'is valid' do
+        application.scopes = nil
+        expect(application).to be_valid
+      end
+    end
   end
 
   describe '#logo_url' do

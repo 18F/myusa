@@ -49,8 +49,7 @@ class Doorkeeper::Application
   scope :search, ->(search) { search.present? && where("name like (?)", "%#{search}%") }
 
   validate do |a|
-    return if a.scopes.nil?
-    unless Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)
+    if a.scopes_string.present? && !Doorkeeper::OAuth::Helpers::ScopeChecker.valid?(a.scopes_string.to_s, Doorkeeper.configuration.scopes)
       errors.add(:scopes, 'Invalid scope')
     end
   end

@@ -22,6 +22,7 @@ gem 'rails-observers'
 gem 'twilio-ruby'
 gem 'bootstrap_tokenfield_rails'
 gem 'will_paginate'
+gem 'ra11y', git: 'git@github.com:benbalter/ra11y.git', branch: 'rspec_integration'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'

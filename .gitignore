@@ -20,6 +20,9 @@ Guardfile
 rerun.txt
 Vagrantfile
 
+# ra11y (getting rid of this soon)
+ra11y
+
 # other config
 config/*.yml
 config/environments/development.rb

@@ -1,5 +1,7 @@
-PATH
-  remote: ra11y
+GIT
+  remote: git@github.com:benbalter/ra11y.git
+  revision: 861ba5d9561a9db1213072b339c8b22d80b9d6c2
+  branch: rspec_integration
   specs:
     ra11y (0.0.1)
       colorator

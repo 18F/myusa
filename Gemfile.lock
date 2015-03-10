@@ -1,6 +1,6 @@
 GIT
-  remote: git@github.com:benbalter/ra11y.git
-  revision: 861ba5d9561a9db1213072b339c8b22d80b9d6c2
+  remote: https://github.com/benbalter/ra11y.git
+  revision: 14647466ef8304f22653855eda8e250601bf1191
   branch: rspec_integration
   specs:
     ra11y (0.0.1)

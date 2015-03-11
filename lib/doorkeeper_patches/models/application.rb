@@ -27,6 +27,8 @@ class Doorkeeper::Application
   validates_presence_of :privacy_policy_link,
     if: :tos_link?, accept: true, allow_nil: false,
     message: :privacy_policy_link_required
+    
+  validates :description, length: { maximum: 255 }
 
   before_save :clear_requested_public_at, if: ->(a) { a.public_changed? && a.public }
 

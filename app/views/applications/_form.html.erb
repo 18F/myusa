@@ -14,7 +14,7 @@
   <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:description].present?}" do %>
     <div class="form-group">
       <%= f.label :description, class: 'control-label', for: 'application_description' %>
-      <%= f.text_area(:description, size:'50x5', class: 'form-control')%>
+      <%= f.text_area(:description, size:'50x5', class: 'form-control', maxlength: 255)%>
       <%= errors_for application, :description %>
     </div>
   <% end %>

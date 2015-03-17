@@ -5,6 +5,7 @@ describe 'Two Factor Authentication', sms: true do
   let(:admin_page) { AdminPage.new }
   let(:sms_page) { TwoFactor::SmsPage.new}
   let(:mobile_confirmation_page) { MobileConfirmationPage.new }
+  let(:account_settings_page) { AccountSettingsPage.new }
 
   let(:user) { FactoryGirl.create(:admin_user, mobile_number: phone_number) }
   let(:phone_number) { '800-555-3455' }
@@ -38,6 +39,10 @@ describe 'Two Factor Authentication', sms: true do
       end
     end
 
+    scenario 'user sees their mobile number on the form' do
+      expect(sms_page.heading.text).to include("Enter the code delivered to the mobile number ending in #{phone_number.last(4)}")
+    end
+
     scenario 'user can receive sms code' do
       expect(receive_code).to_not be_nil
     end
@@ -51,7 +56,32 @@ describe 'Two Factor Authentication', sms: true do
     end
   end
 
-  context 'user has required two factor' do
+  context 'user has not enabled two-factor' do
+    let(:user) { FactoryGirl.create(:user, two_factor_required: false, mobile_number: nil) }
+    before :each do
+      account_settings_page.load
+    end
+
+    it 'user cannot require two-factor' do
+      expect(account_settings_page.two_factor).to_not have_two_factor_required_checkbox
+    end
+  end
+
+  context 'user has enabled two-factor' do
+    def code; receive_code; end
+    let(:user) { FactoryGirl.create(:user, two_factor_required: false, mobile_number: phone_number) }
+    before :each do
+      account_settings_page.load
+      sms_page.token.set code
+      sms_page.submit.click
+    end
+
+    it 'user can require two-factor' do
+      expect(account_settings_page.two_factor).to have_two_factor_required_checkbox
+    end
+  end
+
+  context 'user has required two-factor' do
     let(:user) { FactoryGirl.create(:user, two_factor_required: true, mobile_number: phone_number) }
 
     before :each do

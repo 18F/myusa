@@ -150,6 +150,15 @@ describe 'OAuth' do
           expect(JSON.parse(@auth_page.body)['error']).to eq('access_denied')
         end
 
+        context 'app has TOS links' do
+          let(:client_app) { FactoryGirl.create(:application, name: 'Test App', tos_link: 'http://example.com/tos', privacy_policy_link: 'http://example.com/privacy') }
+          scenario 'page displays links to TOS' do
+            expect(@auth_page).to be_displayed
+            expect(@auth_page).to have_tos_link
+            expect(@auth_page).to have_privacy_policy_link
+          end
+        end
+        
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
           @auth_page.scope_list.uncheck('Email')
@@ -189,7 +198,7 @@ describe 'OAuth' do
         end
 
         context 'when no scopes are requested' do
-          let(:requested_scopes) { '' }
+          let(:requested_scopes) { nil }
           it_behaves_like 'uses existing authorization'
         end
       end

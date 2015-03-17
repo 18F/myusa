@@ -70,6 +70,11 @@ describe Oauth::AuthorizationsController do
           expect(user.profile.reload.last_name).to eq('McTesterson')
         end
       end
+
+      context 'with no scopes' do
+        let(:requested_scope) { nil }
+        it_behaves_like 'oauth'
+      end
     end
 
   end

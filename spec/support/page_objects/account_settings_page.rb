@@ -6,6 +6,7 @@ class AccountSettingsPage < SitePrism::Page
 
   section :two_factor, 'div.two-factor-settings' do
     element :link, "a.two-factor-settings-link"
+    element :two_factor_required_checkbox, "input#user_two_factor_required"
   end
 
   section :delete_account, 'div.delete-account' do

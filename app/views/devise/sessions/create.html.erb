@@ -3,23 +3,19 @@
     <div class="login">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <h1>Next Step</h1>
+          <h1><%= t('devise.almost_there') %></h1>
         </div>
       </div>
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <h2>Your MyUSA access link has been sent to  <%= @email %>.</h2>
-          <p>Click on that link, or copy and paste it into this browser to complete your login.</p>
+          <p><%= t('devise.email.instructions.email_sent', email: @email) %></p>
+          <p><%= t('devise.email.instructions.click_that_link') %></p>
         </div>
       </div>
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <p>If you do not receive an email from us within the next 5 minutes,
-            you may want to check your spam folder. If you still do not see an
-            email from us, you may <%= link_to 'request another link', user_session_token_path(token_id: @token.id) %>.
-          </p>
+          <p><%= t('devise.email.instructions.new_link_request', request_link_link: user_session_token_path(token_id: @token.id)).html_safe %></p>
           <%= link_to "Go Back", root_path, class: "btn btn-link" %>
-
         </div>
       </div>
     </div>

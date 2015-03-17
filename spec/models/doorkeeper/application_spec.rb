@@ -2,6 +2,16 @@ require 'rails_helper'
 
 describe Doorkeeper::Application do
   let(:application) { FactoryGirl.create(:application) }
+  let(:short_description) do
+    %q{
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+    }
+  end
+  let(:long_description) do
+    %q{
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+    }
+  end
 
   describe 'auditing' do
     context 'creation' do
@@ -62,6 +72,30 @@ describe Doorkeeper::Application do
           expect(application.save).to be_truthy
         end
       end
+      
+      context 'description is longer than 255 characters' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, description: long_description) }
+        it 'fails validation' do
+          expect(application.save).to be_falsy
+        end
+      end
+      
+      context 'description is 255 characters or under' do
+        let(:application) { FactoryGirl.build(:application, :federal_agency, description: short_description) }
+        it 'does not fail validation' do
+          expect(application.save).to be_truthy
+        end
+      end
+    end
+
+    context 'tos link is present' do
+      let(:application) { FactoryGirl.build(:application, tos_link: 'http://www.example.org/tos') }
+      it 'fails without a privacy policy link' do
+        expect(application.save).to be_falsy
+      end
+      it 'succeeds with a privacy policy link' do
+        expect(application.update_attributes(privacy_policy_link: 'http://www.example.org/privacy')).to be_truthy
+      end
     end
   end
 
@@ -78,6 +112,13 @@ describe Doorkeeper::Application do
       it 'is not valid' do
         application.scopes = 'foo bar baz'
         expect(application).not_to be_valid
+      end
+    end
+
+    context 'with no scopes' do
+      it 'is valid' do
+        application.scopes = nil
+        expect(application).to be_valid
       end
     end
   end

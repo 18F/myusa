@@ -9,7 +9,7 @@ class CreateAuthorizations < ActiveRecord::Migration
 
     add_column :oauth_access_tokens, :authorization_id, :integer
     add_column :notifications, :authorization_id, :integer
-  end
 
-  add_column :users, :notification_settings, :text
+    add_column :users, :notification_settings, :text
+  end
 end

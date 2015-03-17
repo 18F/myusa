@@ -6,14 +6,23 @@
     <h1>
       Applications
     </h1>
-    <h2>
-      Public Approval Pending
-    </h2>
+
+    <nav class="nav nav-tabs">
+      <%= application_filter_tabs %>
+
+      <%= form_for(:search, method: "get", html: {role: "search", class: "navbar-form navbar-right"}) do |f| %>
+        <div class="form-group">
+          <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
+        </div>
+        <%= submit_tag("Submit", class: "btn btn-default") %>
+      <% end %>
+    </nav>
 
     <table class="table table-striped">
       <thead>
       <tr>
         <th>Name</th>
+        <th>Owner</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
@@ -22,20 +31,21 @@
       <% if @applications.blank? %>
         <tr>
           <td colspan="3">
-            there are no applications pending approval
+            there are no applications matching this criteria
           </td>
         </tr>
       <% end %>
       <% @applications.each do |application| %>
         <tr id="application_<%= application.id %>">
           <td><%= link_to application.name, edit_oauth_application_path(application) %></td>
+          <td><%= application.owner.email %></td>
           <td><%= app_status(application) %></td>
           <td>
             <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>
             <%= form_for application, url: oauth_application_path(application) do |f| %>
-              <%= hidden_field_tag(:return_to, admin_path) %>
-              <%= f.hidden_field(:public, value: true) %>
-              <%= f.submit 'Make Public', class: 'btn btn-link' %>
+              <%= hidden_field_tag(:return_to, admin_path(filter: params[:filter], page: params[:page])) %>
+              <%= f.hidden_field(:public, value: !application.public) %>
+              <%= f.submit "Make #{application.public ? 'Private' : 'Public'}", class: 'btn btn-link' %>
             <% end %>
             <%= render 'doorkeeper/authorized_applications/delete_form', application: application %>
           </td>
@@ -43,5 +53,6 @@
       <% end %>
       </tbody>
     </table>
+    <%= will_paginate @applications %>
   </div>
 </div>

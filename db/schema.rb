@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106232116) do
+ActiveRecord::Schema.define(version: 20150303184510) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -46,6 +46,19 @@ ActiveRecord::Schema.define(version: 20150106232116) do
     t.datetime "updated_at"
     t.datetime "revoked_at"
   end
+
+  create_table "feedbacks", force: true do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "from"
+    t.string   "message"
+    t.string   "remote_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "feedbacks", ["created_at"], name: "index_feedbacks_on_created_at", using: :btree
+  add_index "feedbacks", ["remote_ip"], name: "index_feedbacks_on_remote_ip", using: :btree
 
   create_table "notifications", force: true do |t|
     t.string   "subject"
@@ -114,6 +127,8 @@ ActiveRecord::Schema.define(version: 20150106232116) do
     t.boolean  "federal_agency"
     t.string   "organization"
     t.boolean  "terms_of_service_accepted"
+    t.string   "tos_link"
+    t.string   "privacy_policy_link"
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree

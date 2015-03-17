@@ -45,7 +45,7 @@ To get your Rails development environment setup, here's the steps to follow.
 
 5. Create the development and test databases
 
-    Make sure you have MySQL running.  By default, the development environment looks to connect to MySQL using the root MySQL user with no password.
+    Make sure you have MySQL running.  By default, the development environment looks to connect to MySQL using the root MySQL user with no password. Also, make sure MySQL is set to use UTC as the timezone (http://stackoverflow.com/questions/947299/how-do-i-make-mysqls-now-and-curdate-functions-use-utc)
 
     If you're running on an OS or distribution other than Ubuntu, ensure that the `socket` setting in `config/database.yml` is correct for your platform.
 

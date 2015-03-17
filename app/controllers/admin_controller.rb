@@ -4,7 +4,9 @@ class AdminController < ApplicationController
   before_filter :require_admin!
 
   def index
-    @applications = Doorkeeper::Application.requested_public
+    @applications = Doorkeeper::Application.
+      filter(params[:filter]).
+      search(params[:search]).
+      paginate(page: params[:page], per_page: 8)
   end
-
 end

@@ -25,6 +25,13 @@
 
           <%= render 'scope_list', scopes: @pre_auth.scopes %>
 
+          <% if @pre_auth.client.application.tos_link.present? %>
+            <p>
+              By proceeding, you agree to <%= @pre_auth.client.application.name %>'s
+              <%= link_to 'Terms of Service', @pre_auth.client.application.tos_link %>
+              and <%= link_to 'Privacy Policy', @pre_auth.client.application.privacy_policy_link %>.
+            </p>
+          <% end %>
           <p>
             You are authorizing MyUSA to share the selected information with <%= @pre_auth.client.application.name %>
           </p>

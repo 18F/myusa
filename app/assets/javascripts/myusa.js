@@ -139,7 +139,8 @@ $(document).ready(function () {
       btn.prop('disabled', false);
       form[0].reset();
     }).fail(function (error) {
-      $('.contact-flash .message').text("Whoops! Something went wrong.  We're really sorry.  Try emailing us at <a href='mailto:myusa@gsa.gov'>myusa@gsa.gov</a>.");
+      var message = "Whoops! Something went wrong.  We're really sorry.  Try emailing us at <a href='mailto:myusa@gsa.gov'>myusa@gsa.gov</a>.";
+      $('.contact-flash .message').html(message);
       $('.contact-flash').removeClass('hidden');
       btn.button('reset');
       btn.prop('disabled', false);

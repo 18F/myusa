@@ -357,7 +357,7 @@ footer {
   h1, h2 {
     color: white;
     font-weight: 400;
-    font-family: $font_headings_sub; 
+    font-family: $font_headings_sub;
     margin: 25px 0;
   }
   h1 {
@@ -376,7 +376,7 @@ footer {
 }
 .marketing#for-agencies {
   .container {
-    margin-bottom: 20px;  
+    margin-bottom: 20px;
   }
   .for-agencies {
     @media (max-width: $screen-xs-max) {
@@ -463,6 +463,7 @@ footer {
   }
   h1 {
     font-size: 2.0em;
+    margin-bottom: 15px;
   }
   h2 {
     font-size: 1.0em;

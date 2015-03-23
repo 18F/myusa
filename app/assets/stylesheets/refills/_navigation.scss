@@ -6,15 +6,21 @@ header.navigation {
   $dark-gray: #333 !default;
   $large-screen: em(860) !default;
   
+  $light-blue: #007BB4;
+  $white: #FFFFFF;
+  
   a {
     text-decoration: none;
   }
   //////////////////////////////////////////////////////////////////////////////////
 
   $navigation-padding: 1em;
-  $navigation-background: $dark-gray;
-  $navigation-color: transparentize(white, 0.3);
-  $navigation-color-hover: white;
+  //$navigation-background: $dark-gray;
+  $navigation-background: $white;
+  //$navigation-color: transparentize(white, 0.3);
+  $navigation-color: $light-blue;
+  //$navigation-color-hover: white;
+  $navigation-color-hover: $light-blue;
   $navigation-height: 60px;
   $navigation-nav-button-background: $base-accent-color;
   $navigation-nav-button-background-hover: lighten($navigation-background, 10%);
@@ -81,7 +87,7 @@ header.navigation {
     z-index: 9999999;
 
     @include media ($horizontal-bar-mode) {
-      float: left;
+      float: right;
     }
   }
 

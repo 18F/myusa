@@ -9,7 +9,13 @@
   $hero-background-bottom: #20392B;
   $hero-color: white;
   $gradient-angle: 10deg;
-  $hero-image: 'https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png';
+  //$hero-image: 'https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png';
+
+  $hero-image: image-path('great-plains.png');
+
+  $button-color-light: #99CAE1;
+  $button-color-dark: #007BB4;
+
 
   @include background(url($hero-image), linear-gradient($gradient-angle, $hero-background-bottom, $hero-background-top), no-repeat $hero-background-top scroll);
   background-color: #324766;
@@ -58,6 +64,7 @@
     button {
       @include button(flat, $base-accent-color);
       padding: 0.7em 1em;
+      background-color: $button-color-light;
     }
   }
 }

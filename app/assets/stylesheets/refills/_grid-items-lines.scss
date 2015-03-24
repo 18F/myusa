@@ -34,24 +34,28 @@
   .grid-item {
     @include transition (all 0.2s ease-in-out);
     background: $grid-item-background;
-    border-bottom: $grid-item-border;
-    border-right: $grid-item-border;
+    //border-bottom: $grid-item-border;
+    //border-right: $grid-item-border;
     cursor: pointer;
     float: left;
-    height: $grid-item-height;
+    //height: $grid-item-height;
     overflow: hidden;
     outline: none;
     padding: 2em;
     width: 100%;
+    
+    .center {
+      height: $grid-item-height;
+    }
 
     @include media($large-screen) {
       @include grid-item-columns($grid-item-columns);
     }
 
-    &:focus,
-    &:hover {
-      background: transparentize($grid-item-color, 0.95);
-    }
+    //&:focus,
+    //&:hover {
+    //  background: transparentize($grid-item-color, 0.95);
+    //}
   }
 
   .grid-item img {

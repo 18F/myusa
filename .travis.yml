@@ -1,17 +1,19 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.1.2
+- 2.1.2
 services:
-  - mysql
+- mysql
 before_install:
-  - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc' # skip installing docs for gems
-  - bundle config build.nokogiri --use-system-libraries
-bundler_args: --without production development staging deploy
+- 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
+- bundle config build.nokogiri --use-system-libraries
+bundler_args: "--without production development staging deploy"
 before_script:
-  - cp config/database.yml.example config/database.yml
-  - cp config/secrets.yml.example config/secrets.yml
-  - RAILS_ENV=test bundle exec rake db:setup
+- cp config/database.yml.example config/database.yml
+- cp config/secrets.yml.example config/secrets.yml
+- RAILS_ENV=test bundle exec rake db:setup
 addons:
   code_climate:
     repo_token: fdd28d1ecb46873b6c3969fa679e808a3dfc241f10ee7154884930240d54a4d0
+notifications:
+  webhooks: http://project-monitor.cf.18f.us/projects/myusa/status

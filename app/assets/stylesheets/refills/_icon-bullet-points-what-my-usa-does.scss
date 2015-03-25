@@ -6,10 +6,20 @@
   $dark-gray: #333 !default;
   $base-font-color: $dark-gray !default;
   
+  @mixin center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
   padding: 0;
 
   h2 {
     margin: 0;
+  }
+  
+  h2.center {
+    text-align: center;
   }
 
   li {
@@ -71,5 +81,9 @@
     font-size: $icon-bullet-size / 2.5;
     margin-bottom: $icon-bullet-size / 6;
     padding-top: $icon-bullet-size / 7;
+  }
+  
+  .center {
+    @include center-block;
   }
 }

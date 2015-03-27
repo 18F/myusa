@@ -18,10 +18,10 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:    ENV['SMTP_HOST']
-    port:       ENV['SMTP_PORT']
-    user_name:  Rails.application.secrets.aws_ses_username,
-    password:   Rails.application.secrets.aws_ses_password,
+    address:    ENV['SMTP_HOST'],
+    port:     ENV['SMTP_PORT'],
+    user_name:  Rails.application.secrets.smtp_user,
+    password:   Rails.application.secrets.smtp_pass,
     authentication: 'plain',
     enable_starttls_auto: true
   }

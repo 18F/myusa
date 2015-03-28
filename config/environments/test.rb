@@ -33,7 +33,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  config.x.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
+  config.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -43,8 +43,8 @@ Rails.application.configure do
 
   # SMS sender number.
   # This is the number from which our 2FA SMS messages will be sent.
-  config.x.sms_sender_number = '+12407433320'
+  config.sms_sender_number = '+12407433320'
   # SmsSpec is used to mock the Twilio requests
-  config.x.sms_delivery_method = :twilio
+  config.sms_delivery_method = :twilio
 
 end

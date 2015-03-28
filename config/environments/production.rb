@@ -13,7 +13,7 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
   config.active_record.dump_schema_after_migration = false
 
-  config.x.myusa_sender_email = ENV['SENDER_EMAIL']
+  config.myusa_sender_email = ENV['SENDER_EMAIL']
   config.action_mailer.default_url_options = { host: ENV['APP_HOST'] }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
@@ -26,8 +26,8 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.x.sms_sender_number = ENV['SMS_NUMBER']
-  config.x.sms_delivery_method = :twilio
+  config.sms_sender_number = ENV['SMS_NUMBER']
+  config.sms_delivery_method = :twilio
 
   # Logstasher
   config.logstasher.enabled = true

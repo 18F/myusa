@@ -14,8 +14,8 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   config.action_mailer.delivery_method = :test #letter_opener
-  config.x.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
-
+  config.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
+  
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -40,7 +40,7 @@ Rails.application.configure do
 
   # SMS sender number.
   # This is the number from which our 2FA SMS messages will be sent.
-  config.x.sms_sender_number = '+12407433320'
-  config.x.sms_delivery_method = :email # or :twilio
+  config.sms_sender_number = '+12407433320'
+  config.sms_delivery_method = :email # or :twilio
 
 end

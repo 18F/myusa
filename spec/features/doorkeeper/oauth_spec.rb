@@ -123,7 +123,7 @@ describe 'OAuth' do
           @sign_in_page.submit.click
 
           open_email(user2.email)
-          current_email.click_link('Connect to MyUSA')
+          current_email.click_link('click here')
 
           expect(@auth_page).to be_displayed
         end
@@ -158,7 +158,7 @@ describe 'OAuth' do
             expect(@auth_page).to have_privacy_policy_link
           end
         end
-        
+
         scenario 'user can select scopes' do
           expect(@auth_page).to be_displayed
           @auth_page.scope_list.uncheck('Email')

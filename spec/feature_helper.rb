@@ -34,7 +34,7 @@ def sign_in_with_email(email)
   sign_in_page.submit.click
 
   open_email(email)
-  current_email.click_link('Connect to MyUSA')
+  current_email.click_link('click here')
 end
 
 def submit_new_application_form(options = {})

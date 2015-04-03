@@ -49,12 +49,7 @@
       }
       
       h1 {
-        font-size: 1.6em;
         margin-bottom: 0.5em;
-
-        @include media($large-screen) {
-          font-size: 1.8em;
-        }
       }
 
       p {

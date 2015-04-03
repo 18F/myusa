@@ -1,0 +1,74 @@
+
+#homepage-marketing {
+
+  $large-screen: em(860) !default;
+  line-height: 1.4;
+
+  h2 {
+    text-align: center;
+    text-shadow: rgba(0,0,0,0.4) 0 2px 4px;
+    padding: 1em 0;
+  }
+
+  #what-my-usa-does {
+
+    border-bottom: 2px solid #EEF2F4;
+
+    @include outer-container;
+
+    .module {
+      @include span-columns(12);
+      text-align: center;
+      padding: 20px;
+
+      @include media($large-screen) {
+         @include span-columns(4);
+      }
+
+      h3 { padding: 15px 0; }
+
+      .icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+
+        img { width: 100%; }
+
+      }
+    }
+  }
+
+  #account-management {
+      
+      text-align: center;
+      width: 75%;
+      margin: 0 auto;
+
+      h3 { padding-bottom: 30px; }
+
+      ol {
+        font-size: 1.2em;
+        margin: 0 auto;
+        padding-bottom: 30px;
+
+        li { 
+          margin-bottom: 20px;
+          text-align: left;
+
+          @include media($large-screen) {
+              display: inline;
+              margin-bottom: 0;
+              margin-right: 20px;
+          }
+
+          span {
+            border-radius: 100%;
+            padding: 2px 10px;
+            background-color: #86C779;
+            color: white;
+          }
+        }
+      }
+
+  }
+}

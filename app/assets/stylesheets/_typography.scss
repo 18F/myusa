@@ -1,7 +1,10 @@
+$base-font-size: 1em;
+$base-font-color: #4A4A4A;
+
 body {
 	font-family: 'Source Sans Pro', Helvetica, sans-serif;
-	font-size: 16px;
-	font-weight: normal;
+	font-size: $base-font-size;
+	color: $base-font-color;
 }
 
 h1, h2 {
@@ -9,7 +12,16 @@ h1, h2 {
 	font-weight: 900;
 }
 
-h1 { font-size: 2em; }
+h1 { font-size: $base-font-size * 2; }
+h2 { font-size: $base-font-size * 1.6; }
+h3 { 
+	font-size: $base-font-size * 1.2; 
+	font-weight: 900;
+}
 
 button { font-family: 'Source Sans Pro', Helvetica, sans-serif; }
-a { text-decoration: none; }
+
+a { 
+		text-decoration: none; 
+		color: #007BB4;
+}

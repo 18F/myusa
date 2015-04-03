@@ -5,6 +5,7 @@ body {
 	font-family: 'Source Sans Pro', Helvetica, sans-serif;
 	font-size: $base-font-size;
 	color: $base-font-color;
+	line-height: 1.4;
 }
 
 h1, h2 {
@@ -24,4 +25,8 @@ button { font-family: 'Source Sans Pro', Helvetica, sans-serif; }
 a { 
 		text-decoration: none; 
 		color: #007BB4;
+}
+
+small {
+	font-size: 0.8em;
 }

@@ -1,4 +1,27 @@
-<footer class="footer" role="contentinfo">
+
+<footer>
+  <div id="partners">
+    <h3>Join these partners and streamline online interactions with MyUSA</h3>
+    <div class="partner">
+      <%= link_to( image_tag("businessusa.png"), "#") %>
+    </div>
+    <div class="partner">
+      <%= link_to( image_tag("benefitsgov.png"), "#") %>
+    </div>
+    <div class="partner">
+      <%= link_to( image_tag("usagov.png"), "#") %>
+    </div>
+  </div>
+  <div id="disclaimer">
+    <%= image_tag "usa-flag.png", :alt => 'USA Flag' %>
+    <small>
+      MyUSA is an official website of the United States Government &middot;
+      <%= link_to 'Policies', '#' %>
+    </small>
+  </div>
+</footer>
+
+<!-- <footer class="footer" role="contentinfo">
   <div class="footer-logo">
     <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png" alt="Logo image">
   </div>
@@ -26,3 +49,4 @@
 
   <p>Disclaimer area lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, nostrum repudiandae saepe.</p>
 </footer>
+ -->

@@ -13,8 +13,8 @@
 
   $hero-image: image-path('great-plains.png');
 
-  $button-color-light: #99CAE1;
-  $button-color-dark: #007BB4;
+  $button-color-light: #91C5EA;
+  $button-color-dark: #0073AD;
 
 
   @include background(url($hero-image), linear-gradient($gradient-angle, $hero-background-bottom, $hero-background-top), no-repeat $hero-background-top scroll);
@@ -30,8 +30,7 @@
   }
 
   .hero-inner {
-    @include outer-container;
-    @include clearfix;
+    
     color: $hero-color;
     margin: auto;
     padding: 3.5em;
@@ -39,6 +38,15 @@
 
     .hero-copy {
       text-align: center;
+      background-color: rgb(145, 197, 243);
+      background-color: rgba(145, 197, 243, 0.3);
+      margin: 0 auto;
+      padding: 1em 4em;
+
+      @include media($large-screen) {
+        padding: 1.8em 8em;
+        width: 50em;
+      }
       
       h1 {
         font-size: 1.6em;
@@ -52,19 +60,25 @@
       p {
         font-weight: 200;
         line-height: 1.4em;
-        margin: 0 auto 3em auto; 
+        margin: 0 auto; 
 
         @include media($large-screen) {
           font-size: 1.1em;
-          max-width: 40%;
         }
       }
     }
 
-    button {
-      @include button(flat, $base-accent-color);
-      padding: 0.7em 1em;
-      background-color: $button-color-light;
+    .action {
+      padding-top: 1.4em;
+      button {
+        @include button(flat, $base-accent-color);
+        padding: 0.7em 1em;
+        background-color: $button-color-light;
+        &.signup {
+          background-color: $button-color-dark;
+          margin-left: 10px;
+        }
+      }
     }
   }
 }

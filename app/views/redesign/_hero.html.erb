@@ -1,14 +1,12 @@
 <div class="hero">
 	<div class="hero-inner">
-    <!--<a href="" class="hero-logo"><img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png
-" alt="Logo Image"></a>-->
 		<div class="hero-copy">
 			<h1>One account for government</h1>
 			<p>MyUSA offers comprehensive account management services, enabling visitors to access online government resources easily and securely.</p>	
 		</div>
 		<div class="action">
-    	<button class="learn">Learn More</button> 
-    	<button class="signup">Sign up now</button>
+    	<%= link_to 'Learn More', '#', :class => 'button learn' %>
+    	<%= link_to 'Sign up now', '/users/sign_in', :class => 'button signup' %>
     </div>
 	</div>
 </div>

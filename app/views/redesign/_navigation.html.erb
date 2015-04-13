@@ -13,10 +13,16 @@
           <%= link_to 'About', '/' %>
         </li>
         <li class="nav-link">
-          <%= link_to 'Developer<small>Resources</small>'.html_safe, '/developer' %>
+          <%= link_to 'Developer', '/developer' %>
         </li>
         <li class="nav-link">
-          <%= link_to 'Contact Us <small>with questions</small>'.html_safe, '/#contact' %>
+          <%= link_to 'Contact Us', '/#contact' %>
+        </li>
+        <li class="nav-link">
+          <%= link_to '#' do %>
+            <%= image_tag('user-icon.png', :alt => 'User icon', :class => 'user-icon') %>
+            My Dashboard
+          <% end %>
         </li>
       </ul>
     </nav>

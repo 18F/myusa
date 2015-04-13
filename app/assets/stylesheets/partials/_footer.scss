@@ -10,7 +10,10 @@ footer {
     padding: 40px 25px;
     color: white;
 
-    h3 { padding-bottom: 20px; }
+    h3 { 
+      padding-bottom: 20px;
+      font-weight: 300;
+    }
 
     .partner {
       display: block;
@@ -27,7 +30,7 @@ footer {
 
   #disclaimer {
     background-color: #EEF2F4;
-    padding: 40px 20px;
+    padding: 25px 20px;
     a { color: $base-font-color; }
   }
 

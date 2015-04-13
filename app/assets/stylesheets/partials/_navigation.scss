@@ -15,7 +15,7 @@ header.navigation {
   //$navigation-background: $dark-gray;
   $navigation-background: $white;
   //$navigation-color: transparentize(white, 0.3);
-  $navigation-color: $light-blue;
+  $navigation-color: #0069A0;
   //$navigation-color-hover: white;
   $navigation-color-hover: $light-blue;
   $navigation-height: 90px;
@@ -49,7 +49,7 @@ header.navigation {
     padding-right: 2em;
 
     img {
-      max-height: 200px;
+      max-width: 134px;
       padding: 1.8em 0;
     }
   }
@@ -112,6 +112,9 @@ header.navigation {
   // The nav items
 
   ul li.nav-link {
+    font-family: 'Raleway';
+    font-weight: 900;
+    font-size: 0.9em;
     background: $navigation-background;
     display: block;
     line-height: $navigation-height;
@@ -128,24 +131,24 @@ header.navigation {
       text-decoration: none;
       width: auto;
       border-right: 2px solid #EEF2F4;
-      padding: 1em 1.6em;
+      padding: 0.5em 1em;
+      &:last-child {
+        border: none;
+      }
     }
 
     a {
       color: $navigation-color;
       display: inline-block;
-      font-weight: 400;
       position: relative;
-      top: -0.6em;
       &:focus,
       &:hover {
         color: $navigation-color-hover;
       }
-      small {
-        font-size: 0.7em;
-        position: absolute;
-        right: 0;
-        top: 1.8em;
+      img {
+        width: 20px;
+        top: 7px;
+        position: relative;
       }
     }
   }

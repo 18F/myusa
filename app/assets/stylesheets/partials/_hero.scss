@@ -22,7 +22,6 @@
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-bottom: 3em;
 
   .hero-logo img {
     height: 4em;
@@ -30,33 +29,27 @@
   }
 
   .hero-inner {
-    
+    padding: 3em 0;
     color: $hero-color;
-    margin: auto;
-    padding: 3.5em;
+    max-width: 940px;
+    margin: 0 auto;
     text-align: center;
-
+    @include media($large-screen) {
+      padding: 5em 0;
+    }
     .hero-copy {
-      text-align: center;
-      background-color: rgb(145, 197, 243);
-      background-color: rgba(145, 197, 243, 0.3);
-      margin: 0 auto;
-      padding: 1em 4em;
-
-      @include media($large-screen) {
-        padding: 1.8em 8em;
-        width: 50em;
-      }
-      
+        @include background-image(linear-gradient(#5c8ebf 0, #94b5cf 100%, transparent 20%));
+        padding: 40px 100px;
+        @include media($large-screen) {
+          padding: 40px 250px;
+        }
       h1 {
-        margin-bottom: 0.5em;
+        font-weight: 500;
       }
 
       p {
-        font-weight: 200;
-        line-height: 1.4em;
-        margin: 0 auto; 
-
+        line-height: 1.6em;
+        font-weight: 100;
         @include media($large-screen) {
           font-size: 1.1em;
         }
@@ -67,6 +60,7 @@
       padding-top: 1.4em;
       .button {
         @include button(flat, $base-accent-color);
+        font-weight: 400;
         padding: 0.7em 1em;
         background-color: $button-color-light;
         &.signup {

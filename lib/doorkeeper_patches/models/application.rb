@@ -47,6 +47,10 @@ class Doorkeeper::Application
       nil
     end
   }
+  
+  def number_of_authorizations
+    self.authorizations.length
+  end
 
   scope :search, ->(search) { search.present? && where("name like (?)", "%#{search}%") }
 

@@ -34,10 +34,4 @@ Rails.application.configure do
     elasticache = Dalli::ElastiCache.new(endpoint)
     config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
   end
-
-  # Logstasher
-  config.logstasher.enabled = true
-  config.logstasher.suppress_app_log = false
-  config.logstasher.source = 'myusa'
-  config.logstasher.backtrace = true
 end

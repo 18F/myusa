@@ -24,6 +24,7 @@
         <th>Name</th>
         <th>Owner</th>
         <th>Status</th>
+        <th>Users</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -40,6 +41,7 @@
           <td><%= link_to application.name, edit_oauth_application_path(application) %></td>
           <td><%= application.owner.email %></td>
           <td><%= app_status(application) %></td>
+          <td><%= application.number_of_authorizations %></td>
           <td>
             <%= link_to 'Edit Application', edit_oauth_application_path(application), class: 'btn btn-link' %>
             <%= form_for application, url: oauth_application_path(application) do |f| %>

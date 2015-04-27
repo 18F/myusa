@@ -1,0 +1,21 @@
+<footer>
+  <div id="partners">
+    <h3>Join these partners and streamline online interactions with MyUSA</h3>
+    <div class="partner">
+      <%= image_tag "businessusa.png", :alt => 'BusinessUSA logo' %>
+    </div>
+    <div class="partner">
+      <%= image_tag "benefitsgov.png", :alt => 'Benefits.gov logo' %>
+    </div>
+    <div class="partner">
+      <%= image_tag "usagov.png", :alt => 'USA.gov logo' %>
+    </div>
+  </div>
+  <div id="disclaimer">
+    <%= image_tag "usa-flag.png", :alt => 'USA Flag' %>
+    <small>
+      MyUSA is an official website of the United States Government &middot;
+      <%= link_to 'Policies', legal_path, :title => 'MyUSA Policies including Terms of Service, Privacy Policy, Linking Policy, and PRA Statement' %>
+    </small>
+  </div>
+</footer>

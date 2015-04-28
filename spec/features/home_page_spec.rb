@@ -23,6 +23,12 @@ describe 'Home Page' do
       )
     end
   end
+  
+  it 'has zero automated ra11y errors' do
+    errors, warnings, notices = Ra11y::Page.new('home_page', page.html).run
+
+    expect(errors.length).to eq(0)
+  end
 
   it 'displays message and email address in email' do
     open_email('myusa@gsa.gov')

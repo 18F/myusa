@@ -22,6 +22,7 @@ gem 'rails-observers'
 gem 'twilio-ruby'
 gem 'bootstrap_tokenfield_rails'
 gem 'will_paginate'
+gem 'ra11y', git: 'https://github.com/benbalter/ra11y.git', branch: 'rspec_integration'
 
 gem 'bourbon'
 gem 'neat'

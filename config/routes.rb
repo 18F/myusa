@@ -1,6 +1,8 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  get "redesign" => "redesign#index"
+  
   root to: "home#index"
   get "legal" => "home#legal"
   get 'developer' => 'home#developer'

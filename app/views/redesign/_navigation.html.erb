@@ -1,0 +1,30 @@
+<header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+
+    <%= link_to( image_tag("header-logo.png", :alt => 'MyUSA Logo'), '/', :class => 'logo') %>
+    <%= link_to 'MENU', '#', :class => 'navigation-menu-button', :id => 'js-mobile-menu' %>
+
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        <li class="nav-link">
+          <%= link_to 'Home', '/' %>
+        </li>
+        <li class="nav-link">
+          <%= link_to 'About', '/' %>
+        </li>
+        <li class="nav-link">
+          <%= link_to 'Developer', '/developer' %>
+        </li>
+        <li class="nav-link">
+          <%= link_to 'Contact Us', '/#contact' %>
+        </li>
+        <li class="nav-link">
+          <%= link_to '#' do %>
+            <%= image_tag('user-icon.png', :alt => 'User icon', :class => 'user-icon') %>
+            My Dashboard
+          <% end %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

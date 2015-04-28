@@ -11,7 +11,7 @@ describe 'Sign In' do
   let(:sms_page) { TwoFactor::SmsPage.new}
   let(:welcome_page) { WelcomePage.new }
 
-  let(:email_link_text) { 'Connect to MyUSA' }
+  let(:email_link_text) { 'click here' }
 
   describe 'page' do
     before do

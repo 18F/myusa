@@ -1,0 +1,42 @@
+<%= render 'navigation' %>
+
+<%= render 'hero' %>
+
+<div id="homepage-marketing">
+	<div id="what-my-usa-does">
+	  <h2>What MyUSA does</h2>
+	    <div class="module guide">
+	      <div class="icon">
+	        <%= image_tag('guide.png', alt: 'Guide icon') %>
+	      </div>
+	      <h3>Guide your visitors to what matters</h3>
+	      <p>Your visitors can share personal information that’s important to them, allowing you to recommend relevant services.</p>      
+	    </div>
+	    <div class="module improve">
+	        <div class="icon">
+	          <%= image_tag('badge.png', alt: 'Badge icon') %>
+	        </div>
+	        <h3>Improve visitor interactions</h3>
+	        <p>MyUSA lets your visitors engage with your app as often and to the degree that they like, reducing support costs.</p>
+	    </div>
+	    <div class="module inform">
+	      <div class="icon">
+	        <%= image_tag('checklist.png', alt: 'Checklist icon') %>
+	      </div>
+	      <h3>Keeps your visitors informed and on track</h3>
+	      <p>You can give MyUSA visitors  personalized task lists and notifications, helping them complete key tasks.</p>
+	    </div>
+	</div>
+	<div id="account-management">
+	  <h2>Faster, easier account management</h2>
+	  <h3>It's easy to improve visitor interactions using MyUSA.</h3>
+	  <ol>
+  		<li><%= link_to '<span>1</span> Create an account'.html_safe, '/users/sign_in' %></li>
+    	<li><%= link_to '<span>2</span> Add our plugin'.html_safe, '/developer' %></li>
+			<li><span>3</span> Release your app</li>
+		</ol>
+	  <h3>Voila! Now you're offering customers easier, more personalized interactions.</h3>
+	</div>
+</div>
+
+<%= render 'footer' %>

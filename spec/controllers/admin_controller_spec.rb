@@ -12,6 +12,30 @@ describe AdminController do
       sign_in :two_factor, user
     end
 
+    context '.csv request' do
+      before :each do 
+        get :index, format: 'csv'
+      end
+      
+      it 'returns a CSV string of applications' do
+        expect(assigns(:applications).length).to eq(Doorkeeper::Application.count)
+        expect(assigns(:applications).first).to be_a(Doorkeeper::Application)
+        expect(CSV.parse(response.body)).to be_a(Array)
+      end
+    end
+    
+    context '.json request' do
+      before :each do 
+        get :index, format: 'json'
+      end
+      
+      it 'returns a JSON string of applications' do
+        expect(assigns(:applications).length).to eq(Doorkeeper::Application.count)
+        expect(assigns(:applications).first).to be_a(Doorkeeper::Application)
+        expect(JSON.parse(response.body)).to be_a(Hash)
+      end
+    end
+
     context 'no params' do
       before :each do
         get :index

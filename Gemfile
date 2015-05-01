@@ -42,18 +42,6 @@ group :development do
   gem 'binding_of_caller'
 end
 
-## deploy dependencies
-group :deploy do
-  gem 'berkshelf', '~> 3.0'
-  gem 'chef'
-  gem 'knife-ec2'
-  gem 'knife-solo' #, github: 'matschaffer/knife-solo', submodules: true
-  gem 'knife-solo_data_bag'
-  gem 'unf'
-  gem 'capistrano', '~> 2.15'
-  gem 'capistrano-unicorn', require: false
-end
-
 group :development, :test do
   gem 'oauth2'
   gem 'pry-rails'

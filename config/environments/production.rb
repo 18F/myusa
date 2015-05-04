@@ -13,6 +13,8 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
   config.active_record.dump_schema_after_migration = false
 
+  config.devise_secret_key = ENV['DEVISE_SECRET_KEY']
+
   config.myusa_sender_email = ENV['SENDER_EMAIL']
   config.action_mailer.default_url_options = { host: ENV['APP_HOST'] }
   config.action_mailer.raise_delivery_errors = true
@@ -20,14 +22,19 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:    ENV['SMTP_HOST'],
     port:       ENV['SMTP_PORT'],
-    user_name:  Rails.application.secrets.smtp_user,
-    password:   Rails.application.secrets.smtp_pass,
+    user_name:  ENV['SMTP_USER'],
+    password:   ENV['SMTP_PASS'],
     authentication: 'plain',
     enable_starttls_auto: true
   }
 
   config.sms_sender_number = ENV['SMS_NUMBER']
   config.sms_delivery_method = :twilio
+  config.twilio_account_sid = ENV['TWILIO_ACCOUNT_SID']
+  config.twilio_auth_token = ENV['TWILIO_AUTH_TOKEN']
+
+  config.omniauth_google_app_id = ENV['OMNIAUTH_GOOGLE_APP_ID']
+  config.omniauth_google_secret = ENV['OMNIAUTH_GOOGLE_SECRET']
 
   unless ENV['ELASTICACHE_ENDPOINT'].blank?
     endpoint    = ENV['ELASTICACHE_ENDPOINT'] + ":11211"

@@ -68,6 +68,7 @@ group :staging, :production do
   gem 'unicorn', :require => false
   gem 'dalli-elasticache'
   gem 'newrelic_rpm'
+  gem 'rails_12factor'
 end
 
 group :production do

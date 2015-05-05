@@ -1,8 +1,12 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+
+  # Routes for simpler redesigning
+  # "/permissions" probably should be removed before any deploy
+  get "permissions" => "oauth/authorizations#redesign"
   get "redesign" => "redesign#index"
-  
+
   root to: "home#index"
   get "legal" => "home#legal"
   get 'developer' => 'home#developer'

@@ -49,12 +49,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
                                         <tr>
                                             <td valign="top" class="bodyContent" mc:edit="body_content">
-                                                <p>Hello there, <%= @resource.email %>, </p>
-																								<p>Thanks for creating a MyUSA account. We're excited to bring you easier access to government services.</p>
-																								<p>To continue the registration process, please <%= link_to 'click here', new_user_session_url(email: @resource.email, token: @token.raw).html_safe, :class => 'btn-myusa', secure: true, protocol: 'https  %>.</p>
-                                                <p>If you didn't request a MyUSA account or don't want to connect using this email address, ignore this message.</p>
-                                                <p>Best,</p>
-                                                <p>- The MyUSA team</p>
+                                              <%= render 'content' %>
                                             </td>
                                         </tr>
                                     </table>

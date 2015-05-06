@@ -39,6 +39,8 @@ Rails.application.configure do
   config.omniauth_google_app_id = ENV['OMNIAUTH_GOOGLE_APP_ID']
   config.omniauth_google_secret = ENV['OMNIAUTH_GOOGLE_SECRET']
 
+  config.force_ssl = true
+
   unless ENV['ELASTICACHE_ENDPOINT'].blank?
     endpoint    = ENV['ELASTICACHE_ENDPOINT'] + ":11211"
     elasticache = Dalli::ElastiCache.new(endpoint)

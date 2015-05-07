@@ -2,7 +2,7 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   before_filter :display_not_me, only: [:new]
   skip_filter *_process_action_callbacks.map(&:filter), :only => [:redesign]
 
-  layout 'dashboard'
+  layout 'redesign'
 
   def redesign
     require 'ostruct'

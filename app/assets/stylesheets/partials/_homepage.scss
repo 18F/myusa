@@ -81,3 +81,30 @@
 
   }
 }
+
+#partners {
+  padding: 40px 0;
+  color: white;
+  background-color: #9FA3A6;
+  text-align: center;
+  margin-top: 25px;
+  .partner-list {
+    @include outer-container;
+    h3 { 
+      padding-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .partner {
+      display: block;
+      margin: 15px 0;
+      @include span-columns(12);
+
+      @include media($large-screen) {
+        display: inline-block;
+        @include span-columns(4);
+      }
+      img { max-width: 250px; }
+    }
+  }
+}

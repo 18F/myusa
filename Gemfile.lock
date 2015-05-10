@@ -61,6 +61,10 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bitters (1.0.0)
+      bourbon (>= 3.2)
+      sass (>= 3.2)
+      thor
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     bootstrap_tokenfield_rails (0.0.6)
@@ -370,7 +374,6 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
-    refills (0.1.0)
     request_store (1.1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -541,6 +544,7 @@ DEPENDENCIES
   berkshelf (~> 3.0)
   better_errors
   binding_of_caller
+  bitters
   bootstrap-sass (~> 3.2.0)
   bootstrap_tokenfield_rails
   bourbon
@@ -577,7 +581,6 @@ DEPENDENCIES
   quiet_assets
   rails (~> 4.1.5)
   rails-observers
-  refills
   rspec-its
   rspec-rails
   rspec_junit_formatter
@@ -598,3 +601,6 @@ DEPENDENCIES
   unicorn
   validates_email_format_of
   will_paginate
+
+BUNDLED WITH
+   1.10.0.pre.2

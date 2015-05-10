@@ -1,8 +1,9 @@
 $base-font-size: 1em;
 $base-font-color: #4A4A4A;
+$base-font-family: 'Source Sans Pro', Helvetica, sans-serif;
 
 body {
-	font-family: 'Source Sans Pro', Helvetica, sans-serif;
+	font-family: $base-font-family;
 	font-size: $base-font-size;
 	color: $base-font-color;
 	line-height: 1.4;
@@ -20,7 +21,7 @@ h3 {
 	font-weight: 900;
 }
 
-button { font-family: 'Source Sans Pro', Helvetica, sans-serif; }
+button { font-family: $base-font-family; }
 
 a { 
 		text-decoration: none; 

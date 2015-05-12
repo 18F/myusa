@@ -59,12 +59,19 @@ form {
     clip: rect(0 0 0 0); 
     height: 1px; width: 1px; 
     margin: -1px; padding: 0; border: 0; 
+    &:focus {
+      + .checkbox {
+        outline: none;
+        border-color: #9ecaed;
+        box-shadow: 0 0 10px #9ecaed;
+      }
+    }
 
     + .checkbox {
       @include transition(all 0.1s ease);
       background: #C9D4D9;
       border-radius: $switch-radius;
-      border: none;
+      border: solid 1px white;
       cursor: pointer;
       height: $switch-height;
       margin: 0;
@@ -87,7 +94,7 @@ form {
         content: "NO";
       }
       &:after {
-        @include position(absolute, 2px 0 0 2px);
+        @include position(absolute, 1px 0 0 1px);
         @include transition(all 0.3s ease);
         @include size($knob-size);
         background: $switch-background;

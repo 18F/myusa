@@ -117,9 +117,8 @@ form {
         }
         &:after {
           left: $switch-width - $knob-width - ($switch-padding);
-          
+        }
       }
     }
   }
-}
 }

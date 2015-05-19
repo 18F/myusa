@@ -1,0 +1,65 @@
+ <!-- 
+  <li>
+    <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
+    <div class="form-group">
+      <h3><%= t("scope_groups.#{group}.subheading") %></h3>
+      <% group_scopes.each do |scope| %>
+        <%- if (is_profile_scope = profile_scope?(scope)) -%>
+          <%= scope_field_label(scope) %>
+        <%- end -%>
+        <div>
+          <%= scope_check_box_tag scope %>
+          <%- if is_profile_scope -%>
+            <span class="scope-value">
+              <%= scope_field_tag(scope, class: 'form-control') %>
+            </span>
+          <%- else -%>
+            <%= scope_field_label scope %>
+          <%- end -%>
+        </div>
+      <% end %>
+    </div>
+  </li>
+  <%- end -%>
+<% end %>
+
+
+<section>
+  <h3 id="section_1">Share your email to receive occasional updates about resources that may interest you.</h3>
+          
+  <span id="user_email" aria-describedby="your_info section_1"><%= current_user.email %></span>
+
+  <label for="email" class="label-switch">
+    <input type="checkbox" id="email" tabindex="0" aria-describedby="user_email share_col section_1">
+    <div class="checkbox" role="checkbox" tabindex="-1">
+      <span>YES</span>
+    </div>
+  </label>
+</section>
+
+<section>
+  <h3 id="section_2">Share your name if you'd like <%= @pre_auth.client.application.name %> to use it in our communication with you.</h3>
+
+  <label for="first_name" class="name_field">Enter your first name (optional):
+    <input type="text" id="first_name" name="first_name" aria-describedby="section_2 your_info">
+  </label>
+
+  <label for="fname_switch" class="label-switch fname">
+    <input type="checkbox" id="fname_switch" tabindex="0" aria-describedby="first_name share_col section_2">
+    <div class="checkbox" role="checkbox" tabindex="-1">
+      <span>YES</span>
+    </div>
+  </label>
+  
+  <label for="last_name" class="name_field">Enter your last name (optional):
+    <input type="text" id="last_name" name="last_name" aria-describedby="section2 your_info">
+  </label>
+
+  <label for="lname_switch" class="label-switch lname">
+    <input type="checkbox" id="lname_switch" tabindex="0" aria-describedby="last_name share_col section_2">
+    <div class="checkbox" role="checkbox" tabindex="-1">
+      <span>YES</span>
+    </div>
+  </label>
+   
+   -->

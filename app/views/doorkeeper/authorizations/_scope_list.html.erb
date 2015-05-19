@@ -1,27 +1,27 @@
-<ul class="list-unstyled scope-list">
-  <% scopes_by_group(scopes) do |group, group_scopes| %>
-    <%- if group_scopes.present? -%>
-    <li>
-      <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
-      <div class="form-group">
-        <h3><%= t("scope_groups.#{group}.subheading") %></h3>
-        <% group_scopes.each do |scope| %>
-          <%- if (is_profile_scope = profile_scope?(scope)) -%>
-            <%= scope_field_label(scope) %>
-          <%- end -%>
-          <div>
-            <%= scope_check_box_tag scope %>
-            <%- if is_profile_scope -%>
-              <span class="scope-value">
-                <%= scope_field_tag(scope, class: 'form-control') %>
-              </span>
-            <%- else -%>
-              <%= scope_field_label scope %>
-            <%- end -%>
+<% scopes_by_group(scopes) do |group, group_scopes| %>
+  <%- if group_scopes.present? -%>
+  
+  <section>
+    <h3 id="section_TODO"><%= t("scope_groups.#{group}.subheading") %></h3>
+    
+    <% group_scopes.each do |scope| %>
+            
+      <span id="TODO" aria-describedby="TODO"><%= scope_field_tag(scope) %></span>
+      <label for="TODO" class="label-switch">
+        <input type="checkbox" id="TODO" tabindex="0" aria-describedby="TODO">
+          <div class="checkbox" role="checkbox" tabindex="-1">
+            <span>YES</span>
           </div>
-        <% end %>
-      </div>
-    </li>
-    <%- end -%>
+        </input>
+      </label>
+    
+    <% end %>
+
+  </section>
+  
   <% end %>
-</ul>
+  
+<% end %>
+
+
+ 

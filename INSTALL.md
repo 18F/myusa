@@ -1,10 +1,11 @@
 # MyUSA Development Guide
 
-This is how you get up and running with the MyUSA codebase.  Enclosed are directions for setting up your development environment and deploying MyUSA.
+These are the instructions for installing and running the MyUSA server application
+on a local development machine. To deploy MyUSA to a Cloud Foundry environment,
+see [`DEPLOY.md`](DEPLOY.md)
 
-## Getting up and running
+## Setting up
 
-To get your Rails development environment setup, here's the steps to follow.
 
 1. Install Dependencies.  These are the minimum versions supported.
       - Ruby 2.1.1
@@ -13,6 +14,11 @@ To get your Rails development environment setup, here's the steps to follow.
       - MySQL 5.6
 
     [rbenv](https://github.com/sstephenson/rbenv) is convenient for managing Ruby/Rails versions.
+
+    You'll also need the `bundler` Ruby gem. Once you have Ruby installed, do:
+    ```sh
+    gem install bundler
+    ```
 
 2. Clone the `myusa` project
 
@@ -83,4 +89,3 @@ After you create a user account for yourself, be sure to [give one user administ
 When running the application in development mode, all emails and text messages are logged to the rails development log (often the terminal).
 
 That's it!  Use MyUSA just as you would any other web application.
-

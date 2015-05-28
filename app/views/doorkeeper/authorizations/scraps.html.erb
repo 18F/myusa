@@ -1,4 +1,39 @@
- <!-- 
+ Valid params:
+
+ {"utf8"=>"✓",
+ "authenticity_token"=>"9fJexg9/Q0SKmFMmNEp3quuFfEzA5bqcsMU/7JqWr2w=",
+ "client_id"=>"3ea02008992b6e8e178d6b609d3388ad929972134afb3f438c311f5a4cd71e6b",
+ "redirect_uri"=>"http://localhost:9292/auth/myusa/callback",
+ "state"=>"c61d0f4aeb3832fc142bb3a396673136bc55cc9423d02bab",
+ "response_type"=>"code",
+ "original_scope"=>"profile.email profile.first_name profile.last_name",
+ "scope"=>["profile.email", "profile.first_name", "profile.last_name"],
+ "user_id"=>"1",
+ "allow"=>"1",
+ "commit"=>"Allow Access",
+ "action"=>"create",
+ "controller"=>"oauth/authorizations"}
+
+ Invalid params:
+
+ {"utf8"=>"✓",
+ "authenticity_token"=>"9fJexg9/Q0SKmFMmNEp3quuFfEzA5bqcsMU/7JqWr2w=",
+ "client_id"=>"3ea02008992b6e8e178d6b609d3388ad929972134afb3f438c311f5a4cd71e6b",
+ "redirect_uri"=>"http://localhost:9292/auth/myusa/callback",
+ "state"=>"99836440f6c8988d53d2ab955702dd77dd65ffbb16669c09",
+ "response_type"=>"code",
+ "original_scope"=>"profile.email profile.first_name profile.last_name",
+ "scope"=>["on", "on", "on"],
+ "user_id"=>"1",
+ "allow"=>"1",
+ "commit"=>"Allow",
+ "action"=>"create",
+ "controller"=>"oauth/authorizations"}
+
+
+
+
+ <!--
   <li>
     <h2 class="open"><%= t("scope_groups.#{group}.description") %></h2>
     <div class="form-group">
@@ -26,7 +61,7 @@
 
 <section>
   <h3 id="section_1">Share your email to receive occasional updates about resources that may interest you.</h3>
-          
+
   <span id="user_email" aria-describedby="your_info section_1"><%= current_user.email %></span>
 
   <label for="email" class="label-switch">
@@ -50,7 +85,7 @@
       <span>YES</span>
     </div>
   </label>
-  
+
   <label for="last_name" class="name_field">Enter your last name (optional):
     <input type="text" id="last_name" name="last_name" aria-describedby="section2 your_info">
   </label>
@@ -61,5 +96,5 @@
       <span>YES</span>
     </div>
   </label>
-   
+
    -->

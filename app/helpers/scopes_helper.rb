@@ -49,6 +49,10 @@ module ScopesHelper
     yield(scope.gsub(/\./, '_'), t("scopes.#{scope}.label"))
   end
 
+  def scope_id(scope)
+    scope.gsub(/\./, '_')
+  end
+
   def scope_field_label(scope)
     scope_tag(scope) do |id, display|
       label :scope, id, display

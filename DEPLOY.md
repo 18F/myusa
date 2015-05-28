@@ -24,7 +24,7 @@ environment, e.g. `production` and `staging`.
 MyUSA relies on the following external services for its functionality. Except
 where otherwise noted, the external service setup is required in advance,
 then configured through
-(user-provided CF environment variables)[http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html].
+[user-provided CF environment variables](http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html).
 The variables needed are listed below with their associated services; for
 a full list, see [CONFIGURATION.md](CONFIGURATION.md).
 
@@ -57,7 +57,7 @@ Summary of environment variables needed:
 
 18F recommends HTTPS for all public-facing web applications, and uses AWS ELBs
 for load-balancing and SSL termination. Use
-(this guide)[https://docs.18f.gov/ops/elb/] to set up an ELB for your MyUSA
+[this guide](https://docs.18f.gov/ops/elb/) to set up an ELB for your MyUSA
 deployment.
 
 ### Outbound Email Delivery (SMTP)

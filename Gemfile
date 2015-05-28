@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.3'
+ruby '2.2.2'
 
 gem 'rails', '4.1.9' # update to 4.1.11 when released, due to
                      # https://github.com/rails/rails/pull/19479

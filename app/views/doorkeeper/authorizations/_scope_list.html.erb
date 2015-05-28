@@ -1,27 +1,31 @@
 <% scopes_by_group(scopes) do |group, group_scopes| %>
   <%- if group_scopes.present? -%>
-  
+
   <section>
-    <h3 id="section_TODO"><%= t("scope_groups.#{group}.subheading") %></h3>
-    
+    <h3 id="section_<%= group %>"><%= t("scope_groups.#{group}.subheading") %></h3>
+
     <% group_scopes.each do |scope| %>
-            
-      <span id="TODO" aria-describedby="TODO"><%= scope_field_tag(scope) %></span>
-      <label for="TODO" class="label-switch">
-        <input type="checkbox" id="TODO" tabindex="0" aria-describedby="TODO">
+
+      <span id="instructions_<%= scope_id(scope) %>">
+        <%= scope_field_tag(scope) %>
+      </span>
+      <label for="label_<%= scope_id(scope) %>" class="label-switch">
+        <input type="checkbox"
+               id="label_<%= scope_id(scope) %>"
+               name="scope[]"
+               tabindex="0"
+               aria-describedby="instructions_<%= scope_id(scope) %>"
+               value="<%= scope_id(scope) %>">
           <div class="checkbox" role="checkbox" tabindex="-1">
             <span>YES</span>
           </div>
         </input>
       </label>
-    
+
     <% end %>
 
   </section>
-  
+
   <% end %>
-  
+
 <% end %>
-
-
- 

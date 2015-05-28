@@ -57,7 +57,6 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
         end
       end
     end
-    binding.pry
     params[:scope] = params[:scope].join(' ') if params[:scope].is_a?(Array)
     super
   end

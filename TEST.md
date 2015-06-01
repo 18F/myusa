@@ -1,14 +1,14 @@
 # How to Setup and Run Tests
 
-MyUsa uses several different tools for testing various aspects of its operation:
+MyUSA uses several different tools for testing various aspects of its operation:
 
 * [Rspec](http://rspec.info/), a behavior-driven development testing framework for Ruby
 * [Capybara](http://jnicklas.github.io/capybara/), a library for integration testing
 * [Code Climate](https://codeclimate.com/), a service for automated code reviews
 
-These testing mechanisms uses some additional tools to get what they need done
+These testing mechanisms use some additional tools to get what they need done
 
-* [Site Prism](https://github.com/natritmeyer/site_prism), a simple DSL for the DOM within Capybara
+* [Site Prism](https://github.com/natritmeyer/site_prism), a simple DSL for the [Page-Object Model](http://www.guru99.com/page-object-model-pom-page-factory-in-selenium-ultimate-guide.html) used for Selenium view testing
 * [Database Cleaner](https://github.com/DatabaseCleaner/database_cleaner), cleans the test database between tests
 * [Poltergeist](https://github.com/teampoltergeist/poltergeist), a [PhantomJS](http://phantomjs.org/) driver for Capybara
 * [Factory Girl](https://github.com/thoughtbot/factory_girl_rails), an alternative to fixtures for loading test records

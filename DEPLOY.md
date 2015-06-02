@@ -53,6 +53,10 @@ Summary of environment variables needed:
 | `DATABASE_URL` | `mysql2://myusa:password@myusa-db.us-east-1.rds.amazonaws.com:3306/myusa` | DB connection string; needed for CloudFoundry. Otherwise, MyUSA will attempt to use existing the `config/database.yml` file. |
 | `DB_ENCRYPT_KEY` | `abcdef123456` | Secret hex string used to en/decrypt DB data |
 
+To create a database instance in AWS:
+
+Set up an RDS instance of a standard MySQL 5.6 in the CloudFoundry-live subnet, with the Cloud Foundry security group set. The one tweak you do need to make in setup is using the “utf8” DB Parameter Group (which is likely in the Advanced Settings just before you hit Go).
+
 ### Elastic Load Balancer
 
 18F recommends HTTPS for all public-facing web applications, and uses AWS ELBs

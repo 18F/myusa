@@ -19,6 +19,16 @@ In order to push the application to Cloud Foundry, you will need:
 **Note:** We recommend creating separate Spaces for each deployment
 environment, e.g. `production` and `staging`.
 
+## Order of Setup
+
+1. Create Space
+1. `cf push myusa -n HOSTNAME --no-start`
+1. Ensure DB is available
+1. `cf-ssh` to do initial `myusa-ssh` setup (it will error out, but that's fine)
+1. Add the four CF env vars to `myusa-ssh` as described below
+1. `cf-restage myusa-ssh; cf-ssh` to open remote session; `bundle exec rake db:setup`
+1.
+
 ## External Services
 
 MyUSA relies on the following external services for its functionality. Except
@@ -36,7 +46,7 @@ a single database (typically named `myusa`) with a single database user.
 Database access is configured through the `DATABASE_URL` variable, in this
 format:
 ```
-mysql2://[USER]:[PASSWORD]:[DB_HOST]:[DB_PORT]/[DB_NAME]
+mysql2://[USER]:[PASSWORD]@[DB_HOST]:[DB_PORT]/[DB_NAME]
 ```
 for example:
 ```
@@ -165,6 +175,7 @@ app can start.
   * `DATABASE_URL`
   * `SENDER_EMAIL`
   * `APP_HOST`
+
   Example command: `cf set-env myusa-ssh RAILS_ENV staging`
 4. Run `cf restage myusa-ssh` to rebuild the droplet.
 5. Run `cf-ssh` again. This time it should successfully build the application

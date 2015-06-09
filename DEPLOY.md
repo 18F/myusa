@@ -19,6 +19,86 @@ In order to push the application to Cloud Foundry, you will need:
 **Note:** We recommend creating separate Spaces for each deployment
 environment, e.g. `production` and `staging`.
 
+## Order of Setup
+
+**Note:** The instructions below use some placeholders in the commands, which you should replace with the correct values when entered. Those placeholders are:
+
+| Placeholder | Example | Purpose |
+| ----------- | ------- | ------- |
+| $HOSTNAME | `myusa-staging` | Hostname of the application |
+| $DOMAIN  | `18f.gov` | Domain name in which the hostname will be added |
+| $DATABASE_URL | `mysql2://...` | [Database connection string](#mysql-database) |
+
+_These instructions are based on the [18F Cloud Foundry Quick Deployment Guide](https://docs.18f.gov/apps/deployment/). Take a look at them if you run into trouble._
+
+1. Locally clone the MyUSA repo:
+
+    ```
+    git clone git@github.com:18f/myusa; cd myusa
+    ```
+
+1. Create a Space within the Org:
+
+    ```
+    cf create-space $SPACENAME
+    ```
+1. Do an initial push to add the application to the space:
+
+    ```
+    cf push myusa -n $HOSTNAME --no-start
+    ```
+(This push may well fail due to missing environment variables, but the purpose is to create the `myusa` app in our Space)
+1. This next set of steps is all about furnishing the database with the app's schema.
+  1. First, ensure that the database exists and is available - see [the _MySQL Database_ section below](#mysql-database). Assemble the connection info into a $DATABASE_URL string - we'll be using it in a moment when setting up the environment variables for the app.
+  1. Create the initial `myusa-ssh` setup:
+
+        ```
+        cf-ssh
+        ```
+  (It will likely fail with an error, but after creating the app)
+  1. Add the four necessary CF environment variables to `myusa-ssh`:
+
+        ```
+        cf set-env myusa-ssh APP_HOST $HOSTNAME.$DOMAIN
+        cf set-env myusa-ssh SENDER_EMAIL 'myusa-sender@gsa.gov'
+        cf set-env myusa-ssh DATABASE_URL $DATABASE_URL
+        cf set-env myusa-ssh RAILS_ENV staging
+        cf restage myusa-ssh
+        ```
+  1. Open the remote shell session:
+
+        ```
+        cf-ssh
+        ```
+  1. Inside that session, tell Rails to set up the database with the app schema:
+
+        ```
+        bundle exec rake db:setup
+        ```
+  1. The database schema should now be built. Hit Control-D to quit.
+1. Now that we have the database set up, configure the environment variables for the main application/ At minimum you'll need the four specified above for the database setup, but ideally you should add as many of those specified in [the _External Services_ section](#external-services) as possible. For each variable, set it for the app like so:
+
+    ```
+    cf set-env myusa VARIABLE_NAME VARIABLE_VALUE
+    ```
+1. Check the enviroment variables you've set:
+
+    ```
+    cf env myusa
+    ```
+1. Restage to export the variables to the app:
+
+    ```
+    cf restage myusa
+    ```
+1. Finally, push to launch:
+
+    ```
+    cf push myusa -n $HOSTNAME
+    ```
+
+The app should now be available at `https://$HOSTNAME.$DOMAIN/`
+
 ## External Services
 
 MyUSA relies on the following external services for its functionality. Except
@@ -36,7 +116,7 @@ a single database (typically named `myusa`) with a single database user.
 Database access is configured through the `DATABASE_URL` variable, in this
 format:
 ```
-mysql2://[USER]:[PASSWORD]:[DB_HOST]:[DB_PORT]/[DB_NAME]
+mysql2://[USER]:[PASSWORD]@[DB_HOST]:[DB_PORT]/[DB_NAME]
 ```
 for example:
 ```
@@ -128,55 +208,3 @@ us large amounts of pain.
 | ------------- | ------------- | ---------- |
 | `NEW_RELIC_APP_NAME` | `MyUSA` | Identifies app data in New Relic dashboard |
 | `NEW_RELIC_LICENSE_KEY` | `abcdef123456` | Secret API key for New Relic |
-
-
-## App Setup
-
-### Initial installation
-
-Once the external services have been created and configured, you can install
-MyUSA to Cloud Foundry.
-
-After locally cloning the [MyUSA repo](https://github.com/18F/myusa/),
-follow the [18F Cloud Foundry Quick Deployment Guide](https://docs.18f.gov/apps/deployment/).
-
-**Note:** For the initial installation, you need to supply two extra flags to
-the `cf push` command, like so:
-
-```
-cf push myusa -n HOSTNAME --no-start
-```
-
-Use the `-n` flag to associate the app with a hostname other than `myusa` (for
-example, `myusa-test`.)
-
-Use the `--no-start` flag to ensure that the app doesn't attempt to start
-after this first install, as the database hasn't been fully set up yet.
-
-### Initial database setup
-
-The MySQL database needs to be prepared with the correct schema before the
-app can start.
-
-1. Install the 18F version of the `cf-ssh` script, following
-[these instructions](https://docs.18f.gov/getting-started/cf-ssh/)
-2. Run the `cf-ssh` command once. It will fail with an error, but that's fine;
-   we mainly need it to create the `myusa-ssh` app so that we can add the
-   necessary environment variables.
-3. Configure these environment variables for the `myusa-ssh` app with the
-  correct settings:
-  * `RAILS_ENV` (use `staging` or `production`)
-  * `DATABASE_URL`
-  * `SENDER_EMAIL`
-  * `APP_HOST`
-  Example command: `cf set-env myusa-ssh RAILS_ENV staging`
-4. Run `cf restage myusa-ssh` to rebuild the droplet.
-5. Run `cf-ssh` again. This time it should successfully build the application
-   droplet and make an SSH connection to the container.
-6. In the container, run: `bundle exec rake db:setup`
-7. The database schema should now be built. Hit Control-D to quit.
-
-### Deployment
-
-Run `cf push` to deploy the application. Once deployment has completed, you
-should be able to connect to it with a web browser.

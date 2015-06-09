@@ -65,7 +65,7 @@ Summary of environment variables needed:
 
 ### Elastic Load Balancer
 
-18F recommends HTTPS for all public-facing web applications, and uses AWS ELBs
+18F requires HTTPS for all public-facing web applications, and uses AWS ELBs
 for load-balancing and SSL termination. Use
 [this guide](https://docs.18f.gov/ops/elb/) to set up an ELB for your MyUSA
 deployment.

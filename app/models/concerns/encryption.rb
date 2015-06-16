@@ -4,7 +4,7 @@ module Encryption
   extend ActiveSupport::Concern
 
   def key
-    key_val = ENV.fetch('DB_ENCRYPT_KEY') ||
+    key_val = ENV['DB_ENCRYPT_KEY'] ||
               Rails.configuration.database_configuration[Rails.env]['encryption_key']
 
     # if in production. require key to be set.

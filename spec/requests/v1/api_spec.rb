@@ -253,19 +253,22 @@ describe Api::V1 do
             completed_at: Time.now-1.day,
             user_id: user.id,
             app_id: client_app.id,
-            task_items_attributes: [{ name: 'Task item one' }]
+            task_items_attributes: [{ name: 'Task item one', external_id: 'abcdef' }]
           })
         end
 
         context 'when valid parameters are used' do
-          let(:params) { { task: { name: 'New Task', url: "http://18f.gsa.gov", task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
+          let(:params) { { task: { name: 'New Task', url: "http://18f.gsa.gov", task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one A' }] }} }
 
           it 'should update the task and task items' do
             expect(subject.status).to eq 200
             parsed_json = JSON.parse(subject.body)
             expect(parsed_json['name']).to eq 'New Task'
             expect(parsed_json['url']).to eq 'http://18f.gsa.gov'
-            expect(parsed_json['task_items'].first['name']).to eq 'Task item one'
+            expect(parsed_json['task_items'].first['name']).to eq 'Task item one A'
+
+            # this shouldn't be changed by the put
+            expect(parsed_json['task_items'].first['external_id']).to eq 'abcdef'
           end
 
           it 'creates an user action record' do
@@ -283,7 +286,7 @@ describe Api::V1 do
             }).tap {|t| t.complete! }
           end
 
-          let(:params) { {task: { name: 'New Incomplete Task', url: 'http://whitehouse.gov', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
+          let(:params) { {task: { name: 'New Incomplete Task', url: 'http://whitehouse.gov', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one', external_id: 'abc' }] }} }
 
           it 'should no longer be marked as complete when specified' do
             expect(subject.status).to eq 200
@@ -291,6 +294,7 @@ describe Api::V1 do
             expect(parsed_json['name']).to eq 'New Incomplete Task'
             expect(parsed_json['url']).to eq 'http://whitehouse.gov'
             expect(parsed_json['task_items'].first['name']).to eq 'Task item one'
+            expect(parsed_json['task_items'].first['external_id']).to eq 'abc'
           end
 
           it 'creates an user action record' do

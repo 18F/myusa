@@ -123,7 +123,7 @@ describe Api::V1 do
 
   describe 'POST /api/v1/notifications' do
     let(:client_app_2) { FactoryGirl.create(:application, name: 'App2') }
-  
+
     let(:token) { FactoryGirl.create(:access_token, application: client_app_2, resource_owner: user, scopes: 'notifications') }
 
     subject { post '/api/v1/notifications', params, header }
@@ -208,7 +208,7 @@ describe Api::V1 do
     end
 
     describe 'POST /api/v1/tasks' do
-      let(:params) { {task: { name: 'New Task' }} }
+      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/" }} }
       subject { post '/api/v1/tasks', params, header }
 
       context 'when the caller has a valid token' do
@@ -218,7 +218,8 @@ describe Api::V1 do
             parsed_json = JSON.parse(subject.body)
             expect(parsed_json).to_not be_nil
             expect(parsed_json['name']).to eq 'New Task'
-            expect(Task.where(name: 'New Task', user_id: user.id, app_id: client_app.id).count).to eq 1
+            expect(parsed_json['url']).to eq "http://wwww.gsa.gov/"
+            expect(Task.where(name: 'New Task', url: "http://wwww.gsa.gov/", user_id: user.id, app_id: client_app.id).count).to eq 1
           end
 
           it 'creates an user action record' do
@@ -248,6 +249,7 @@ describe Api::V1 do
         let!(:task) do
           Task.create!({
             name: 'Mega task',
+            url: "http://www.gsa.gov/",
             completed_at: Time.now-1.day,
             user_id: user.id,
             app_id: client_app.id,
@@ -256,12 +258,13 @@ describe Api::V1 do
         end
 
         context 'when valid parameters are used' do
-          let(:params) { { task: { name: 'New Task', task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
+          let(:params) { { task: { name: 'New Task', url: "http://18f.gsa.gov", task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
 
           it 'should update the task and task items' do
             expect(subject.status).to eq 200
             parsed_json = JSON.parse(subject.body)
             expect(parsed_json['name']).to eq 'New Task'
+            expect(parsed_json['url']).to eq 'http://18f.gsa.gov'
             expect(parsed_json['task_items'].first['name']).to eq 'Task item one'
           end
 
@@ -280,12 +283,13 @@ describe Api::V1 do
             }).tap {|t| t.complete! }
           end
 
-          let(:params) { {task: { name: 'New Incomplete Task', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
+          let(:params) { {task: { name: 'New Incomplete Task', url: 'http://whitehouse.gov', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one' }] }} }
 
           it 'should no longer be marked as complete when specified' do
             expect(subject.status).to eq 200
             parsed_json = JSON.parse(subject.body)
             expect(parsed_json['name']).to eq 'New Incomplete Task'
+            expect(parsed_json['url']).to eq 'http://whitehouse.gov'
             expect(parsed_json['task_items'].first['name']).to eq 'Task item one'
           end
 
@@ -313,6 +317,7 @@ describe Api::V1 do
       let(:task) do
         Task.create! do |t|
           t.name = 'New Task'
+          t.url = 'http://www.gsa.gov'
           t.user_id = user.id
           t.app_id = client_app.id
           t.task_items = [
@@ -329,6 +334,7 @@ describe Api::V1 do
           parsed_json = JSON.parse(subject.body)
           expect(parsed_json).to_not be_nil
           expect(parsed_json['name']).to eq 'New Task'
+          expect(parsed_json['url']).to eq 'http://www.gsa.gov'
           expect(parsed_json['task_items'].first['name']).to eq "Task Item #1"
           expect(parsed_json['task_items'].last['url']).to eq 'http://valid_url.com'
         end

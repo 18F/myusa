@@ -25,9 +25,12 @@ environment, e.g. `production` and `staging`.
 
 | Placeholder | Example | Purpose |
 | ----------- | ------- | ------- |
+| $SPACENAME  | `staging` | Cloud Foundry Space housing the application |
 | $HOSTNAME | `myusa-staging` | Hostname of the application |
 | $DOMAIN  | `18f.gov` | Domain name in which the hostname will be added |
 | $DATABASE_URL | `mysql2://...` | [Database connection string](#mysql-database) |
+
+You may find it easier to set variables in your local environment so you can just copy and paste the commands below.
 
 _These instructions are based on the [18F Cloud Foundry Quick Deployment Guide](https://docs.18f.gov/apps/deployment/). Take a look at them if you run into trouble._
 

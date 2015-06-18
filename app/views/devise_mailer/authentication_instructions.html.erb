@@ -49,14 +49,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
                                         <tr>
                                             <td valign="top" class="bodyContent" mc:edit="body_content">
-                                                <p>Hello there <%= @resource.email %> </p>
-                                                <p>Below is your requested <%= link_to 'access link', new_user_session_url(email: @resource.email, token: @token.raw).html_safe %> to connect to MyUSA.</p>
-                                                <p>
-                                                <%= link_to 'Connect to MyUSA', new_user_session_url(email: @resource.email, token: @token.raw).html_safe, :class => 'btn-myusa'  %>
-                                                </p>
-                                                <p>If you do not want to connect to MyUSA from this email account, just ignore this message.</p>
-                                                <p>Thanks!</p>
-                                                <p>- The MyUSA team</p>
+                                              <%= render 'content' %>
                                             </td>
                                         </tr>
                                     </table>

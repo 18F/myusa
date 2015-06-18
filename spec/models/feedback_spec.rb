@@ -25,6 +25,8 @@ describe Feedback do
         FactoryGirl.build(:feedback, remote_ip: remote_ip, created_at: Time.now - 10.seconds).save(validate: false)
       end
 
+      # NOTE: This test will fail unless you have remembered to set your DB's timezone to UTC.
+      # See http://stackoverflow.com/questions/947299/how-do-i-make-mysqls-now-and-curdate-functions-use-utc for how
       it 'allows more than one message per IP' do
         expect(FactoryGirl.create(:feedback, remote_ip: remote_ip)).to be_truthy
       end

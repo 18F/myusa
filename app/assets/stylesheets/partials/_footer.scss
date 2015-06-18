@@ -1,0 +1,37 @@
+$large-screen: em(860) !default;
+
+footer {
+  background-color: #9FA3A6;
+  text-align: center;
+  margin-top: 25px;
+
+  #partners {
+    @include outer-container;
+    padding: 40px 25px;
+    color: white;
+
+    h3 { 
+      padding-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .partner {
+      display: block;
+      margin: 15px 0;
+      @include span-columns(12);
+
+      @include media($large-screen) {
+        display: inline-block;
+        @include span-columns(4);
+      }
+      img { max-width: 250px; }
+    }
+  }
+
+  #disclaimer {
+    background-color: #EEF2F4;
+    padding: 25px 20px;
+    a { color: $base-font-color; }
+  }
+
+}

@@ -11,7 +11,7 @@ describe 'Sign In' do
   let(:sms_page) { TwoFactor::SmsPage.new}
   let(:welcome_page) { WelcomePage.new }
 
-  let(:email_link_text) { 'Connect to MyUSA' }
+  let(:email_link_text) { 'click here' }
 
   describe 'page' do
     before do
@@ -111,6 +111,12 @@ describe 'Sign In' do
       it 'sends the user an email with sign in link' do
         open_email(email)
         expect(current_email).to have_link(email_link_text)
+      end
+
+      it 'sends an HTTPS link' do
+        open_email(email)
+        link = current_email.find_link(email_link_text)
+        expect(link[:href]).to match(/^https/)
       end
 
       describe 'resending token via email' do

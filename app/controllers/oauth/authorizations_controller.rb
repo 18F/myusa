@@ -10,8 +10,9 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
     def current_user
       user = OpenStruct.new
       user.profile = OpenStruct.new
-      user.profile.first_name = "Firstname"
-      user.profile.last_name = "Lastname"
+      #user.profile.first_name = "Firstname"
+      #user.profile.last_name = "Lastname"
+      user.profile.email = "elizabeth.goodman@gsa.gov"
       user.define_singleton_method(:has_role?) do |params|
         false
       end
@@ -28,7 +29,7 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
     @pre_auth.state = "fake_state"
     @pre_auth.response_type = "fake_response_type"
     @pre_auth.scope = "fake_scope"
-    @pre_auth.scopes = %w(profile.first_name profile.last_name)
+    @pre_auth.scopes = %w(profile.first_name profile.last_name profile.email)
     @pre_auth.client.application.tos_link = "https://github.com/18F"
     @pre_auth.client.application.privacy_policy_link = "https://github.com/18F"
     render :new

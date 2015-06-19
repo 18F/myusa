@@ -92,6 +92,13 @@ module ScopesHelper
     scope.starts_with?('profile.')
   end
 
+  def scope_value_present?(scope)
+    field = Profile.attribute_from_scope(scope)
+    value = current_user.profile.send(field)
+
+    value.present?
+  end
+
   def scope_field_tag(scope, opts = {})
     return unless profile_scope?(scope)
     read_only = opts.delete :read_only

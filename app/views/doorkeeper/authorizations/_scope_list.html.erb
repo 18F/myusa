@@ -4,17 +4,24 @@
   <section>
     <h3 id="section_<%= group %>"><%= t("scope_groups.#{group}.subheading") %></h3>
 
-    <% group_scopes.each do |scope| %>
+    <% group_scopes.each_with_index do |scope, index| %>
 
-      <span id="instructions_<%= scope_id(scope) %>">
-        <%= scope_field_tag(scope) %>
-      </span>
+      <% if scope_value_present?(scope) %>
+        <span id="user_<%= scope_id(scope) %>" aria-describedby="your_info section_<%= "#{index+1}" %>">
+          <%= scope_field_tag(scope) %>
+        </span>
+      <% else %>
+        <label for="<%= scope_id(scope) %>">Enter your <%= scope_id(scope) %>
+          <%= scope_field_tag(scope) %>
+        </label>
+      <% end %>
+
       <label for="label_<%= scope_id(scope) %>" class="label-switch">
         <input type="checkbox"
                id="label_<%= scope_id(scope) %>"
                name="scope[]"
                tabindex="0"
-               aria-describedby="instructions_<%= scope_id(scope) %>"
+               aria-describedby="<%= scope_id(scope) %> share_col section_<%= "#{index+1}" %>"
                value="<%= scope %>">
           <div class="checkbox" role="checkbox" tabindex="-1">
             <span>YES</span>

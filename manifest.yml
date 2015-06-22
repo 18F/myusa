@@ -1,0 +1,7 @@
+---
+applications:
+- name: myusa
+  memory: 512M
+  instances: 1
+  host: myusa
+  domain: 18f.gov

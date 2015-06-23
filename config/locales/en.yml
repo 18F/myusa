@@ -231,6 +231,8 @@ en:
       subject: '%{name} requested public access'
     notification:
       subject: 'Message from %{name} about %{subject}'
+    authentication:
+      subject: Authenticate With MyUSA
 
   mobile_confirmation:
     skip_this_step: 'You can add your mobile number on your <a href="%{profile_link}">MyUSA profile</a> at another time.'

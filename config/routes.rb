@@ -4,7 +4,10 @@ Rails.application.routes.draw do
 
   # Routes for simpler redesigning
   # "/permissions" probably should be removed before any deploy
-  get "permissions" => "oauth/authorizations#redesign"
+  if Rails.env.development?
+    get "permissions" => "oauth/authorizations#redesign"
+  end
+  
   get "redesign" => "redesign#index"
 
   root to: "home#index"

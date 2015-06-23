@@ -113,6 +113,12 @@ describe 'Sign In' do
         expect(current_email).to have_link(email_link_text)
       end
 
+      it 'sends an HTTPS link' do
+        open_email(email)
+        link = current_email.find_link(email_link_text)
+        expect(link[:href]).to match(/^https/)
+      end
+
       describe 'resending token via email' do
         before :each do
           token_instructions_page.resend_link.click

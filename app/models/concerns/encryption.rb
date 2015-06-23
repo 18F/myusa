@@ -1,10 +1,12 @@
 require 'active_support/concern'
 
-module Encryption  
+module Encryption
   extend ActiveSupport::Concern
 
   def key
-    key_val = Rails.configuration.database_configuration[Rails.env]['encryption_key']
+    key_val = ENV['DB_ENCRYPT_KEY'] ||
+              Rails.configuration.database_configuration[Rails.env]['encryption_key']
+
     # if in production. require key to be set.
     if Rails.env.production?
       raise 'Must set token key!!' unless key_val

@@ -11,7 +11,7 @@
           <%= scope_field_tag(scope) %>
         </span>
       <% else %>
-        <label for="<%= scope_id(scope) %>">Enter your <%= scope_id(scope) %>
+        <label for="<%= scope_id(scope) %>"><%= t "scopes.#{scope}.label" %>
           <%= scope_field_tag(scope) %>
         </label>
       <% end %>

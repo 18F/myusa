@@ -192,9 +192,9 @@ describe 'OAuth' do
           expect(@auth_page).to have_no_profile_email
           @auth_page.profile_last_name.set 'McTesterson'
           @auth_page.allow_button.click
-  
+
           token = @token_page.get_token(oauth_client, client_app.redirect_uri)
-  
+
           profile = JSON.parse token.get('/api/profile').body
           expect(profile['last_name']).to eq('McTesterson')
           expect(profile['email']).to eq('testy.mctesterson@gsa.gov')
@@ -273,7 +273,9 @@ describe 'OAuth' do
              'Allow the application send you notifications via MyUSA'])
         end
 
-        it_behaves_like 'authorizable'
+        pending do
+          it_behaves_like 'authorizable'
+        end
       end
 
       context 'with non-public (sandboxed) app' do

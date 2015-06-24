@@ -32,6 +32,9 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
     @pre_auth.scopes = %w(profile.first_name profile.last_name profile.email)
     @pre_auth.client.application.tos_link = "https://github.com/18F"
     @pre_auth.client.application.privacy_policy_link = "https://github.com/18F"
+
+    @app_name = @pre_auth.client.application.name
+
     render :new
   end
 

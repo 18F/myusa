@@ -2,7 +2,7 @@
   <%- if group_scopes.present? -%>
 
   <section>
-    <h3 id="section_<%= group %>"><%= t("scope_groups.#{group}.subheading") %></h3>
+    <h3 id="section_<%= group %>"><%= t("scope_groups.#{group}.subheading", app_name: app_name) %></h3>
 
     <% group_scopes.each_with_index do |scope, index| %>
 

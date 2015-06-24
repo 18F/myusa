@@ -43,4 +43,6 @@ Rails.application.configure do
   config.sms_sender_number = '+12407433320'
   config.sms_delivery_method = :email # or :twilio
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
 end

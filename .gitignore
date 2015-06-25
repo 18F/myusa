@@ -37,6 +37,7 @@ kitchen/data_bags/staging/*
 kitchen/data_bags/production/*
 
 # folders
+db/backup
 coverage
 log/*
 public/system

@@ -25,6 +25,7 @@ gem 'rails-observers'
 gem 'twilio-ruby'
 gem 'bootstrap_tokenfield_rails'
 gem 'will_paginate'
+gem 'datashift'
 
 gem 'bourbon'
 gem 'neat'

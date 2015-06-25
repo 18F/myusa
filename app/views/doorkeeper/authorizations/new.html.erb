@@ -18,7 +18,7 @@
         <h2><%= @pre_auth.client.application.name %> requests your information.</h2>
         <p><%= @pre_auth.client.application.name %> would like to use some of the data from your MyUSA account to personalize your interactions.</p>
 
-        <p>Please review the following to determine what data you allow MyUSA to share with <%= @app_name %> from your MyUSA account. Sharing this information will help us serve you better, but it’s not required.</p>
+        <p>Please review the following to determine what data you allow MyUSA to share with <%= @pre_auth.client.application.name %> from your MyUSA account. Sharing this information will help us serve you better, but it’s not required.</p>
       </header>
 
       <div class="dividers">
@@ -26,12 +26,12 @@
         <span id="share_col">Share</span>
       </div>
 
-      <%= render 'scope_list', scopes: @pre_auth.scopes, app_name: @app_name %>
+      <%= render 'scope_list', scopes: @pre_auth.scopes, app_name: @pre_auth.client.application.name %>
 
       </section>
 
       <section id="submit">
-        <h3>By clicking Allow, you agree to share the above information from your MyUSA account with <%= @app_name %>.</h3>
+        <h3>By clicking Allow, you agree to share the above information from your MyUSA account with <%= @pre_auth.client.application.name %>.</h3>
         <div class="button_group">
           <%= hidden_field_tag :user_id, current_user.id %>
           <%= hidden_field_tag :allow, "1", :id => "allow" %>

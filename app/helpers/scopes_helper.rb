@@ -112,7 +112,6 @@ module ScopesHelper
       opts.merge!(prompt: t(:not_specified))
       select_tag "profile[#{field}]", profile_options, opts
     else
-      opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
       text_field_tag("profile[#{field}]", current_user.profile.send(field),
                      opts)
     end

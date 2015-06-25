@@ -10,9 +10,9 @@ class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
     def current_user
       user = OpenStruct.new
       user.profile = OpenStruct.new
-      #user.profile.first_name = "Firstname"
-      #user.profile.last_name = "Lastname"
-      user.profile.email = "elizabeth.goodman@gsa.gov"
+      user.profile.first_name = "Firstname"
+      user.profile.last_name = "Lastname"
+      #user.profile.email = "elizabeth.goodman@gsa.gov"
       user.define_singleton_method(:has_role?) do |params|
         false
       end

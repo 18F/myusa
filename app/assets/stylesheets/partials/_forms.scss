@@ -84,7 +84,7 @@ form {
       font-family: "Raleway", Helvetica, sans-serif;
       span { display: none; }
       &:before {
-        @include position(absolute, 6px 0 0 31px);
+        @include position(absolute, 5px 0 0 31px);
         @include transform(scale(1));
         @include transition(all 0.1s ease);
         border-radius: $switch-radius;

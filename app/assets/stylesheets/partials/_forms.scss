@@ -69,7 +69,7 @@ form {
 
     + .checkbox {
       @include transition(all 0.1s ease);
-      background: #C9D4D9;
+      background: #666;
       border-radius: $switch-radius;
       border: solid 1px white;
       cursor: pointer;

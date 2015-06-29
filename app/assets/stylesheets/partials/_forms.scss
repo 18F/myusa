@@ -1,0 +1,124 @@
+form {
+  label { display: block; }
+  #{$all-text-inputs},
+  select[multiple=multiple],
+  textarea {
+    border: 1px solid #C9D4D9;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: block;
+    transition: border-color;
+    width: 70%;
+    height: 40px;
+    padding: 0.5em 0.5em;
+    &:focus {
+      border-color: #3770c0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06),0 0 5px #3770c0;
+      outline: none;
+    }
+  }
+  button
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"] {
+    font-family: $base-font-family;
+    font-weight: 600;
+    background-color: #0069A0;
+    border: 2px solid #0069A0;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    font-size: 1.1em;
+  }
+}
+
+.label-switch {  
+  $action-color: #477DCA !default;
+  $base-background-color: white !default;
+  $switch-width: 62px;
+  $switch-padding: 2px;
+  $switch-height: 25px;
+  $switch-radius: $switch-height;
+  $knob-size: $switch-height - ($switch-padding * 2);
+  $knob-radius: $switch-height - ($switch-padding * 2);
+  $knob-width: $knob-size;
+  $switch-background: $base-background-color;
+  $switch-border-background: darken($base-background-color, 9%);
+
+  border-radius: $switch-radius;
+  cursor: pointer;
+  display: inline-block;
+  height: $switch-height;
+  position: relative;
+  width: $switch-width;
+
+  input[type="checkbox"] {
+    position: absolute; 
+    overflow: hidden; 
+    clip: rect(0 0 0 0); 
+    height: 1px; width: 1px; 
+    margin: -1px; padding: 0; border: 0; 
+    &:focus {
+      + .checkbox {
+        outline: none;
+        border-color: #9ecaed;
+        box-shadow: 0 0 10px #9ecaed;
+      }
+    }
+
+    + .checkbox {
+      @include transition(all 0.1s ease);
+      background: #666;
+      border-radius: $switch-radius;
+      border: solid 1px white;
+      cursor: pointer;
+      height: $switch-height;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: $switch-width;
+      z-index: 0;
+      color: white;
+      font-size: 0.7em;
+      font-family: "Raleway", Helvetica, sans-serif;
+      span { display: none; }
+      &:before {
+        @include position(absolute, 5px 0 0 31px);
+        @include transform(scale(1));
+        @include transition(all 0.1s ease);
+        border-radius: $switch-radius;
+        height: $knob-radius;
+        width: $switch-width - ($switch-padding * 2);
+        z-index: 1;
+        content: "NO";
+      }
+      &:after {
+        @include position(absolute, 1px 0 0 1px);
+        @include transition(all 0.3s ease);
+        @include size($knob-size);
+        background: $switch-background;
+        border-radius: $knob-radius;
+        content: "";
+        z-index: 2;
+      }
+    }
+
+    &:checked {
+      + .checkbox {
+        background: $action-color;
+        span {
+          display: inline;
+          @include position(absolute, 6px 0 0 10px);
+        }
+        &:before {
+          @include transform(scale(0));
+          @include position(absolute, 2px 0 0 30px);
+        }
+        &:after {
+          left: $switch-width - $knob-width - ($switch-padding);
+        }
+      }
+    }
+  }
+}

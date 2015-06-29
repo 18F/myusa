@@ -49,6 +49,10 @@ module ScopesHelper
     yield(scope.gsub(/\./, '_'), t("scopes.#{scope}.label"))
   end
 
+  def scope_id(scope)
+    scope.gsub(/\./, '_')
+  end
+
   def scope_field_label(scope)
     scope_tag(scope) do |id, display|
       label :scope, id, display
@@ -88,6 +92,13 @@ module ScopesHelper
     scope.starts_with?('profile.')
   end
 
+  def scope_value_present?(scope)
+    field = Profile.attribute_from_scope(scope)
+    value = current_user.profile.send(field)
+
+    value.present?
+  end
+
   def scope_field_tag(scope, opts = {})
     return unless profile_scope?(scope)
     read_only = opts.delete :read_only
@@ -101,7 +112,6 @@ module ScopesHelper
       opts.merge!(prompt: t(:not_specified))
       select_tag "profile[#{field}]", profile_options, opts
     else
-      opts.merge!(placeholder: t("scopes.#{scope}.placeholder"))
       text_field_tag("profile[#{field}]", current_user.profile.send(field),
                      opts)
     end

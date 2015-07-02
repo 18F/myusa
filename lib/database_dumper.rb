@@ -14,7 +14,7 @@ class DatabaseDumper
     FileUtils.mkdir_p(EXPORT_DIR)
   end
 
-  def self.remove_dir
+  def self.cleanup
     FileUtils.rm_rf(EXPORT_DIR)
   end
 
@@ -39,6 +39,7 @@ class DatabaseDumper
     save_csv(Task, "tasks")
     save_csv(TaskItem, "task_items")
     save_csv(UnsubscribeToken, "unsubscribe_tokens")
+    puts "Export complete"
   end
 
   def self.save_csv(klass, filename)
@@ -97,7 +98,7 @@ class DatabaseDumper
         import_csv(Task, "tasks")
         import_csv(TaskItem, "task_items")
         import_csv(UnsubscribeToken, "unsubscribe_tokens")
-        raise "FOO!"
+        puts "Import complete"
       end
     end
 

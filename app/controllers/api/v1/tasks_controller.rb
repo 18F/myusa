@@ -1,5 +1,6 @@
 class Api::V1::TasksController < Api::ApiController
   doorkeeper_for :all, scopes: ['tasks']
+  wrap_parameters :task, include: [:name, :url, :completed_at, :task_items_attributes]
 
   def index
     @tasks = current_resource_owner.tasks.where(:app_id => doorkeeper_token.application.id).joins(:task_items)

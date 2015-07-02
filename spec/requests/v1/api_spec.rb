@@ -208,7 +208,7 @@ describe Api::V1 do
     end
 
     describe 'POST /api/v1/tasks' do
-      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/", task_items_attributes: [name: "Item 1", external_id: "abc"]}} }
+      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/", task_items_attributes: [{name: "Item 1", external_id: "abc"}]}} }
       subject { post '/api/v1/tasks', params, header }
 
       context 'when the caller has a valid token' do

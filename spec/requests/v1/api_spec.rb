@@ -208,7 +208,7 @@ describe Api::V1 do
     end
 
     describe 'POST /api/v1/tasks' do
-      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/" }} }
+      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/", task_items_attributes: [name: "Item 1", external_id: "abc"]}} }
       subject { post '/api/v1/tasks', params, header }
 
       context 'when the caller has a valid token' do
@@ -220,6 +220,25 @@ describe Api::V1 do
             expect(parsed_json['name']).to eq 'New Task'
             expect(parsed_json['url']).to eq "http://wwww.gsa.gov/"
             expect(Task.where(name: 'New Task', url: "http://wwww.gsa.gov/", user_id: user.id, app_id: client_app.id).count).to eq 1
+          end
+
+          it "should create a new task item for the task" do
+            expect(subject.status).to eq 200
+            parsed_json = JSON.parse(subject.body)
+
+            expect(parsed_json).to_not be_nil
+            expect(parsed_json['task_items'].count).to eq 1
+            expect(parsed_json['task_items'][0]['name']).to eq 'Item 1'
+            expect(parsed_json['task_items'][0]['external_id']).to eq 'abc'
+
+            task = Task.where(name: 'New Task', url: "http://wwww.gsa.gov/", user_id: user.id, app_id: client_app.id).first
+            expect(task).to_not be_nil
+            expect(task.task_items.count).to eq 1
+
+            item = task.task_items.first
+            expect(item.name).to eq "Item 1"
+            expect(item.external_id).to eq "abc"
+            expect(item).to_not be_completed
           end
 
           it 'creates an user action record' do

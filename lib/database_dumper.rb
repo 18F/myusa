@@ -1,16 +1,11 @@
 require 'csv'
 require 'rubygems'
-require 'datashift'
 require 'fileutils'
 
 class DatabaseDumper
   EXPORT_DIR = Rails.root.join("db", "backup")
 
   def self.ensure_dir
-    DataShift::require_libraries
-    require 'csv_exporter'
-    require 'csv_loader'
-
     FileUtils.mkdir_p(EXPORT_DIR)
   end
 
@@ -25,27 +20,27 @@ class DatabaseDumper
   def self.export_all_csvs
     ensure_dir
     save_profiles_csv
-    save_csv(AuthenticationToken, "authentication_tokens")
-    save_csv(Authentication, "authentications")
-    save_csv(Doorkeeper::Application, "oauth_applications")
-    save_csv(Authorization, "authorizations")
-    save_csv(Feedback, "feedbacks")
-    save_csv(Notification, "notifications")
-    save_csv(Doorkeeper::AccessGrant, "oauth_access_grants")
-    save_csv(Doorkeeper::AccessToken, "oauth_access_tokens")
-    # fix me save_csv(Doorkeeper::Scope.all, "oauth_scopes")  FIXME
-    save_csv(Role, "roles")
-    save_csv(SmsCode, "sms_codes")
-    save_csv(Task, "tasks")
-    save_csv(TaskItem, "task_items")
-    save_csv(UnsubscribeToken, "unsubscribe_tokens")
-    puts "Export complete"
+
+    [AuthenticationToken, Authentication, Doorkeeper::Application, Authorization, Feedback, Notification, Doorkeeper::AccessGrant,
+     Doorkeeper::AccessToken, Role, SmsCode, Task, TaskItem, UnsubscribeToken].each do |klass|
+      save_csv(klass)
+    end
+    #puts "Export complete"
   end
 
-  def self.save_csv(klass, filename)
-    records = klass.all
-    exporter = DataShift::CsvExporter.new(csv_path(filename))
-    exporter.export(records)
+  def self.save_csv(klass)
+    return unless klass.count > 0    
+
+    column_names = klass.columns.map(&:name)
+    table_name = klass.table_name
+
+    CSV.open(csv_path(table_name), "w") do |csv|
+      csv << column_names
+
+      klass.find_each do |x|
+        csv << column_names.map {|c| x.read_attribute(c) }  # after it's been type-cast
+      end
+    end
   end
 
   def self.save_profiles_csv
@@ -84,21 +79,12 @@ class DatabaseDumper
       ensure_dir
       ActiveRecord::Base.transaction do
         import_profiles
-        import_csv(AuthenticationToken, "authentication_tokens")
-        import_csv(Authentication, "authentications")
-        import_csv(Doorkeeper::Application, "oauth_applications")
-        import_csv(Authorization, "authorizations")
-        import_csv(Feedback, "feedbacks")
-        import_csv(Notification, "notifications")
-        import_csv(Doorkeeper::AccessGrant, "oauth_access_grants")
-        import_csv(Doorkeeper::AccessToken, "oauth_access_tokens")
-        # fix me save_csv(Doorkeeper::Scope.all, "oauth_scopes")  FIXME
-        import_csv(Role, "roles")
-        import_csv(SmsCode, "sms_codes")
-        import_csv(Task, "tasks")
-        import_csv(TaskItem, "task_items")
-        import_csv(UnsubscribeToken, "unsubscribe_tokens")
-        puts "Import complete"
+        
+        [AuthenticationToken, Authentication, Doorkeeper::Application, Authorization, Feedback, Notification,
+         Doorkeeper::AccessGrant, Doorkeeper::AccessToken, Role, SmsCode, Task, TaskItem, UnsubscribeToken].each do |klass|
+          import_csv(klass)
+        end
+        #puts "Import complete"
       end
     end
 
@@ -117,15 +103,17 @@ class DatabaseDumper
       end
     end
 
-    def self.import_csv(klass, filename)
-      klass.delete_all
-      path = csv_path(filename)
+    def self.import_csv(klass)
+      klass.delete_all 
+      table_name = klass.table_name
+      path = csv_path(table_name)
 
       if File.exists?(path)
-        loader = DataShift::CsvLoader.new(klass)
-        loader.perform_csv_load(path, :dummy => true)
+        CSV.foreach(path, :headers => true) do |row|
+          klass.create row.to_h
+        end
       else
-        puts "No dump found for #{filename}. Assuming that means no records..."
+#        puts "No dump found for #{filename}. Assuming that means no records..."
       end
     end
 end

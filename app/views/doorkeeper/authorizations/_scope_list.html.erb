@@ -22,6 +22,7 @@
                name="scope[]"
                tabindex="0"
                aria-describedby="<%= scope_id(scope) %> share_col section_<%= "#{index+1}" %>"
+               <% if scope_value_required?(scope) %>checked<%- end %>
                value="<%= scope %>">
           <div class="checkbox" role="checkbox" tabindex="-1">
             <span>YES</span>

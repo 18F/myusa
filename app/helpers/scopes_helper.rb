@@ -99,6 +99,13 @@ module ScopesHelper
     value.present?
   end
 
+  def scope_value_required?(scope)
+    # FIXME: inelegant hack for now to make the email required for now.
+    # Look into a mechanism for applications to specify other required
+    # scopes or possibly default sharing scopes yet
+    scope == 'profile.email'
+  end
+
   def scope_field_tag(scope, opts = {})
     return unless profile_scope?(scope)
     read_only = opts.delete :read_only

@@ -1,5 +1,6 @@
 class Api::V1::TasksController < Api::ApiController
   doorkeeper_for :all, scopes: ['tasks']
+  wrap_parameters :task, include: [:name, :url, :completed_at, :task_items_attributes]
 
   def index
     @tasks = current_resource_owner.tasks.where(:app_id => doorkeeper_token.application.id).joins(:task_items)
@@ -47,11 +48,11 @@ class Api::V1::TasksController < Api::ApiController
   end
 
   def task_params
-    params.require(:task).permit(:name, :completed_at, task_items_attributes:[:name])
+    params.require(:task).permit(:name, :url, :completed_at, task_items_attributes:[:name, :external_id])
   end
 
   def update_task_params
-    params.require(:task).permit(:name, :completed_at, task_items_attributes:[:id, :name])
+    params.require(:task).permit(:name, :url, :completed_at, task_items_attributes:[:id, :name, :external_id])
   end
 
 end

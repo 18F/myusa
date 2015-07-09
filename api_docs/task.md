@@ -38,7 +38,8 @@ Create a new task for the user for this application.
 + Parameters
 
 + name (required, string, `Test task`) ...The name for the task that is being created.
-+ task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute' }`) ...A list of task items to be associated with the task.
++ url (optional, string, 'http://18f.gsa.gov') ...an optional URL for the Task. Note you can define URLs for task items too.
++ task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute', :url => 'optional url', :external_id => 'optional ID string' }`) ...A list of task items to be associated with the task. The External ID field is provided for your convenience to more easily map task items to records on your own system.
 
 + Request Create a new task (application/json)
 
@@ -123,11 +124,15 @@ Update a task
       }
     }
 
+Note that if the task or one of its attributes has defined values for fields that are not explicitly included in the PUT request,
+those values will be preserved and will not be overwritten.
+
 + Response 200 (application/json; charset=utf-8)
 
     {
       "id": 1,
       "name": "New Task",
+      "url": "This URL was not updated",
       "completed_at": "2014-07-07T17:59:21.000Z",
       "user_id": 1,
       "created_at": "2014-07-08T17:59:21.000Z",

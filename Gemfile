@@ -6,7 +6,7 @@ gem 'rails', '4.1.9' # update to 4.1.12 when released, due to
                      # In our case, specs fail because of simple_role::has_role?
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1.3'
 gem 'turbolinks'
 gem 'mysql2'
 ## app dependencies

@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.2' # CF Rails buildpack demands explicit ruby version
 
-gem 'rails', '4.1.9' # update to 4.1.12 when released, due to
-                     # https://github.com/rails/rails/pull/19479
-                     # In our case, specs fail because of simple_role::has_role?
+gem 'rails', '~> 4.1.9'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails', '~> 3.1.3'

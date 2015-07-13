@@ -6,21 +6,22 @@ class Feedback < ActiveRecord::Base
 
   after_create :send_feedback
 
-  scope :last_5_seconds, -> { where("date_sub(now(), interval 5 second) <= created_at") }
-  scope :last_24_hours, -> { where("date_sub(now(), interval 24 hour) <= created_at") }
+  scope :last_5_seconds, -> { where('created_at > ?', 5.seconds.ago) }
+  scope :last_24_hours, -> { where('created_at > ?', 24.hours.ago) }
+  scope :with_remote_ip, ->(remote_ip) { where(remote_ip: remote_ip) }
 
   RATE_LIMIT_PER_DAY = 20
 
   private
 
   def rate_limit_per_5_seconds
-    if Feedback.where(remote_ip: self.remote_ip).last_5_seconds.exists?
+    if Feedback.with_remote_ip(remote_ip).last_5_seconds.exists?
       errors.add(:base, :rate_limit_per_5_seconds)
     end
   end
 
   def rate_limit_per_day
-    if Feedback.where(remote_ip: self.remote_ip).last_24_hours.count >= RATE_LIMIT_PER_DAY
+    if Feedback.with_remote_ip(remote_ip).last_24_hours.size >= RATE_LIMIT_PER_DAY
       errors.add(:base, :rate_limit_per_day)
     end
   end

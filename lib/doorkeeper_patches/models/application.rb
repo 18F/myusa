@@ -27,7 +27,7 @@ class Doorkeeper::Application
   validates_presence_of :privacy_policy_link,
     if: :tos_link?, accept: true, allow_nil: false,
     message: :privacy_policy_link_required
-    
+
   validates :description, length: { maximum: 255 }
 
   before_save :clear_requested_public_at, if: ->(a) { a.public_changed? && a.public }
@@ -47,7 +47,7 @@ class Doorkeeper::Application
       nil
     end
   }
-  
+
   def number_of_authorizations
     self.authorizations.length
   end
@@ -78,5 +78,18 @@ class Doorkeeper::Application
 
   def clear_requested_public_at
     self.requested_public_at = nil
+  end
+
+  # Patched to generate if fields are nil or the empty string
+  def generate_uid
+    if uid.blank?
+      self.uid = UniqueToken.generate
+    end
+  end
+
+  def generate_secret
+    if secret.blank?
+      self.secret = UniqueToken.generate
+    end
   end
 end

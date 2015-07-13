@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303184510) do
+ActiveRecord::Schema.define(version: 20150617160707) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 20150303184510) do
     t.integer  "task_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "external_id"
   end
 
   add_index "task_items", ["task_id"], name: "index_task_items_on_task_id", using: :btree
@@ -216,6 +217,7 @@ ActiveRecord::Schema.define(version: 20150303184510) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "app_id"
+    t.string   "url"
   end
 
   add_index "tasks", ["app_id"], name: "index_tasks_on_app_id", using: :btree

@@ -1,8 +1,9 @@
 class Oauth::AuthorizationsController < Doorkeeper::AuthorizationsController
   before_filter :display_not_me, only: [:new]
+  skip_filter *_process_action_callbacks.map(&:filter)
 
-  layout 'dashboard'
-
+  layout 'redesign'
+  
   def new
     if pre_auth.authorizable?
       if matching_token? || skip_authorization?

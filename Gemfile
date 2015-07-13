@@ -1,12 +1,10 @@
 source 'https://rubygems.org'
 ruby '2.2.2' # CF Rails buildpack demands explicit ruby version
 
-gem 'rails', '4.1.9' # update to 4.1.12 when released, due to
-                     # https://github.com/rails/rails/pull/19479
-                     # In our case, specs fail because of simple_role::has_role?
+gem 'rails', '~> 4.1.9'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1.3'
 gem 'turbolinks'
 gem 'mysql2'
 ## app dependencies
@@ -28,7 +26,7 @@ gem 'will_paginate'
 
 gem 'bourbon'
 gem 'neat'
-gem 'refills'
+gem 'bitters'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'

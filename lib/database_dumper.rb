@@ -22,23 +22,31 @@ class DatabaseDumper
     save_profiles_csv
 
     [AuthenticationToken, Authentication, Doorkeeper::Application, Authorization, Feedback, Notification, Doorkeeper::AccessGrant,
-     Doorkeeper::AccessToken, Role, SmsCode, Task, TaskItem, UnsubscribeToken].each do |klass|
+     Doorkeeper::AccessToken, Role, SmsCode, Task, TaskItem, UnsubscribeToken, UserAction].each do |klass|
       save_csv(klass)
     end
+
+    save_csv(User, :methods => [:role_ids])
     #puts "Export complete"
   end
 
-  def self.save_csv(klass)
+  def self.save_csv(klass, options={})
     return unless klass.count > 0    
 
     column_names = klass.columns.map(&:name)
+    csv_columns = column_names
+    csv_columns += options[:methods] if options[:methods]
+
     table_name = klass.table_name
 
     CSV.open(csv_path(table_name), "w") do |csv|
-      csv << column_names
+      csv << csv_columns
 
       klass.find_each do |x|
-        csv << column_names.map {|c| x.read_attribute(c) }  # after it's been type-cast
+        # this is writing out the typecast Rails versions of the database columns
+        row = column_names.map {|c| x.read_attribute(c) }
+        row += options[:methods].map {|c| x.send(c).join(",") } if options[:methods]
+        csv << row
       end
     end
   end
@@ -84,6 +92,8 @@ class DatabaseDumper
          Doorkeeper::AccessGrant, Doorkeeper::AccessToken, Role, SmsCode, Task, TaskItem, UnsubscribeToken].each do |klass|
           import_csv(klass)
         end
+
+        import_users
         #puts "Import complete"
       end
     end
@@ -100,6 +110,24 @@ class DatabaseDumper
         end
 
         p.save!
+      end
+    end
+
+    def self.import_users
+      User.delete_all
+      path = csv_path("users")
+      return unless File.exists?(path)
+
+      CSV.foreach(path, :headers => true) do |row|
+        attr_hash = row.to_h
+        role_ids = attr_hash.delete("role_ids")
+
+        u = User.create(attr_hash)
+
+        # role_ids.split(/,/).each do |role_id|
+        #   r = Role.find(role_id)
+        #   u.roles << r
+        # end
       end
     end
 

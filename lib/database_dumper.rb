@@ -53,10 +53,11 @@ class DatabaseDumper
 
   def self.save_profiles_csv
     CSV.open(csv_path("profiles"), "w") do |csv|
-      csv << %w(user_id created_at updated_at title first_name middle_name last_name suffix address address2 city state zip gender marital_status is_parent is_student is_veteran is_retired phone mobile)
+      csv << %w(id user_id created_at updated_at title first_name middle_name last_name suffix address address2 city state zip gender marital_status is_parent is_student is_veteran is_retired phone mobile)
 
       Profile.find_each do |p|
         csv << [
+          p.id,
           p.user_id,
           p.created_at,
           p.updated_at,
@@ -103,6 +104,7 @@ class DatabaseDumper
 
       CSV.foreach(csv_path("profiles"), :headers => true) do |row|
         p = Profile.new(:user_id => row["user_id"], :created_at => row["created_at"], :updated_at => row["updated_at"])
+        p.id = row["id"]   # necessary to copy over the row
 
         Profile::ENCRYPTED_FIELDS.each do |f|
           f = f.to_s   # CSV row hashmap is not indifferent about symbols vs. hash keys

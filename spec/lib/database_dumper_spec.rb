@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'database_dumper'
 
 describe DatabaseDumper do
-  after :each do
+  before :each do
   	DatabaseDumper.cleanup
   end
 
@@ -13,8 +13,8 @@ describe DatabaseDumper do
   		DatabaseDumper.export_all_csvs
   		klass.delete_all
   		DatabaseDumper.import_all_csvs
-  		after = klass.first
-  		expect(before).to eq(after)
+  		after = klass.last
+  		expect(after).to eq(before)
   	end
   end
 
@@ -26,7 +26,7 @@ describe DatabaseDumper do
     DatabaseDumper.import_all_csvs
 
     after = User.first
-    expect(before).to eq(after)
+    expect(after).to eq(before)
     role = Role.first
 
     expect(after.roles.count).to eq(1)
@@ -36,12 +36,14 @@ describe DatabaseDumper do
   end
 
   it "should back up the profiles table" do
-  	before = create(:full_profile)
+  	before = create(:full_profile, created_at: 10.minutes.ago, updated_at: 2.minutes.ago)
+    # expect(Profile.count).to eq(1)
+
   	DatabaseDumper.export_all_csvs
   	Profile.delete_all
   	DatabaseDumper.import_all_csvs
-  	after = Profile.first
+  	after = Profile.last
 
-  	expect(before).to eq(after)
+    expect(after).to eq(before)
   end
 end

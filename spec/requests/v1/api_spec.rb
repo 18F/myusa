@@ -208,7 +208,7 @@ describe Api::V1 do
     end
 
     describe 'POST /api/v1/tasks' do
-      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/", task_items_attributes: [{name: "Item 1", external_id: "abc"}]}} }
+      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/", task_items_attributes: [{name: "Item 1", external_id: "abc", url: "http://www.gsa.gov/"}]}} }
       subject { post '/api/v1/tasks', params, header }
 
       context 'when the caller has a valid token' do
@@ -230,6 +230,7 @@ describe Api::V1 do
             expect(parsed_json['task_items'].count).to eq 1
             expect(parsed_json['task_items'][0]['name']).to eq 'Item 1'
             expect(parsed_json['task_items'][0]['external_id']).to eq 'abc'
+            expect(parsed_json['task_items'][0]['url']).to eq 'http://www.gsa.gov/'
 
             task = Task.where(name: 'New Task', url: "http://wwww.gsa.gov/", user_id: user.id, app_id: client_app.id).first
             expect(task).to_not be_nil

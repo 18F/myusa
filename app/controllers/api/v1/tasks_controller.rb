@@ -55,11 +55,11 @@ class Api::V1::TasksController < Api::ApiController
   end
 
   def task_params
-    params.require(:task).permit(:name, :url, :completed_at, task_items_attributes:[:name, :external_id])
+    params.require(:task).permit(:name, :url, :completed_at, task_items_attributes:[:name, :external_id, :url, :completed_at])
   end
 
   def update_task_params
-    params.require(:task).permit(:name, :url, :completed_at, task_items_attributes:[:id, :name, :external_id])
+    params.require(:task).permit(:name, :url, :completed_at, task_items_attributes:[:id, :name, :external_id, :url, :completed_at])
   end
 
 end

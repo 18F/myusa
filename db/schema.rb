@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617160707) do
+ActiveRecord::Schema.define(version: 20150714180901) do
 
   create_table "authentication_tokens", force: true do |t|
     t.integer  "user_id"
@@ -105,6 +105,15 @@ ActiveRecord::Schema.define(version: 20150617160707) do
   add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
   add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "oauth_application_scopes", force: true do |t|
+    t.integer "application_id"
+    t.string  "name"
+    t.text    "reason_needed"
+  end
+
+  add_index "oauth_application_scopes", ["application_id", "name"], name: "index_oauth_application_scopes_on_application_id_and_name", unique: true, using: :btree
+  add_index "oauth_application_scopes", ["application_id"], name: "index_oauth_application_scopes_on_application_id", using: :btree
 
   create_table "oauth_applications", force: true do |t|
     t.string   "name",                                                   null: false

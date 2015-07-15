@@ -1,11 +1,12 @@
 require 'simple_role'
 
 class Doorkeeper::Application
-  include Doorkeeper::Models::Scopes
+  #include Doorkeeper::Models::Scopes
 
   acts_as_authorization_object
 
   has_many :authorizations, dependent: :destroy
+  has_many :application_scopes, dependent: :destroy
 
   validates_format_of :logo_url, with: URI.regexp(['https']),
                                  allow_blank: true,
@@ -72,6 +73,30 @@ class Doorkeeper::Application
   # Could not figure out how to implement this as a relation ...
   def owner
     self.roles.where(name: 'owner').first.users.first
+  end
+
+  # Have the methods from Doorkeeper::Models::Scopes use the associated tables instead
+  def scopes
+    application_scopes.map(&:name)
+  end
+
+  def scopes=(scopes_str)
+    scope_names = scopes_str.split(/\s+/)
+
+    scope_names.each do |name|
+      application_scopes.for_name(name).first_or_create!
+    end
+
+    not_selected = scopes.reject {|r| scope_names.include?(r) }
+    not_selected.each {|sn| application_scopes.for_name(sn).first.destroy }
+  end
+  
+  def scopes_string
+    scopes.join
+  end
+
+  def includes_scope?(*required_scopes)
+    required_scopes.blank? || required_scopes.any? { |s| scopes.exists?(s.to_s) }
   end
 
   private

@@ -43,10 +43,6 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bitters (1.0.0)
-      bourbon (>= 3.2)
-      sass (>= 3.2)
-      thor
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     bootstrap_tokenfield_rails (0.0.6)
@@ -350,7 +346,6 @@ DEPENDENCIES
   autoprefixer-rails
   better_errors
   binding_of_caller
-  bitters
   bootstrap-sass (~> 3.2.0)
   bootstrap_tokenfield_rails
   bourbon

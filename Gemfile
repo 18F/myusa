@@ -26,7 +26,6 @@ gem 'will_paginate'
 
 gem 'bourbon'
 gem 'neat'
-gem 'bitters'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'

@@ -7,6 +7,8 @@ class Api::ApiController < ActionController::Base
   doorkeeper_for :all
 
   around_filter ApiSweeper.instance
+  
+  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
   protected
 
@@ -23,6 +25,10 @@ class Api::ApiController < ActionController::Base
     [ resource ]
   end
 
+  def not_found
+    render :json => doorkeeper_not_found_options, :status => :not_found
+  end
+
   def audit_api_access
     resources.each do |r|
       UserAction.create(
@@ -32,6 +38,10 @@ class Api::ApiController < ActionController::Base
         data: { action: params[:action] }
       )
     end
+  end
+
+  def doorkeeper_not_found_options
+    {json: {message: 'Not Found'}}
   end
 
   def doorkeeper_unauthorized_render_options

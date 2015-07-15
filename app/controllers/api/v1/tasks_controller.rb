@@ -41,6 +41,13 @@ class Api::V1::TasksController < Api::ApiController
     end
   end
 
+  def destroy
+    @task = current_resource_owner.tasks.find(params[:id])
+    @task.destroy
+
+    render :json => @task.to_json(:include => :task_items), :status => 200
+  end
+
   private
 
   def resources

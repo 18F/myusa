@@ -1,0 +1,12 @@
+$large-screen: em(860) !default;
+
+footer {
+  text-align: center;
+
+  #disclaimer {
+    background-color: #EEF2F4;
+    padding: 25px 20px;
+    a { color: $base-font-color; }
+  }
+
+}

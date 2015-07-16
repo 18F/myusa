@@ -1,6 +1,7 @@
 require 'simple_role'
 
 class Doorkeeper::Application
+  # Implemented these methods below to also update our tables
   #include Doorkeeper::Models::Scopes
 
   acts_as_authorization_object
@@ -92,7 +93,7 @@ class Doorkeeper::Application
   end
   
   def scopes_string
-    scopes.join
+    scopes.join(' ')
   end
 
   def includes_scope?(*required_scopes)

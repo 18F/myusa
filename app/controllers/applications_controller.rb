@@ -1,17 +1,19 @@
 class ApplicationsController < ApplicationController
   before_filter :authenticate_user!
 
-  before_filter :build_application, only: [:new, :create]
   before_filter :set_application, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
-  before_filter :update_application, only: [:create, :update]
-
   before_filter :require_owner_or_admin!, only: [:show, :edit, :update, :destroy, :new_api_key, :make_public]
 
   layout 'dashboard'
 
-  def new; end
+  def new
+    build_application
+  end
 
   def create
+    build_application
+    update_application
+
     if @application.errors.empty? && @application.save
       current_user.grant_role!(:owner, @application)
 
@@ -25,6 +27,8 @@ class ApplicationsController < ApplicationController
   end
 
   def update
+    update_application
+
     if @application.errors.empty? && @application.save
       flash[:notice] = I18n.t(:notice, scope: [:doorkeeper, :flash, :applications, :update])
       if params[:return_to]
@@ -83,7 +87,7 @@ class ApplicationsController < ApplicationController
       :name, :description, :short_description, :custom_text, :url,
       :logo_url, :owner_emails, :developer_emails, :scopes, :redirect_uri,
       :federal_agency, :organization, :terms_of_service_accepted, :tos_link,
-      :privacy_policy_link
+      :privacy_policy_link, :scopes
     ]
     if current_user.has_role?(:admin)
       params << :public
@@ -92,6 +96,7 @@ class ApplicationsController < ApplicationController
     return params
   end
 
+  # How the form gets away with using scope
   def application_params
     if params.has_key?(:scope)
       params[:application][:scopes] = params[:scope].join(' ')

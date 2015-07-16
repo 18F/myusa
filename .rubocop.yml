@@ -27,18 +27,18 @@ Metrics/LineLength:
   Description: Limit lines to 80 characters.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#80-character-limits
   Enabled: true
-  Max: 80
+  Max: 100
   AllowURI: true
   URISchemes:
   - http
   - https
 
 Metrics/MethodLength:
-  Description: Avoid methods longer than 10 lines of code.
+  Description: Avoid methods longer than 20 lines of code.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods
   Enabled: true
   CountComments: false
-  Max: 10
+  Max: 20
 
 Metrics/ModuleLength:
   Description: Avoid modules longer than 100 lines of code.
@@ -102,7 +102,7 @@ Style/GuardClause:
 Style/StringLiterals:
   Description: Checks if uses of quotes match the configured preference.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#consistent-string-literals
-  Enabled: true
+  Enabled: false
   EnforcedStyle: single_quotes
   SupportedStyles:
   - single_quotes

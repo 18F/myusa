@@ -4,6 +4,8 @@ describe ApplicationsController do
   let(:user) { FactoryGirl.create(:user) }
 
   describe '#create' do
+    subject { -> { post :create, application: application_params } }
+
     before :each do
       sign_in user
     end
@@ -17,9 +19,6 @@ describe ApplicationsController do
         }
       end
 
-      let!(:response) { @response = post :create, application: application_params }
-      subject { response }
-
       it 'saves' do
         is_expected.to change { Doorkeeper::Application.count }.by(1)
       end
@@ -30,11 +29,12 @@ describe ApplicationsController do
       end
 
       it 'should create the application and scopes' do
+        subject.call
         app = Doorkeeper::Application.where(name: 'Test App').first 
 
         expect(app).to_not be_nil
         expect(app.redirect_uri).to eq('http://www.example.com/callback')
-        expect(app.scopes_string).to eq('profile.email profile.last_name profile.first_name tasks') 
+        expect(app.scopes.sort.join(' ')).to eq('profile.email profile.first_name profile.last_name tasks') 
         expect(app.application_scopes.length).to eq(4)
       end
     end

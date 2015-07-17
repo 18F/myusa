@@ -77,23 +77,38 @@ class Doorkeeper::Application
   end
 
   # Have the methods from Doorkeeper::Models::Scopes use the associated tables instead
+
+          #   define_method :scopes do
+          #   OAuth::Scopes.from_string(self[:scopes])
+          # end
+
+          # define_method :scopes_string do
+          #   OAuth::Scopes.from_string(self[:scopes]).to_s
+          # end
+
+          # define_method :includes_scope? do |required_scopes|
+          #   required_scopes.blank? || required_scopes.any? { |s| scopes.exists?(s) }
+          # end
+
   def scopes
-    application_scopes.map(&:name)
+    Doorkeeper::OAuth::Scopes.from_array(application_scopes.map(&:name))
   end
 
   def scopes=(scopes_str)
-    scope_names = scopes_str.split(/\s+/)
+    scope_names = scopes_str.blank? ? [] : scopes_str.split(/\s+/)
 
     scope_names.each do |name|
-      application_scopes.for_name(name).first_or_create!
-    end
+      unless application_scopes.for_name(name).exists?
+        application_scopes.build(name: name)
+      end
+    end 
 
     not_selected = scopes.reject {|r| scope_names.include?(r) }
-    not_selected.each {|sn| application_scopes.for_name(sn).first.destroy }
+    not_selected.each {|sn| sc = application_scopes.for_name(sn).first; sc.destroy unless sc.nil? }
   end
   
   def scopes_string
-    scopes.join(' ')
+    scopes.to_s
   end
 
   def includes_scope?(*required_scopes)

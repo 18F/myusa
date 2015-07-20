@@ -17,3 +17,17 @@
 //= require bootstrap-sprockets
 //= require_tree .
 //= require bootstrap-tokenfield
+
+$(function() {
+  
+  var menuToggle = $('#myusa-button-nav_mobile').unbind();
+
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#myusa-menu_mobile').slideToggle(function(){
+      if($('#myusa-menu_mobile').is(':hidden')) {
+        $('#myusa-menu_mobile').removeAttr('style');
+      }
+    });
+  });
+});

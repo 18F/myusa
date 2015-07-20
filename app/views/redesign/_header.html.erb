@@ -1,0 +1,29 @@
+<header role="banner">
+  <div class="disclaimer">
+    <%= image_tag "usa-flag.png", :alt => 'USA Flag' %>
+    <span>
+      MyUSA is an official website of the United States Government
+    </span>
+  </div>
+  <nav id="myusa-nav" role="navigation">
+    <h1 id="branding">
+      <%= link_to( image_tag("header-logo.png", :alt => 'MyUSA Logo'), '/') %>
+      <span>your one account for government</span>
+    </h1>
+    <a href="#" id="myusa-button-nav_mobile">MENU</a>
+    <ul id="myusa-menu_mobile" class="right-nav">
+      <li>
+        <%= link_to 'About', '/' %>
+      </li>
+      <li>
+        <%= link_to 'For Developers', '/developer' %>
+      </li>
+      <li>
+        <%= link_to 'Contact Us', '/#contact' %>
+      </li>
+      <li>
+        <%= link_to 'Sign Up Now', new_user_session_path, :class => 'myusa-button-outlined' %>
+      </li>
+    </ul>
+  </nav>
+</header>

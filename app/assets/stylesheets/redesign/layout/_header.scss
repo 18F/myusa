@@ -1,2 +1,16 @@
-.l-header {
+header[role="banner"] {
+
+  .disclaimer {
+    background-color: #164369;
+    color: white;
+    font-size: $base-font-size / 1.5;
+    line-height: 2em;
+    text-align: center;
+
+    img {
+      position: relative;
+      top: 1px;
+      right: 3px;
+    }
+  }
 }

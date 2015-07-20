@@ -1,3 +1,4 @@
+@charset "utf-8";
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -18,6 +19,11 @@
 
 @import "bourbon";
 @import "neat";
+
+// ==========================================================================
+// $Utilities - Custom variables, mixins, grid-system, etc.
+// ==========================================================================
+@import "redesign/utilities/index";
 
 // ==========================================================================
 // $Base - Regular elements

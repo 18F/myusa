@@ -1,0 +1,23 @@
+// Breakpoints
+/////////////////////////////////////////
+
+$small:       new-breakpoint(max-width 480px, 12);
+$medium:      new-breakpoint(max-width 767px, 12);
+$large:       new-breakpoint(max-width 1024px, 12);
+$xlarge:      new-breakpoint(max-width 1200px, 12);
+
+// Fonts
+/////////////////////////////////////////
+
+$base-font-size: 16px;
+$base-font-family: "Source Sans Pro", Helvetica, sans-serif;
+
+// Colors
+/////////////////////////////////////////
+
+$color-blue: #164369;
+$color-blue-light: #689AC8;
+$color-gray: #EEF2F4;
+
+$base-color-link: #007BB4;
+$base-font-color: #444444;

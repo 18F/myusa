@@ -1,0 +1,13 @@
+@mixin box-centered() {
+  background: #FFFFFF;
+  border: 2px solid #EEF2F4;
+  padding: 40px 20px;
+  margin: 40px 20px;
+  @include span-columns(8);
+  @include shift(2);
+
+  @include media($small) { 
+    padding: 20px 10px;
+  }
+  
+}

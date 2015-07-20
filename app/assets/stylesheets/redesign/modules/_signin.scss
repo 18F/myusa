@@ -1,0 +1,64 @@
+#myusa-signin {    
+  background-color: #F8FBFD;
+  border-top: 2px solid $color-gray;
+  height: 100%;
+
+  .myusa-signin-form {
+    @include box-centered;
+    padding: 40px 20px 60px 20px;
+    text-align: center;
+
+    small {
+      margin: 40px 0;
+    }
+
+    .myusa-sign-form_input {
+      padding: 20px 40px;
+
+      input[type="email"] {
+        width: 80%;
+      }
+
+      label {
+        text-align: left;
+      }
+
+      .google {
+        background-color: #df4a32;
+        border-color: #be3f2b;
+        border-radius: 4px;
+        color: white;
+        height: 40px;
+        line-height: 2.2em;
+        margin-bottom: 15px;
+        padding: 0 10px 0 0;
+        width: 60%;
+
+        &:before {
+          border-right: 0.075em solid rgba(0,0,0,0.1);
+          content: "\f0d5";
+          float: left;
+          font-family: FontAwesome;
+          font-smoothing: antialiased;
+          font-size: 120%;
+          margin: 0 0.5em 0 0;
+          padding: 0 0.5em;
+          -webkit-font-smoothing: antialiased;
+        }
+      }
+      .more-signin {
+        > a {
+          top: 40px;
+          width: 40%;
+          padding: 5px 10px;
+          position: relative;
+        }
+
+        .google:before {
+          border-right: 0.075em solid rgba(0,0,0,0.1);
+          float: none;
+        }
+      }
+    }
+  }
+}

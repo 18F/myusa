@@ -152,7 +152,7 @@ describe 'OAuth' do
           expect(@auth_page).to be_displayed
 
           # FIXME
-          pending("The current form is missing a head back link")
+          pending('The current form is missing a head back link')
           pass
 
           @auth_page.head_back_link.click
@@ -160,10 +160,15 @@ describe 'OAuth' do
         end
 
         context 'app has TOS links' do
-          let(:client_app) { FactoryGirl.create(:application, name: 'Test App', tos_link: 'http://example.com/tos', privacy_policy_link: 'http://example.com/privacy') }
+          let(:client_app) do
+            FactoryGirl.create(:application,
+                               name: 'Test App',
+                               tos_link: 'http://example.com/tos',
+                               privacy_policy_link: 'http://example.com/privacy')
+          end
           scenario 'page displays links to TOS' do
             # FIXME
-            pending("The TOS link has not been added yet")
+            pending('The TOS link has not been added yet')
             pass
 
             expect(@auth_page).to be_displayed
@@ -174,7 +179,7 @@ describe 'OAuth' do
 
         scenario 'user can select scopes' do
           # FIXME
-          pending("The form is missing some elements")
+          pending('The form is missing some elements')
           pass
 
           expect(@auth_page).to be_displayed
@@ -187,7 +192,7 @@ describe 'OAuth' do
 
         scenario 'user can update profile' do
           # FIXME
-          pending("The form is missing some elements")
+          pending('The form is missing some elements')
           pass
           expect(@auth_page).to have_no_profile_email
           @auth_page.profile_last_name.set 'McTesterson'
@@ -207,7 +212,7 @@ describe 'OAuth' do
           let(:requested_scopes) { 'profile.phone_number' }
           scenario 'user cannot save or authorize' do
             # FIXME
-            pending("The form is missing a div.alert.alert-danger div")
+            pending('The form is missing a div.alert.alert-danger div')
             pass
 
             expect(@auth_page).to be_displayed
@@ -327,7 +332,7 @@ describe 'OAuth' do
     end
   end
 
-  # TODO move these specs to home page spec upon creation
+  # TODO: move these specs to home page spec upon creation
   describe 'header and footer content' do
     let(:requested_scopes) { 'profile.email profile.last_name' }
 

@@ -22,20 +22,20 @@ describe 'Sign In' do
       expect(sign_in_page.slogan.text).to match('one account for government')
     end
 
-    describe '"More Options" button,', js: true do
+    describe '"Connect with your Email Address" button,', js: true do
       describe 'at load time,' do
-        specify { expect(sign_in_page).to have_more_options }
-        specify { expect(sign_in_page).to_not have_less_options }
+        specify { expect(sign_in_page).to have_google_signin_ui }
+        specify { expect(sign_in_page).to_not have_email_signin_ui }
       end
 
       describe 'when clicked once,' do
         before do
-          sign_in_page.more_options_link.click
-          sign_in_page.wait_for_less_options
+          sign_in_page.email_signin_link.click
+          sign_in_page.wait_for_email_signin_ui
         end
 
-        specify { expect(sign_in_page).to_not have_more_options }
-        specify { expect(sign_in_page).to have_less_options }
+        specify { expect(sign_in_page).to_not have_google_signin_ui }
+        specify { expect(sign_in_page).to have_email_signin_ui }
       end
     end
 
@@ -127,7 +127,7 @@ describe 'Sign In' do
 
         it 'allows the user to resend token via email' do
           expect(token_instructions_page).to have_content(
-            'A new access link has been sent to your email address.')
+            'We just sent an access link to')
         end
 
         it 'sends the user an email' do

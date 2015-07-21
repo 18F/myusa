@@ -10,11 +10,11 @@ class HomePage < SitePrism::Page
   element :contact_flash, 'div.contact-flash'
   element :contact_flash_no_js, '.alert.alert-info'
 
-  section :login_form, 'section.login-section' do
+  section :login_form, '.myusa-sign-form_input' do
     element :email, "noscript input#inputEmail"
-    element :remember_me, "noscript input#user_remember_me"
+    element :remember_me, "noscript input#remember"
     element :submit, "noscript input[value='Connect']"
-    element :google_button,     '.login button', text: 'Connect with Google'
+    element :google_button, 'button', text: 'Connect with Google'
   end
 
   section :contact_form, '#contact-form' do

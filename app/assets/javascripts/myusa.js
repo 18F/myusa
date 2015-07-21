@@ -58,13 +58,13 @@ $(document).ready(function () {
    */
   var showOption = function (opt) {
     if (opt == '#email') {
-      $(".hidden-buttons").show();
+      $(".email-buttons").show();
       $(".more-options").hide();
       $(".less-options").show();
       $(".omniauth-buttons").hide();
       $("#inputEmail").focus();
     } else {
-      $(".hidden-buttons").hide();
+      $(".email-buttons").hide();
       $(".less-options").hide();
       $(".more-options").show();
       $(".omniauth-buttons").show();

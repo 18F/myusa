@@ -29,14 +29,14 @@
 
     <div class="myusa-signin-form">
 
-      <h2><%= t('devise.connect_with') %></h2> 
+      <h2><%= t('devise.connect_with') %></h2>
       <p class="myusa-subhead">Your one account for government</p>
 
       <div class="myusa-sign-form_input">
         <div class="omniauth-buttons">
           <%= bs_button_to "Connect with Google", user_omniauth_authorize_path(:google_oauth2, login_required: params[:login_required]), :class => "google" %>
         </div>
-        <div class="hidden-buttons">
+        <div class="email-buttons">
           <%= render partial: 'devise/sessions/email_option', locals: { resource: User.new, resource_name: :user } %>
         </div>
         <noscript>

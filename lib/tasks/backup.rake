@@ -2,7 +2,7 @@ require 'database_dumper'
 
 namespace :backup do
   desc "Dumps an unencrypted view of the database to CSVs"
-  task :export => :environment do
+  task :export => :cleanup do
     DatabaseDumper.export_all_csvs
   end
 

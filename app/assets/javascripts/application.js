@@ -15,5 +15,20 @@
 //Turbo links disabled as temp fix of more/less options on signin/signup pages
 // require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+//= require myusa
 //= require bootstrap-tokenfield
+
+$(document).ready(function() {
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+

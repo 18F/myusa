@@ -36,8 +36,9 @@ describe DatabaseDumper do
   end
 
   it "should back up the profiles table" do
-  	before = create(:full_profile, created_at: 10.minutes.ago, updated_at: 2.minutes.ago)
-    # expect(Profile.count).to eq(1)
+    # The user association was creating another profile, so giving an explicit fake ID to skip
+  	before = create(:full_profile, user_id: 83, created_at: 10.minutes.ago, updated_at: 2.minutes.ago)
+    expect(Profile.count).to eq(1)
 
   	DatabaseDumper.export_all_csvs
   	Profile.delete_all

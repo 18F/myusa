@@ -14,6 +14,9 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.secret_key_base = ENV["SECRET_KEY_BASE"]
+  config.devise_secret_key = ENV['DEVISE_SECRET_KEY']
+  config.force_ssl = true
+  config.sms_delivery_method = :twilio
   config.myusa_sender_email = ENV['SENDER_EMAIL']
   config.action_mailer.default_url_options = { host: ENV['APP_HOST'], protocol: 'https' }
   config.action_mailer.raise_delivery_errors = true
@@ -27,23 +30,8 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.sms_sender_number = ENV['SMS_NUMBER']
-  config.sms_delivery_method = :twilio
-
-  # For some reason, trying to access these config parameters in the
-  # initializers throws a method_missing, despite the configs set
-  # above being totally OK. No idea why, need to investigate. -- Yoz
-  config.twilio_account_sid = ENV['TWILIO_ACCOUNT_SID']
-  config.twilio_auth_token = ENV['TWILIO_AUTH_TOKEN']
-  config.devise_secret_key = ENV['DEVISE_SECRET_KEY']
-  config.omniauth_google_app_id = ENV['OMNIAUTH_GOOGLE_APP_ID']
-  config.omniauth_google_secret = ENV['OMNIAUTH_GOOGLE_SECRET']
-
-  config.force_ssl = true
-
-  unless ENV['ELASTICACHE_ENDPOINT'].blank?
-    endpoint    = ENV['ELASTICACHE_ENDPOINT'] + ":11211"
-    elasticache = Dalli::ElastiCache.new(endpoint)
-    config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
-  end
+  # For other environment config, see these initializers:
+  # OMNIAUTH_*: devise.rb
+  # ELASTICACHE_ENDPOINT: cache.rb
+  # TWILIO_*: twilio.rb
 end

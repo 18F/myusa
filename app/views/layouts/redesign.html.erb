@@ -20,9 +20,12 @@
     <![endif]-->
   </head>
   <body>
-    <%= yield %>
 
+    <%= yield %>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <%= javascript_include_tag "application" %>
+
+    <%= render 'layouts/analytics' %>
   </body>
 </html>

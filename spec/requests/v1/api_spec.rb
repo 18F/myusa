@@ -5,16 +5,16 @@ describe Api::V1 do
   let(:user) { FactoryGirl.create(:user, :with_profile) }
   let(:scopes) { '' }
   let(:token) { FactoryGirl.create(:access_token, application: client_app, resource_owner: user, scopes: scopes) }
-  let(:header) { {'HTTP_AUTHORIZATION' => "Bearer #{token.token}"} }
+  let(:header) { { 'HTTP_AUTHORIZATION' => "Bearer #{token.token}" } }
   let(:empty_header) { {} }
 
   describe 'Legacy tokens path' do
-    let(:grant) {
+    let(:grant) do
       FactoryGirl.create(:access_grant,
                          application: client_app,
                          redirect_uri: client_app.redirect_uri,
                          resource_owner: user)
-    }
+    end
 
     let(:params) do
       {
@@ -26,7 +26,7 @@ describe Api::V1 do
       }
     end
 
-    subject { post  '/oauth/authorize', params }
+    subject { post '/oauth/authorize', params }
     it 'response http code is 200' do
       expect(subject.status).to eql(200)
     end
@@ -62,8 +62,8 @@ describe Api::V1 do
       its(['resource_owner_id'])  { should eq user.id }
       its(['scopes'])             { should eq scopes.split(' ') }
       its(['expires_in_seconds']) { should be_within(2).of Doorkeeper.configuration.access_token_expires_in }
-      its(['application'])        { should eql 'uid'=>client_app.uid }
-      its(:size)                  { should eq 4 }
+      its(['application'])        { should eql 'uid' => client_app.uid }
+      its(:size)                  { should eq 4 } 
     end
   end
 
@@ -105,7 +105,7 @@ describe Api::V1 do
     context 'when the user queried exists' do
       context 'when the schema parameter is set' do
         pending 'need to understand Schema.org requirement' do
-          let(:params) { {'schema' => 'true'} }
+          let(:params) { { 'schema' => 'true' } }
           it 'should render the response in a Schema.org hash' do
             expect(subject.status).to eq 200
             parsed_json = JSON.parse(subject.body)
@@ -130,7 +130,7 @@ describe Api::V1 do
 
     context 'when the user has a valid token' do
       context 'when the notification attributes are valid' do
-        let(:params) { {notification: {subject: 'Project MyUSA', body: 'This is a test.'}} }
+        let(:params) { { notification: { subject: 'Project MyUSA', body: 'This is a test.' } } }
         it 'should create a new notification when the notification info is valid' do
           expect(user.notifications.size).to eq 0
           expect(subject.status).to eq 200
@@ -145,7 +145,7 @@ describe Api::V1 do
       end
 
       context 'when the notification attributes are not valid' do
-        let(:params) { {notification: {body: 'This is a test.'} } }
+        let(:params) { { notification: { body: 'This is a test.' } } }
         it 'should return an error message' do
           expect(subject.status).to eq 400
           parsed_response = JSON.parse(subject.body)
@@ -167,9 +167,9 @@ describe Api::V1 do
       context 'when token is valid' do
         context 'when there are tasks for a user, some of which were created by the app making the request' do
           before do
-            @task1 = Task.create!({name: 'Task #1', user_id: user.id, app_id: client_app.id})
+            @task1 = Task.create!(name: 'Task #1', user_id: user.id, app_id: client_app.id)
             @task1.task_items << TaskItem.create!(name: 'Task item 1 (no url)')
-            @task2 = Task.create!({name: 'Task #2', user_id: user.id, app_id: client_app.id + 1})
+            @task2 = Task.create!(name: 'Task #2', user_id: user.id, app_id: client_app.id + 1)
             @task2.task_items << TaskItem.create!(name: 'Task item 1 (with url)', url: 'http://www.google.com')
           end
 
@@ -203,12 +203,18 @@ describe Api::V1 do
         it 'does not create an user action record' do
           expect { subject }.to_not change(UserAction.api_access.where(record_type: 'Task'), :count)
         end
-
       end
     end
 
     describe 'POST /api/v1/tasks' do
-      let(:params) { {task: { name: 'New Task', url: "http://wwww.gsa.gov/", task_items_attributes: [{name: "Item 1", external_id: "abc", url: "http://www.gsa.gov/"}]}} }
+      let(:params) do
+        { task: { name: 'New Task',
+                  url: "http://wwww.gsa.gov/",
+                  task_items_attributes: [ { name: "Item 1", external_id: "abc", url: "http://www.gsa.gov/" } ]
+                }
+        }
+      end
+
       subject { post '/api/v1/tasks', params, header }
 
       context 'when the caller has a valid token' do
@@ -266,18 +272,20 @@ describe Api::V1 do
       subject { put "/api/tasks/#{task.id}", params, header }
       context 'when the caller has a valid token' do
         let!(:task) do
-          Task.create!({
-                         name: 'Mega task',
-                         url: "http://www.gsa.gov/",
-                         completed_at: Time.now-1.day,
-                         user_id: user.id,
-                         app_id: client_app.id,
-                         task_items_attributes: [{ name: 'Task item one', external_id: 'abcdef' }]
-          })
+          Task.create!(name: 'Mega task',
+                       url: "http://www.gsa.gov/",
+                       completed_at: Time.now - 1.day,
+                       user_id: user.id,
+                       app_id: client_app.id,
+                       task_items_attributes: [{ name: 'Task item one', external_id: 'abcdef' }])
         end
 
         context 'when valid parameters are used' do
-          let(:params) { { task: { name: 'New Task', url: "http://18f.gsa.gov", task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one A' }] }} }
+          let(:params) do
+            { task: { name: 'New Task', url: "http://18f.gsa.gov",
+                      task_items_attributes: [{ id: task.task_items.first.id,
+                                                name: 'Task item one A' }] } }
+          end
 
           it 'should update the task and task items' do
             expect(subject.status).to eq 200
@@ -302,10 +310,17 @@ describe Api::V1 do
                            user_id: user.id,
                            app_id: client_app.id,
                            task_items_attributes: [{ name: 'Task item one' }]
-            }).tap {|t| t.complete! }
+                         }).tap(&:complete!)
           end
 
-          let(:params) { {task: { name: 'New Incomplete Task', url: 'http://whitehouse.gov', completed_at: nil, task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one', external_id: 'abc' }] }} }
+          let(:params) do
+            { task: { name: 'New Incomplete Task',
+                      url: 'http://whitehouse.gov',
+                      completed_at: nil,
+                      task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one', external_id: 'abc' }] 
+                    } 
+            }
+          end
 
           it 'should no longer be marked as complete when specified' do
             expect(subject.status).to eq 200
@@ -321,12 +336,15 @@ describe Api::V1 do
           end
         end
         context 'when invalid parameters are used' do
-          let(:params) { {task: { name: 'New Task' , task_items_attributes: [{ id: 'chicken', name: 'updated task item name' }] }} }
+          let(:params) do
+            { task: { name: 'New Task',
+                      task_items_attributes: [{ id: 'chicken', name: 'updated task item name' }] }}
+          end
 
           it 'should return meaningful errors' do
-            expect(subject.status).to eq 422
+            expect(subject.status).to eq 404
             parsed_json = JSON.parse(subject.body)
-            expect(parsed_json['message']).to eq 'Invalid parameters. Check your values and try again.'
+            expect(parsed_json['message']).to_not be_blank
           end
 
           it 'does not create an user action record' do
@@ -366,6 +384,21 @@ describe Api::V1 do
           expect { subject }.to change(UserAction.api_access.where(record_type: 'Task'), :count).by(1)
         end
       end
+
+      context "when the task exists but belongs to another user" do
+        before { task.update_attribute(:user_id, user.id + 1) }
+
+        it "should return a 403 response" do
+          expect(subject.status).to eq(403)
+        end
+      end
+
+      context "when the task does not exist" do
+        subject { get "/api/tasks/#{task.id + 10_000}", nil, header }
+        it "should return a 404 error" do
+          expect(subject.status).to eq(404)
+        end
+      end
     end
 
     describe 'DELETE api/v1/tasks/:id' do
@@ -399,12 +432,12 @@ describe Api::V1 do
       end
 
       context "when the task belongs to a different user" do
-        before { task.user_id = user.id + 1; task.save! }
+        before { task.update_attribute(:user_id, user.id + 1) }
 
         before { @response = delete "/api/tasks/#{task.id}", nil, header }
 
-        it "should return a status of 404" do
-          expect(@response.status).to eq(404)
+        it "should return a status of 403" do
+          expect(@response.status).to eq(403)
         end
 
         it "should not delete the Task" do
@@ -429,9 +462,9 @@ describe Api::V1 do
 
   describe "Task Items API" do
     let(:scopes) { 'tasks' }
-    
+
     describe "POST /api/v1/tasks/:id/task_items" do
-      let(:task) do
+      let!(:task) do
         Task.create! do |t|
           t.name = 'New Task'
           t.url = 'http://www.gsa.gov'
@@ -443,14 +476,14 @@ describe Api::V1 do
       let(:params) { { task_item: { name: 'Task item one', external_id: 'abc', url: "http://gsa.gov/" } } }
 
       context "when the token is valid" do
-        before { @response = post "/api/v1/tasks/#{task.id}/task_items", params, header }
+        subject { post "/api/v1/tasks/#{task.id}/task_items", params, header }
 
         it "should return a 200 status" do
-          expect(@response.status).to eq(200)
+          expect(subject.status).to eq(200)
         end
 
         it "should return the JSON of the task" do
-          parsed_json = JSON.parse(@response.body)
+          parsed_json = JSON.parse(subject.body)
           expect(parsed_json['name']).to eq(params[:task_item][:name])
           expect(parsed_json['url']).to eq(params[:task_item][:url])
           expect(parsed_json['external_id']).to eq(params[:task_item][:external_id])
@@ -458,19 +491,32 @@ describe Api::V1 do
         end
 
         it "should create a new task item associated with that task" do
-          expect(task.task_items.count).to eq(1)
+          expect { subject }.to change(TaskItem, :count).by(1)
+        end
+      end
+
+      context "when the task belongs to another user" do
+        before { task.update_attribute(:user_id, task.user_id + 10) }
+        subject { post "/api/v1/tasks/#{task.id}/task_items", params, header }
+
+        it "should return a 403 status" do
+          expect(subject.status).to eq(403)
+        end
+
+        it "should not create a task item" do
+          expect { subject }.to_not change(TaskItem, :count)
         end
       end
 
       context "when the token is not valid" do
-        before { @response = post "/api/v1/tasks/#{task.id}/task_items", params, empty_header }
+        subject { post "/api/v1/tasks/#{task.id}/task_items", params, empty_header }
 
         it "should return a HTTP 401 status" do
-          expect(@response.status).to eq(401)
+          expect(subject.status).to eq(401)
         end
 
         it "should create nothing" do
-          expect(task.task_items.count).to eq(0)
+          expect { subject }.to_not change(TaskItem, :count)
         end
       end
     end
@@ -489,33 +535,49 @@ describe Api::V1 do
         end
       end
 
-      context "when the token is valid" do
-        before { @response = get "/api/v1/tasks/#{task.id}/task_items", nil, header }
+      subject { get "/api/v1/tasks/#{task.id}/task_items", nil, header }
 
+      context "when the token is valid" do
         it "should return a HTTP 200 status" do
-          expect(@response.status).to eq(200)
+          expect(subject.status).to eq(200)
         end
 
         it "should return all the task_items associated with that task in an array" do
-          expect(@response.status).to eq(200)
-          parsed_json = JSON.parse(@response.body)
+          expect(subject.status).to eq(200)
+          parsed_json = JSON.parse(subject.body)
           expect(parsed_json.length).to eq(2)
           expect(parsed_json.first["name"]).to eq("Task Item #1")
           expect(parsed_json.last["name"]).to eq("Task Item #2")
         end
       end
 
+      context "when the task does not exist" do
+        before { task.delete }
+
+        it "should return a 404 HTTP status" do
+          expect(subject.status).to eq(404)
+        end
+      end
+
+      context "when the task belongs to someone else" do
+        before { task.update_attribute(:user_id, task.user_id + 10) }
+
+        it "should return a 403 HTTP status" do
+          expect(subject.status).to eq(403)
+        end
+      end
+
       context "when the token is invalid" do
-        before { @response = get "/api/v1/tasks/#{task.id}/task_items", nil, empty_header }
+        subject { get "/api/v1/tasks/#{task.id}/task_items", nil, empty_header }
 
         it "should return a 401 HTTP status" do
-          expect(@response.status).to eq(401)
+          expect(subject.status).to eq(401)
         end
       end
     end
 
     describe "PUT /api/v1/tasks/:id/task_items/:item_id" do
-      let(:task) do
+      let!(:task) do
         Task.create! do |t|
           t.name = 'New Task'
           t.url = 'http://www.gsa.gov'
@@ -528,24 +590,25 @@ describe Api::V1 do
         end
       end
 
-      let(:task_item) { task.task_items.first }
-      let(:params) { {task_item: { name: "Task Item Changed", "complete": true} } }
+      let!(:task_item) { task.task_items.first }
+      let(:params) { { task_item: { name: "Task Item Changed", "complete": true } } }
+
+      subject { put "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", params, header }
 
       context "when the token is valid" do
-        before { @response = put "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", params, header }
-
         it "should return a HTTP 200 status code" do
-          expect(@response.status).to eq(200)
+          expect(subject.status).to eq(200)
         end
 
         it "should return JSON representing the new task item" do
-          parsed_json = JSON.parse(@response.body)
+          parsed_json = JSON.parse(subject.body)
           expect(parsed_json["name"]).to eq(params[:task_item][:name])
           expect(parsed_json["external_id"]).to eq(task_item.external_id)
           expect(parsed_json["completed_at"]).to_not be_blank
         end
 
         it "should update the task item with specified fields" do
+          expect { subject }.to_not change(TaskItem, :count)
           t = TaskItem.find(task_item.id)
           expect(t.name).to eq(params[:task_item][:name])
           expect(t.completed_at).to_not be_nil
@@ -553,9 +616,34 @@ describe Api::V1 do
         end
 
         it "should not change fields that are not specified" do
+          expect { subject }.to_not change(TaskItem, :count)
           task_item2 = TaskItem.find(task_item.id)
           expect(task_item2.external_id).to eq(task_item.external_id)
           expect(task_item2.url).to eq(task_item.url)
+        end
+      end
+
+      context "when the task does not exist" do
+        before { task.destroy }
+
+        it "should return a 404 status" do
+          expect(subject.status).to eq(404)
+        end
+
+        it "should not create any task items" do
+          expect { subject }.to_not change(TaskItem, :count)
+        end
+      end
+
+      context "when the task belongs to someone else" do
+        before { task.update_attribute(:user_id, task.user_id + 10) }
+
+        it "should return a 403 status" do
+          expect(subject.status).to eq(403)
+        end
+
+        it "should not create any task items" do
+          expect { subject }.to_not change(TaskItem, :count)
         end
       end
 
@@ -586,33 +674,61 @@ describe Api::V1 do
         end
         let(:task_item) { task.task_items.first }
 
-        context "when the token is valid" do
-          before { @response = delete "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", nil, header }
+        subject { delete "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", nil, header }
 
+        context "when the token is valid" do
           it "should return a HTTP 200 status code" do
-            expect(@response.status).to eq(200)
+            expect(subject.status).to eq(200)
           end
 
           it "should return a JSON representation of the task item" do
-            parsed_json = JSON.parse(@response.body)
+            parsed_json = JSON.parse(subject.body)
             expect(parsed_json["name"]).to eq(task_item["name"])
             expect(parsed_json["external_id"]).to eq(task_item["abcdef"])
           end
 
           it "should delete the task_item" do
-            expect(TaskItem.where(id: task_item.id).count).to eq(0)
+            expect { subject }.to change(TaskItem, :count).by(-1)
+          end
+        end
+
+        context "when the task does not exist" do
+          before { task.destroy }
+
+          it "should return a 404 status" do
+            expect(subject.status).to eq(404)
+          end
+        end
+
+        context "when the task_item does not exist" do
+          before { task_item.destroy }
+
+          it "should return a 404 status" do
+            expect(subject.status).to eq(404)
+          end
+        end
+
+        context "when the task belongs to another user" do
+          before { task.update_attribute(:user_id, task.user_id + 10) }
+
+          it "should return a 403 status" do
+            expect(subject.status).to eq(403)
+          end
+
+          it "should not delete the task_item" do
+            expect { subject }.to_not change(TaskItem, :count)
           end
         end
 
         context "when the token is invalid" do
-          before { @response = delete "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", nil, empty_header }
+          subject { delete "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", nil, empty_header }
 
           it "should return a HTTP 401 error" do
-            expect(@response.status).to eq(401)
+            expect(subject.status).to eq(401)
           end
 
           it "should not delete the task" do
-            expect(TaskItem.where(id: task_item.id).count).to eq(1)
+            expect { subject }.to_not change(TaskItem, :count)
           end
         end
       end

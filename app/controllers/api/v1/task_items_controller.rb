@@ -1,60 +1,68 @@
 class Api::V1::TaskItemsController < Api::ApiController
-	doorkeeper_for :all, scopes: ['tasks']
+  doorkeeper_for :all, scopes: ['tasks']
   before_filter :lookup_task
   wrap_parameters :task_item
 
   def index
     @task_items = @task.task_items
-    render :json => @task_items.to_json, :status => 200
+    render json: @task_items.to_json, status: 200
   end
 
   def create
-    begin
-      @task_item = @task.task_items.build(task_params)
-      if @task_item.save
-        render :json => @task_item.to_json, :status => 200
-      else
-        render :json => {:message => @task_item.errors}, :status => 400
-      end
-    rescue ActionController::ParameterMissing
-      render :json => { :message => "can't be blank"}, :status => 400
+    @task_item = @task.task_items.build(task_params)
+    if @task_item.save
+      render json: @task_item.to_json, status: 200
+    else
+      render json: { message: @task_item.errors }, status: 400
     end
+  rescue ActiveRecord::RecordNotFound
+    if Task.where(id: params[:task_id]).exists?
+      render json: { message: "Access forbidden" }, status: 403
+    else
+      render json: { message: "Not found" }, status: 404
+    end
+  rescue ActionController::ParameterMissing
+    render json: { message: "can't be blank" }, status: 400
   end
 
   def show
     @task_item = @task.task_items.find_by_id(params[:id])
-    render :json => @task_item.to_json, :status => 200
+    render json: @task_item.to_json, status: 200
   end
 
   def update
-    begin
-      if @task_item = @task.task_items.find(params[:id])
-        @task_item.assign_attributes(update_task_params)
-        @task_item.save!
-        @task_item.complete! if params["task_item"]["complete"] # should they be posting up complete or completed_at
-      end
-
-      render :json => @task_item.to_json
-    rescue ActionController::ParameterMissing
-      render :json => { :message => "can't be blank"}, :status => 400
+    if @task_item = @task.task_items.find(params[:id])
+      @task_item.assign_attributes(update_task_params)
+      @task_item.save!
+      @task_item.complete! if params["task_item"]["complete"]
     end
+
+    render json: @task_item.to_json
+  rescue ActionController::ParameterMissing
+    render json: { message: "can't be blank" }, status: 400
   end
 
   def destroy
     @task_item = @task.task_items.find(params[:id])
     @task_item.destroy
 
-    render :json => @task_item, :status => 200
+    render json: @task_item, status: 200
   end
 
+  private
 
-private
   def lookup_task
     @task = current_resource_owner.tasks.where(:app_id => doorkeeper_token.application.id).find(params[:task_id])
+  rescue ActiveRecord::RecordNotFound
+    if Task.where(id: params[:task_id]).exists?
+      raise RecordBelongsToAnother
+    else
+      raise
+    end
   end
 
   def resources
-    @task_items.presence || [ @task_item ]
+    @task_items.presence || [@task_item]
   end
 
   def task_params

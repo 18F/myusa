@@ -13,9 +13,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  config.action_mailer.delivery_method = :test #letter_opener
+  config.action_mailer.delivery_method = :test # letter_opener
   config.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
-  
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -38,9 +38,6 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # SMS sender number.
-  # This is the number from which our 2FA SMS messages will be sent.
-  config.sms_sender_number = '+12407433320'
   config.sms_delivery_method = :email # or :twilio
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }

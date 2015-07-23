@@ -94,13 +94,6 @@ describe 'OAuth' do
         expect(@auth_page).to be_displayed
       end
 
-      scenario 'it tells you why you\'re here' do
-        @sign_in_page = SignInPage.new
-        expect(@sign_in_page).to have_welcome
-        expect(@sign_in_page.welcome).to(
-          have_content('Welcome to MyUSA from Test App'))
-      end
-
       scenario 'does not show flash redirect message' do
         expect(@sign_in_page).to_not have_content(
           'You need to sign in or sign up before continuing'

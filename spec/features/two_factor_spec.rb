@@ -107,12 +107,11 @@ describe 'Two Factor Authentication', sms: true do
 
       scenario 'shows error and displays sms form' do
         expect(sms_page).to be_displayed
-        expect(sms_page).to have_flash_message('Please check the number sent to your mobile and re-enter that code')
       end
 
       scenario 'user can resend code' do
         first_code = receive_code
-        sms_page.flash_resend_link.click
+        sms_page.resend_link.click
         expect(sms_page).to be_displayed
         expect(second_code = receive_code).to_not be_nil
         expect(second_code).to_not eql(first_code)

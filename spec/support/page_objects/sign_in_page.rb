@@ -14,5 +14,4 @@ class SignInPage < SitePrism::Page
   element :email_signin_ui,    '.email-buttons'
   element :submit,             'noscript input[value="Connect"]'
   element :alert,              '.alert'
-  element :welcome,            'div.alert-success .container[contains("Welcome to MyUSA")]'
 end

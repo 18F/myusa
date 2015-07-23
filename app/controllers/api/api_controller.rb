@@ -1,3 +1,6 @@
+class RecordBelongsToAnother < ActiveRecord::RecordNotFound
+end
+
 class Api::ApiController < ActionController::Base
   protect_from_forgery with: :null_session
   skip_before_filter :verify_authenticity_token
@@ -7,6 +10,9 @@ class Api::ApiController < ActionController::Base
   doorkeeper_for :all
 
   around_filter ApiSweeper.instance
+
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from RecordBelongsToAnother, with: :forbidden
 
   protected
 
@@ -20,7 +26,15 @@ class Api::ApiController < ActionController::Base
   end
 
   def resources
-    [ resource ]
+    [resource]
+  end
+
+  def not_found
+    render doorkeeper_not_found_options.merge(status: :not_found)
+  end
+
+  def forbidden
+    render doorkeeper_forbidden_render_options.merge(status: :forbidden)
   end
 
   def audit_api_access
@@ -34,12 +48,15 @@ class Api::ApiController < ActionController::Base
     end
   end
 
+  def doorkeeper_not_found_options
+    { json: { message: 'Not Found' } }
+  end
+
   def doorkeeper_unauthorized_render_options
-    {json: {message: 'Not Authorized'}}
+    { json: { message: 'Not Authorized' } }
   end
 
   def doorkeeper_forbidden_render_options
-    {json: {message: 'Forbidden'}}
+    { json: { message: 'Forbidden' } }
   end
-
 end

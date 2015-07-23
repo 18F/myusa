@@ -10,6 +10,7 @@ class UserAction < ActiveRecord::Base
 
   scope :api_access, -> { where(action: 'api_access') }
   scope :api_write, -> { where(action: 'api_write') }
+  scope :api_destroy, -> { where(action: 'api_destroy') }
 
   scope :admin_action, -> { where(action: 'admin_action') }
 end

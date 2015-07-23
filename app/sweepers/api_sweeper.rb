@@ -1,5 +1,5 @@
 class ApiSweeper < ActionController::Caching::Sweeper
-  observe Task, Notification
+  observe Task, TaskItem, Notification
 
   def before(controller)
     @user = controller.send(:current_resource_owner)
@@ -14,6 +14,15 @@ class ApiSweeper < ActionController::Caching::Sweeper
     UserAction.create(
       user: @user,
       action: "api_write",
+      record: record,
+      data: { action: @action  }
+    )
+  end
+
+  def after_destroy(record)
+    UserAction.create(
+      user: @user,
+      action: "api_destroy",
       record: record,
       data: { action: @action  }
     )

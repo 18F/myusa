@@ -33,8 +33,8 @@ class Api::V1::TaskItemsController < Api::ApiController
   def update
     if @task_item = @task.task_items.find(params[:id])
       @task_item.assign_attributes(update_task_params)
+      @task_item.complete if params["task_item"]["complete"]
       @task_item.save!
-      @task_item.complete! if params["task_item"]["complete"]
     end
 
     render json: @task_item.to_json

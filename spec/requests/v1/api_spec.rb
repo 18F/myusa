@@ -63,7 +63,7 @@ describe Api::V1 do
       its(['scopes'])             { should eq scopes.split(' ') }
       its(['expires_in_seconds']) { should be_within(2).of Doorkeeper.configuration.access_token_expires_in }
       its(['application'])        { should eql 'uid' => client_app.uid }
-      its(:size)                  { should eq 4 } 
+      its(:size)                  { should eq 4 }
     end
   end
 
@@ -317,8 +317,8 @@ describe Api::V1 do
             { task: { name: 'New Incomplete Task',
                       url: 'http://whitehouse.gov',
                       completed_at: nil,
-                      task_items_attributes: [{ id: task.task_items.first.id, name: 'Task item one', external_id: 'abc' }] 
-                    } 
+                      task_items_attributes: [{id: task.task_items.first.id, name: 'Task item one', external_id: 'abc'}]
+                    }
             }
           end
 
@@ -402,7 +402,7 @@ describe Api::V1 do
     end
 
     describe 'DELETE api/v1/tasks/:id' do
-      let(:task) do
+      let!(:task) do
         Task.create! do |t|
           t.name = 'New Task'
           t.url = 'http://www.gsa.gov'
@@ -416,18 +416,22 @@ describe Api::V1 do
       end
 
       context "when the token is valid" do
-        before { @response = delete "/api/tasks/#{task.id}", nil, header }
+        subject { delete "/api/tasks/#{task.id}", nil, header }
 
         it "should return a status of 200" do
-          expect(@response.status).to eq(200)
+          expect(subject.status).to eq(200)
         end
 
         it "should delete the task" do
-          expect(Task.where(id: task.id).count).to eq(0)
+          expect { subject }.to change(Task.where(id: task.id), :count).by(-1)
         end
 
         it "should delete any associated task_items" do
-          expect(TaskItem.where(task_id: task.id).count).to eq(0)
+          expect { subject }.to change(Task.where(id: task.id), :count).by(-1)
+        end
+
+        it 'creates an user action record' do
+          expect { subject }.to change(UserAction.api_destroy.where(record_type: 'Task'), :count).by(1)
         end
       end
 
@@ -443,6 +447,10 @@ describe Api::V1 do
         it "should not delete the Task" do
           expect(Task.where(id: task.id).count).to eq(1)
         end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_destroy.where(record_type: 'Task'), :count)
+        end
       end
 
       context "when the token is invalid" do
@@ -455,6 +463,10 @@ describe Api::V1 do
         it "should not delete anything" do
           expect(Task.where(id: task.id).count).to eq(1)
           expect(TaskItem.where(task_id: task.id).count).to eq(2)
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'Task'), :count)
         end
       end
     end
@@ -493,6 +505,10 @@ describe Api::V1 do
         it "should create a new task item associated with that task" do
           expect { subject }.to change(TaskItem, :count).by(1)
         end
+
+        it 'creates an user action record' do
+          expect { subject }.to change(UserAction.api_write.where(record_type: 'TaskItem'), :count).by(1)
+        end
       end
 
       context "when the task belongs to another user" do
@@ -506,6 +522,10 @@ describe Api::V1 do
         it "should not create a task item" do
           expect { subject }.to_not change(TaskItem, :count)
         end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'TaskItem'), :count)
+        end
       end
 
       context "when the token is not valid" do
@@ -517,6 +537,10 @@ describe Api::V1 do
 
         it "should create nothing" do
           expect { subject }.to_not change(TaskItem, :count)
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'Task'), :count)
         end
       end
     end
@@ -549,6 +573,10 @@ describe Api::V1 do
           expect(parsed_json.first["name"]).to eq("Task Item #1")
           expect(parsed_json.last["name"]).to eq("Task Item #2")
         end
+
+        it 'creates an user action record' do
+          expect { subject }.to change(UserAction.api_access.where(record_type: 'TaskItem'), :count).by(2)
+        end
       end
 
       context "when the task does not exist" do
@@ -556,6 +584,10 @@ describe Api::V1 do
 
         it "should return a 404 HTTP status" do
           expect(subject.status).to eq(404)
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_access.where(record_type: 'TaskItem'), :count)
         end
       end
 
@@ -565,6 +597,10 @@ describe Api::V1 do
         it "should return a 403 HTTP status" do
           expect(subject.status).to eq(403)
         end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_access.where(record_type: 'TaskItem'), :count)
+        end
       end
 
       context "when the token is invalid" do
@@ -572,6 +608,10 @@ describe Api::V1 do
 
         it "should return a 401 HTTP status" do
           expect(subject.status).to eq(401)
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_access.where(record_type: 'TaskItem'), :count)
         end
       end
     end
@@ -621,6 +661,10 @@ describe Api::V1 do
           expect(task_item2.external_id).to eq(task_item.external_id)
           expect(task_item2.url).to eq(task_item.url)
         end
+
+        it 'creates an user action record' do
+          expect { subject }.to change(UserAction.api_write.where(record_type: 'TaskItem'), :count).by(1)
+        end
       end
 
       context "when the task does not exist" do
@@ -632,6 +676,10 @@ describe Api::V1 do
 
         it "should not create any task items" do
           expect { subject }.to_not change(TaskItem, :count)
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'TaskItem'), :count)
         end
       end
 
@@ -645,18 +693,27 @@ describe Api::V1 do
         it "should not create any task items" do
           expect { subject }.to_not change(TaskItem, :count)
         end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'TaskItem'), :count)
+        end
       end
 
       context "when the token is invalid" do
-        before { @response = put "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", params, empty_header }
+        subject { put "/api/v1/tasks/#{task.id}/task_items/#{task_item.id}", params, empty_header }
 
         it "should return a HTTP 401 status" do
-          expect(@response.status).to eq(401)
+          expect(subject.status).to eq(401)
         end
 
         it "should not update the task item" do
+          subject
           task_item2 = TaskItem.find(task_item.id)
           expect(task_item2).to eq(task_item)
+        end
+
+        it 'does not create an user action record' do
+          expect { subject }.to_not change(UserAction.api_write.where(record_type: 'TaskItem'), :count)
         end
       end
     end
@@ -690,6 +747,10 @@ describe Api::V1 do
           it "should delete the task_item" do
             expect { subject }.to change(TaskItem, :count).by(-1)
           end
+
+          it 'creates an user action record' do
+            expect { subject }.to change(UserAction.api_destroy.where(record_type: 'TaskItem'), :count).by(1)
+          end
         end
 
         context "when the task does not exist" do
@@ -698,6 +759,10 @@ describe Api::V1 do
           it "should return a 404 status" do
             expect(subject.status).to eq(404)
           end
+
+          it 'does not create an user action record' do
+            expect { subject }.to_not change(UserAction.api_destroy.where(record_type: 'TaskItem'), :count)
+          end
         end
 
         context "when the task_item does not exist" do
@@ -705,6 +770,10 @@ describe Api::V1 do
 
           it "should return a 404 status" do
             expect(subject.status).to eq(404)
+          end
+
+          it 'does not create an user action record' do
+            expect { subject }.to_not change(UserAction.api_destroy.where(record_type: 'TaskItem'), :count)
           end
         end
 
@@ -718,6 +787,10 @@ describe Api::V1 do
           it "should not delete the task_item" do
             expect { subject }.to_not change(TaskItem, :count)
           end
+
+          it 'does not create an user action record' do
+            expect { subject }.to_not change(UserAction.api_destroy.where(record_type: 'TaskItem'), :count)
+          end
         end
 
         context "when the token is invalid" do
@@ -729,6 +802,10 @@ describe Api::V1 do
 
           it "should not delete the task" do
             expect { subject }.to_not change(TaskItem, :count)
+          end
+
+          it 'does not create an user action record' do
+            expect { subject }.to_not change(UserAction.api_destroy.where(record_type: 'TaskItem'), :count)
           end
         end
       end

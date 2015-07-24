@@ -1,5 +1,4 @@
-
-# Group Logout
+# Logout
 
 
 ## GET /users/sign_out?continue=

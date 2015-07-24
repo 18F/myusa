@@ -9,30 +9,28 @@ List all tasks, and associated attributes, created by the calling application
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Task #1",
-    "completed_at": null,
-    "user_id": 1,
-    "created_at": "2014-07-08T17:59:23.000Z",
-    "updated_at": "2014-07-08T17:59:23.000Z",
-    "app_id": 1,
-    "task_items": [
+    [
       {
         "id": 1,
-        "name": "Task item 1 (no url)",
-        "url": null,
+        "name": "Task #1",
         "completed_at": null,
-        "task_id": 1,
+        "user_id": 1,
         "created_at": "2014-07-08T17:59:23.000Z",
-        "updated_at": "2014-07-08T17:59:23.000Z"
+        "updated_at": "2014-07-08T17:59:23.000Z",
+        "app_id": 1,
+        "task_items": [
+          {
+            "id": 1,
+            "name": "Task item 1 (no url)",
+            "url": null,
+            "completed_at": null,
+            "task_id": 1,
+            "created_at": "2014-07-08T17:59:23.000Z",
+            "updated_at": "2014-07-08T17:59:23.000Z"
+          }
+        ]
       }
     ]
-  }
-]
-```
 
 ## POST /api/v1/tasks
 
@@ -175,19 +173,17 @@ Returns an array of all the task items associated within the task. This is ident
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
- [  
-   {
-     "id": 1,
-     "name": "Task item 1 (no url)",
-     "url": null,
-     "completed_at": null,
-     "task_id": 1,
-     "created_at": "2014-07-08T17:59:23.000Z",
-     "updated_at": "2014-07-08T17:59:23.000Z"
-   }
- ]
-```
+   [  
+     {
+       "id": 1,
+       "name": "Task item 1 (no url)",
+       "url": null,
+       "completed_at": null,
+       "task_id": 1,
+       "created_at": "2014-07-08T17:59:23.000Z",
+       "updated_at": "2014-07-08T17:59:23.000Z"
+     }
+   ]
 
 ## POST /api/v1/tasks/:task_id/task_items
 
@@ -195,28 +191,25 @@ Create a new task item associated with the task. Post a new JSON hash for the it
 
 + Request Create a new task item (application/json)
 
-```json
-{
-  "task_item": {
-    "name": "New Item",
-    "external_id": "10020202",
-    "url": "http://www.gsa.gov/"
-  }
-}
-```
+    {
+      "task_item": {
+        "name": "New Item",
+        "external_id": "10020202",
+        "url": "http://www.gsa.gov/"
+      }
+    }
+
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-{
-  "id": 5,
-  "task_id": 1,
-  "name": "New Item",
-  "external_id": "10020202",
-  "url": "http://www.gsa.gov/",
-  "completed_at": null
-}
-```
+    {
+      "id": 5,
+      "task_id": 1,
+      "name": "New Item",
+      "external_id": "10020202",
+      "url": "http://www.gsa.gov/",
+      "completed_at": null
+    }
 
 ## PUT /api/v1/tasks/:task_id/task_items/:id
 
@@ -225,24 +218,24 @@ Update the attributes of a task item. Any attributes not included in the update 
 * Include a `completed_at` field in the PUT body that is a datetime for when the task was completed. Use the ISO 8601 date format only.
 * More conveniently, you can just send `"complete": true` and it will set the completion time for the task item automatically.
 
-```json
-{
-  "complete": true
-}
-```
++ Request Update a task item (application/json)
+
+    {
+      "complete": true
+    }
+
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-{
-  "id": 5,
-  "task_id": 1,
-  "name": "New Item",
-  "external_id": "10020202",
-  "url": "http://www.gsa.gov/",
-  "completed_at": "2015-07-15 21:20:53 -0400"
-}
-```
+    {
+      "id": 5,
+      "task_id": 1,
+      "name": "New Item",
+      "external_id": "10020202",
+      "url": "http://www.gsa.gov/",
+      "completed_at": "2015-07-15 21:20:53 -0400"
+    }
+
 
 ## DELETE /api/v1/tasks/:task_id/task_items/:id
 
@@ -250,13 +243,11 @@ Deletes the task item. Upon successful completion, it will return the JSON of th
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-{
-  "id": 5,
-  "task_id": 1,
-  "name": "New Item",
-  "external_id": "10020202",
-  "url": "http://www.gsa.gov/",
-  "completed_at": "2015-07-15 21:20:53 -0400"
-}
-```
+    {
+      "id": 5,
+      "task_id": 1,
+      "name": "New Item",
+      "external_id": "10020202",
+      "url": "http://www.gsa.gov/",
+      "completed_at": "2015-07-15 21:20:53 -0400"
+    }

@@ -1,5 +1,5 @@
 
-# Group Notification
+# Notification
 
 
 ## POST /api/v1/notifications

@@ -2,14 +2,15 @@ FORMAT: 1A
 
 # MyUSA API Documentation
 
-# Group Overview
+# Overview
 
 MyUSA is an openly accessible service designed to make life easier for app developers and users. It provides:
 * **an Authentication and Authorization gateway**, which means apps don't need their own sign-in/sign-up screens
 * **a Profile system**, which helps users save time as they fill out forms
 * **a Notification service**, making it fast and free for apps to send email and SMS notifications to specific users
+* **a Task service**, allowing apps to track tasks that users might need to do for an application process, etc.
 
-# Group Getting Started
+# Getting Started
 
 Welcome to MyUSA’s API documentation. Here, you’ll find everything you need to know to successfully integrate MyUSA with your application.
 
@@ -84,7 +85,7 @@ To ensure that your application is properly connected to MyUSA, test its login c
 Once a user has signed in, your app should have access to the specific scopes
 requested, using the MyUSA API.
 
-# Group Branding Guidelines
+# Branding Guidelines
 
 These guidelines provide the design specifications for using the MyUSA brand
 within your application.  You can use these assets on your website or in your
@@ -131,7 +132,7 @@ To add this button to your application, use the following HTML:
 ```
 
 
-# Group Authentication
+# Authentication
 
 MyUSA uses OAuth 2.0. The authentication flow is as follows:
 
@@ -249,18 +250,17 @@ Get metadata about the token used to make this request, including
 the list of scopes the user has authorized.
 
 + Response 200 (application/json; charset=utf-8)
-
-  {
-    "resource_owner_id": 3879,
-    "scopes": [
-      "profile.first_name",
-      "profile.last_name"
-    ],
-    "expires_in_seconds": 7200,
-    "application": {
-      "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
+    {
+      "resource_owner_id": 3879,
+      "scopes": [
+        "profile.first_name",
+        "profile.last_name"
+      ],
+      "expires_in_seconds": 7200,
+      "application": {
+        "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
+      }
     }
-  }
 
 ## POST /oauth/token
 
@@ -274,7 +274,6 @@ the list of scopes the user has authorized.
     }
 
 + Response 200 (application/json; charset=utf-8)
-
     {
       "access_token": "...",
       "token_type": "bearer",
@@ -381,30 +380,28 @@ List all tasks, and associated attributes, created by the calling application
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Task #1",
-    "completed_at": null,
-    "user_id": 1,
-    "created_at": "2014-07-08T17:59:23.000Z",
-    "updated_at": "2014-07-08T17:59:23.000Z",
-    "app_id": 1,
-    "task_items": [
+    [
       {
         "id": 1,
-        "name": "Task item 1 (no url)",
-        "url": null,
+        "name": "Task #1",
         "completed_at": null,
-        "task_id": 1,
+        "user_id": 1,
         "created_at": "2014-07-08T17:59:23.000Z",
-        "updated_at": "2014-07-08T17:59:23.000Z"
+        "updated_at": "2014-07-08T17:59:23.000Z",
+        "app_id": 1,
+        "task_items": [
+          {
+            "id": 1,
+            "name": "Task item 1 (no url)",
+            "url": null,
+            "completed_at": null,
+            "task_id": 1,
+            "created_at": "2014-07-08T17:59:23.000Z",
+            "updated_at": "2014-07-08T17:59:23.000Z"
+          }
+        ]
       }
     ]
-  }
-]
-```
 
 ## POST /api/v1/tasks
 
@@ -547,19 +544,17 @@ Returns an array of all the task items associated within the task. This is ident
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
- [  
-   {
-     "id": 1,
-     "name": "Task item 1 (no url)",
-     "url": null,
-     "completed_at": null,
-     "task_id": 1,
-     "created_at": "2014-07-08T17:59:23.000Z",
-     "updated_at": "2014-07-08T17:59:23.000Z"
-   }
- ]
-```
+   [  
+     {
+       "id": 1,
+       "name": "Task item 1 (no url)",
+       "url": null,
+       "completed_at": null,
+       "task_id": 1,
+       "created_at": "2014-07-08T17:59:23.000Z",
+       "updated_at": "2014-07-08T17:59:23.000Z"
+     }
+   ]
 
 ## POST /api/v1/tasks/:task_id/task_items
 
@@ -567,28 +562,25 @@ Create a new task item associated with the task. Post a new JSON hash for the it
 
 + Request Create a new task item (application/json)
 
-```json
-{
-  "task_item": {
-    "name": "New Item",
-    "external_id": "10020202",
-    "url": "http://www.gsa.gov/"
-  }
-}
-```
+    {
+      "task_item": {
+        "name": "New Item",
+        "external_id": "10020202",
+        "url": "http://www.gsa.gov/"
+      }
+    }
+
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-{
-  "id": 5,
-  "task_id": 1,
-  "name": "New Item",
-  "external_id": "10020202",
-  "url": "http://www.gsa.gov/",
-  "completed_at": null
-}
-```
+    {
+      "id": 5,
+      "task_id": 1,
+      "name": "New Item",
+      "external_id": "10020202",
+      "url": "http://www.gsa.gov/",
+      "completed_at": null
+    }
 
 ## PUT /api/v1/tasks/:task_id/task_items/:id
 
@@ -597,24 +589,24 @@ Update the attributes of a task item. Any attributes not included in the update 
 * Include a `completed_at` field in the PUT body that is a datetime for when the task was completed. Use the ISO 8601 date format only.
 * More conveniently, you can just send `"complete": true` and it will set the completion time for the task item automatically.
 
-```json
-{
-  "complete": true
-}
-```
++ Request Update a task item (application/json)
+
+    {
+      "complete": true
+    }
+
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-{
-  "id": 5,
-  "task_id": 1,
-  "name": "New Item",
-  "external_id": "10020202",
-  "url": "http://www.gsa.gov/",
-  "completed_at": "2015-07-15 21:20:53 -0400"
-}
-```
+    {
+      "id": 5,
+      "task_id": 1,
+      "name": "New Item",
+      "external_id": "10020202",
+      "url": "http://www.gsa.gov/",
+      "completed_at": "2015-07-15 21:20:53 -0400"
+    }
+
 
 ## DELETE /api/v1/tasks/:task_id/task_items/:id
 
@@ -622,18 +614,16 @@ Deletes the task item. Upon successful completion, it will return the JSON of th
 
 + Response 200 (application/json; charset=utf-8)
 
-```json
-{
-  "id": 5,
-  "task_id": 1,
-  "name": "New Item",
-  "external_id": "10020202",
-  "url": "http://www.gsa.gov/",
-  "completed_at": "2015-07-15 21:20:53 -0400"
-}
-```
+    {
+      "id": 5,
+      "task_id": 1,
+      "name": "New Item",
+      "external_id": "10020202",
+      "url": "http://www.gsa.gov/",
+      "completed_at": "2015-07-15 21:20:53 -0400"
+    }
 
-# Group Notification
+# Notification
 
 
 ## POST /api/v1/notifications
@@ -669,8 +659,7 @@ This will create a notification for the authenticated user.  The user will be ab
       "viewed_at": null
     }
 
-
-# Group Logout
+# Logout
 
 
 ## GET /users/sign_out?continue=

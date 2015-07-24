@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
 
+  # Until we get ATO approval, non-whitelisted clients need to use HTTP Auth
+  before_filter :pre_ato_protect
+
   protected
 
   def clear_return_to
@@ -11,6 +14,17 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def pre_ato_protect
+    if ENV['PRE_ATO_PROTECT']
+      match = Rails.application.config.pre_ato_whitelist.any? do |ip|
+        ip.include? request.remote_ip
+      end
+      authenticate_or_request_with_http_basic do |user,pass|
+        user == ENV.fetch('PRE_ATO_USERNAME') && pass == ENV.fetch('PRE_ATO_PASSWORD')
+      end unless match
+    end
+  end
 
   def valid_url?(uri)
     !!((uri =~ URI.regexp(%w(http https))) &&

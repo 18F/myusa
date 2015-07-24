@@ -46,4 +46,11 @@ Rails.application.configure do
     elasticache = Dalli::ElastiCache.new(endpoint)
     config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
   end
+
+  # Remove once we have ATO
+  require 'ipaddr'
+
+  if ENV['PRE_ATO_PROTECT']
+    config.pre_ato_whitelist = ENV.fetch('PRE_ATO_WHITELIST').split(/\s,/).map { |ip| IPAddr.new(ip) }
+  end
 end

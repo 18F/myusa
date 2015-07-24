@@ -4,16 +4,16 @@
       <div class="form-group">
         <%= label_tag 'inputEmail', t('devise.enter_your_email'), class: 'blue_header' %>
         <div class="input-group">
-          <%= f.email_field :email, class: "form-control", id: "inputEmail", autofocus: true, placeholder: 'Email Address' %>
+          <%= f.email_field :email, class: "form-control", id: "inputEmail", autofocus: true, placeholder: 'Email Address', tabindex: "1" %>
           <span class="input-group-btn">
             <%= hidden_field_tag :login_required, params[:login_required] %>
-            <%= submit_tag 'Connect', :class => 'btn btn-primary connect_button', :type => 'submit' %>
+            <%= submit_tag 'Connect', :class => 'btn btn-primary connect_button', :type => 'submit', :tabindex => '3' %>
           </span>
         </div>
       </div>
       <div class="checkbox">
         <label>
-          <%= f.check_box :remember_me %>
+          <%= f.check_box :remember_me, tabindex: "2" %>
           Remember me on this computer for 2 weeks
         </label>
       </div>

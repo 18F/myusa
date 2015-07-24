@@ -2,7 +2,7 @@ FORMAT: 1A
 
 # MyUSA API Documentation
 
-# Overview
+# Group Overview
 
 MyUSA is an openly accessible service designed to make life easier for app developers and users. It provides:
 * **an Authentication and Authorization gateway**, which means apps don't need their own sign-in/sign-up screens
@@ -10,7 +10,7 @@ MyUSA is an openly accessible service designed to make life easier for app devel
 * **a Notification service**, making it fast and free for apps to send email and SMS notifications to specific users
 * **a Task service**, allowing apps to track tasks that users might need to do for an application process, etc.
 
-# Getting Started
+# Group Getting Started
 
 Welcome to MyUSA’s API documentation. Here, you’ll find everything you need to know to successfully integrate MyUSA with your application.
 
@@ -85,7 +85,7 @@ To ensure that your application is properly connected to MyUSA, test its login c
 Once a user has signed in, your app should have access to the specific scopes
 requested, using the MyUSA API.
 
-# Branding Guidelines
+# Group Branding Guidelines
 
 These guidelines provide the design specifications for using the MyUSA brand
 within your application.  You can use these assets on your website or in your
@@ -132,7 +132,7 @@ To add this button to your application, use the following HTML:
 ```
 
 
-# Authentication
+# Group Authentication
 
 MyUSA uses OAuth 2.0. The authentication flow is as follows:
 
@@ -250,65 +250,70 @@ Get metadata about the token used to make this request, including
 the list of scopes the user has authorized.
 
 + Response 200 (application/json; charset=utf-8)
-    {
-      "resource_owner_id": 3879,
-      "scopes": [
-        "profile.first_name",
-        "profile.last_name"
-      ],
-      "expires_in_seconds": 7200,
-      "application": {
-        "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
-      }
-    }
+
+        {
+          "resource_owner_id": 3879,
+          "scopes": [
+            "profile.first_name",
+            "profile.last_name"
+          ],
+          "expires_in_seconds": 7200,
+          "application": {
+            "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
+          }
+        }
 
 ## POST /oauth/token
 
 + Request Requesting the access token
-    {
-      "client_id": THE_ID,
-      "client_secret": THE_SECRET,
-      "code": RETURNED_CODE,
-      "grant_type": "authorization_code",
-      "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
-    }
+
+        {
+          "client_id": THE_ID,
+          "client_secret": THE_SECRET,
+          "code": RETURNED_CODE,
+          "grant_type": "authorization_code",
+          "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
+        }
 
 + Response 200 (application/json; charset=utf-8)
-    {
-      "access_token": "...",
-      "token_type": "bearer",
-      "expires_in": 7200,
-      "refresh_token": "..."
-    }
+
+        {
+          "access_token": "...",
+          "token_type": "bearer",
+          "expires_in": 7200,
+          "refresh_token": "..."
+        }
 
 + Request Refreshing the access token
-    {
-      "client_id": THE_ID,
-      "client_secret": THE_SECRET,
-      "refresh_token": REFRESH_TOKEN,
-      "grant_type": "refresh_token",
-      "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
-    }
+
+        {
+          "client_id": THE_ID,
+          "client_secret": THE_SECRET,
+          "refresh_token": REFRESH_TOKEN,
+          "grant_type": "refresh_token",
+          "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "access_token": "...",
-      "token_type": "bearer",
-      "expires_in": 7200,
-      "refresh_token": "..."
-    }
+        {
+          "access_token": "...",
+          "token_type": "bearer",
+          "expires_in": 7200,
+          "refresh_token": "..."
+        }
 
 ## POST /oauth/revoke
 
 + Request Revoking the token
-    {
-      "token": TOKEN
-    }
+
+        {
+          "token": TOKEN
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-  Always returns a 200, even if the token does not exist or has already been revoked.
+        Always returns a 200, even if the token does not exist or has already been revoked.
 
 
 # Group Profile
@@ -324,20 +329,20 @@ Get the user profile with attributes limited to just those chosen by app owner d
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "email": "joe@citizen.org",
-      "givenName": "Joe",
-      "additionalName": null,
-      "familyName": "Citizen",
-      "homeLocation": {
-        "streetAddress": "",
-        "addressLocality": null,
-        "addressRegion": null,
-        "postalCode": null
-      },
-      "telephone": null,
-      "gender": null
-    }
+        {
+          "email": "joe@citizen.org",
+          "givenName": "Joe",
+          "additionalName": null,
+          "familyName": "Citizen",
+          "homeLocation": {
+            "streetAddress": "",
+            "addressLocality": null,
+            "addressRegion": null,
+            "postalCode": null
+          },
+          "telephone": null,
+          "gender": null
+        }
 
 ## GET /api/v1/profile
 
@@ -345,32 +350,31 @@ Get the user profile with attributes limited to just those chosen by app owner d
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "title": null,
-      "first_name": "Joe",
-      "middle_name": null,
-      "last_name": "Citizen",
-      "suffix": null,
-      "address": null,
-      "address2": null,
-      "city": null,
-      "state": null,
-      "zip": null,
-      "gender": null,
-      "marital_status": null,
-      "is_parent": null,
-      "is_student": null,
-      "is_veteran": null,
-      "is_retired": "0",
-      "email": "joe@citizen.org",
-      "phone_number": null,
-      "mobile_number": null,
-      "uid": "a83dead6-d98d-4377-9e69-eb00488839f5",
-      "id": "a83dead6-d98d-4377-9e69-eb00488839f5"
-    }
+        {
+          "title": null,
+          "first_name": "Joe",
+          "middle_name": null,
+          "last_name": "Citizen",
+          "suffix": null,
+          "address": null,
+          "address2": null,
+          "city": null,
+          "state": null,
+          "zip": null,
+          "gender": null,
+          "marital_status": null,
+          "is_parent": null,
+          "is_student": null,
+          "is_veteran": null,
+          "is_retired": "0",
+          "email": "joe@citizen.org",
+          "phone_number": null,
+          "mobile_number": null,
+          "uid": "a83dead6-d98d-4377-9e69-eb00488839f5",
+          "id": "a83dead6-d98d-4377-9e69-eb00488839f5"
+        }
 
-
-# Task API
+# Group Tasks
 
 To use these methods, the user must allow access to the `tasks` scope (your application must also request it from them).
 
@@ -380,61 +384,59 @@ List all tasks, and associated attributes, created by the calling application
 
 + Response 200 (application/json; charset=utf-8)
 
-    [
-      {
-        "id": 1,
-        "name": "Task #1",
-        "completed_at": null,
-        "user_id": 1,
-        "created_at": "2014-07-08T17:59:23.000Z",
-        "updated_at": "2014-07-08T17:59:23.000Z",
-        "app_id": 1,
-        "task_items": [
+        [
           {
             "id": 1,
-            "name": "Task item 1 (no url)",
-            "url": null,
+            "name": "Task #1",
             "completed_at": null,
-            "task_id": 1,
+            "user_id": 1,
             "created_at": "2014-07-08T17:59:23.000Z",
-            "updated_at": "2014-07-08T17:59:23.000Z"
+            "updated_at": "2014-07-08T17:59:23.000Z",
+            "app_id": 1,
+            "task_items": [
+              {
+                "id": 1,
+                "name": "Task item 1 (no url)",
+                "url": null,
+                "completed_at": null,
+                "task_id": 1,
+                "created_at": "2014-07-08T17:59:23.000Z",
+                "updated_at": "2014-07-08T17:59:23.000Z"
+              }
+            ]
           }
         ]
-      }
-    ]
 
 ## POST /api/v1/tasks
 
 Create a new task for the user for this application.
 
 + Parameters
-
-+ name (required, string, `Test task`) ...The name for the task that is being created.
-+ url (optional, string, 'http://18f.gsa.gov') ...an optional URL for the Task. Note you can define URLs for task items too.
-+ task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute', :url => 'optional url', :external_id => 'optional ID string' }`) ...A list of task items to be associated with the task. The External ID field is provided for your convenience to more easily map task items to records on your own system. **Note:** there is a separate RESTful API that can be used for individually creating and updating task items associated with tasks.
+    + name (required, string, `Test task`) ...The name for the task that is being created.
+    + url (optional, string, `http://18f.gsa.gov`) ...a URL for the Task. Note you can define URLs for task items too.
+    + task_items_atributes (optional, hash, `{:id=>1, :name=>'Task attribute' }`) ...A list of task items to be associated with the task. The External ID field is provided for your convenience to more easily map task items to records on your own system. There is a separate RESTful API that can be used for individually creating and updating task items associated with tasks.
 
 + Request Create a new task (application/json)
 
-    {
-      "task": {
-        "name": "New Task"
-      }
-    }
+        {
+          "task": {
+            "name": "New Task"
+          }
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 1,
-      "name": "New Task",
-      "completed_at": null,
-      "user_id": 1,
-      "created_at": "2014-07-08T17:59:22.487Z",
-      "updated_at": "2014-07-08T17:59:22.487Z",
-      "app_id": 1,
-      "task_items": [
-
-      ]
-    }
+        {
+          "id": 1,
+          "name": "New Task",
+          "completed_at": null,
+          "user_id": 1,
+          "created_at": "2014-07-08T17:59:22.487Z",
+          "updated_at": "2014-07-08T17:59:22.487Z",
+          "app_id": 1,
+          "task_items": [
+          ]
+        }
 
 ## GET /api/v1/task/:id
 
@@ -442,92 +444,100 @@ Get a single task.
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 1,
-      "name": "New Task",
-      "completed_at": null,
-      "user_id": 1,
-      "created_at": "2014-07-08T17:59:23.000Z",
-      "updated_at": "2014-07-08T17:59:23.000Z",
-      "app_id": 1,
-      "task_items": [
         {
           "id": 1,
-          "name": "Task Item #1",
-          "url": null,
+          "name": "New Task",
           "completed_at": null,
-          "task_id": 1,
+          "user_id": 1,
           "created_at": "2014-07-08T17:59:23.000Z",
-          "updated_at": "2014-07-08T17:59:23.000Z"
-        },
-        {
-          "id": 2,
-          "name": "Task Item #2",
-          "url": "http://valid_url.com",
-          "completed_at": null,
-          "task_id": 1,
-          "created_at": "2014-07-08T17:59:23.000Z",
-          "updated_at": "2014-07-08T17:59:23.000Z"
+          "updated_at": "2014-07-08T17:59:23.000Z",
+          "app_id": 1,
+          "task_items": [
+            {
+              "id": 1,
+              "name": "Task Item #1",
+              "url": null,
+              "completed_at": null,
+              "task_id": 1,
+              "created_at": "2014-07-08T17:59:23.000Z",
+              "updated_at": "2014-07-08T17:59:23.000Z"
+            },
+            {
+              "id": 2,
+              "name": "Task Item #2",
+              "url": "http://valid_url.com",
+              "completed_at": null,
+              "task_id": 1,
+              "created_at": "2014-07-08T17:59:23.000Z",
+              "updated_at": "2014-07-08T17:59:23.000Z"
+            }
+          ]
         }
-      ]
-    }
 
 
-## PUT /api/v1/task/:id
+## PUT /api/v1/task/{id}
 
-Update a task
+Update a task. Note that if the task or one of its attributes has defined values for fields that are not explicitly included in the PUT request,
+those values will be preserved and will not be overwritten. If a task item is not included in the tasks posted here, it will not be changed at all. To delete a task item, you need to use the RESTful API.
 
 + Parameters
-
-+ name (optional, string, `Test task`) ...The updated name of the task.
-+ task_items_atributes(optional, hash, `{:id=>1, :name=>'Task attribute' }`)... The updated task items that are associated with the task.
+    + name (optional, string, `Test task`) ...The updated name of the task.
+    + task_items_atributes (optional, hash, `{:id=>1, :name=>'Task attribute' }`) ...The updated task items that are associated with the task.
 
 + Request Update a task and task items (application/json)
 
-    {
-      "task": {
-        "name": "New Task",
-        "task_items_attributes": [
         {
-          "id": "1",
-          "name": "Task item one"
+          "task": {
+            "name": "New Task",
+            "task_items_attributes": [
+            {
+              "id": "1",
+              "name": "Task item one"
+            }
+            ]
+          }
         }
-        ]
-      }
-    }
-
-Note that if the task or one of its attributes has defined values for fields that are not explicitly included in the PUT request,
-those values will be preserved and will not be overwritten. If a task item is not included in the tasks posted here, it will not be changed at all. To delete a task item, you need to use the RESTful API.
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 1,
-      "name": "New Task",
-      "url": "This URL was not updated",
-      "completed_at": "2014-07-07T17:59:21.000Z",
-      "user_id": 1,
-      "created_at": "2014-07-08T17:59:21.000Z",
-      "updated_at": "2014-07-08T17:59:21.875Z",
-      "app_id": 1,
-      "task_items": [
-      {
-        "id": 1,
-        "name": "Task item one",
-        "url": null,
-        "completed_at": null,
-        "task_id": 1,
-        "created_at": "2014-07-08T17:59:21.000Z",
-        "updated_at": "2014-07-08T17:59:21.000Z"
-      }
-      ]
-    }
+        {
+          "id": 1,
+          "name": "New Task",
+          "url": "This URL was not updated",
+          "completed_at": "2014-07-07T17:59:21.000Z",
+          "user_id": 1,
+          "created_at": "2014-07-08T17:59:21.000Z",
+          "updated_at": "2014-07-08T17:59:21.875Z",
+          "app_id": 1,
+          "task_items": [
+          {
+            "id": 1,
+            "name": "Task item one",
+            "url": null,
+            "completed_at": null,
+            "task_id": 1,
+            "created_at": "2014-07-08T17:59:21.000Z",
+            "updated_at": "2014-07-08T17:59:21.000Z"
+          }
+          ]
+        }
 
-## DELETE /api/v1/tasks/:id
+## DELETE /api/v1/task/:id
 
 Deletes the task associated with the ID and all of its associated task_items. Upon successful deletion, his method returns at HTTP 200 status and the JSON of the task that was deleted.
 
-# Task Items API
++ Response 200 (application/json; charset=utf-8)
+
+        {
+          "id": 5,
+          "task_id": 1,
+          "name": "New Item",
+          "external_id": "10020202",
+          "url": "http://www.gsa.gov/",
+          "completed_at": "2015-07-15 21:20:53 -0400"
+        }
+
+# Group Task Items
 
 Every task can have one or more optional task items associated with it. These task items have the following optional attributes:
 
@@ -544,43 +554,42 @@ Returns an array of all the task items associated within the task. This is ident
 
 + Response 200 (application/json; charset=utf-8)
 
-   [  
-     {
-       "id": 1,
-       "name": "Task item 1 (no url)",
-       "url": null,
-       "completed_at": null,
-       "task_id": 1,
-       "created_at": "2014-07-08T17:59:23.000Z",
-       "updated_at": "2014-07-08T17:59:23.000Z"
-     }
-   ]
-
+        [  
+          {
+            "id": 1,
+            "name": "Task item 1 (no url)",
+            "url": null,
+            "completed_at": null,
+            "task_id": 1,
+            "created_at": "2014-07-08T17:59:23.000Z",
+            "updated_at": "2014-07-08T17:59:23.000Z"
+          }
+        ]
+        
 ## POST /api/v1/tasks/:task_id/task_items
 
 Create a new task item associated with the task. Post a new JSON hash for the item you want to create.
 
 + Request Create a new task item (application/json)
 
-    {
-      "task_item": {
-        "name": "New Item",
-        "external_id": "10020202",
-        "url": "http://www.gsa.gov/"
-      }
-    }
-
+        {
+          "task_item": {
+            "name": "New Item",
+            "external_id": "10020202",
+            "url": "http://www.gsa.gov/"
+          }
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 5,
-      "task_id": 1,
-      "name": "New Item",
-      "external_id": "10020202",
-      "url": "http://www.gsa.gov/",
-      "completed_at": null
-    }
+        {
+          "id": 5,
+          "task_id": 1,
+          "name": "New Item",
+          "external_id": "10020202",
+          "url": "http://www.gsa.gov/",
+          "completed_at": null
+        }
 
 ## PUT /api/v1/tasks/:task_id/task_items/:id
 
@@ -591,21 +600,21 @@ Update the attributes of a task item. Any attributes not included in the update 
 
 + Request Update a task item (application/json)
 
-    {
-      "complete": true
-    }
+        {
+          "complete": true
+        }
 
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 5,
-      "task_id": 1,
-      "name": "New Item",
-      "external_id": "10020202",
-      "url": "http://www.gsa.gov/",
-      "completed_at": "2015-07-15 21:20:53 -0400"
-    }
+        {
+          "id": 5,
+          "task_id": 1,
+          "name": "New Item",
+          "external_id": "10020202",
+          "url": "http://www.gsa.gov/",
+          "completed_at": "2015-07-15 21:20:53 -0400"
+        }
 
 
 ## DELETE /api/v1/tasks/:task_id/task_items/:id
@@ -614,16 +623,16 @@ Deletes the task item. Upon successful completion, it will return the JSON of th
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 5,
-      "task_id": 1,
-      "name": "New Item",
-      "external_id": "10020202",
-      "url": "http://www.gsa.gov/",
-      "completed_at": "2015-07-15 21:20:53 -0400"
-    }
+        {
+          "id": 5,
+          "task_id": 1,
+          "name": "New Item",
+          "external_id": "10020202",
+          "url": "http://www.gsa.gov/",
+          "completed_at": "2015-07-15 21:20:53 -0400"
+        }
 
-# Notification
+# Group Notification
 
 
 ## POST /api/v1/notifications
@@ -637,29 +646,29 @@ This will create a notification for the authenticated user.  The user will be ab
 
 + Request Create a new notification (application/json)
 
-    {
-      "notification": {
-        "subject": "Project MyUSA",
-        "body": "This is a test."
-      }
-    }
+        {
+          "notification": {
+            "subject": "Project MyUSA",
+            "body": "This is a test."
+          }
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "id": 17,
-      "subject": "Project MyUSA",
-      "body": "This is a test.",
-      "received_at": "2014-07-08T17:59:15.803Z",
-      "app_id": 1,
-      "user_id": 1,
-      "created_at": "2014-07-08T17:59:15.804Z",
-      "updated_at": "2014-07-08T17:59:15.804Z",
-      "deleted_at": null,
-      "viewed_at": null
-    }
+        {
+          "id": 17,
+          "subject": "Project MyUSA",
+          "body": "This is a test.",
+          "received_at": "2014-07-08T17:59:15.803Z",
+          "app_id": 1,
+          "user_id": 1,
+          "created_at": "2014-07-08T17:59:15.804Z",
+          "updated_at": "2014-07-08T17:59:15.804Z",
+          "deleted_at": null,
+          "viewed_at": null
+        }
 
-# Logout
+# Group Logout
 
 
 ## GET /users/sign_out?continue=
@@ -672,12 +681,13 @@ the user.
 
 + Parameters
 
- + continue (required, url, `http://example.com/page`)
+    + continue (required, url, `http://example.com/page`)
 
 + Response 302
-    + Headers
 
-        Location: http://example.com/page
+    + Headers
+    
+            Location: http://example.com/page
 
 
 ## GET /users/sign_out

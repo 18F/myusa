@@ -1,64 +1,65 @@
-<a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row aglio"><div class="col-md-3"><nav id="nav" data-spy="affix" data-offset-top="120" class="hidden-sm hidden-xs nav"><div class="list-group"><a data-toggle="" data-target="#overview-menu" href="#overview" class="list-group-item heading collapsed">Overview</a><div id="overview-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#getting-started-menu" href="#getting-started" class="list-group-item heading collapsed">Getting Started</a><div id="getting-started-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#branding-guidelines-menu" href="#branding-guidelines" class="list-group-item heading collapsed">Branding Guidelines</a><div id="branding-guidelines-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#authentication-menu" href="#authentication" class="list-group-item heading collapsed">Authentication</a><div id="authentication-menu"><a href="#authentication-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tokeninfo</a><a href="#authentication-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /oauth/token</a><a href="#authentication-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /oauth/revoke</a></div></div><div class="list-group"><a data-toggle="" data-target="#profile-menu" href="#profile" class="list-group-item heading collapsed">Profile</a><div id="profile-menu"><a href="#profile-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/profile?schema=</a><a href="#profile-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/profile</a></div></div><div class="list-group"><a data-toggle="" data-target="#task-menu" href="#task" class="list-group-item heading collapsed">Task</a><div id="task-menu"><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tasks</a><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/tasks</a><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/task/:id</a><a href="#task-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span>PUT /api/v1/task/:id</a></div></div><div class="list-group"><a data-toggle="" data-target="#notification-menu" href="#notification" class="list-group-item heading collapsed">Notification</a><div id="notification-menu"><a href="#notification-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/notifications</a></div></div><div class="list-group"><a data-toggle="" data-target="#logout-menu" href="#logout" class="list-group-item heading collapsed">Logout</a><div id="logout-menu"><a href="#logout-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /users/sign_out?continue=</a><a href="#logout-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /users/sign_out</a></div></div></nav></div><div class="col-md-8"><div><header><div class="page-header"><h1 id="top">MyUSA API Documentation</h1></div></header><div class="description"></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="overview">Overview&nbsp;<a href="#overview"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>MyUSA is an openly accessible service designed to make life easier for app developers and users. It provides:</p>
+<a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row aglio"><div class="col-md-3"><nav id="nav" data-spy="affix" data-offset-top="120" class="hidden-sm hidden-xs nav"><div class="list-group"><a data-toggle="" data-target="#overview-menu" href="#overview" class="list-group-item heading collapsed">Overview</a><div id="overview-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#getting-started-menu" href="#getting-started" class="list-group-item heading collapsed">Getting Started</a><div id="getting-started-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#branding-guidelines-menu" href="#branding-guidelines" class="list-group-item heading collapsed">Branding Guidelines</a><div id="branding-guidelines-menu"></div></div><div class="list-group"><a data-toggle="" data-target="#authentication-menu" href="#authentication" class="list-group-item heading collapsed">Authentication</a><div id="authentication-menu"><a href="#authentication-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tokeninfo</a><a href="#authentication-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /oauth/token</a><a href="#authentication-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /oauth/revoke</a></div></div><div class="list-group"><a data-toggle="" data-target="#profile-menu" href="#profile" class="list-group-item heading collapsed">Profile</a><div id="profile-menu"><a href="#profile-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/profile?schema=</a><a href="#profile-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/profile</a></div></div><div class="list-group"><a data-toggle="" data-target="#tasks-menu" href="#tasks" class="list-group-item heading collapsed">Tasks</a><div id="tasks-menu"><a href="#tasks-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tasks</a><a href="#tasks-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/tasks</a><a href="#tasks-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/task/:id</a><a href="#tasks-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span>PUT /api/v1/task/{id}</a><a href="#tasks-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-danger"><i class="fa fa-times"></i></span>DELETE /api/v1/task/:id</a></div></div><div class="list-group"><a data-toggle="" data-target="#task-items-menu" href="#task-items" class="list-group-item heading collapsed">Task Items</a><div id="task-items-menu"><a href="#task-items-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /api/v1/tasks/:task_id/task_items</a><a href="#task-items-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/tasks/:task_id/task_items</a><a href="#task-items-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span>PUT /api/v1/tasks/:task_id/task_items/:id</a><a href="#task-items-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-danger"><i class="fa fa-times"></i></span>DELETE /api/v1/tasks/:task_id/task_items/:id</a></div></div><div class="list-group"><a data-toggle="" data-target="#notification-menu" href="#notification" class="list-group-item heading collapsed">Notification</a><div id="notification-menu"><a href="#notification-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span>POST /api/v1/notifications</a></div></div><div class="list-group"><a data-toggle="" data-target="#logout-menu" href="#logout" class="list-group-item heading collapsed">Logout</a><div id="logout-menu"><a href="#logout-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /users/sign_out?continue=</a><a href="#logout-" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>GET /users/sign_out</a></div></div></nav></div><div class="col-md-8"><div><header><div class="page-header"><h1 id="top">MyUSA API Documentation</h1></div></header><div class="description"></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="overview">Overview&nbsp;<a href="#overview"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>MyUSA is an openly accessible service designed to make life easier for app developers and users. It provides:</p>
 <ul>
-<li><strong>an Authentication and Authorization gateway</strong>, which means apps don’t need their own sign-in/sign-up screens</li>
-<li><strong>a Profile system</strong>, which helps users save time as they fill out forms</li>
-<li><strong>a Notification service</strong>, making it fast and free for apps to send email and SMS notifications to specific users</li>
+<li><p><strong>an Authentication and Authorization gateway</strong>, which means apps don’t need their own sign-in/sign-up screens</p></li>
+<li><p><strong>a Profile system</strong>, which helps users save time as they fill out forms</p></li>
+<li><p><strong>a Notification service</strong>, making it fast and free for apps to send email and SMS notifications to specific users</p></li>
+<li><p><strong>a Task service</strong>, allowing apps to track tasks that users might need to do for an application process, etc.</p></li>
 </ul>
 </div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="getting-started">Getting Started&nbsp;<a href="#getting-started"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>Welcome to MyUSA’s API documentation. Here, you’ll find everything you need to know to successfully integrate MyUSA with your application.</p>
 <p>To make use of MyUSA’s services in your application, follow the steps outlined below.
 If you have questions or need more information, contact us – we’ll get back to you as quickly as we can.</p>
-<h2 id="1-read-these-documents">1. Read these documents</h2>
+<h2>1. Read these documents</h2>
 <p>Before doing anything else, read all of steps described in this document. In particular, take note of the various API calls that provide the functions your application requires.</p>
-<h2 id="2-create-your-app">2. Create your app</h2>
+<h2>2. Create your app</h2>
 <p>Use any language or framework you like to create your application – MyUSA places no restrictions on platform or hosting options. We have only two requirements:</p>
 <ul>
-<li>Your application must make HTTPS calls to our REST API</li>
-<li>Your application must provide an OAuth2-compliant endpoint for a callback after the authentication process</li>
+<li><p>Your application must make HTTPS calls to our REST API</p></li>
+<li><p>Your application must provide an OAuth2-compliant endpoint for a callback after the authentication process</p></li>
 </ul>
 <p>For a working example, take a look at <a href="https://github.com/18F/omniauth-myusa/tree/master/example">this minimal Ruby &amp; Sinatra implementation</a>,
 which is included in our <a href="https://github.com/18F/omniauth-myusa"><em>omniauth-myusa</em>
 repository</a>.</p>
-<h2 id="3-register-your-app">3. Register your app</h2>
+<h2>3. Register your app</h2>
 <p>Once you’ve created your application, you’ll need to register it with MyUSA. To do this, visit our <a href="/authorizations">Applications page</a> and click the green New Application button at the top-right corner of the screen. This will open a form you’ll need to complete in order to register your application. We encourage you to complete the form in its entirety. That said, only the following fields are required:</p>
 <ul>
-<li><strong>Name:</strong> Enter the name of your application. Because your application’s name will appear in each user’s list of authorizations, you should choose a name that’s descriptive and easily recognizable.</li>
-<li><strong>Redirect URI:</strong> Your application will direct each user’s browser to an authentication page at MyUSA. Once the user has been authenticated, MyUSA will redirect the user’s browser to the URI you provide here.</li>
-<li><strong>Scopes:</strong> The latter portion of the form features a list of all the scopes available for use by your application. You’re free to select as many scopes as you like, but you’re required to select at least one to allow your application to access user services.</li>
+<li><p><strong>Name:</strong> Enter the name of your application. Because your application’s name will appear in each user’s list of authorizations, you should choose a name that’s descriptive and easily recognizable.</p></li>
+<li><p><strong>Redirect URI:</strong> Your application will direct each user’s browser to an authentication page at MyUSA. Once the user has been authenticated, MyUSA will redirect the user’s browser to the URI you provide here.</p></li>
+<li><p><strong>Scopes:</strong> The latter portion of the form features a list of all the scopes available for use by your application. You’re free to select as many scopes as you like, but you’re required to select at least one to allow your application to access user services.</p></li>
 </ul>
 <p>Please note that there are three levels of scopes:</p>
 <ol>
-<li>Those you specify (indicate interest in accessing) when you register your application;</li>
-<li>Those you request from the user during the OAuth process; and</li>
-<li>Those the user approves access to during the OAuth process.</li>
+<li><p>Those you specify (indicate interest in accessing) when you register your application;</p></li>
+<li><p>Those you request from the user during the OAuth process; and</p></li>
+<li><p>Those the user approves access to during the OAuth process.</p></li>
 </ol>
 <p>It’s possible that the user will deny access to some of the scopes you request. Currently, you’re required to specify at least one scope.</p>
 <p>After you’ve completed and successfully submitted your application form, a <strong>Public Key</strong> (also known as the <strong>Client ID</strong>) and a Secret Key will be displayed on the page. Your application will use these keys to access the MyUSA API. Please note that <strong>these keys cannot be retrieved, only regenerated</strong> – please keep track of this information when you’re given access to it.</p>
-<h2 id="4-make-your-application-public">4. Make your application public</h2>
+<h2>4. Make your application public</h2>
 <p>On the <a href="/authorizations">Applications page</a>, click
 the  “New Application” button. At minimum, you need to provide the following
 information:</p>
 <ul>
-<li><strong>Name:</strong> Since the application name will be shown to a user in their list
-of authorizations, you should pick a name that’s easily recognizable.</li>
-<li><strong>Redirect URI:</strong> To authenticate a user, your app will direct the user’s
+<li><p><strong>Name:</strong> Since the application name will be shown to a user in their list
+of authorizations, you should pick a name that’s easily recognizable.</p></li>
+<li><p><strong>Redirect URI:</strong> To authenticate a user, your app will direct the user’s
 browser to an authentication page at MyUSA. Once the user is authenticated,
-MyUSA will redirect the user’s browser to the URI you provide here.</li>
-<li><strong>Scopes:</strong> You must select at least one scope which your app will use to
-access user services.</li>
+MyUSA will redirect the user’s browser to the URI you provide here.</p></li>
+<li><p><strong>Scopes:</strong> You must select at least one scope which your app will use to
+access user services.</p></li>
 </ul>
 <p>It’s important to note that all newly registered applications default to Private Mode. Applications in <strong>Private Mode</strong> are only able to be accessed (through MyUSA) by you, the registered developer. To enable user access to your application, you must request public access for it. Once this request is approved and access is granted, MyUSA users will be able to access your application.</p>
-<h2 id="5-connect-your-application-to-myusa">5. Connect your application to MyUSA</h2>
+<h2>5. Connect your application to MyUSA</h2>
 <p>After you’ve successfully registered your application, you’re ready to connect it to MyUSA. To do this, you’ll need to add a Connect with MyUSA button, which your users will click to log in.</p>
 <p>Please visit the <a href="#authenticating-users">Authenticating Users</a> section to access the URL to use, and visit our <a href="#branding">Branding</a> section to access the HTML you’ll need to install the MyUSA button.</p>
-<h2 id="6-test-your-app-s-connection-to-myusa">6. Test your app’s connection to MyUSA</h2>
+<h2>6. Test your app’s connection to MyUSA</h2>
 <p>To ensure that your application is properly connected to MyUSA, test its login capability and API access by taking the actions described below:</p>
-<h3 id="signing-in">Signing in</h3>
+<h3>Signing in</h3>
 <ol>
-<li>Access your application and click the Connect with MyUSA button as it appears in your application. You should be taken to the MyUSA sign in page.</li>
-<li>Sign in with your MyUSA developer account (the one you used to register your application). Doing this should route you to your application’s OAuth callback endpoint.</li>
-<li>Be aware that your application is in Private Mode by default. As long as your application remains in <strong>Private Mode</strong>, your attempts to sign in with any other account should produce a client authentication error.</li>
+<li><p>Access your application and click the Connect with MyUSA button as it appears in your application. You should be taken to the MyUSA sign in page.</p></li>
+<li><p>Sign in with your MyUSA developer account (the one you used to register your application). Doing this should route you to your application’s OAuth callback endpoint.</p></li>
+<li><p>Be aware that your application is in Private Mode by default. As long as your application remains in <strong>Private Mode</strong>, your attempts to sign in with any other account should produce a client authentication error.</p></li>
 </ol>
-<h3 id="api-access">API access</h3>
+<h3>API access</h3>
 <p>Once a user has signed in, your app should have access to the specific scopes
 requested, using the MyUSA API.</p>
 </div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="branding-guidelines">Branding Guidelines&nbsp;<a href="#branding-guidelines"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>These guidelines provide the design specifications for using the MyUSA brand
@@ -69,22 +70,22 @@ Terms of Services requires explicit approval.  Note that the MyUSA brand or
 any affiliated government organization may not be used to imply an
 endorsement of an organization (including a nonprofit), product, person,
 or service.</p>
-<h2 id="myusa-button">MyUSA Button</h2>
+<h2>MyUSA Button</h2>
 <p>Two versions of the MyUSA button are available: one with a blue background and one with a white background.</p>
 <p><strong>Note:</strong> In the HTML code below, replace <code>$URL</code> with your custom sign in URL. (See <a href="#authenticating-users">the “Authenticating Users” section</a> for more information.)</p>
-<h3 id="blue-background">Blue Background</h3>
+<h3>Blue Background</h3>
 <p><a href="" class="btn btn-social btn-myusa">Connect with MyUSA</a></p>
 <p>To add this button to your application, use the following HTML:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'//fonts.googleapis.com/css?family=Open+Sans'</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">'stylesheet'</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'//fonts.googleapis.com/css?family=Open+Sans'</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">'stylesheet'</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'//s3.amazonaws.com/myusa-static/button.min.css'</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">'stylesheet'</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"$URL"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"btn btn-social btn-myusa"</span>&gt;</span>Connect with MyUSA<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 </code></pre>
-<h3 id="white-background">White Background</h3>
+<h3>White Background</h3>
 <p><a href="" class="btn btn-social btn-myusa white">Connect with MyUSA</a></p>
 <p>To add this button to your application, use the following HTML:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'//fonts.googleapis.com/css?family=Open+Sans'</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">'stylesheet'</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'//fonts.googleapis.com/css?family=Open+Sans'</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">'stylesheet'</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'//s3.amazonaws.com/myusa-static/button.min.css'</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">'stylesheet'</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"$URL"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"btn btn-social btn-myusa white"</span>&gt;</span>Connect with MyUSA<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
@@ -92,109 +93,117 @@ or service.</p>
 </code></pre>
 </div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="authentication">Authentication&nbsp;<a href="#authentication"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>MyUSA uses OAuth 2.0. The authentication flow is as follows:</p>
 <ol>
-<li>Your application redirects the user to MyUSA.</li>
-<li>If the user is not logged in at MyUSA, they are redirected to a login dialog.</li>
-<li>The user authorizes MyUSA to grant access to your application.</li>
-<li>MyUSA redirects the user back to your application, with an access_token.</li>
-<li>Using the access token, your application may query MyUSA APIs that you granted access to.</li>
+<li><p>Your application redirects the user to MyUSA.</p></li>
+<li><p>If the user is not logged in at MyUSA, they are redirected to a login dialog.</p></li>
+<li><p>The user authorizes MyUSA to grant access to your application.</p></li>
+<li><p>MyUSA redirects the user back to your application, with an access_token.</p></li>
+<li><p>Using the access token, your application may query MyUSA APIs that you granted access to.</p></li>
 </ol>
-<h2 id="scopes">Scopes</h2>
+<h2>Scopes</h2>
 <p>The scopes you define when you setup your app on MyUSA.gov define what information users will be asked to grant access to. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond that which the user already has.</p>
-<h2 id="api-versions">API Versions</h2>
+<h2>API Versions</h2>
 <p>To access the MyUSA API, your app should use URLs which include the API version number.
 API URLs are constructed using this template:</p>
 <pre><code><span class="hljs-link_url">https://my.usa.gov/api/</span>[<span class="hljs-link_label">VERSION</span>]/[ENDPOINT]
-</code></pre><p>The MyUSA API is currently at <strong>version 1</strong>. So, to access the Profile API, request this URL:</p>
-<pre><code><span class="hljs-label">https:</span>//my<span class="hljs-preprocessor">.usa</span><span class="hljs-preprocessor">.gov</span>/api/v1/profile
-</code></pre><p>The MyUSA team frequently makes minor changes to the API, but the vast majority of these changes are backwards-compatible and will not break existing integration code.</p>
+</code></pre>
+<p>The MyUSA API is currently at <strong>version 1</strong>. So, to access the Profile API, request this URL:</p>
+<pre><code><span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/my.usa.gov/api</span><span class="hljs-regexp">/v1/profile</span>
+</code></pre>
+<p>The MyUSA team frequently makes minor changes to the API, but the vast majority of these changes are backwards-compatible and will not break existing integration code.</p>
 <p>If an API change is backwards-incompatible, we increment the version number while keeping the previous version available.
 By using API URLs with specified versions, your application can continue operating without code changes.</p>
 <p><strong>Note that only two versions of the API are officially supported at any time: the current version, and the version preceding it.</strong>
 If your app uses the MyUSA API, you’ll need to keep track of new versions to ensure that the app stays functional.</p>
-<h2 id="connecting-with-oauth">Connecting with OAuth</h2>
+<h2>Connecting with OAuth</h2>
 <ol>
-<li>Sign in to <a href="/">MyUSA</a> to register an application.</li>
-<li>Provide a redirect URI which is <code>YOUR_SITE/auth/myusa/callback</code> by default.</li>
-<li>Select the scopes that your application will request. Sample scopes are email <code>profile.first_name</code> and <code>profile.phone_number</code>.</li>
-<li>Take note of your Consumer Key and Consumer Secret.</li>
+<li><p>Sign in to <a href="/">MyUSA</a> to register an application.</p></li>
+<li><p>Provide a redirect URI which is <code>YOUR_SITE/auth/myusa/callback</code> by default.</p></li>
+<li><p>Select the scopes that your application will request. Sample scopes are email <code>profile.first_name</code> and <code>profile.phone_number</code>.</p></li>
+<li><p>Take note of your Consumer Key and Consumer Secret.</p></li>
 </ol>
-<h2 id="authenticating-users">Authenticating Users</h2>
+<h2>Authenticating Users</h2>
 <p>To sign in to your app, users should be shown a “Connect with MyUSA” button. (See the <a href="#branding">Branding section</a> for details and code.) The button should link to your app’s custom sign in URL, which you can construct from this format:</p>
-<pre><code>    https://my<span class="hljs-preprocessor">.usa</span><span class="hljs-preprocessor">.gov</span>/users/sign_in?client_id=ABCD
-</code></pre><p>… where <code>ABCD</code> should be replaced with the <strong>Consumer Public Key</strong> (also known as the <strong>Client ID</strong>) that MyUSA provided when your app was registered.</p>
+<pre><code>    <span class="hljs-attribute">https</span>:<span class="hljs-comment">//my.usa.gov/users/sign_in?client_id=ABCD</span>
+</code></pre>
+<p>… where <code>ABCD</code> should be replaced with the <strong>Consumer Public Key</strong> (also known as the <strong>Client ID</strong>) that MyUSA provided when your app was registered.</p>
 <p>After clicking the “Connect with MyUSA” button, the user will be presented with the MyUSA login page. When they login, they will be redirected back to your application via the redirect URI that you specified when you setup the application. If your redirect uri was <code>https://www.example.com/test</code>, MyUSA would redirect to:</p>
-<pre><code><span class="hljs-label">https:</span>//www<span class="hljs-preprocessor">.example</span><span class="hljs-preprocessor">.com</span>/test?code=<span class="hljs-number">12345</span>abcde
-</code></pre><h3 id="handling-the-response">Handling the response</h3>
+<pre><code><span class="hljs-string">https:</span><span class="hljs-comment">//www.example.com/test?code=12345abcde</span>
+</code></pre>
+<h3>Handling the response</h3>
 <p>Your application should have an end point to recieve the redirect at this url.</p>
-<h3 id="long-lived-token">Long-lived Token</h3>
+<h3>Long-lived Token</h3>
 <p>Now that you have a valid code, you can make a server to server request to the MyUSA API to get a long-lived token to keep users logged in.</p>
-<h2 id="example-rails-configuration">Example Rails configuration</h2>
+<h2>Example Rails configuration</h2>
 <p>Start by adding this gem to your Gemfile:</p>
-<pre><code class="lang-ruby">gem <span class="hljs-string">'omniauth-myusa'</span>, <span class="hljs-symbol">:git</span> =&gt; <span class="hljs-string">'https://github.com/18F/omniauth-myusa'</span>
+<pre><code class="language-ruby">gem <span class="hljs-string">'omniauth-myusa'</span>, <span class="hljs-symbol">:git</span> =&gt; <span class="hljs-string">'https://github.com/18F/omniauth-myusa'</span>
 </code></pre>
 <p>Next, tell OmniAuth about this provider. For a Rails app, your <code>config/initializers/omniauth.rb</code> file should look like this:</p>
-<pre><code class="lang-ruby"><span class="hljs-constant">Rails</span>.application.config.middleware.use <span class="hljs-constant">OmniAuth::Builder</span> <span class="hljs-keyword">do</span>
+<pre><code class="language-ruby"><span class="hljs-constant">Rails</span>.application.config.middleware.use <span class="hljs-constant">OmniAuth::Builder</span> <span class="hljs-keyword">do</span>
   provider <span class="hljs-symbol">:myusa</span>, <span class="hljs-string">"YOURKEY"</span>, <span class="hljs-string">"YOURSECRET"</span>, <span class="hljs-symbol">scope:</span> [...]
 <span class="hljs-keyword">end</span>
 </code></pre>
 <p>Set SCOPES equal to a space separated string of your scopes that you requested when you created the app. In the future, we will generate this for you.
 Replace CONSUMER_KEY and CONSUMER_SECRET with the appropriate values you obtained from <a href="/authorizations">MyUSA</a> earlier.</p>
 <p>Don’t forget to create a route to handle the callback. For example:</p>
-<pre><code><span class="hljs-built_in">get</span> <span class="hljs-string">'/auth/:provider/callback'</span>, <span class="hljs-built_in">to</span>: <span class="hljs-string">'sessions#create’</span>
-</code></pre><p>The sessions controller in this example calls a create method that logs in the user.</p>
+<pre><code><span class="hljs-keyword">get</span> '/auth/:provider/callback', <span class="hljs-keyword">to</span>: 'sessions<span class="hljs-comment">#create’</span>
+</code></pre>
+<p>The sessions controller in this example calls a create method that logs in the user.</p>
 <p>Further reading:</p>
-<h2 id="watch-the-railscast">Watch the RailsCast</h2>
+<h2>Watch the RailsCast</h2>
 <p>Ryan Bates has put together an excellent RailsCast on OmniAuth:</p>
 <p><a href="http://railscasts.com/episodes/241-simple-omniauth-revised"><img src="http://railscasts.com/static/episodes/stills/241-simple-omniauth-revised.png" alt="RailsCast #241" title="RailsCast #241 - Simple OmniAuth (revised)"></a></p>
 <p>View the OmniAuth 1.0 docs for more information about strategy implementation: <a href="https://github.com/intridea/omniauth">https://github.com/intridea/omniauth</a>.</p>
-<h2 id="contributing">Contributing</h2>
+<h2>Contributing</h2>
 <ol>
-<li>Fork it</li>
-<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
-<li>Commit your changes (<code>git commit -am &#39;Add some feature&#39;</code>)</li>
-<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
-<li>Create new Pull Request</li>
+<li><p>Fork it</p></li>
+<li><p>Create your feature branch (<code>git checkout -b my-new-feature</code>)</p></li>
+<li><p>Commit your changes (<code>git commit -am 'Add some feature'</code>)</p></li>
+<li><p>Push to the branch (<code>git push origin my-new-feature</code>)</p></li>
+<li><p>Create new Pull Request</p></li>
 </ol>
 <h4 id="authentication-">Resources&nbsp;<a href="#authentication-"><i class="fa fa-link"></i></a></h4><section id="authentication--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#authentication--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/tokeninfo</code></div></div><div class="panel-body"><p>Get metadata about the token used to make this request, including
 the list of scopes the user has authorized.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#9916574b20e358953988410169f862a5" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="9916574b20e358953988410169f862a5" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
-"<span class="hljs-attribute">resource_owner_id</span>": <span class="hljs-value"><span class="hljs-number">3879</span></span>,
-"<span class="hljs-attribute">scopes</span>": <span class="hljs-value">[
-  <span class="hljs-string">"profile.first_name"</span>,
-  <span class="hljs-string">"profile.last_name"</span>
-]</span>,
-"<span class="hljs-attribute">expires_in_seconds</span>": <span class="hljs-value"><span class="hljs-number">7200</span></span>,
-"<span class="hljs-attribute">application</span>": <span class="hljs-value">{
-  "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"</span>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#2059537f2c4f38595c34cf4b214a98bf" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2059537f2c4f38595c34cf4b214a98bf" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">resource_owner_id</span>": <span class="hljs-value"><span class="hljs-number">3879</span></span>,
+  "<span class="hljs-attribute">scopes</span>": <span class="hljs-value">[
+    <span class="hljs-string">"profile.first_name"</span>,
+    <span class="hljs-string">"profile.last_name"</span>
+  ]</span>,
+  "<span class="hljs-attribute">expires_in_seconds</span>": <span class="hljs-value"><span class="hljs-number">7200</span></span>,
+  "<span class="hljs-attribute">application</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"</span>
+  </span>}
 </span>}
-</span>}
-</code></pre></li></ul></section><h4 id="authentication-">Resources&nbsp;<a href="#authentication-"><i class="fa fa-link"></i></a></h4><section id="authentication--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#authentication--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/oauth/token</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Requesting the access token</code></strong><a data-toggle="collapse" data-target="#4eecbd65d6e5ebcd7cb48bf6bdd69a33" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="4eecbd65d6e5ebcd7cb48bf6bdd69a33" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
+</code></pre></li></ul></section><h4 id="authentication-">Resources&nbsp;<a href="#authentication-"><i class="fa fa-link"></i></a></h4><section id="authentication--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#authentication--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/oauth/token</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Requesting the access token</code></strong><a data-toggle="collapse" data-target="#1c87037636f122ac1be7c2be74fab9dd" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="1c87037636f122ac1be7c2be74fab9dd" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">client_id</span>": <span class="hljs-value">THE_ID</span>,
   "<span class="hljs-attribute">client_secret</span>": <span class="hljs-value">THE_SECRET</span>,
   "<span class="hljs-attribute">code</span>": <span class="hljs-value">RETURNED_CODE</span>,
   "<span class="hljs-attribute">grant_type</span>": <span class="hljs-value"><span class="hljs-string">"authorization_code"</span></span>,
   "<span class="hljs-attribute">redirect_uri</span>": <span class="hljs-value"><span class="hljs-string">"urn:ietf:wg:oauth:2.0:oob"</span>
-</span>}</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#e6bf841d31b519252d3bddd5403f3fd3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e6bf841d31b519252d3bddd5403f3fd3" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#e6bf841d31b519252d3bddd5403f3fd3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e6bf841d31b519252d3bddd5403f3fd3" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">access_token</span>": <span class="hljs-value"><span class="hljs-string">"..."</span></span>,
   "<span class="hljs-attribute">token_type</span>": <span class="hljs-value"><span class="hljs-string">"bearer"</span></span>,
   "<span class="hljs-attribute">expires_in</span>": <span class="hljs-value"><span class="hljs-number">7200</span></span>,
   "<span class="hljs-attribute">refresh_token</span>": <span class="hljs-value"><span class="hljs-string">"..."</span>
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Refreshing the access token</code></strong><a data-toggle="collapse" data-target="#c24c975cd9db1ade07b1ccfed5e8bb76" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="c24c975cd9db1ade07b1ccfed5e8bb76" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Refreshing the access token</code></strong><a data-toggle="collapse" data-target="#6119a2779eacdea63423a68527493bf8" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="6119a2779eacdea63423a68527493bf8" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">client_id</span>": <span class="hljs-value">THE_ID</span>,
   "<span class="hljs-attribute">client_secret</span>": <span class="hljs-value">THE_SECRET</span>,
   "<span class="hljs-attribute">refresh_token</span>": <span class="hljs-value">REFRESH_TOKEN</span>,
   "<span class="hljs-attribute">grant_type</span>": <span class="hljs-value"><span class="hljs-string">"refresh_token"</span></span>,
   "<span class="hljs-attribute">redirect_uri</span>": <span class="hljs-value"><span class="hljs-string">"urn:ietf:wg:oauth:2.0:oob"</span>
-</span>}</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#e6bf841d31b519252d3bddd5403f3fd3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e6bf841d31b519252d3bddd5403f3fd3" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#e6bf841d31b519252d3bddd5403f3fd3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e6bf841d31b519252d3bddd5403f3fd3" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">access_token</span>": <span class="hljs-value"><span class="hljs-string">"..."</span></span>,
   "<span class="hljs-attribute">token_type</span>": <span class="hljs-value"><span class="hljs-string">"bearer"</span></span>,
   "<span class="hljs-attribute">expires_in</span>": <span class="hljs-value"><span class="hljs-number">7200</span></span>,
   "<span class="hljs-attribute">refresh_token</span>": <span class="hljs-value"><span class="hljs-string">"..."</span>
 </span>}
-</code></pre></li></ul></section><h4 id="authentication-">Resources&nbsp;<a href="#authentication-"><i class="fa fa-link"></i></a></h4><section id="authentication--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#authentication--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/oauth/revoke</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Revoking the token</code></strong><a data-toggle="collapse" data-target="#a8548100fb031353f28291365aa60085" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="a8548100fb031353f28291365aa60085" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
+</code></pre></li></ul></section><h4 id="authentication-">Resources&nbsp;<a href="#authentication-"><i class="fa fa-link"></i></a></h4><section id="authentication--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#authentication--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/oauth/revoke</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Revoking the token</code></strong><a data-toggle="collapse" data-target="#cf90fa4170b0624bfb8c9c579199bfc6" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="cf90fa4170b0624bfb8c9c579199bfc6" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">token</span>": <span class="hljs-value">TOKEN
-</span>}</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#fa226712afbdd1eb0bcb79c61bab29da" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="fa226712afbdd1eb0bcb79c61bab29da" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>Always returns <span class="hljs-operator">a</span> <span class="hljs-number">200</span>, even <span class="hljs-keyword">if</span> <span class="hljs-operator">the</span> <span class="hljs-keyword">token</span> does <span class="hljs-operator">not</span> exist <span class="hljs-operator">or</span> has already been revoked.
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#fa226712afbdd1eb0bcb79c61bab29da" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="fa226712afbdd1eb0bcb79c61bab29da" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>Always returns <span class="hljs-operator">a</span> <span class="hljs-number">200</span>, even <span class="hljs-keyword">if</span> <span class="hljs-operator">the</span> <span class="hljs-keyword">token</span> does <span class="hljs-operator">not</span> exist <span class="hljs-operator">or</span> has already been revoked.
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="profile">Profile&nbsp;<a href="#profile"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="profile-">Resources&nbsp;<a href="#profile-"><i class="fa fa-link"></i></a></h4><section id="profile--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#profile--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/profile?schema=</code></div></div><div class="panel-body"><p>Get the user profile with attributes limited to just those chosen by app owner during app registration in schema format.</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>schema</dt><dd><code>boolean</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>true</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d5d490c60e2a2cd77efb1767fb0c950b" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d5d490c60e2a2cd77efb1767fb0c950b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"joe@citizen.org"</span></span>,
@@ -234,36 +243,40 @@ the list of scopes the user has authorized.</p>
   "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"a83dead6-d98d-4377-9e69-eb00488839f5"</span></span>,
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"a83dead6-d98d-4377-9e69-eb00488839f5"</span>
 </span>}
-</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="task">Task&nbsp;<a href="#task"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/tasks</code></div></div><div class="panel-body"><p>List all tasks, and associated attributes, created by the calling application</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#af44e04b4072b3d93021469a2cf306aa" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="af44e04b4072b3d93021469a2cf306aa" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>[
-{
-  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task #1"</span></span>,
-  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
-  "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
-    {
-      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task item 1 (no url)"</span></span>,
-      "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-      "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-      "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span>
-    </span>}
-  ]
-</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="tasks">Tasks&nbsp;<a href="#tasks"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>To use these methods, the user must allow access to the <code>tasks</code> scope (your application must also request it from them).</p>
+<h4 id="tasks-">Resources&nbsp;<a href="#tasks-"><i class="fa fa-link"></i></a></h4><section id="tasks--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#tasks--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/tasks</code></div></div><div class="panel-body"><p>List all tasks, and associated attributes, created by the calling application</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#2d08e16e1438206c0df617325ca48549" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2d08e16e1438206c0df617325ca48549" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task #1"</span></span>,
+    "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+    "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
+    "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
+    "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task item 1 (no url)"</span></span>,
+        "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span>
+      </span>}
+    ]
+  </span>}
 ]
-</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#task--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/v1/tasks</code></div></div><div class="panel-body"><p>Create a new task for the user for this application.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task</code></strong><a data-toggle="collapse" data-target="#7fa52df752b9382f276814a428f0a707" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="7fa52df752b9382f276814a428f0a707" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li></ul></section><h4 id="tasks-">Resources&nbsp;<a href="#tasks-"><i class="fa fa-link"></i></a></h4><section id="tasks--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#tasks--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/v1/tasks</code></div></div><div class="panel-body"><p>Create a new task for the user for this application.</p>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The name for the task that is being created.</p>
+</dd><dt>url</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>http://18f.gsa.gov</span></span><p>a URL for the Task. Note you can define URLs for task items too.</p>
+</dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>A list of task items to be associated with the task. The External ID field is provided for your convenience to more easily map task items to records on your own system. There is a separate RESTful API that can be used for individually creating and updating task items associated with tasks.</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task</code></strong><a data-toggle="collapse" data-target="#19a0cf1bbf0082da9966b93912e639ae" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="19a0cf1bbf0082da9966b93912e639ae" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">task</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span>
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8c6c6cbd62b75ce206e061ad919a3b0f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8c6c6cbd62b75ce206e061ad919a3b0f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#a7d59b5435c1871b33ea28e6c0a5ded9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="a7d59b5435c1871b33ea28e6c0a5ded9" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
   "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -272,11 +285,10 @@ the list of scopes the user has authorized.</p>
   "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:22.487Z"</span></span>,
   "<span class="hljs-attribute">app_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">task_items</span>": <span class="hljs-value">[
-
   ]
 </span>}
-</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/task/:id</code></div></div><div class="panel-body"><p>Get a single task.</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#935a0ba6e1657147b17d69f9ec856928" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="935a0ba6e1657147b17d69f9ec856928" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li></ul></section><h4 id="tasks-">Resources&nbsp;<a href="#tasks-"><i class="fa fa-link"></i></a></h4><section id="tasks--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#tasks--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/task/:id</code></div></div><div class="panel-body"><p>Get a single task.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#66480c91cc8b9abc1bc4c25e59f6e80b" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="66480c91cc8b9abc1bc4c25e59f6e80b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
   "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
@@ -305,8 +317,11 @@ the list of scopes the user has authorized.</p>
     </span>}
   ]
 </span>}
-</code></pre></li></ul></section><h4 id="task-">Resources&nbsp;<a href="#task-"><i class="fa fa-link"></i></a></h4><section id="task--put" class="panel panel-warning"><div class="panel-heading"><div style="float:left"><a href="#task--put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/api/v1/task/:id</code></div></div><div class="panel-body"><p>Update a task</p>
-</div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Update a task and task items</code></strong><a data-toggle="collapse" data-target="#3365cd5ec06ccaab9efa9f898f8ca283" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="3365cd5ec06ccaab9efa9f898f8ca283" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li></ul></section><h4 id="tasks-">Resources&nbsp;<a href="#tasks-"><i class="fa fa-link"></i></a></h4><section id="tasks--put" class="panel panel-warning"><div class="panel-heading"><div style="float:left"><a href="#tasks--put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/api/v1/task/{id}</code></div></div><div class="panel-body"><p>Update a task. Note that if the task or one of its attributes has defined values for fields that are not explicitly included in the PUT request,
+those values will be preserved and will not be overwritten. If a task item is not included in the tasks posted here, it will not be changed at all. To delete a task item, you need to use the RESTful API.</p>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>name</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test task</span></span><p>The updated name of the task.</p>
+</dd><dt>task_items_atributes</dt><dd><code>hash</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>{:id=&gt;1, :name=&gt;'Task attribute' }</span></span><p>The updated task items that are associated with the task.</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Update a task and task items</code></strong><a data-toggle="collapse" data-target="#15011c81c25bdc4e23961f07c5dd6b72" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="15011c81c25bdc4e23961f07c5dd6b72" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">task</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
     "<span class="hljs-attribute">task_items_attributes</span>": <span class="hljs-value">[
@@ -317,9 +332,10 @@ the list of scopes the user has authorized.</p>
     ]
   </span>}
 </span>}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#2453d799c2d8be94e22d495177dea601" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2453d799c2d8be94e22d495177dea601" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8b9ed7bd06231563ade3342bb403165c" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8b9ed7bd06231563ade3342bb403165c" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Task"</span></span>,
+  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"This URL was not updated"</span></span>,
   "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-07T17:59:21.000Z"</span></span>,
   "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:21.000Z"</span></span>,
@@ -336,6 +352,76 @@ the list of scopes the user has authorized.</p>
     "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:21.000Z"</span>
   </span>}
   ]
+</span>}
+</code></pre></li></ul></section><h4 id="tasks-">Resources&nbsp;<a href="#tasks-"><i class="fa fa-link"></i></a></h4><section id="tasks--delete" class="panel panel-danger"><div class="panel-heading"><div style="float:left"><a href="#tasks--delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/api/v1/task/:id</code></div></div><div class="panel-body"><p>Deletes the task associated with the ID and all of its associated task_items. Upon successful deletion, his method returns at HTTP 200 status and the JSON of the task that was deleted.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#a8177ab6df1e2bf357dd955b2edbaa0e" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="a8177ab6df1e2bf357dd955b2edbaa0e" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,
+  "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Item"</span></span>,
+  "<span class="hljs-attribute">external_id</span>": <span class="hljs-value"><span class="hljs-string">"10020202"</span></span>,
+  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://www.gsa.gov/"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2015-07-15 21:20:53 -0400"</span>
+</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="task-items">Task Items&nbsp;<a href="#task-items"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>Every task can have one or more optional task items associated with it. These task items have the following optional attributes:</p>
+<ul>
+<li><p><strong>name</strong>: a name for the task</p></li>
+<li><p><strong>url</strong>: a URL associated with the task</p></li>
+<li><p><strong>external_id</strong>: an optional string that can be used to map this task_item to a records on your own system</p></li>
+<li><p><strong>completed_at</strong>: to indicate when the task was completed</p></li>
+</ul>
+<p>Although it is possible to create and update task_items solely within the Tasks API methods, these methods offer a cleaner and more granular interface to modify task items individually. It also is the only way to delete task items. All methods for task items are scoped within the task they belong to, it’s impossible to modify a task item without knowing its associated task ID.</p>
+<h4 id="task-items-">Resources&nbsp;<a href="#task-items-"><i class="fa fa-link"></i></a></h4><section id="task-items--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#task-items--get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/api/v1/tasks/:task_id/task_items</code></div></div><div class="panel-body"><p>Returns an array of all the task items associated within the task. This is identical to the data within the <code>task_items</code> key returned from the <code>GET /api/v1/tasks/:id</code> method.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#73679b86a37107e12870ee9e8fb598e1" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="73679b86a37107e12870ee9e8fb598e1" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>[  
+  {
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Task item 1 (no url)"</span></span>,
+    "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+    "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+    "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span></span>,
+    "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-07-08T17:59:23.000Z"</span>
+  </span>}
+]
+</code></pre></li></ul></section><h4 id="task-items-">Resources&nbsp;<a href="#task-items-"><i class="fa fa-link"></i></a></h4><section id="task-items--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#task-items--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/v1/tasks/:task_id/task_items</code></div></div><div class="panel-body"><p>Create a new task item associated with the task. Post a new JSON hash for the item you want to create.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new task item</code></strong><a data-toggle="collapse" data-target="#b9707088eba08298a5c05a7b5d97be0f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="b9707088eba08298a5c05a7b5d97be0f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">task_item</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Item"</span></span>,
+    "<span class="hljs-attribute">external_id</span>": <span class="hljs-value"><span class="hljs-string">"10020202"</span></span>,
+    "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://www.gsa.gov/"</span>
+  </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8181b2d1804fe5b9113994030d2cf612" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8181b2d1804fe5b9113994030d2cf612" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,
+  "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Item"</span></span>,
+  "<span class="hljs-attribute">external_id</span>": <span class="hljs-value"><span class="hljs-string">"10020202"</span></span>,
+  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://www.gsa.gov/"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
+</span>}
+</code></pre></li></ul></section><h4 id="task-items-">Resources&nbsp;<a href="#task-items-"><i class="fa fa-link"></i></a></h4><section id="task-items--put" class="panel panel-warning"><div class="panel-heading"><div style="float:left"><a href="#task-items--put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/api/v1/tasks/:task_id/task_items/:id</code></div></div><div class="panel-body"><p>Update the attributes of a task item. Any attributes not included in the update will not be changed. In addition, there are two different ways that you can mark a task item as completed as part of the PUT:</p>
+<ul>
+<li><p>Include a <code>completed_at</code> field in the PUT body that is a datetime for when the task was completed. Use the ISO 8601 date format only.</p></li>
+<li><p>More conveniently, you can just send <code>&quot;complete&quot;: true</code> and it will set the completion time for the task item automatically.</p></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Update a task item</code></strong><a data-toggle="collapse" data-target="#0a18c225b7d29c36c938ab4b3c31c96c" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="0a18c225b7d29c36c938ab4b3c31c96c" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">complete</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#596e83802874b0de286129b90cd9842d" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="596e83802874b0de286129b90cd9842d" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,
+  "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Item"</span></span>,
+  "<span class="hljs-attribute">external_id</span>": <span class="hljs-value"><span class="hljs-string">"10020202"</span></span>,
+  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://www.gsa.gov/"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2015-07-15 21:20:53 -0400"</span>
+</span>}
+</code></pre></li></ul></section><h4 id="task-items-">Resources&nbsp;<a href="#task-items-"><i class="fa fa-link"></i></a></h4><section id="task-items--delete" class="panel panel-danger"><div class="panel-heading"><div style="float:left"><a href="#task-items--delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/api/v1/tasks/:task_id/task_items/:id</code></div></div><div class="panel-body"><p>Deletes the task item. Upon successful completion, it will return the JSON of the item.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d6da1538759fa6e10c99d989cbd9c182" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d6da1538759fa6e10c99d989cbd9c182" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span><br/></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,
+  "<span class="hljs-attribute">task_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Item"</span></span>,
+  "<span class="hljs-attribute">external_id</span>": <span class="hljs-value"><span class="hljs-string">"10020202"</span></span>,
+  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"http://www.gsa.gov/"</span></span>,
+  "<span class="hljs-attribute">completed_at</span>": <span class="hljs-value"><span class="hljs-string">"2015-07-15 21:20:53 -0400"</span>
 </span>}
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="notification">Notification&nbsp;<a href="#notification"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="notification-">Resources&nbsp;<a href="#notification-"><i class="fa fa-link"></i></a></h4><section id="notification--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#notification--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/api/v1/notifications</code></div></div><div class="panel-body"><p>This will create a notification for the authenticated user.  The user will be able to view the notification through a user interface, and optionally by email.</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>subject</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>Test notification</span></span></dd><dt>body</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>This is a test</span></span></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request&nbsp;&nbsp;<code>Create a new notification</code></strong><a data-toggle="collapse" data-target="#d29039edf1a7ff762dd9051b91f0191f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d29039edf1a7ff762dd9051b91f0191f" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br/></code></pre><h5>Body</h5><pre><code>{

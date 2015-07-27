@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
   belongs_to :user
-  belongs_to :app
+  belongs_to :app, :class_name => 'Doorkeeper::Application'
   has_many :task_items, :dependent => :destroy
   validates_associated :task_items
 

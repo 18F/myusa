@@ -59,6 +59,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'site_prism'
   gem 'fakeweb'
+  gem 'faker'
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'shoulda-matchers'

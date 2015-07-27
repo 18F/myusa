@@ -4,7 +4,7 @@ FactoryGirl.define do
     last_name 'Public'
     association :user
 
-    factory :full_profile do
+    factory :full_profile, class: Profile do
       title 'Sir'
       first_name 'Joan'
       middle_name 'Quincy'

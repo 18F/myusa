@@ -90,7 +90,7 @@ describe Profile do
                                 'is_student'=>false,
                                 'is_veteran'=>true,
                                 'is_retired'=>false,
-                                'email'=> profile.user.email,
+                                'email' => profile.user.email,
                                 'phone_number'=>'123-456-7890',
                                 'mobile_number'=>'123-456-7890'
       end

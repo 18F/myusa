@@ -17,8 +17,9 @@
 //= require bootstrap-sprockets
 //= require myusa
 //= require bootstrap-tokenfield
+//= require modal-window
 
-$(document).ready(function() {
+$(function() {
   var menuToggle = $('#js-mobile-menu').unbind();
   $('#js-navigation-menu').removeClass('show');
 

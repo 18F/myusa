@@ -1,0 +1,48 @@
+#modalOverlay {
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: white;
+  opacity: 0.5;
+  position:fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+#modal {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+  padding: 5px;
+  background-color:#fff;
+  z-index: 99999; /* places the modal dialog on top of everything else */
+  position:fixed;
+  top:25%;
+  left:25%;
+  display:none;
+}
+#modal h1 {
+  text-align: center;
+}
+
+.modalCloseButton {
+  float: right;
+  position: absolute;
+  top: 10px;
+  left: 92%;
+  height: 25px;
+}
+.modalCloseButton img {
+  border: 0;
+}
+
+.screen-reader-offscreen {
+  position: absolute;
+  left: -999px;
+  width: 1px;
+  height: 1px;
+  top: auto;
+}

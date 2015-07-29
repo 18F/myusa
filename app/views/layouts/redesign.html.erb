@@ -26,10 +26,18 @@
     <div id="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
       <div id="modalDescription" class="screen-reader-offscreen">Beginning of a dialog window for the contact form. It begins with a heading 3 called &quot;Have a question? Let us know!&quot;. Escape will cancel and close the window.</div>
       <h3 id="modalTitle">Have a question? Let us know!</h3>
+      <div id="modalCloseButton" class="modalCloseButton" title="Close registration form">
+        <span id="cancel">X</span>
+        Close 
+        <span>or Esc Key</span>
+      </div>
+
+      <hr />
+      
       <%= form_for :contact_us, url: contact_us_path, html: { id: 'contact-form', role: "form" } do |f| %>
         <div class="form-group">
           <%= f.label 'Message:' %>
-          <%= f.text_area :message, rows: 8, placeholder: 'How can we help you?' %>
+          <%= f.text_area :message, placeholder: 'How can we help you?' %>
         </div>
         <div class="form-group">
           <%= f.label 'Your name:' %>
@@ -39,12 +47,14 @@
           <%= f.label 'Your email:' %>
           <%= f.text_field :return_email, placeholder: 'What is your email address?' %>
         </div>
-        <%= f.submit 'Send Us Your Message', 'data-loading-text' => "Sending your message..." %>
+
+        <hr />
+
+        <%= f.submit 'Send Message', 'data-loading-text' => "Sending your message..." %>
       <% end %>
-      <div class="contact-flash hidden">
-        <div class="message"></div>
+      <div class="alert success">
+        <p class="message">Thank you! Your message has been sent.</p>
       </div>
-      <button id="modalCloseButton" class="modalCloseButton" title="Close registration form"><img id="cancel" src="x.png" alt="close the registration form"></button>
     </div>
     
     <div id="modalOverlay" tabindex="-1"></div>

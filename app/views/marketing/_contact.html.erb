@@ -10,7 +10,7 @@
              <a href="#" data-dismiss="alert" class="close">×</a>
              <div class="message"></div>
           </div>
-          <%= form_for :contact_us, url: contact_us_path, html: { id: 'contact-form', role: "form" } do |f| %>
+          <%= form_for :contact_us, url: contact_us_path(format: :json), html: { id: 'contact-form', role: "form" } do |f| %>
             <div class="form-group">
               <%= f.label 'Message:' %>
               <%= f.text_area :message, class: 'form-control', rows: 8, placeholder: 'How can we help you?' %>

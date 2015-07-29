@@ -33,7 +33,11 @@ form#contact-form {
   }
 }
 
-.alert {
+div#contact-alert {
+  display: none;
+}
+
+.alert-box {
   border-radius: 4px;
   font-size: 14px;
   text-align: center;
@@ -46,4 +50,10 @@ form#contact-form {
   background-color: #EDF6EF;
   border: 1px solid #86C779;
   color: #008C46;
+}
+
+.error {
+  color: #D8000C;
+  background-color: #FFBABA;
+  border: 1px solid #D8000C;
 }

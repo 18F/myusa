@@ -31,5 +31,23 @@ $(function() {
       }
     });
   });
-});
 
+  $("#contact-form").on("ajax:success", function(e, data, status, xhr) {
+     // TODO: should disable the submit button?
+     $('#contact-alert p.message').text(data.message);
+
+     if (data.success) {
+      $('#contact-alert').removeClass('error').addClass('success')
+     }
+
+     $('#contact-alert').show();
+  }).on('ajax:error', function(e, data, status, xhr) {
+    console.log(data);
+
+    if data.message {
+      $('#contact-alert p.message').text(data.message);
+    }
+
+    $('#contact-alert').show();
+  });
+});

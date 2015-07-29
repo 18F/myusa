@@ -34,7 +34,7 @@
 
       <hr />
       
-      <%= form_for :contact_us, url: contact_us_path, html: { id: 'contact-form', role: "form" } do |f| %>
+      <%= form_for :contact_us, remote: true, url: contact_us_path(format: :json), html: { id: 'contact-form', role: "form" } do |f| %>
         <div class="form-group">
           <%= f.label 'Message:' %>
           <%= f.text_area :message, placeholder: 'How can we help you?' %>
@@ -52,8 +52,8 @@
 
         <%= f.submit 'Send Message', 'data-loading-text' => "Sending your message..." %>
       <% end %>
-      <div class="alert success">
-        <p class="message">Thank you! Your message has been sent.</p>
+      <div id="contact-alert" class="alert-box error">
+        <p class="message">An error has occurred. Please try again.</p>
       </div>
     </div>
     

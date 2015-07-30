@@ -41,10 +41,10 @@ $(function() {
      }
 
      $('#contact-alert').show();
-  }).on('ajax:error', function(e, data, status, xhr) {
-    console.log(data);
 
-    if data.message {
+  }).on("ajax:error", function(e, data, status, xhr) {
+
+    if (data.message) {
       $('#contact-alert p.message').text(data.message);
     }
 

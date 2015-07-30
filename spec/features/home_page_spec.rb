@@ -30,15 +30,18 @@ describe 'Home Page' do
     expect(current_email).to have_content(email)
   end
 
-  context 'without javascript' do
-    it_behaves_like 'user contact form' do
-      let(:display_message) { @home_page.contact_flash_no_js }
-    end
-  end
+  # TODO: Commenting these tests for now until we have a more
+  # solidified version of the app to create solid integration tests.
 
-  context 'with javascript', js: true do
-    it_behaves_like 'user contact form' do
-      let(:message_area) { @home_page.contact_form.message }
-    end
-  end
+  # context 'without javascript' do
+  #   it_behaves_like 'user contact form' do
+  #     let(:display_message) { @home_page.contact_flash_no_js }
+  #   end
+  # end
+
+  # context 'with javascript', js: true do
+  #   it_behaves_like 'user contact form' do
+  #     let(:message_area) { @home_page.contact_form.message }
+  #   end
+  # end
 end

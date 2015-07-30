@@ -1,5 +1,5 @@
 #modalOverlay {
-  background-color: white;
+  background-color: #ffffff;
   display: none; 
   height: 100%;
   left: 0;
@@ -13,16 +13,16 @@
 }
 
 #modal {
-  background-color: white;
-  border: 2px solid #C9D4D9;
+  background-color: #ffffff;
+  border: 2px solid #d9d4d9;
   border-radius: 6px;
   display: none;
+  left: 25%;
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
   position: absolute;
   top: 40px;
-  left: 25%;
   width: 50%;
   z-index: 99999;
 
@@ -43,34 +43,35 @@
   }
 
   hr {
-    border: 1px solid #EEF2F4;
+    border: 1px solid #eef2f4;
   }
 
-  #modalCloseButton {
-    color: #0069A0;
-    cursor: pointer;
-    font-size: 11px;
-    line-height: 1.1;
-    position: absolute;
-    right: 20px;
-    text-align: right;
-    top: 20px;
-    width: 80px;
-    
-    span {
-      color: #9A9A9A;
-      display: block;
+}
 
-      &#cancel {
+#modalCloseButton {
+  color: #0069a0;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1.1;
+  position: absolute;
+  right: 20px;
+  text-align: right;
+  top: 20px;
+  width: 80px;
+  
+  span {
+    color: #9a9a9a;
+    display: block;
 
-        background-color: #0069A0;
-        border-radius: 3px;
-        color: white;
-        float: right;
-        font-size: 14px;
-        margin-left: 5px;
-        padding: 4px 10px;
-      }
+    &#cancel {
+
+      background-color: #0069a0;
+      border-radius: 3px;
+      color: #fffff;
+      float: right;
+      font-size: 14px;
+      margin-left: 5px;
+      padding: 4px 10px;
     }
   }
 }

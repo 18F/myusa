@@ -22,10 +22,47 @@
   <body>
 
     <%= yield %>
+
+    <div id="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+      <div id="modalDescription" class="screen-reader-offscreen">Beginning of a dialog window for the contact form. It begins with a heading 3 called &quot;Have a question? Let us know!&quot;. Escape will cancel and close the window.</div>
+      <h3 id="modalTitle">Have a question? Let us know!</h3>
+      <div id="modalCloseButton" class="modalCloseButton" title="Close registration form">
+        <span id="cancel">X</span>
+        Close 
+        <span>or Esc Key</span>
+      </div>
+
+      <hr />
+      
+      <%= form_for :contact_us, remote: true, url: contact_us_path(format: :json), html: { id: 'contact-form', role: "form" } do |f| %>
+        <div class="form-group">
+          <%= f.label 'Message:' %>
+          <%= f.text_area :message, placeholder: 'How can we help you?' %>
+        </div>
+        <div class="form-group">
+          <%= f.label 'Your name:' %>
+          <%= f.text_field :from, placeholder: 'What is your name?' %>
+        </div>
+        <div class="form-group">
+          <%= f.label 'Your email:' %>
+          <%= f.text_field :return_email, placeholder: 'What is your email address?' %>
+        </div>
+
+        <hr />
+
+        <%= f.submit 'Send Message', 'data-loading-text' => "Sending your message..." %>
+      <% end %>
+      <div id="contact-alert" class="alert-box error">
+        <p class="message">An error has occurred. Please try again.</p>
+      </div>
+    </div>
+    
+    <div id="modalOverlay" tabindex="-1"></div>
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <%= javascript_include_tag "application" %>
 
     <%= render 'layouts/analytics' %>
+
   </body>
 </html>

@@ -158,8 +158,51 @@ describe SessionsController do
       it 'redirects to sign_in page' do
         is_expected.to redirect_to(new_user_session_path)
       end
+    end
+  end
 
+  describe "#destroy" do
+    let!(:user) { FactoryGirl.create(:user, :with_2fa, email: email) }
+    let!(:application) { FactoryGirl.create(:application, owner: user, url: 'http://origin-staging.test.gov') }
+    let!(:authorization) { FactoryGirl.create(:authorization, user: user, application: application) }
+    let!(:access) { FactoryGirl.create(:access_token, resource_owner: user, application: application) }
+
+    subject { get :destroy }
+
+    context "user is signed in" do
+      before :each do
+        sign_in user
+      end
+
+      it "should clear the current user" do
+        subject
+        expect(controller.current_user).to_not be
+      end
+
+      it "should set the logged out user" do
+        subject
+        expect(controller.instance_variable_get('@logged_out_user')).to eq(user)
+      end
+
+      it "should redirect to the root" do
+        is_expected.to redirect_to('http://test.host/')
+      end
     end
 
+    context "when passed a redirect" do
+      before :each do
+        sign_in user
+        expect(Doorkeeper::Application.authorized_for(user).map(&:url)).to eq([application.url])
+      end
+
+      subject { get :destroy, continue: 'http://origin-staging.test.gov/user/sign_out' }
+
+      it 'redirects to redirect argument' do
+        is_expected.to redirect_to('http://origin-staging.test.gov/user/sign_out')
+      end
+    end
+
+    context "user is not signed in" do
+    end
   end
 end

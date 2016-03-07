@@ -12,10 +12,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Considering this is followed by a test that the URL matches registered domain,
+  # I decided to make this simpler since prior version was rejecting valid URLs
   def valid_url?(uri)
-    !!((uri =~ URI.regexp(%w(http https))) &&
-      URI.parse(uri).host =~
-        /^(localhost|(([0-9]{1,3}\.){3}[0-9]{1,3})|([a-z0-9]+\.)+[a-z]{2,5})$/i)
+    parsed = URI.parse(uri)
+    return (parsed.scheme == 'http' || parsed.scheme == 'https')
   rescue URI::InvalidURIError
     false
   end

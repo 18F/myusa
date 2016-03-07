@@ -1,4 +1,9 @@
 /*
+
+ Original code for modal-window.js located at:
+ https://github.com/gdkraus/accessible-modal-dialog
+
+ Created by https://github.com/gdkraus
  
  ============================================
  License for Application

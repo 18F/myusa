@@ -64,16 +64,16 @@ en:
       subheading: Notifications allow applications to contact you through MyUSA without sharing your email address or contact information
     email:
       description: Identify you by your email address
-      subheading: Share your email to receive occasional updates about resources that may interest you.
+      subheading: Allow this application to see your email address.
     name:
       description: Address you by name
-      subheading: Share your name if you'd like %{app_name} to use it in communication with you.
+      subheading: Allow this application to see your full name.
     address:
       description: Know where you live
       subheading: Information can be tailored for you based on your location
     phone:
       description: Know how to contact you by phone or text message
-      subheading: Phone numbers can be used to contact you
+      subheading: Allow this application to see your phone number, which can be used to contact you
     identifiers:
       description: Find out more about you
       subheading: Self identifiers aid in customizing your experience

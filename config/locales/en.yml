@@ -64,16 +64,16 @@ en:
       subheading: Notifications allow applications to contact you through MyUSA without sharing your email address or contact information
     email:
       description: Identify you by your email address
-      subheading: Providing your email address will let the application contact you directly
+      subheading: Allow this application to see your email address.
     name:
       description: Address you by name
-      subheading: Your name is used to greet you or identify you for government services
+      subheading: Allow this application to see your full name.
     address:
       description: Know where you live
       subheading: Information can be tailored for you based on your location
     phone:
       description: Know how to contact you by phone or text message
-      subheading: Phone numbers can be used to contact you
+      subheading: Allow this application to see your phone number, which can be used to contact you
     identifiers:
       description: Find out more about you
       subheading: Self identifiers aid in customizing your experience
@@ -104,7 +104,7 @@ en:
         label: 'Email Address'
         hint: ""
         desc: 'Read your email address'
-        placeholder: 'Enter your email address'
+        placeholder: 'Email Address'
       title:
         label: 'Title'
         hint: ""
@@ -114,7 +114,7 @@ en:
         label: 'First Name'
         hint: ""
         desc: 'Read your first name'
-        placeholder: 'Enter your first name'
+        placeholder: 'First Name'
       middle_name:
         label: 'Middle Name'
         hint: ""
@@ -124,7 +124,7 @@ en:
         label: 'Last Name'
         hint: ""
         desc: 'Read your last name'
-        placeholder: 'Enter your last name'
+        placeholder: 'Last Name'
       suffix:
         label: 'Suffix'
         hint: ""
@@ -231,6 +231,8 @@ en:
       subject: '%{name} requested public access'
     notification:
       subject: 'Message from %{name} about %{subject}'
+    authentication:
+      subject: Authenticate With MyUSA
 
   mobile_confirmation:
     skip_this_step: 'You can add your mobile number on your <a href="%{profile_link}">MyUSA profile</a> at another time.'

@@ -4,7 +4,6 @@
 *.sassc
 **.orig
 .powrc
-.rubocop.yml
 .sass-cache
 .zeus.sock
 .DS_store
@@ -23,7 +22,6 @@ Vagrantfile
 # other config
 config/*.yml
 config/environments/development.rb
-config/environments/production.rb
 config/initializers/recaptcha.rb
 config/deploy.rb
 config/deploy/ec2.rb
@@ -38,6 +36,7 @@ kitchen/data_bags/staging/*
 kitchen/data_bags/production/*
 
 # folders
+db/backup
 coverage
 log/*
 public/system

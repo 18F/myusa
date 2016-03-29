@@ -1,69 +1,46 @@
-<div class="row scope-page">
-  <div class="col-md-8 col-md-offset-2">
-    <h1><%= @pre_auth.client.application.name %> is requesting permission to:</h1>
-    <p class="subhead">Your MyUSA data is yours to grant or deny access at will.</p>
+<%= render 'redesign/navigation' %>
 
-    <div class="alert alert-warning hidden" id ="scopes-alert-none">
-      <h1>No info for <%= @pre_auth.client.application.name %>?</h1>
-      <p>
-        If you would like to proceed with your interaction with <%= @pre_auth.client.application.name %>,
-        please select one of the following pieces of information to get your conversation started.
-      </p>
-      <p>
-        We've exposed all the context for their requests.
-      </p>
+<div id="permissions">
+  <div id="welcome">
+    <div class="welcome-text">
+      <p>Welcome to <span>MyUSA</span>, your one account for government — we help you manage your online interactions with government agencies. Follow the instructions below to log into <span><%= @pre_auth.client.application.name %></span>.</p>
     </div>
+  </div>
+  <div id="permissions-box">
+    <%= form_tag oauth_authorization_path, role:'form', class:'form-inline', id:'p-form', method: :post do %>
+      <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+      <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+      <%= hidden_field_tag :state, @pre_auth.state %>
+      <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+      <%= hidden_field_tag :original_scope, @pre_auth.scope %>
 
-    <div class="row">
-      <div class="col-md-12">
-        <%= form_tag oauth_authorization_path, role:'form', class:'form-inline', method: :post do %>
-          <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-          <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-          <%= hidden_field_tag :state, @pre_auth.state %>
-          <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-          <%= hidden_field_tag :original_scope, @pre_auth.scope %>
+      <header>
+        <h2><%= @pre_auth.client.application.name %> requests your information.</h2>
+        <p><%= @pre_auth.client.application.name %> would like to use some of the data from your MyUSA account to personalize your interactions.</p>
 
-          <%= render 'scope_list', scopes: @pre_auth.scopes %>
+        <p>Please review the following to determine what data you allow MyUSA to share with <%= @pre_auth.client.application.name %> from your MyUSA account. Sharing this information will help us serve you better, but it’s not required.</p>
+      </header>
 
-          <% if @pre_auth.client.application.tos_link.present? %>
-            <p>
-              By proceeding, you agree to <%= @pre_auth.client.application.name %>'s
-              <%= link_to 'Terms of Service', @pre_auth.client.application.tos_link %>
-              and <%= link_to 'Privacy Policy', @pre_auth.client.application.privacy_policy_link %>.
-            </p>
-          <% end %>
-          <p>
-            You are authorizing MyUSA to share the selected information with <%= @pre_auth.client.application.name %>
-          </p>
-
-          <div class="row">
-            <div class="col-md-7 col-sm-8 col-xs-8">
-              <%= hidden_field_tag :user_id, current_user.id %>
-              <%= hidden_field_tag :allow, "1", :id => "allow" %>
-              <%= submit_tag 'Allow Access', :class => 'btn btn-primary width-100'%>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-              <%= oauth_deny_link @pre_auth, "No Thanks", class: "btn btn-default width-100" %>
-            </div>
-          </div>
-        <% end %>
+      <div class="dividers">
+        <span id="your_info">Your info</span>
+        <span id="share_col">Share</span>
       </div>
-    </div>
-    <p class="disclaimer-info label-pad">
-      <small>
-        Additional information you provide here will be saved to your MyUSA profile. You may change your permissions to <%= @pre_auth.client.application.name %>  or <%= link_to 'update your MyUSA profile', profile_path %> at any time by clicking on your email address.
-      </small>
-    </p>
-    <div class="alert alert-warning hidden" id="scopes-alert-none2">
-      <h1>Still not convinced?</h1>
-      <p>
-        Feel free to head back to <%= oauth_deny_link @pre_auth, @pre_auth.client.application.name %> or visit your <%= link_to 'MyUSA Profile', profile_path, :title => 'MyUSA Profile' %>.
-      </p>
-    </div>
-    <p class="disclaimer-info label-pad">
-      <small>
-        <%= render 'application/privacy_act' %>
-      </small>
-    </p>
+
+      <%= render 'scope_list', scopes: @pre_auth.scopes, app_name: @pre_auth.client.application.name %>
+
+      </section>
+
+      <section id="submit">
+        <h3>By clicking Allow, you agree to share the above information from your MyUSA account with <%= @pre_auth.client.application.name %>.</h3>
+        <div class="button_group">
+          <%= hidden_field_tag :user_id, current_user.id %>
+          <%= hidden_field_tag :allow, "1", :id => "allow" %>
+          <%= submit_tag 'Allow'%>
+          <%= oauth_deny_link @pre_auth, "Cancel", :class => "cancel" %>
+        </div>
+      </section>
+    <% end %>
   </div>
 </div>
+
+<%= render 'redesign/footer' %>

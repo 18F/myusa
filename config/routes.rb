@@ -1,8 +1,9 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
-  get "redesign" => "redesign#index"
   
+  get "redesign" => "redesign#index"
+
   root to: "home#index"
   get "legal" => "home#legal"
   get 'developer' => 'home#developer'
@@ -70,7 +71,10 @@ Rails.application.routes.draw do
     namespace :v1, as: 'v1' do
       resource :profile, only: [:show]
       resources :notifications, only: [:create]
-      resources :tasks, only: [:index, :create, :show, :update]
+      resources :tasks do
+        resources :task_items
+      end
+
       get 'tokeninfo', to: '/doorkeeper/token_info#show'
     end
 
@@ -82,7 +86,9 @@ Rails.application.routes.draw do
     scope module: 'v1' do
       resource :profile, only: [:show]
       resources :notifications, only: [:create]
-      resources :tasks, only: [:index, :create, :show, :update]
+      resources :tasks do
+        resources :task_items
+      end
     end
   end
 

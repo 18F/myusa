@@ -15,5 +15,39 @@
 //Turbo links disabled as temp fix of more/less options on signin/signup pages
 // require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+//= require myusa
 //= require bootstrap-tokenfield
+//= require modal-window
+
+$(function() {
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass('show');
+
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+
+  $("#contact-form").on("ajax:success", function(e, data, status, xhr) {
+     // TODO: should disable the submit button?
+     $('#contact-alert p.message').text(data.message);
+
+     if (data.success) {
+      $('#contact-alert').removeClass('error').addClass('success')
+     }
+
+     $('#contact-alert').show();
+
+  }).on("ajax:error", function(e, data, status, xhr) {
+
+    if (data.message) {
+      $('#contact-alert p.message').text(data.message);
+    }
+
+    $('#contact-alert').show();
+  });
+});

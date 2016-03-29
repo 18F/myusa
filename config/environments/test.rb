@@ -26,12 +26,14 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
-  config.action_mailer.default_url_options = { :host => 'www.example.com' }
+  config.action_mailer.default_url_options = { host: 'www.example.com', protocol: 'https' }
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+
+  config.myusa_sender_email = 'MyUSA <myusa@gsa.gov>'
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

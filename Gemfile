@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
+ruby '2.2.4' # CF Rails buildpack demands explicit ruby version
 
-gem 'rails', '~> 4.1.5'
+gem 'rails', '~> 4.1.9'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1.3'
 gem 'turbolinks'
 gem 'mysql2'
 ## app dependencies
@@ -25,7 +26,7 @@ gem 'will_paginate'
 
 gem 'bourbon'
 gem 'neat'
-gem 'refills'
+gem 'bitters'
 
 # TODO: Check this again soon for a new release (after 9/1/14) -- Yoz
 gem 'validates_email_format_of'
@@ -46,18 +47,6 @@ group :development do
   gem 'binding_of_caller'
 end
 
-## deploy dependencies
-group :deploy do
-  gem 'berkshelf', '~> 3.0'
-  gem 'chef'
-  gem 'knife-ec2'
-  gem 'knife-solo' #, github: 'matschaffer/knife-solo', submodules: true
-  gem 'knife-solo_data_bag'
-  gem 'unf'
-  gem 'capistrano', '~> 2.15'
-  gem 'capistrano-unicorn', require: false
-end
-
 group :development, :test do
   gem 'oauth2'
   gem 'pry-rails'
@@ -70,6 +59,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'site_prism'
   gem 'fakeweb'
+  gem 'faker'
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'shoulda-matchers'
@@ -84,6 +74,7 @@ group :staging, :production do
   gem 'unicorn', :require => false
   gem 'dalli-elasticache'
   gem 'newrelic_rpm'
+  gem 'rails_12factor'
 end
 
 group :production do

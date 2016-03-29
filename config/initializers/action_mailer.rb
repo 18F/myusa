@@ -1,5 +1,5 @@
 ActionMailer::Base.default_options = {
-  to: 'MyUSA <myusa@gsa.gov>',
-  reply_to: 'myusa@gsa.gov',
-  from: 'no-reply@' + ActionMailer::Base.default_url_options[:host]
+  to: Rails.configuration.myusa_sender_email,
+  reply_to: Rails.configuration.myusa_sender_email,
+  from: 'MyUSA <no-reply@' + ActionMailer::Base.default_url_options[:host] + '>'
 }

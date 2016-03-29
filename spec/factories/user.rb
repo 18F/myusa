@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:email) {|n| "user_#{n}@gsa.gov" }
+    email { Faker::Internet.email }
     sign_in_count 42
 
     trait :new_user do
@@ -9,6 +9,10 @@ FactoryGirl.define do
 
     trait :with_profile do
       profile
+    end
+
+    trait :with_full_profile do
+      full_profile
     end
 
     trait :with_google do

@@ -99,7 +99,7 @@ Further reading:
 
 Ryan Bates has put together an excellent RailsCast on OmniAuth:
 
-[![RailsCast #241](http://railscasts.com/static/episodes/stills/241-simple-omniauth-revised.png "RailsCast #241 - Simple OmniAuth (revised)")](http://railscasts.com/episodes/241-simple-omniauth-revised)
+[![RailsCast #241](https://railscasts.com/static/episodes/stills/241-simple-omniauth-revised.png "RailsCast #241 - Simple OmniAuth (revised)")](http://railscasts.com/episodes/241-simple-omniauth-revised)
 
 View the OmniAuth 1.0 docs for more information about strategy implementation: https://github.com/intridea/omniauth.
 
@@ -118,63 +118,66 @@ the list of scopes the user has authorized.
 
 + Response 200 (application/json; charset=utf-8)
 
-  {
-    "resource_owner_id": 3879,
-    "scopes": [
-      "profile.first_name",
-      "profile.last_name"
-    ],
-    "expires_in_seconds": 7200,
-    "application": {
-      "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
-    }
-  }
+        {
+          "resource_owner_id": 3879,
+          "scopes": [
+            "profile.first_name",
+            "profile.last_name"
+          ],
+          "expires_in_seconds": 7200,
+          "application": {
+            "uid": "b6b334908bed08005ca145fc96ccbd7e4015a0e504d085c77298cf321aaca8f3"
+          }
+        }
 
 ## POST /oauth/token
 
 + Request Requesting the access token
-    {
-      "client_id": THE_ID,
-      "client_secret": THE_SECRET,
-      "code": RETURNED_CODE,
-      "grant_type": "authorization_code",
-      "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
-    }
+
+        {
+          "client_id": THE_ID,
+          "client_secret": THE_SECRET,
+          "code": RETURNED_CODE,
+          "grant_type": "authorization_code",
+          "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "access_token": "...",
-      "token_type": "bearer",
-      "expires_in": 7200,
-      "refresh_token": "..."
-    }
+        {
+          "access_token": "...",
+          "token_type": "bearer",
+          "expires_in": 7200,
+          "refresh_token": "..."
+        }
 
 + Request Refreshing the access token
-    {
-      "client_id": THE_ID,
-      "client_secret": THE_SECRET,
-      "refresh_token": REFRESH_TOKEN,
-      "grant_type": "refresh_token",
-      "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
-    }
+
+        {
+          "client_id": THE_ID,
+          "client_secret": THE_SECRET,
+          "refresh_token": REFRESH_TOKEN,
+          "grant_type": "refresh_token",
+          "redirect_uri": "urn:ietf:wg:oauth:2.0:oob"
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-    {
-      "access_token": "...",
-      "token_type": "bearer",
-      "expires_in": 7200,
-      "refresh_token": "..."
-    }
+        {
+          "access_token": "...",
+          "token_type": "bearer",
+          "expires_in": 7200,
+          "refresh_token": "..."
+        }
 
 ## POST /oauth/revoke
 
 + Request Revoking the token
-    {
-      "token": TOKEN
-    }
+
+        {
+          "token": TOKEN
+        }
 
 + Response 200 (application/json; charset=utf-8)
 
-  Always returns a 200, even if the token does not exist or has already been revoked.
+        Always returns a 200, even if the token does not exist or has already been revoked.

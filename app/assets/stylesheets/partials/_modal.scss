@@ -1,0 +1,85 @@
+#modalOverlay {
+  background-color: #ffffff;
+  display: none; 
+  height: 100%;
+  left: 0;
+  margin: 0;
+  opacity: 0.7;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+#modal {
+  background-color: #ffffff;
+  border: 2px solid #d9d4d9;
+  border-radius: 6px;
+  display: none;
+  left: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  position: absolute;
+  top: 40px;
+  width: 50%;
+  z-index: 99999;
+
+  @media (max-width: 767px) {
+    left: 15%;
+    width: 70%;
+  }
+
+  @media (max-width: 767px) {
+    left: 10%;
+    width: 80%;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: normal;
+    padding-bottom: 15px;
+  }
+
+  hr {
+    border: 1px solid #eef2f4;
+  }
+
+}
+
+#modalCloseButton {
+  color: #0069a0;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1.1;
+  position: absolute;
+  right: 20px;
+  text-align: right;
+  top: 20px;
+  width: 80px;
+  
+  span {
+    color: #9a9a9a;
+    display: block;
+
+    &#cancel {
+
+      background-color: #0069a0;
+      border-radius: 3px;
+      color: #fffff;
+      float: right;
+      font-size: 14px;
+      margin-left: 5px;
+      padding: 4px 10px;
+    }
+  }
+}
+
+.screen-reader-offscreen {
+  height: 1px;
+  left: -999px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+}

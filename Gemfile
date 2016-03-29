@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2' # CF Rails buildpack demands explicit ruby version
+ruby '2.2.4' # CF Rails buildpack demands explicit ruby version
 
 gem 'rails', '~> 4.1.9'
 gem 'sass-rails', '~> 4.0.3'

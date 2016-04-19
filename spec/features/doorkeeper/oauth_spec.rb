@@ -306,9 +306,7 @@ describe 'OAuth' do
             expect(@auth_page).to be_displayed
             expect(@auth_page).to have_error_message
             expect(@auth_page.error_message.text).to(
-              include('Client authentication failed due to unknown client, ' \
-                      'no client authentication included, or unsupported ' \
-                      'authentication method.'))
+              include('Client authentication failed due to unknown client'))
           end
         end
       end

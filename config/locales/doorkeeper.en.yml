@@ -46,7 +46,7 @@ en:
         unsupported_response_type: 'The authorization server does not support this response type.'
 
         # Access token errors
-        invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
+        invalid_client: 'Client authentication failed due to unknown client, no client authentication included, the application not being public, or unsupported authentication method.'
         invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
         unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
 

@@ -62,7 +62,7 @@ Rails/TimeZone:
   # The value `always` means that `Time` should be used with `zone`.
   # The value `acceptable` allows usage of `in_time_zone` instead of `zone`.
   Enabled: true
-  EnforcedStyle: always
+  EnforcedStyle: strict
   SupportedStyles:
     - always
     - acceptable

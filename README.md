@@ -1,3 +1,7 @@
+# MyUSA is now deprecated
+
+All development on MyUSA has ceased. However, 18F hasn't stopped working on single sign-on for government. We're now developing [Login.gov](https://login.gov/). If you're interested in the underlying identity provider implementation, see [the identity-idp repo](https://github.com/18F/identity-idp/).
+
 ## MyUSA
 
 ![MyUSA logo](https://cloud.githubusercontent.com/assets/2539570/3864655/cbcf7700-1f65-11e4-9c32-bc834792bcf6.png)

@@ -54,7 +54,8 @@ describe Profile do
 
   it 'strips dashes out of phone numbers on updates' do
     profile_with_phone = create(:profile, phone_number: '123-456-7890')
-    profile_with_phone.update_attributes(phone_number: '123-567-4567', mobile_number: '3-45-678-9012')
+    profile_with_phone.update(phone_number: '123-567-4567', mobile_number: '3-45-678-9012')
+    profile_with_phone.reload
 
     expect(profile_with_phone.phone).to eq '1235674567'
     expect(profile_with_phone.mobile).to eq '3456789012'
